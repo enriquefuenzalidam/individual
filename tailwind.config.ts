@@ -9,7 +9,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        pangea: [ '"Pangea Trial"', "sans-serif" ],
+        pangea: [ 'Pangea Trial', 'sans-serif' ],
+        eggaramond: [ 'EB Garamond', 'serif' ]
       },
     },
   },

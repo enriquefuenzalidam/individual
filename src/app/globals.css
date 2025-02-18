@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,19 +11,74 @@ html, body {
 
 @font-face {
   font-family: "Pangea Trial";
-  src: url("/pangea/PangeaTrial-RegularWeb.woff2") format("woff2"),
-       url("/pangea/PangeaTrial-RegularWeb.woff") format("woff");
-  font-weight: normal;
+  src: url("/pangea/PangeaTrial-RegularWeb.woff2") format("woff2");
+  font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Pangea Trial";
-  src: url("/pangea/PangeaTrial-BoldWeb.woff2") format("woff2"),
-       url("/pangea/PangeaTrial-BoldWeb.woff") format("woff");
-  font-weight: bold;
+  src: url("/pangea/PangeaTrial-ItalicWeb.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Pangea Trial";
+  src: url("/pangea/PangeaTrial-LightWeb.woff2") format("woff2");
+  font-weight: 300;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "Pangea Trial";
+  src: url("/pangea/PangeaTrial-LightItalicWeb.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Pangea Trial";
+  src: url("/pangea/PangeaTrial-MediumWeb.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pangea Trial";
+  src: url("/pangea/PangeaTrial-MediumItalicWeb.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Pangea Trial";
+  src: url("/pangea/PangeaTrial-SemiBoldWeb.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pangea Trial";
+  src: url("/pangea/PangeaTrial-SemiBoldItalicWeb.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Pangea Trial";
+  src: url("/pangea/PangeaTrial-BoldWeb.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pangea Trial";
+  src: url("/pangea/PangeaTrial-BoldItalicWeb.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+}
+
 
 /*
 The font-weight follows standard CSS values:

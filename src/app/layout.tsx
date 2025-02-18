@@ -12,9 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={` antialiased bg-white `}>
+    <html lang="es" className={` antialiased bg-white font-pangea `}>
       <body
-        className={` antialiased bg-white `}
+        className={` antialiased bg-white bg-gradient-to-b from-[#fffaf4] to-white font-pangea `}
       >
         {children}
       </body>
