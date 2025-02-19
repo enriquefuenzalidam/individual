@@ -226,43 +226,21 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
         return () => window.removeEventListener("resize", applyDiscoStyles);
       }, [applyDiscoStyles]);
 
-      return React.createElement(
-        "div",
-        { ref: mainContainer },
-        React.createElement(
-            "div",
-            { ref: sliderContainer },
-            React.createElement(
-                "div",
-                { ref: innerSliderContainer },
+      return React.createElement( "div", { ref: mainContainer },
+        React.createElement( "div", { ref: sliderContainer },
+            React.createElement( "div", { ref: innerSliderContainer },
                 !!imagenesLista.length &&
-                    React.createElement(
-                        "div",
-                        { ref: galleryRef },
+                    React.createElement( "div", { ref: galleryRef },
                         imagenesLista.map((item, index) =>
-                            React.createElement(
-                                "div",
-                                { key: index, ref: (el: HTMLDivElement | null) => setImageRef(el, index) },
+                            React.createElement( "div", { key: index, ref: (el: HTMLDivElement | null) => setImageRef(el, index) },
                                 React.createElement(Image, { src: item, alt: "" }),
-                                React.createElement("div", null)
-                            )
-                        )
-                    )
-            )
-        ),
-        React.createElement(
-            "div",
-            { ref: discosSelector },
+                                React.createElement("div", null) ) ) ) ) ),
+        React.createElement( "div", { ref: discosSelector },
             !!imagenesLista.length &&
-                React.createElement(
-                    "div",
-                    null,
+                React.createElement( "div", null,
                     imagenesLista.map((_, index) =>
-                        React.createElement("span", { key: index, ref: (el: HTMLSpanElement | null) => setDiscosRef(el, index) })
-                    )
-                )
-        )
-    );
-    };
+                        React.createElement("span", { key: index, ref: (el: HTMLSpanElement | null) => setDiscosRef(el, index) }) ) ) )
+      )
+}
 
 export default ImagenesSlider;
