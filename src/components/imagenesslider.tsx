@@ -70,6 +70,7 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
         galleryEl.style.transition = "all 700ms ease-in-out";
 
         imageRefs.current.forEach((imageEl, index) => {
+
           if (!imageEl) return;
 
           const imgEl = imageEl.querySelector("img") as HTMLImageElement | null;
@@ -90,36 +91,39 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
           imageEl.style.borderRadius = "0.125rem";
           imageEl.style.overflow = "hidden";
 
-          imageEl.style.opacity = "0";
-          imageEl.style.transform = "scale(1)";
-          imageEl.style.zIndex = "10";
-          imageEl.style.left = "50%";
-          imageEl.style.translate = "-50%";
-
-          if (isCurrent) {
-            imageEl.style.opacity = "1";
-            imageEl.style.zIndex = "50";
-            imageEl.style.transform = "scale(1.1)";
-            imageEl.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)";
-
-          } else if (isBefore1 || isAfter1) {
-            imageEl.style.opacity = "1";
-            imageEl.style.zIndex = "40";
-            imageEl.style.transform = "scale(1.05)";
-            imageEl.style.left = isBefore1 ? "25%" : "75%";
-            imageEl.style.translate = isBefore1 ? "-25%" : "-75%" ;
-            imageEl.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
-    
-          } else if (isBefore2 || isAfter2) {
-            imageEl.style.opacity = "1";
-            imageEl.style.zIndex = "30";
-            imageEl.style.transform = "scale(0.95)";
-            imageEl.style.left = isBefore2 ? "0%" : "100%";
-            imageEl.style.translate = isBefore2 ? "0%" : "-100%";
-            imageEl.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
-
+          if (!(isBefore1 || isAfter1 || isBefore2 || isAfter2) ) {
+            imageEl.style.left = "50%";
+            imageEl.style.translate = "-50%";
+            if (isCurrent) {
+              imageEl.style.opacity = "1";
+              imageEl.style.zIndex = "50";
+              imageEl.style.transform = "scale(1.1)";
+              imageEl.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)";
+            }
+            else {
+              imageEl.style.opacity = "0";
+              imageEl.style.zIndex = "10";
+              imageEl.style.transform = "scale(0.25)";
+            }
           }
-          
+
+          if (isBefore1 || isAfter1 || isBefore2 || isAfter2) {
+            imageEl.style.opacity = "1";
+            imageEl.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
+            if (isBefore1 || isAfter1) {
+              imageEl.style.zIndex = "40";
+              imageEl.style.transform = "scale(1.05)";
+              imageEl.style.left = isBefore1 ? "25%" : "75%";
+              imageEl.style.translate = isBefore1 ? "-25%" : "-75%";
+            }
+            else {
+              imageEl.style.zIndex = "30";
+              imageEl.style.transform = "scale(0.95)";
+              imageEl.style.left = isBefore2 ? "0%" : "100%";
+              imageEl.style.translate = isBefore2 ? "0%" : "-100%";
+            }
+          }
+       
           if (imgEl) {
             imgEl.style.width = "100%";
             imgEl.style.height = "100%";
@@ -132,7 +136,6 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
             overlayEl.style.inset = "0";
             overlayEl.style.transition = "all 700ms ease-in-out";
             overlayEl.style.backdropFilter = "grayscale(100%)";
-      
             if (isCurrent || !(isBefore1 || isBefore2 || isAfter1 || isAfter2)) {
               overlayEl.style.opacity = "0";
               overlayEl.style.backgroundColor = "transparent";
