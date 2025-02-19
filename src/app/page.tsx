@@ -14,7 +14,7 @@ export default function Home() {
         <h2 className={` text-slate-400 `}><span className={` tracking-normal transition-all ease-in-out duration-300 uppercase text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium inline-block align-middle mr-[0.125rem] sm:mr-[0.156rem] md:mr-[0.188rem] lg:mr-[0.250rem] `}>Componentes</span> <NextLogo className={` transition-all ease-in-out duration-300 text-slate-600 w-[3.95rem] sm:w-[4.938rem] md:w-[5.925rem] lg:w-[7.9rem] h-auto inline-block mt-[0.050rem] sm:mt-[0.063rem] md:mt-[0.075rem] lg:mt-[0.1rem] `} /></h2>
       </div>
     </header>
-    <div className={` relative flex flex-col w-full min-h-screen h-full `}>
+    <div className={` relative flex flex-col w-full h-full `}>
       <main className={` relative max-w-[64rem]`}>
         <div className={` relative p-[0.5rem] sm:p-[1.875rem] md:p-[2.25rem] lg:p-[3rem] `}>
           <h3 className={` text-left font-light text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-slate-500 mt-3 sm:mt-6 md:mt-9 lg:mt-12 mb-1 sm:mb-2 md:mb-4 lg:mb-6 ml-[1.875rem] md:ml-[2rem] lg:ml-[2.25rem] transition-all ease-in-out duration-300`}>ProntoVista</h3>
@@ -28,7 +28,7 @@ export default function Home() {
           <ImagenesSlider 
             imageneslista={PexelsRandomImageList}
             seleccionColor='rgb(51,65,85)'
-            alturaBase={22}
+            alturaBase={24}
             iteracionTiempo={3000} />
 
           </div>
