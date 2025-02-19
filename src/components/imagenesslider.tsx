@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { useRef, useState, useEffect, useCallback } from 'react';
 import Image, { StaticImageData } from 'next/image';
 
@@ -16,6 +17,7 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
     
     const alturaBaseSm = alturaBase+6;
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(2);
+
     const galleryRef = useRef<HTMLDivElement | null>(null);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -23,12 +25,9 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
     const setImageRef = (el: HTMLDivElement | null, index: number) => {
         imageRefs.current[index] = el;  };
 
-
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
     useEffect(() => {
-          const handleResize = () => {
-              setIsLargeScreen(window.innerWidth >= 640);
-          };
+          const handleResize = () => setIsLargeScreen(window.innerWidth >= 640);
           handleResize();
           window.addEventListener("resize", handleResize);
           return () => window.removeEventListener("resize", handleResize);
@@ -41,9 +40,7 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
     }, [imagenesLista.length, iteracionTiempo]);
 
     const clearIntervalTimer = useCallback(() => {
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-        }
+        if (intervalRef.current) clearInterval(intervalRef.current);
     }, []);
 
     useEffect(() => {
@@ -77,7 +74,6 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
 
           const imgEl = imageEl.querySelector("img") as HTMLImageElement | null;
           const overlayEl = imageEl.querySelector("div") as HTMLDivElement | null;
-          const linkEl = imageEl.querySelectorAll("div")[1] as HTMLDivElement | null;
       
           const isCurrent = index === currentGalleryIndex;
           const isBefore1 = index === getCircularIndex(currentGalleryIndex - 1);
@@ -140,22 +136,15 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
             if (isCurrent || !(isBefore1 || isBefore2 || isAfter1 || isAfter2)) {
               overlayEl.style.opacity = "0";
               overlayEl.style.backgroundColor = "transparent";
-            } else if (isBefore1 || isAfter1) {
-              overlayEl.style.opacity = "0.8";
-              overlayEl.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
-            } else if (isBefore2 || isAfter2) {
-              overlayEl.style.opacity = "0.8";
-              overlayEl.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
+              overlayEl.style.cursor = "default";
             }
-          }
-
-          if (linkEl) {
-            linkEl.style.position = "absolute";
-            linkEl.style.display = "block";
-            linkEl.style.inset = "0";
-            linkEl.style.cursor = "pointer";
-            linkEl.style.backgroundColor = "transparent";
-            linkEl.onclick = () => handleNavClick(index);
+            else {
+              overlayEl.onclick = () => handleNavClick(index);
+              overlayEl.style.cursor = "pointer";
+              overlayEl.style.opacity = "0.8";
+              if (isBefore1 || isAfter1) overlayEl.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
+              else if (isBefore2 || isAfter2) overlayEl.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
+            }
           }
 
         });
@@ -234,23 +223,43 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
         return () => window.removeEventListener("resize", applyDiscoStyles);
       }, [applyDiscoStyles]);
 
-    return (<div ref={mainContainer} >
-
-            <div ref={sliderContainer}>
-                <div ref={innerSliderContainer}>
-                    {!!imagenesLista.length && (
-                        <div ref={galleryRef}>
-                            {imagenesLista.map((item, index) => (<div key={index} ref={(el) => setImageRef(el, index)} >
-                              <Image src={item} alt='' />
-                              <div />
-                              {index !== currentGalleryIndex && (<div />)}
-                            </div>))}</div>)}</div></div>
-
-            <div ref={discosSelector}>
-              {!!imagenesLista.length && (<div>
-                      {imagenesLista.map((_, index) => (<span key={index} ref={(el) => setDiscosRef(el, index)} />))}
-              </div>)}</div>
-
-        </div>);};
+      return React.createElement(
+        "div",
+        { ref: mainContainer },
+        React.createElement(
+            "div",
+            { ref: sliderContainer },
+            React.createElement(
+                "div",
+                { ref: innerSliderContainer },
+                !!imagenesLista.length &&
+                    React.createElement(
+                        "div",
+                        { ref: galleryRef },
+                        imagenesLista.map((item, index) =>
+                            React.createElement(
+                                "div",
+                                { key: index, ref: (el: HTMLDivElement | null) => setImageRef(el, index) },
+                                React.createElement(Image, { src: item, alt: "" }),
+                                React.createElement("div", null)
+                            )
+                        )
+                    )
+            )
+        ),
+        React.createElement(
+            "div",
+            { ref: discosSelector },
+            !!imagenesLista.length &&
+                React.createElement(
+                    "div",
+                    null,
+                    imagenesLista.map((_, index) =>
+                        React.createElement("span", { key: index, ref: (el: HTMLSpanElement | null) => setDiscosRef(el, index) })
+                    )
+                )
+        )
+    );
+    };
 
 export default ImagenesSlider;
