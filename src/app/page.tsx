@@ -1,7 +1,7 @@
 "use client";
 import NextLogo from '@/components/nextlogo';
 import ImagenesSlider from '@/components/imagenesslider';
-import EurohockeyViajesGaleria from '@/components/imageList';
+import PexelsRandomImageList from '@/components/pexelsrandomimageslist';
 
 export default function Home() {
 
@@ -26,9 +26,10 @@ export default function Home() {
           <div className={` p-6 bg-white block rounded-md shadow-inner shadow-black/40 `} >
           
           <ImagenesSlider 
-            imageneslista={EurohockeyViajesGaleria}
+            imageneslista={PexelsRandomImageList}
             seleccionColor='rgb(51,65,85)'
-            alturaBase={22} />
+            alturaBase={22}
+            iteracionTiempo={3000} />
 
           </div>
         </div>
