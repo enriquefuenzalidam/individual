@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Header from "@/components/header";
 
 export const metadata: Metadata = {
   title: "individual.cl",
@@ -16,6 +17,7 @@ export default function RootLayout({
       <body
         className={` antialiased bg-white bg-gradient-to-b from-[#fffaf4] to-white font-pangea `}
       >
+        <Header />
         {children}
       </body>
     </html>
