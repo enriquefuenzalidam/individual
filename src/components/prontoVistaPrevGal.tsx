@@ -3,14 +3,14 @@ import React from "react";
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { StaticImageData } from 'next/image';
 
-interface ImagenesSliderProps {
+interface ProntoVistaPrevGalProps {
   imageneslista: (string | StaticImageData)[];
   seleccionColor?: string;
   alturaBase?: number;
   iteracionTiempo?: number;
 }
 
-const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccionColor = "#000", alturaBase = 22, iteracionTiempo = 4000 }) => {
+const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imageneslista, seleccionColor = "#000", alturaBase = 22, iteracionTiempo = 4000 }) => {
 
     const imagenesLista = imageneslista;
     const alturaBaseSm = alturaBase+6;
@@ -77,4 +77,4 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
       )
 }
 
-export default ImagenesSlider;
+export default ProntoVistaPrevGal;
