@@ -13,13 +13,11 @@ interface ImagenesSliderProps {
 const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccionColor = "#000", alturaBase = 22, iteracionTiempo = 4000 }) => {
 
     const imagenesLista = imageneslista;
-    
     const alturaBaseSm = alturaBase+6;
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(2);
-
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
+
     useEffect(() => {
           const handleResize = () => setIsLargeScreen(window.innerWidth >= 640);
           handleResize();

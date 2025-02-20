@@ -27,6 +27,10 @@ const config: Config = {
           '-webkit-mask-image': 'linear-gradient(to right, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)',
           'mask-image': 'linear-gradient(to right, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)',
         },
+        '.fade-mask-to-left-to-right': {
+          '-webkit-mask-image': 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)',
+          'mask-image': 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)',
+        },
       });
     }),
   ],

@@ -24,7 +24,7 @@ import pexelsrandomimage23 from '@/assets/pexelsrandomimages/pexels-szafran-3074
 import pexelsrandomimage24 from '@/assets/pexelsrandomimages/pexels-travelerchitect-30730409.jpg';
 import pexelsrandomimage25 from '@/assets/pexelsrandomimages/pexels-zeynep-sude-emek-193601188-26770601.jpg';
 
-const PexelsRandomImageList = [
+const ProntoVistaImgsList = [
     pexelsrandomimage01,
     pexelsrandomimage02,
     pexelsrandomimage03,
@@ -52,4 +52,4 @@ const PexelsRandomImageList = [
     pexelsrandomimage25
 ];
 
-export default PexelsRandomImageList;
+export default ProntoVistaImgsList;
