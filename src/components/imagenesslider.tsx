@@ -74,7 +74,7 @@ const ImagenesSlider: React.FC<ImagenesSliderProps> = ({ imageneslista, seleccio
                     imagenesLista.map((_, index) => {
                       const isCurrent = index === currentGalleryIndex;
                       return React.createElement("span", { key: index,   onClick: () => handleNavClick(index), style: { position: 'relative', margin: isLargeScreen ? '0.5rem' : '0.375rem', display: 'inline-block', borderRadius: '9999px', overflow: 'hidden', height: isLargeScreen ? '1rem' : '0.75rem', cursor: isCurrent ? 'default' : 'pointer', transition: 'all 300ms ease-in-out', width: isCurrent ? (isLargeScreen ? '4rem' : '3rem') : (isLargeScreen ? '1rem' : '0.75rem'), backgroundColor: 'rgba(0, 0, 0, 0.2)' } },
-                                                React.createElement("span", { style: { display: 'inline-block', position: 'absolute', left: '0', top: '0', width: isCurrent ? (isLargeScreen ? '4rem' : '3rem') : '0', borderRadius: '9999px', height: isLargeScreen ? '1rem' : '0.75rem', backgroundColor: seleccionColor, transition: 'width '+iteracionTiempo+'ms linear', visibility: isCurrent ? 'visible' : 'hidden', cursor: 'default' } })
+                                                React.createElement("span", { style: { opacity: isCurrent ? '1': '0', pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', width: isCurrent ? '100%' : (isLargeScreen ? '1rem' : '0.75rem'), borderRadius: '9999px', height: isLargeScreen ? '1rem' : '0.75rem', backgroundColor: seleccionColor, transition: 'width '+iteracionTiempo+'ms linear, opacity 700ms ease-in-out' } })
                                                 ) }) ) )
       )
 }
