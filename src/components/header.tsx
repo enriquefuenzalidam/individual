@@ -1,22 +1,19 @@
-import React, { JSX } from "react";
+"use client";
+import React from "react";
 import NextLogo from "./nextlogo";
+import usePantallaTamagnos from "@/hooks/usepantallatamagnos";
 
-const Header: React.FC = ({ }): JSX.Element => {
-    return (
-        <header className={` relative block `}>
-            <section className={` max-w-[64rem] relative z-20 pt-[1.5rem] sm:pt-[1.875rem] px-[1.5rem] sm:px-[1.875rem] md:px-[2.25rem] lg:px-[3rem] pb-2 sm:pb-3 md:pb-4 lg:pb-5 block transition-all ease-in-out duration-300 `}>
-                
-                <div className={` absolute inset-0 fade-mask-header bg-gradient-to-b to-transparent from-[#f1f5f9] `} />
-                <div className={` absolute inset-0 fade-mask-header bg-[linear-gradient(to_top,_rgba(0,0,0,0.1)_0%,_rgba(0,0,0,0.005)_1rem,_rgba(0,0,0,0)_100%),_linear-gradient(to_top,_rgba(0,0,0,0.2)_0%,_rgba(0,0,0,0.01)_0.3rem,_rgba(0,0,0,0)_100%)] `} />
-
-                <h1 className={` relative font-pangea font-bold `}>
-                    <span className={` transition-all ease-in-out duration-300 text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-slate-600 `}>individual</span>
-                    <span className={` transition-all ease-in-out duration-300 text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-slate-950 `}>.cl</span></h1>
-                <h2 className={` relative font-pangea text-slate-400 -mt-2 md:-mt-3 `}>
-                    <span className={` tracking-normal transition-all ease-in-out duration-300 uppercase text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium inline-block align-middle mr-1 sm:mr-1 md:mr-2 lg:mr-2 `}>Componentes</span>
-                    <NextLogo className={` transition-all ease-in-out duration-300 text-slate-600 w-[3.95rem] sm:w-[4.938rem] md:w-[5.925rem] lg:w-[7.9rem] h-auto inline-block mt-[0.050rem] sm:mt-[0.063rem] md:mt-[0.075rem] lg:mt-[0.1rem] `} /></h2>
-
-            </section>
-        </header>)
-};
+const Header: React.FC = () => {
+    const { lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
+    return React.createElement("header", { style: { position: "relative", display: "block" } },
+        React.createElement("section", { style: { maxWidth: "64rem", position: "relative", zIndex: "20", paddingTop: smScreen ? "1.875rem" : "1.5rem", paddingLeft: lgScreen ? "3rem" : mdScreen ? "2.25rem" : smScreen ? "1.875rem" : "1.5rem", paddingRight: lgScreen ? "3rem" : mdScreen ? "2.25rem" : smScreen ? "1.875rem" : "1.5rem", paddingBottom: lgScreen ? "1.2rem" : mdScreen ? "1rem" : smScreen ? "0.8rem" : "0.65rem", display: "block", transition: "all 300ms ease-in-out" } },
+            React.createElement("div", { style: { position: "absolute", inset: "0", backgroundImage: "linear-gradient(to bottom, #f1f5f9, transparent)" },  className: "fade-mask-header" }),
+            React.createElement("div", { style: { position: "absolute", inset: "0", backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 1rem, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.01) 0.3rem, rgba(0,0,0,0) 100%)" },  className: "fade-mask-header" } ),
+            React.createElement("h1", { style: { position: "relative", fontWeight: "bold", fontFamily: "'Pangea Trial', sans-serif", lineHeight: "1" } },
+                React.createElement("span", { style: { transition: "all 300ms ease-in-out", fontSize: lgScreen ? "6rem" : mdScreen ? "4.5rem" : smScreen ? "3.75rem" : "3rem", color: "rgb(71, 85, 105)" } }, "individual"),
+                React.createElement("span", { style: { transition: "all 300ms ease-in-out", fontSize: lgScreen ? "3rem" : mdScreen ? "2.25rem" : smScreen ? "1.85rem" : "1.5rem", color: "rgb(30, 41, 59)" } }, ".cl") ),
+            React.createElement("h2", { style: { position: "relative", fontFamily: "'Pangea Trial', serif", color: "rgb(148, 163, 184)", marginTop: lgScreen ? "-0.75rem" : mdScreen ? "-0.5rem" : smScreen ? "-0.3rem" : "-0.3rem", lineHeight: "1.15" } },
+                React.createElement("span", { style: { textTransform: "uppercase", transition: "all 300ms ease-in-out", fontSize: lgScreen ? "2.25rem" : mdScreen ? "1.875rem" : smScreen ? "1.5rem" : "1.25rem", fontWeight: "500", display: "inline-block", verticalAlign: "middle", marginRight: lgScreen ? "0.5rem" : mdScreen ? "0.5rem" : smScreen ? "0.25rem" : "0.25rem" } }, "Componentes"),
+                React.createElement("span", { style: { transition: "all 300ms ease-in-out", color: "rgb(71,85,105)", width: lgScreen ? "7.9rem": mdScreen ? "5.925rem" : smScreen ? "4.938rem" : "3.95rem", height: "auto", display: "inline-block", verticalAlign: "middle", marginTop: lgScreen ? "0.1rem" : mdScreen ? "0.075rem" : smScreen ? "0.063rem" : "0.050rem" }},
+                    React.createElement(NextLogo  ) ) ) ) ) };
 export default Header;

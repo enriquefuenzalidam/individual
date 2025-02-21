@@ -1,9 +1,11 @@
-import React, { JSX } from "react";
+"use client";
+import React from "react";
+import usePantallaTamagnos from "@/hooks/usepantallatamagnos";
 
-const Footer: React.FC = ({ }): JSX.Element => {
-    return React.createElement ('footer', { className: 'max-w-[64rem] relative block pb-6 md:pb-9 lg:pb-12 pt-3 md:pt-6 lg:pt-9 px-6 sm:px-12 md:px-18 lg:px-24 font-normal text-slate-900/60 text-left text-sm sm:text-base md:text-lg lg:text-xl leading-normal sm:leading-normal md:leading-normal lg:leading-normal mt-2 md:mt-3 lg:mt-4'  },
+const Footer: React.FC = () => {
+    const { lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
+    return React.createElement('footer', { style: { maxWidth: '64rem', position: 'relative', display: 'block', paddingBottom: lgScreen ? '3rem': mdScreen ? '2.75rem' : smScreen ? '2.5rem' :  '2.25rem', fontWeight: 'normal', color: 'rgba(15, 23, 42, 0.5)', textAlign: 'left', paddingLeft: lgScreen ? '6rem' : mdScreen ? '4.5rem' : smScreen ? '3rem' : '1.5rem', paddingRight: lgScreen ? '6rem' : mdScreen ? '4.5rem' : smScreen ? '3rem' : '1.5rem', paddingTop: lgScreen ? '2.25rem' : mdScreen ? '1.75rem' : smScreen ? '1.25rem' : '1rem', fontSize: lgScreen ? '1.25rem' : mdScreen ? '1.125rem' : smScreen ? '1rem' : '0.875rem', lineHeight: 'normal', marginTop: lgScreen ? '1rem' : mdScreen ? '0.75rem' : '0.5rem' } },
         React.createElement('div', { style: { pointerEvents: 'none', position: 'absolute', inset: '0', display: 'block', backgroundImage: 'linear-gradient(to bottom, transparent, #f1f5f9)', maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)' }} ),
         React.createElement('div', { style: { pointerEvents: 'none', position: 'absolute', inset: '0', display: 'block', backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 1rem, rgba(0,0,0,0) 100%), linear-gradient( to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.01) 0.3rem, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)'}} ),
-        React.createElement('p', { style: { position: 'relative' } }, '© 2025 individual.cl. Distribuido bajo ', React.createElement('a', { style: { position: 'relative', fontWeight: 'bold' }, href: '/license.txt'} , 'Licencia MIT'), '.')) }
-
+        React.createElement('p', { style: { position: 'relative' } }, '© 2025 individual.cl. Distribuido bajo ', React.createElement('a', { style: { position: 'relative', fontWeight: 'bold' }, href: '/license.txt'} , 'Licencia MIT'), '.') ) }
 export default Footer;

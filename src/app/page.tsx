@@ -1,12 +1,10 @@
-"use client";
 import ProntoVistaPrevGal from '@/components/prontoVistaPrevGal';
 import ProntoVistaImgsList from '@/components/prontoVistaImgsList';
 
 export default function Home() {
 
   return (
-      <main className={` relative w-full `}>
-        <div className={` relative max-w-[64rem]`}>
+      <main className={` relative w-full max-w-[64rem] `}>
 
           <section className={` relative px-[0.5rem] sm:px-[1.875rem] md:px-[2.25rem] lg:px-[3rem] py-[0.2rem] sm:py-[1.575rem] md:py-[1.95rem] lg:py-[2.7rem]`}>
             <h3 className={` text-left font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-slate-500  mb-1 sm:mb-2 md:mb-4 lg:mb-6 ml-4 md:ml-5 lg:ml-6 transition-all ease-in-out duration-300 mt-6 `}>ProntoVista</h3>
@@ -15,8 +13,8 @@ export default function Home() {
 
             <div className={` relative  block p-6 rounded-tl-lg overflow-hidden mt-5 md:mt-6 lg:mt-7 `} >
 
-              <div className={` absolute fade-mask-toright inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.005)_2rem,rgba(0,0,0,0)_100%),_linear-gradient(to_bottom,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.01)_0.4rem,rgba(0,0,0,0)_100%)] `} />
-              <div className={` absolute fade-mask-tobottom inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.005)_2rem,rgba(0,0,0,0)_100%),_linear-gradient(to_right,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.01)_0.4rem,rgba(0,0,0,0)_100%)] `} />
+              <div className={` absolute fade-mask-toright inset-0  bg-[linear-gradient(to_bottom,rgba(51,65,85,0.05)_0%,rgba(51,65,85,0.005)_2rem,rgba(51,65,85,0)_100%),_linear-gradient(to_bottom,rgba(0,0,0,0.1)_0%,rgba(51,65,85,0.01)_0.4rem,rgba(51,65,85,0)_100%)] `} />
+              <div className={` absolute fade-mask-tobottom inset-0 bg-[linear-gradient(_to_right,rgba(51,65,85,0.05)_0%,rgba(51,65,85,0.005)_2rem,rgba(51,65,85,0)_100%),_linear-gradient(_to_right,rgba(0,0,0,0.1)_0%,rgba(51,65,85,0.01)_0.4rem,rgba(51,65,85,0)_100%)] `} />
 
               <ProntoVistaPrevGal
                 imageneslista={ProntoVistaImgsList}
@@ -27,12 +25,6 @@ export default function Home() {
             </div>
           </section>
 
-        </div>
       </main>
   );
-
 }
-
-            /*
-          
-          */
