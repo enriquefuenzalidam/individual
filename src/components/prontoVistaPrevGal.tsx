@@ -6,13 +6,18 @@ import NextImage, { StaticImageData } from 'next/image';
 interface ProntoVistaPrevGalProps {
   imagenesLista: (string | StaticImageData)[];
   seleccionColor?: string;
-  alturaBase?: number;
+  maxAltura?: number;
   iteracionTiempo?: number;
 }
 
 const DEFAULT_SCREEN_SIZE = 1024;
 
-const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, seleccionColor = "#000", alturaBase = 14, iteracionTiempo = 4000 }) => {
+const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, seleccionColor = "#000", maxAltura = 32, iteracionTiempo = 4000 }) => {
+
+    const galAlturaXl = Math.min(32, Math.max(18, maxAltura));
+    const galAlturaLg = Math.min(32, Math.max(18, galAlturaXl - 4));
+    const galAlturaMd = Math.min(32, Math.max(18, galAlturaLg - 8));
+    const galAlturaSm = Math.min(32, Math.max(18, galAlturaMd - 2));
 
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(2);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -108,7 +113,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                         )
                     )
         });
-    }, [imagenesLista, loadedImages, currentGalleryIndex, isXlScreen, isLgScreen, isMdScreen, seleccionColor, handleNavClick, getCircularIndex]);
+    }, [imagenesLista, loadedImages, currentGalleryIndex, seleccionColor, handleNavClick, getCircularIndex]);
 
     const visibleSelectores = useMemo(() => {
         return imagenesLista.map((_, index) => {
@@ -121,7 +126,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     if (!screenReady) return null;
     return React.createElement( "div", { style: { position: 'relative' } }, 
         React.createElement( "div", { style: { position: 'relative', maxWidth: '64rem', width: '100%', height: 'auto', marginLeft: 'auto', marginRight: 'auto', borderRadius: '0.375rem' } },
-            React.createElement( "div", { style: { transition: 'all 700ms ease-in-out', overflowY: 'visible', overflowX: 'hidden', width: '100%', position: 'relative', height: isXlScreen ? `${alturaBase+18}rem` : isLgScreen ? `${alturaBase+14}rem` : isMdScreen ? `${alturaBase+6}rem` : `${alturaBase}rem` } },
+            React.createElement( "div", { style: { transition: 'all 700ms ease-in-out', overflowY: 'visible', overflowX: 'hidden', width: '100%', position: 'relative', height: isXlScreen ? `${galAlturaXl}rem` : isLgScreen ? `${galAlturaLg}rem` : isMdScreen ? `${galAlturaMd}rem` : `${galAlturaSm}rem` } },
                 !!imagenesLista.length &&
                     React.createElement( "div", { style: {position: "relative", width: "100%", height: "100%", overflow: "hidden", transition: "all 700ms ease-in-out" } },
                         visibleImages ) ) ),
