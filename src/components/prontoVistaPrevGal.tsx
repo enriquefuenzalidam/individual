@@ -83,6 +83,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
     const visibleImages = useMemo(() => {
         return imagenesLista.map((item, index) => {
+
             const isCurrent = index === currentGalleryIndex;
             const isBefore1 = index === getCircularIndex(currentGalleryIndex - 1);
             const isBefore2 = index === getCircularIndex(currentGalleryIndex - 2);
@@ -91,7 +92,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             const isSideImage = isBefore1 || isAfter1 || isBefore2 || isAfter2;
 
             const imageBlockStyleA = {
-                transition: "all 700ms ease-in-out", position: "absolute", top: "1.25rem", display: "block", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", overflow: "hidden", boxShadow: isSideImage ? "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)" : isCurrent ? "0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)" : "none", opacity: isSideImage || isCurrent ? "1" : "0", zIndex: isCurrent ? "50" : isBefore1 || isAfter1 ? "40" : isBefore2 || isAfter2 ? "30" : "10", transform: isCurrent  ? "scale(1.1)" : isBefore1 || isAfter1 ? "scale(1.05)" : isBefore2 || isAfter2 ? "scale(0.95)" : "scale(0.25)", left: isSideImage ? isBefore1 ? "25%" : isAfter1 ? "75%" : isBefore2 ? "0%" : "100%" : "50%", translate: isSideImage ? isBefore1 ? "-25%" : isAfter1 ? "-75%" : isBefore2 ? "0%" : "-100%" : "-50%"
+                transition: "all 700ms ease-in-out", position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", overflow: "hidden", boxShadow: isSideImage ? "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)" : isCurrent ? "0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)" : "none", display: isSideImage || isCurrent ? "block" : "none", opacity: isSideImage || isCurrent ? "1" : "0", zIndex: isCurrent ? "50" : isBefore1 || isAfter1 ? "40" : isBefore2 || isAfter2 ? "30" : "10", transform: isCurrent  ? "scale(1.1)" : isBefore1 || isAfter1 ? "scale(1.05)" : isBefore2 || isAfter2 ? "scale(0.95)" : "scale(0.25)", left: isSideImage ? isBefore1 ? "25%" : isAfter1 ? "75%" : isBefore2 ? "0%" : "100%" : "50%", translate: isSideImage ? isBefore1 ? "-25%" : isAfter1 ? "-75%" : isBefore2 ? "0%" : "-100%" : "-50%"
             }
             const sobreCapaStyle = {
                 position: 'absolute', inset: '0', transition: "all 700ms ease-in-out", backdropFilter: "grayscale(100%)", opacity: isCurrent || !(isBefore1 || isBefore2 || isAfter1 || isAfter2) ? 0 : 0.9, backgroundColor: isCurrent || !(isBefore1 || isBefore2 || isAfter1 || isAfter2) ? "transparent" : isBefore1 || isAfter1 ? "rgba(255, 255, 255, 0.3)" : "rgba(255, 255, 255, 0.7)", cursor: isCurrent || !(isBefore1 || isBefore2 || isAfter1 || isAfter2) ? "default" : "pointer"
