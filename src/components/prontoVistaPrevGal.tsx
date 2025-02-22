@@ -4,7 +4,7 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import { StaticImageData } from 'next/image';
 
 interface ProntoVistaPrevGalProps {
-  imageneslista: (string | StaticImageData)[];
+  imagenesLista: (string | StaticImageData)[];
   seleccionColor?: string;
   alturaBase?: number;
   iteracionTiempo?: number;
@@ -12,16 +12,31 @@ interface ProntoVistaPrevGalProps {
 
 const DEFAULT_SCREEN_SIZE = 1024;
 
-const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imageneslista, seleccionColor = "#000", alturaBase = 14, iteracionTiempo = 4000 }) => {
+const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, seleccionColor = "#000", alturaBase = 14, iteracionTiempo = 4000 }) => {
 
-    const imagenesLista = imageneslista;
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(2);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const [isMdScreen, setIsMdScreen] = useState<boolean>(false);
     const [isLgScreen, setIsLgScreen] = useState<boolean>(false);
     const [isXlScreen, setIsXlScreen] = useState<boolean>(false);
-
     const [screenReady, setScreenReady] = useState(false);
+
+    const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
+    useEffect(() => {
+        imagenesLista.forEach((item, index) => {
+            const img = new Image();
+            img.src = typeof item === "string" ? item : item.src;
+            img.onload = () => {
+                setLoadedImages((prev) => {
+                    const updated = [...prev];
+                    updated[index] = true;
+                    return updated;
+                });
+            };
+        });
+    }, [imagenesLista]);
+    
+    
 
     useEffect(() => {
           const handleResize = () => {
@@ -58,9 +73,9 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imageneslista, 
     }, [clearIntervalTimer, startInterval]);
 
     const getCircularIndex = useCallback((index: number) => {
-        const len = imageneslista.length;
+        const len = imagenesLista.length;
         return (index + len) % len;
-    }, [imageneslista.length]);
+    }, [imagenesLista.length]);
 
     if (!screenReady) return null;
     return React.createElement( "div", { style: { position: 'relative' } }, 
@@ -76,7 +91,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imageneslista, 
                           const isAfter2 = index === getCircularIndex(currentGalleryIndex + 2);
                           const isSideImage = isBefore1 || isAfter1 || isBefore2 || isAfter2;
                           return React.createElement( "div", { key: index, style: { backgroundColor: "#fff", transition: "all 700ms ease-in-out", position: "absolute", top: "1.25rem", display: "block", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", overflow: "hidden", boxShadow: isSideImage ? "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)" : isCurrent ? "0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)" : "none", opacity: isSideImage || isCurrent ? "1" : "0", zIndex: isCurrent ? "50" : isBefore1 || isAfter1 ? "40" : isBefore2 || isAfter2 ? "30" : "10", transform: isCurrent  ? "scale(1.1)" : isBefore1 || isAfter1 ? "scale(1.05)" : isBefore2 || isAfter2 ? "scale(0.95)" : "scale(0.25)", left: isSideImage ? isBefore1 ? "25%" : isAfter1 ? "75%" : isBefore2 ? "0%" : "100%" : "50%", translate: isSideImage ? isBefore1 ? "-25%" : isAfter1 ? "-75%" : isBefore2 ? "0%" : "-100%" : "-50%"} },
-                                React.createElement( "div", { style: { width: "100%", height: "100%", backgroundImage: `url(${typeof item === "string" ? item : item.src})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" } }),
+                                React.createElement( "div", { style: { width: "100%", height: "100%", opacity: loadedImages[index] ? 1 : 0, backgroundImage: `url(${typeof item === "string" ? item : item.src})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" } }),
                                 React.createElement( "div", { style: { position: "absolute", inset: "0", transition: "all 700ms ease-in-out", backdropFilter: "grayscale(100%)", opacity: isCurrent || !(isBefore1 || isBefore2 || isAfter1 || isAfter2) ? "0" : "0.8", backgroundColor: isCurrent || !(isBefore1 || isBefore2 || isAfter1 || isAfter2) ? "transparent" : isBefore1 || isAfter1 ? "rgba(255, 255, 255, 0.3)" : "rgba(255, 255, 255, 0.7)", cursor: isCurrent || !(isBefore1 || isBefore2 || isAfter1 || isAfter2) ? "default" : "pointer" }, onClick: isCurrent || !(isBefore1 || isBefore2 || isAfter1 || isAfter2) ? undefined : ()=> handleNavClick(index)} ) ) }) ) ) ),
         React.createElement( "div", { style: { maxWidth: '64rem', width: '100%', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center', paddingTop: '1.25rem', position: 'relative' } },
             !!imagenesLista.length &&
