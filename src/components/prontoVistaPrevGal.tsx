@@ -37,19 +37,18 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         });
     }, [imagenesLista]);
 
-    
-    const handleResize = useCallback(() => {
-        const screenSize = typeof window === "undefined" ? DEFAULT_SCREEN_SIZE : window.innerWidth;
-        setIsMdScreen(screenSize >= 640);
-        setIsLgScreen(screenSize >= 768);
-        setIsXlScreen(screenSize >= 1024);
-        setScreenReady(true);
-    }, []);
     useEffect(() => {
-          handleResize();
-          window.addEventListener("resize", handleResize);
-          return () => window.removeEventListener("resize", handleResize);
-    }, [handleResize]);
+        const handleResize = () => {
+            const screenSize = typeof window === "undefined" ? DEFAULT_SCREEN_SIZE : window.innerWidth;
+            setIsMdScreen(screenSize >= 640);
+            setIsLgScreen(screenSize >= 768);
+            setIsXlScreen(screenSize >= 1024);
+        }
+        handleResize();
+        setScreenReady(true);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const startInterval = useCallback(() => {
         intervalRef.current = setInterval(() => {
@@ -91,7 +90,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             }
             return React.createElement( "div", { key: index, style: imageBlockStyle },
                         React.createElement( "div", { style: { position: 'relative', width: '100%', height: '100%', backgroundColor: "white", display: 'flex', justifyContent: 'center', alignItems: 'center' }},
-                            loadedImages[index] && ( React.createElement( 'div', { style: { width: '10%', height: 'auto', transition: 'all 700ms ease-in-out', fontWeight: '500', color: seleccionColor, fontSize: isXlScreen ? '2rem': isLgScreen ? '1.6rem' : isMdScreen ? '1.4rem' : '0.8rem' } },
+                            ( React.createElement( 'div', { style: { opacity: loadedImages[index] ? 0 : 1 , width: '10%', height: 'auto', transition: 'all 700ms ease-in-out', fontWeight: '500', color: seleccionColor, fontSize: isXlScreen ? '2rem': isLgScreen ? '1.6rem' : isMdScreen ? '1.4rem' : '0.8rem' } },
                                 React.createElement( 'svg', { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 640 512", fill: 'currentColor' },
                                     React.createElement('path', { fill: 'currentColor', d: 'M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z'} ) ) ) ),
                             React.createElement( NextImage, { src: typeof item === "string" ? item : item.src, alt: 'Gallery Image', fill: true, style: { objectFit: 'cover', transition: 'all 700ms ease-in-out', opacity: loadedImages[index] ? 1 : 0  } }),
@@ -101,27 +100,26 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         });
     }, [imagenesLista, loadedImages, currentGalleryIndex, isXlScreen, isLgScreen, isMdScreen, seleccionColor]);
 
+    const visibleSelectores = useMemo(() => {
+        return imagenesLista.map((_, index) => {
+            const isCurrent = index === currentGalleryIndex;
+            return React.createElement("span", { key: index, onClick: () => handleNavClick(index), style: { position: 'relative', margin: isLgScreen ? '0.5rem' : isMdScreen ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: '9999px', overflow: 'hidden', height: isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem', cursor: isCurrent ? 'default' : 'pointer', transition: 'all 300ms ease-in-out', width: isCurrent ? (isLgScreen ? '4rem' : isMdScreen ? '3rem' : '3rem' ) : (isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'), backgroundColor: 'rgba(0, 0, 0, 0.2)' } },
+                                      React.createElement("span", { style: { opacity: isCurrent ? '1': '0', pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', width: isCurrent ? '100%' : (isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'), borderRadius: '9999px', height: isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem', backgroundColor: seleccionColor, transition: 'width '+iteracionTiempo+'ms linear, opacity 700ms ease-in-out' } })
+                                      ) } )
+    }, [imagenesLista, currentGalleryIndex, isXlScreen, isLgScreen, isMdScreen, seleccionColor]);
+
     if (!screenReady) return null;
     return React.createElement( "div", { style: { position: 'relative' } }, 
         React.createElement( "div", { style: { position: 'relative', maxWidth: '64rem', width: '100%', height: 'auto', marginLeft: 'auto', marginRight: 'auto', borderRadius: '0.375rem' } },
             React.createElement( "div", { style: { transition: 'all 700ms ease-in-out', overflowY: 'visible', overflowX: 'hidden', width: '100%', position: 'relative', height: isXlScreen ? `${alturaBase+18}rem` : isLgScreen ? `${alturaBase+14}rem` : isMdScreen ? `${alturaBase+6}rem` : `${alturaBase}rem` } },
                 !!imagenesLista.length &&
                     React.createElement( "div", { style: {position: "relative", width: "100%", height: "100%", overflow: "hidden", transition: "all 700ms ease-in-out" } },
-    
-                    // Block iteration to optimize
-                        visibleImages
-                    // Block's end
-
-        ) ) ),
+                        visibleImages ) ) ),
         React.createElement( "div", { style: { maxWidth: '64rem', width: '100%', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center', paddingTop: '1.25rem', position: 'relative' } },
             !!imagenesLista.length &&
-                React.createElement( "div", null,
-                    imagenesLista.map((_, index) => {
-                      const isCurrent = index === currentGalleryIndex;
-                      return React.createElement("span", { key: index,   onClick: () => handleNavClick(index), style: { position: 'relative', margin: isLgScreen ? '0.5rem' : isMdScreen ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: '9999px', overflow: 'hidden', height: isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem', cursor: isCurrent ? 'default' : 'pointer', transition: 'all 300ms ease-in-out', width: isCurrent ? (isLgScreen ? '4rem' : isMdScreen ? '3rem' : '3rem' ) : (isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'), backgroundColor: 'rgba(0, 0, 0, 0.2)' } },
-                                                React.createElement("span", { style: { opacity: isCurrent ? '1': '0', pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', width: isCurrent ? '100%' : (isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'), borderRadius: '9999px', height: isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem', backgroundColor: seleccionColor, transition: 'width '+iteracionTiempo+'ms linear, opacity 700ms ease-in-out' } })
-                                                ) }) ) )
-      )
-}
+                React.createElement( "div", null, visibleSelectores )
+            )
+        )
+    }
 
 export default ProntoVistaPrevGal;
