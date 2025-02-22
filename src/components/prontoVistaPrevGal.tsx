@@ -10,22 +10,26 @@ interface ProntoVistaPrevGalProps {
   iteracionTiempo?: number;
 }
 
+const DEFAULT_SCREEN_SIZE = 1024;
+
 const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imageneslista, seleccionColor = "#000", alturaBase = 14, iteracionTiempo = 4000 }) => {
 
     const imagenesLista = imageneslista;
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(2);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
-//  const [isSmScreen, setIsSmScreen] = useState<boolean>(false);
     const [isMdScreen, setIsMdScreen] = useState<boolean>(false);
     const [isLgScreen, setIsLgScreen] = useState<boolean>(false);
     const [isXlScreen, setIsXlScreen] = useState<boolean>(false);
 
+    const [screenReady, setScreenReady] = useState(false);
+
     useEffect(() => {
           const handleResize = () => {
-//          setIsSmScreen(window.innerWidth >= 320);
-            setIsMdScreen(window.innerWidth >= 640);
-            setIsLgScreen(window.innerWidth >= 768);
-            setIsXlScreen(window.innerWidth >= 1024);
+                const screenSize = (typeof window === "undefined") ? DEFAULT_SCREEN_SIZE : window.innerWidth;
+                setIsMdScreen(screenSize >= 640);
+                setIsLgScreen(screenSize >= 768);
+                setIsXlScreen(screenSize >= 1024);
+                setScreenReady(true);
             }
           handleResize();
           window.addEventListener("resize", handleResize);
@@ -58,7 +62,8 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imageneslista, 
         return (index + len) % len;
     }, [imageneslista.length]);
 
-      return React.createElement( "div", { style: { position: 'relative' } }, 
+    if (!screenReady) return null;
+    return React.createElement( "div", { style: { position: 'relative' } }, 
         React.createElement( "div", { style: { position: 'relative', maxWidth: '64rem', width: '100%', height: 'auto', marginLeft: 'auto', marginRight: 'auto', borderRadius: '0.375rem' } },
             React.createElement( "div", { style: { transition: 'all 700ms ease-in-out', overflowY: 'visible', overflowX: 'hidden', width: '100%', position: 'relative', height: isXlScreen ? `${alturaBase+18}rem` : isLgScreen ? `${alturaBase+14}rem` : isMdScreen ? `${alturaBase+6}rem` : `${alturaBase}rem` } },
                 !!imagenesLista.length &&

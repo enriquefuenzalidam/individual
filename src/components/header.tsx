@@ -4,7 +4,8 @@ import NextLogo from "./nextlogo";
 import usePantallaTamagnos from "@/hooks/usepantallatamagnos";
 
 const Header: React.FC = () => {
-    const { lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
+    const { screenReady, lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
+    if (!screenReady) return null;
     return React.createElement("header", { style: { position: "relative", display: "block" } },
         React.createElement("section", { style: { maxWidth: "64rem", position: "relative", zIndex: "20", paddingTop: smScreen ? "1.875rem" : "1.5rem", paddingLeft: lgScreen ? "3rem" : mdScreen ? "2.25rem" : smScreen ? "1.875rem" : "1.5rem", paddingRight: lgScreen ? "3rem" : mdScreen ? "2.25rem" : smScreen ? "1.875rem" : "1.5rem", paddingBottom: lgScreen ? "1.2rem" : mdScreen ? "1rem" : smScreen ? "0.8rem" : "0.65rem", display: "block", transition: "all 300ms ease-in-out" } },
             React.createElement("div", { style: { position: "absolute", inset: "0", backgroundImage: "linear-gradient(to bottom, #f1f5f9, transparent)", maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)' } }),

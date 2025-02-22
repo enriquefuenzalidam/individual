@@ -7,7 +7,8 @@ import usePantallaTamagnos from '@/hooks/usepantallatamagnos';
 <div className={`relative  block p-6 rounded-tl-lg overflow-hidden mt-5 md:mt-6 lg:mt-7 `}/>
 
 const Home: React.FC = () => {
-  const { lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
+  const { screenReady, lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
+  if (!screenReady) return null;
   return React.createElement('main', { style: { position: 'relative', width: '100%', maxWidth: '64rem' } },  
     React.createElement('section', { style: { position: 'relative', padding: lgScreen ? '3rem' : mdScreen ? '2.1rem' : smScreen ? '1.75rem' : '0.5rem', transition: 'all 300ms ease-in-out'} },
       React.createElement('h3', { style: { marginLeft: lgScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', marginBottom: lgScreen ? '1.5rem' : mdScreen ? '1rem' : smScreen ? '0.5rem' : '0.25rem', textAlign: 'left', fontWeight: '400', color: 'rgb(100,116,139)', transition: 'all 300ms ease-in-out', marginTop: '2rem', fontSize: lgScreen ? '2.2rem': mdScreen ? '2rem' : smScreen ? '1.7rem' : '1.5rem', lineHeight: lgScreen ? '1' : mdScreen ? '2.5rem' : smScreen ? '2.25rem' : '2rem' } },
