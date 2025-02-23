@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
-import ProntoVistaPrevGal from '@/components/prontoVistaPrevGal';
+// import ProntoVistaPrevGal from '@/components/prontoVistaPrevGal';
+import ProntoVistaPrevGalTailwind from '@/components/prontoVistaPrevGalTailwind';
 import ProntoVistaImgsList from '@/components/prontoVistaImgsList';
 import usePantallaTamagnos from '@/hooks/usepantallatamagnos';
 
@@ -18,7 +19,7 @@ const Home: React.FC = () => {
       React.createElement('div', { style: { position: 'relative', display: 'block', padding: '1.5rem', borderTopLeftRadius: '0.5rem', marginTop: lgScreen ? '1.75rem' : mdScreen ? '1.5rem' : smScreen ? '1.25rem' : '1.25rem', overflow: 'hidden' }  },
         React.createElement('div', { style: { position: 'absolute', inset: '0', background: 'linear-gradient( to bottom, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to bottom, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 2%, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 100%)'} }),
         React.createElement('div', { style: { position: 'absolute', inset: '0', background: 'linear-gradient( to right, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to right, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)' } }),
-        React.createElement(ProntoVistaPrevGal, {
+        React.createElement(ProntoVistaPrevGalTailwind, {
           imagenesLista: ProntoVistaImgsList,
           seleccionColor: 'rgb(51,65,85)',
           iteracionTiempo: 3000,
