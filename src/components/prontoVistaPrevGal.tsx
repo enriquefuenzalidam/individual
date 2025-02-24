@@ -52,7 +52,6 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 el.style.opacity = "0";
                 el.style.backgroundColor = "transparent";
                 el.style.cursor = "default";
-                // el.onclick = null; // Remove onClick event
             }
         });
 
@@ -63,17 +62,14 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     el.style.opacity = "0";
                     el.style.backgroundColor = "transparent";
                     el.style.cursor = "default";
-                    // el.onclick = null;
                 } else if (index === newBefore2 || index === newAfter2) {
                     el.style.opacity = "0.9";
                     el.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
                     el.style.cursor = "pointer";
-                    // el.onclick = () => handleNavClick(index);
                 } else if (index === newBefore1 || index === newAfter1) {
                     el.style.opacity = "0.9";
                     el.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
                     el.style.cursor = "pointer";
-                    // el.onclick = () => handleNavClick(index);
                 }
             }
         });
@@ -87,17 +83,14 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     if (computedStyle.opacity !== "0") el.style.opacity = "0";
                     if (computedStyle.backgroundColor !== "transparent") el.style.backgroundColor = "transparent";
                     if (computedStyle.cursor !== "default") el.style.cursor = "default";
-                    // el.onclick = null;
                 } else if (index === newBefore2 || index === newAfter2) {
                     if (computedStyle.opacity !== "0.9") el.style.opacity = "0.9";
                     if (computedStyle.backgroundColor !== "rgba(255, 255, 255, 0.7)") el.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
                     if (computedStyle.cursor !== "pointer") el.style.cursor = "pointer";
-                    // el.onclick = () => handleNavClick(index);
                 } else if (index === newBefore1 || index === newAfter1) {
                     if (computedStyle.opacity !== "0.9") el.style.opacity = "0.9";
                     if (computedStyle.backgroundColor !== "rgba(255, 255, 255, 0.3)") el.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
                     if (computedStyle.cursor !== "pointer") el.style.cursor = "pointer";
-                    // el.onclick = () => handleNavClick(index);
                 }
             }
         });
@@ -199,8 +192,12 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 }
             }
         });
+    }, [imagenesLista.length]);
+
+    const totalStylesUpdate = useCallback((newIndex: number, prevIndex: number) => {
+        updateGalleryStyles(newIndex, prevIndex);
         updateSobreCapaStyles(newIndex, prevIndex);
-    }, [imagenesLista.length, updateSobreCapaStyles]);
+    }, [updateGalleryStyles,updateSobreCapaStyles]);
 
 
 
@@ -251,11 +248,11 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         intervalRef.current = setInterval(() => {
             setCurrentGalleryIndex((prevIndex) => {
                 const newIndex = (prevIndex + 1) % imagenesLista.length;
-                updateGalleryStyles(newIndex, prevIndex);
+                totalStylesUpdate(newIndex, prevIndex);
                 return newIndex;
             })
         }, iteracionTiempo);
-    }, [imagenesLista.length, iteracionTiempo, updateGalleryStyles]);
+    }, [imagenesLista.length, iteracionTiempo, totalStylesUpdate]);
 
     const clearIntervalTimer = useCallback(() => {
         if (intervalRef.current) clearInterval(intervalRef.current);
@@ -269,53 +266,28 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     const handleNavClick = useCallback((newIndex: number) => {
         clearIntervalTimer();
         setCurrentGalleryIndex(newIndex); 
-        updateGalleryStyles(newIndex, currentGalleryIndex); 
+        totalStylesUpdate(newIndex, currentGalleryIndex); 
         startInterval();
-    }, [currentGalleryIndex, updateGalleryStyles, clearIntervalTimer, startInterval]);
+    }, [currentGalleryIndex, totalStylesUpdate, clearIntervalTimer, startInterval]);
 
 //    const getCircularIndex = useCallback((index: number) => {
 //      const len = imagenesLista.length;
 //      return (index + len) % len;
 //  }, [imagenesLista.length]);
 
-/*
-    const updateSobreCapaOnClick = useCallback((newIndex: number, prevIndex: number) => {
-
-        const { newCurrent, newBefore1, newBefore2, newAfter1, newAfter2,
-            commonElements, exclusiveNewElements, nonCommonElements } = computeGalleryIndexes(newIndex, prevIndex, imagenesLista.length);
-
-        nonCommonElements.forEach(index => {
-            const el = sobreCapaRefs.current[index];
-            if (el) el.onclick = null;
-        });
-
-        exclusiveNewElements.forEach(index => {
-            const el = sobreCapaRefs.current[index];
-            if (el) {
-                if (index === newCurrent) el.onclick = null;
-                else if (index === newBefore2 || index === newAfter2) el.onclick = () => handleNavClick(index);
-                else if (index === newBefore1 || index === newAfter1) el.onclick = () => handleNavClick(index);
-            }
-        });
-
-        commonElements.forEach(index => {
-            const el = sobreCapaRefs.current[index];
-            if (el) {
-                if (index === newCurrent) el.onclick = null;
-                else if (index === newBefore2 || index === newAfter2) el.onclick = () => handleNavClick(index);
-                else if (index === newBefore1 || index === newAfter1) el.onclick = () => handleNavClick(index);
-            }
-        });
-
-    }, [imagenesLista.length, handleNavClick]);
 
     useEffect(() => {
-        const { newBefore2, newBefore1, newAfter1, newAfter2 } = computeGalleryIndexes(currentGalleryIndex, (currentGalleryIndex - 1 + imagenesLista.length) % imagenesLista.length, imagenesLista.length);
+        const { newCurrent, nonCommonElements, newBefore2, newBefore1, newAfter1, newAfter2 } = computeGalleryIndexes(currentGalleryIndex, (currentGalleryIndex - 1 + imagenesLista.length) % imagenesLista.length, imagenesLista.length);
 
-        // Clear click events for all elements
-        sobreCapaRefs.current.forEach(el => {
+        // Clear click events to the nonCommonElements except for
+        // the newCurrent if it is between them
+        nonCommonElements
+        .filter(index => index !== newCurrent) // Exclude newCurrent
+        .forEach(index => {
+            const el = sobreCapaRefs.current[index];
             if (el) el.onclick = null;
         });
+
 
         // Attach click events only to the ones that need it
         [newBefore2, newBefore1, newAfter1, newAfter2].forEach(index => {
@@ -324,7 +296,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         });
 
     }, [imagenesLista.length, currentGalleryIndex, handleNavClick]); 
-*/
+
     const visibleImages = useMemo(() => {
 
         return imagenesLista.map((item, index) => {
@@ -343,7 +315,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     width: '10%', height: 'auto', transition: 'all 700ms ease-in-out', fontWeight: '500', color: seleccionColor
                 }
 
-                return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA },  // the main image element that gets the main style modification
+                return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA },
                     React.createElement("div", { style: imageBlockStyleB },
                         !loadedImages[index] && (React.createElement('div', { style: imageBlockStyleC },
                             React.createElement('svg', { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 640 512", fill: 'currentColor' },
