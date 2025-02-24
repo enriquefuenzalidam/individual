@@ -44,11 +44,32 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             prevCurrent, prevBefore1, prevBefore2, prevAfter1, prevAfter2,
             newSet, prevSet, commonElements, exclusiveNewElements, nonCommonElements } };
 
+
+    const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(2);
+    const [isMdScreen, setIsMdScreen] = useState<boolean>(false);
+    const [isLgScreen, setIsLgScreen] = useState<boolean>(false);
+    const [isXlScreen, setIsXlScreen] = useState<boolean>(false);
+    const [screenReady, setScreenReady] = useState(false);
+
     const sobreCapaRefs = useRef<(HTMLDivElement | null)[]>([]);
     const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const innerSpanDiscRefs = useRef<(HTMLSpanElement)[]>([]);
+    const outerSpanDiscRefs = useRef<(HTMLSpanElement)[]>([]);
     const totalStylesUpdate = useCallback((indexes: GalleryIndexes) => {
         const { newCurrent, newBefore1, newBefore2, newAfter1, newAfter2,
-            commonElements, exclusiveNewElements, nonCommonElements } = indexes;
+            prevCurrent, commonElements, exclusiveNewElements, nonCommonElements } = indexes;
+
+            if (innerSpanDiscRefs.current[newCurrent]) {
+                innerSpanDiscRefs.current[newCurrent].style.opacity = "1";
+                innerSpanDiscRefs.current[newCurrent].style.width = "100%";
+                innerSpanDiscRefs.current[prevCurrent].style.opacity = "0";
+                innerSpanDiscRefs.current[prevCurrent].style.width = isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'; }
+
+            if (outerSpanDiscRefs.current[newCurrent]) {
+                outerSpanDiscRefs.current[newCurrent].style.cursor = "default";
+                outerSpanDiscRefs.current[newCurrent].style.width = isLgScreen ? '4rem' : isMdScreen ? '3rem' : '3rem';
+                outerSpanDiscRefs.current[prevCurrent].style.cursor = "pointer";
+                outerSpanDiscRefs.current[prevCurrent].style.width = isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'; }
 
         nonCommonElements.forEach(index => {
 
@@ -56,8 +77,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             if (el) {
                 el.style.opacity = "0";
                 el.style.backgroundColor = "transparent";
-                el.style.cursor = "default";
-            }
+                el.style.cursor = "default"; }
 
             const el2 = imageRefs.current[index];
             if (el2) {
@@ -65,8 +85,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 el2.style.zIndex = "10";
                 el2.style.boxShadow = "none";
                 el2.style.left = "50%";
-                el2.style.transform = "translateX(-50%) scale(0.01)";
-            }
+                el2.style.transform = "translateX(-50%) scale(0.01)"; }
 
         });
 
@@ -161,19 +180,12 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                         applyStyleIfDifferent(el2, "left","75%");
                         applyStyleIfDifferent(el2, "transform","translateX(-75%) scale(1.05)"); } } } 
 
-        } ) }, []);
+        } ) }, [isLgScreen, isMdScreen]);
 
     const galAlturaXl = Math.min(32, Math.max(18, maxAltura));
     const galAlturaLg = Math.min(32, Math.max(18, galAlturaXl - 4));
     const galAlturaMd = Math.min(32, Math.max(18, galAlturaLg - 8));
     const galAlturaSm = Math.min(32, Math.max(18, galAlturaMd - 2));
-
-    const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(2);
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
-    const [isMdScreen, setIsMdScreen] = useState<boolean>(false);
-    const [isLgScreen, setIsLgScreen] = useState<boolean>(false);
-    const [isXlScreen, setIsXlScreen] = useState<boolean>(false);
-    const [screenReady, setScreenReady] = useState(false);
 
     const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
     const handleImageLoad = (index: number) => {
@@ -198,6 +210,8 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
     const startInterval = useCallback(() => {
         intervalRef.current = setInterval(() => {
             setCurrentGalleryIndex((prevIndex) => {
@@ -217,11 +231,10 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     }, [startInterval, clearIntervalTimer]);
 
     const handleNavClick = useCallback((newIndex: number) => {
-
-    const indexes = computeGalleryIndexes(newIndex, currentGalleryIndex, imagenesLista.length);
-        totalStylesUpdate(indexes); 
+        const indexes = computeGalleryIndexes(newIndex, currentGalleryIndex, imagenesLista.length);
+        totalStylesUpdate(indexes);
         clearIntervalTimer();
-        setCurrentGalleryIndex(newIndex); 
+        setCurrentGalleryIndex(newIndex);
         startInterval();
     }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, clearIntervalTimer, startInterval]);
 
@@ -276,19 +289,39 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     }, [imagenesLista, loadedImages, seleccionColor]);
 
     const visibleSelectores = useMemo(() => {
+
         return imagenesLista.map((_, index) => {
-            const isCurrent = index === currentGalleryIndex;
-            return React.createElement("span", { key: index, onClick: () => handleNavClick(index), style: { position: 'relative', margin: isLgScreen ? '0.5rem' : isMdScreen ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: '9999px', overflow: 'hidden', height: isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem', cursor: isCurrent ? 'default' : 'pointer', transition: 'all 300ms linear', width: isCurrent ? (isLgScreen ? '4rem' : isMdScreen ? '3rem' : '3rem' ) : (isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'), backgroundColor: 'rgba(0, 0, 0, 0.2)' } },
-                                      React.createElement("span", { style: { willChange: "opacity", opacity: isCurrent ? '1': '0', pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', width: isCurrent ? '100%' : (isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'), borderRadius: '9999px', height: isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem', backgroundColor: seleccionColor, transition: 'width '+iteracionTiempo+'ms linear, opacity 700ms linear' } })
+
+            const outerSpanDisc = {
+                position: 'relative', margin: isLgScreen ? '0.5rem' : isMdScreen ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: '9999px', overflow: 'hidden', height: isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem', transition: 'all 300ms linear', backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                cursor: 'pointer', width: isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem' }
+            const innerSpanDisc = {
+                willChange: "opacity", pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', borderRadius: '9999px', height: isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem', backgroundColor: seleccionColor, transition: 'width '+iteracionTiempo+'ms linear, opacity 700ms linear',
+                opacity: '0', width: isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem' }
+            
+            return React.createElement("span", { key: index, onClick: () => handleNavClick(index), ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
+                                      React.createElement("span", { ref: (el) => { innerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: innerSpanDisc })
                                       ) } )
-    }, [imagenesLista, currentGalleryIndex, isLgScreen, isMdScreen, seleccionColor, handleNavClick, iteracionTiempo]);
+    }, [imagenesLista, isLgScreen, isMdScreen, seleccionColor, handleNavClick, iteracionTiempo]);
+
+
+    const mainContainerStyle: React.CSSProperties = { position: 'relative' };
+    const scndContainerStyle: React.CSSProperties = {
+        position: 'relative', maxWidth: '64rem', width: '100%', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }
+    const hghtContainerStyle = (): React.CSSProperties => ({
+        transition: 'all 700ms linear', overflowY: 'visible', overflowX: 'hidden', width: '100%', position: 'relative', height: isXlScreen ? `${galAlturaXl}rem` : isLgScreen ? `${galAlturaLg}rem` : isMdScreen ? `${galAlturaMd}rem` : `${galAlturaSm}rem` })
+    const outerImagenesLista: React.CSSProperties = {
+        position: "relative", width: "100%", height: "100%", overflow: "hidden", transition: "all 700ms linear" }
+
+    const discContainerStyle: React.CSSProperties = {
+        maxWidth: '64rem', width: '100%', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center', paddingTop: '1.25rem', position: 'relative' }
 
     if (!screenReady) return null;
-    return React.createElement( "div", { style: { position: 'relative' } }, 
-        React.createElement( "div", { style: { position: 'relative', maxWidth: '64rem', width: '100%', height: 'auto', marginLeft: 'auto', marginRight: 'auto' } },
-            React.createElement( "div", { style: { transition: 'all 700ms linear', overflowY: 'visible', overflowX: 'hidden', width: '100%', position: 'relative', height: isXlScreen ? `${galAlturaXl}rem` : isLgScreen ? `${galAlturaLg}rem` : isMdScreen ? `${galAlturaMd}rem` : `${galAlturaSm}rem` } },
-                !!imagenesLista.length && React.createElement("div", { style: {position: "relative", width: "100%", height: "100%", overflow: "hidden", transition: "all 700ms linear"} }, visibleImages ) ) ),
-        React.createElement( "div", { style: { maxWidth: '64rem', width: '100%', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center', paddingTop: '1.25rem', position: 'relative' } },
+    return React.createElement( "div", { style: mainContainerStyle }, 
+        React.createElement( "div", { style: scndContainerStyle },
+            React.createElement( "div", { style: hghtContainerStyle() },
+                !!imagenesLista.length && React.createElement("div", { style: outerImagenesLista }, visibleImages ) ) ),
+        React.createElement( "div", { style: discContainerStyle },
             !!imagenesLista.length && React.createElement( "div", null, visibleSelectores )
             )
         )
