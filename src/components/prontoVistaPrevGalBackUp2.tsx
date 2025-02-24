@@ -126,40 +126,65 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             if (index === newCurrent) {
                 applyStyleIfDifferent(el,"opacity","0");
                 applyStyleIfDifferent(el,"backgroundColor","transparent");
-                applyStyleIfDifferent(el,"cursor","default"); }
+                applyStyleIfDifferent(el,"cursor","default"); /*
+                if (currentOpacity !== "0") el.style.opacity = "0";
+                if (currentBackground !== "transparent") el.style.backgroundColor = "transparent";
+                if (currentCursor !== "default") el.style.cursor = "default"; */ }
             else {
                 applyStyleIfDifferent(el,"opacity","0.9");
                 applyStyleIfDifferent(el,"cursor","pointer");
                 if (index === newBefore2 || index === newAfter2) applyStyleIfDifferent(el,"backgroundColor","rgba(255, 255, 255, 0.7)");
-                else applyStyleIfDifferent(el,"backgroundColor","rgba(255, 255, 255, 0.3)"); } 
+                else applyStyleIfDifferent(el,"backgroundColor","rgba(255, 255, 255, 0.3)");
+                /*
+                if (currentOpacity !== "0.9") el.style.opacity = "0.9";
+                if (currentCursor !== "pointer") el.style.cursor = "pointer";
+                if ( (index === newBefore2 || index === newAfter2) && (currentBackground !== "rgba(255, 255, 255, 0.7)")) el.style.backgroundColor = "rgba(255, 255, 255, 0.7)"; 
+                else if (currentBackground !== "rgba(255, 255, 255, 0.3)") el.style.backgroundColor = "rgba(255, 255, 255, 0.3)"; */} 
 
             const el2 = imageRefs.current[index];
             if (!el2 || !(index === newBefore2 || index === newBefore1 || index === newCurrent || index === newAfter1 || index === newAfter2)) return;
 
+            // if (currentOpacity2 !== "1") el2.style.opacity = "1";
             applyStyleIfDifferent(el2, "opacity","1");
             if (index === newCurrent) {
                 applyStyleIfDifferent(el2, "zIndex","50");
                 applyStyleIfDifferent(el2, "boxShadow","0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)");
                 applyStyleIfDifferent(el2, "left","50%");
-                applyStyleIfDifferent(el2, "transform","translateX(-50%) scale(1.1)"); }
+                applyStyleIfDifferent(el2, "transform","translateX(-50%) scale(1.1)");
+                /*
+                if (currentZIndex2 !== "50") el2.style.zIndex = "50";
+                if (currentBoxShadow2 !== "0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)") el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)";
+                if (currentLeft2 !== "50%") el2.style.left = "50%";
+                if (currentTransform2 !== "translateX(-50%) scale(1.1)") el2.style.transform = "translateX(-50%) scale(1.1)"; */}
             else {
                 applyStyleIfDifferent(el2, "boxShadow","0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)");
+                // if (currentBoxShadow2 !== "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)") el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
                 if (index === newBefore2 || index === newAfter2) {
                     applyStyleIfDifferent(el2, "zIndex","30");
+                    // if (currentZIndex2 !== "30") el2.style.zIndex = "30";
                     if (index === newBefore2) {
                         applyStyleIfDifferent(el2, "left","0%");
-                        applyStyleIfDifferent(el2, "transform","translateX(0%) scale(0.95)"); }
+                        applyStyleIfDifferent(el2, "transform","translateX(0%) scale(0.95)"); /*
+                        if (currentLeft2 !== "0%") el2.style.left = "0%";
+                        if (currentTransform2 !== "translateX(0%) scale(0.95)") el2.style.transform = "translateX(0%) scale(0.95)"; */}
                     else {
                         applyStyleIfDifferent(el2, "left","100%");
-                        applyStyleIfDifferent(el2, "transform","translateX(-100%) scale(0.95)"); } }
+                        applyStyleIfDifferent(el2, "transform","translateX(-100%) scale(0.95)"); /*
+                        if (currentLeft2 !== "100%") el2.style.left = "100%";
+                        if (currentTransform2 !== "translateX(-100%) scale(0.95)") el2.style.transform = "translateX(-100%) scale(0.95)"; */} }
                 else {
                     applyStyleIfDifferent(el2, "zIndex","40");
+                    // if (currentZIndex2 !== "40") el2.style.zIndex = "40";
                     if (index === newBefore1) {
                         applyStyleIfDifferent(el2, "left","25%");
-                        applyStyleIfDifferent(el2, "transform","translateX(-25%) scale(1.05)"); }
+                        applyStyleIfDifferent(el2, "transform","translateX(-25%) scale(1.05)"); /*
+                        if (currentLeft2 !== "25%") el2.style.left = "25%";
+                        if (currentTransform2 !== "translateX(-25%) scale(1.05)") el2.style.transform = "translateX(-25%) scale(1.05)"; */ }
                     else {
                         applyStyleIfDifferent(el2, "left","75%");
-                        applyStyleIfDifferent(el2, "transform","translateX(-75%) scale(1.05)"); } } } 
+                        applyStyleIfDifferent(el2, "transform","translateX(-75%) scale(1.05)"); /*
+                        if (currentLeft2 !== "75%") el2.style.left = "75%";
+                        if (currentTransform2 !== "translateX(-75%) scale(1.05)") el2.style.transform = "translateX(-75%) scale(1.05)"; */ } } } 
 
         } ) }, []);
 
