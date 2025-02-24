@@ -42,7 +42,8 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     };
 
     const sobreCapaRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const updateSobreCapaStyles = useCallback((newIndex: number, prevIndex: number) => {
+    const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const totalStylesUpdate = useCallback((newIndex: number, prevIndex: number) => {
         const { newCurrent, newBefore1, newBefore2, newAfter1, newAfter2,
             commonElements, exclusiveNewElements, nonCommonElements } = computeGalleryIndexes(newIndex, prevIndex, imagenesLista.length);
 
@@ -52,6 +53,14 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 el.style.opacity = "0";
                 el.style.backgroundColor = "transparent";
                 el.style.cursor = "default";
+            }
+            const el2 = imageRefs.current[index];
+            if (el2) {
+                el2.style.opacity = "0";
+                el2.style.zIndex = "10";
+                el2.style.boxShadow = "none";
+                el2.style.left = "50%";
+                el2.style.transform = "translateX(-50%) scale(0.01)";
             }
         });
 
@@ -70,6 +79,42 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     el.style.opacity = "0.9";
                     el.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
                     el.style.cursor = "pointer";
+                }
+            }
+
+
+            const el2 = imageRefs.current[index];
+            if (el2) {
+                if (index === newBefore2) {
+                    el2.style.opacity = "1";
+                    el2.style.zIndex = "30";
+                    el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
+                    el2.style.left = "0%";
+                    el2.style.transform = "translateX(0%) scale(0.95)";
+                } else if (index === newBefore1) {
+                    el2.style.opacity = "1";
+                    el2.style.zIndex = "40";
+                    el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
+                    el2.style.left = "25%";
+                    el2.style.transform = "translateX(-25%) scale(1.05)";
+                } else if (index === newCurrent) {
+                    el2.style.opacity = "1";
+                    el2.style.zIndex = "50";
+                    el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)";
+                    el2.style.left = "50%";
+                    el2.style.transform = "translateX(-50%) scale(1.1)";
+                } else if (index === newAfter1) {
+                    el2.style.opacity = "1";
+                    el2.style.zIndex = "40";
+                    el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
+                    el2.style.left = "75%";
+                    el2.style.transform = "translateX(-75%) scale(1.05)";
+                } else if (index === newAfter2) {
+                    el2.style.opacity = "1";
+                    el2.style.zIndex = "30";
+                    el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
+                    el2.style.left = "100%";
+                    el2.style.transform = "translateX(-100%) scale(0.95)";
                 }
             }
         });
@@ -93,11 +138,53 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     if (computedStyle.cursor !== "pointer") el.style.cursor = "pointer";
                 }
             }
+
+
+            const el2 = imageRefs.current[index];
+            if (el2) {
+                const computedStyle = window.getComputedStyle(el2);
+
+                if (index === newBefore2) {
+                    if (computedStyle.opacity !== "1") el2.style.opacity = "1";
+                    if (computedStyle.zIndex !== "30") el2.style.zIndex = "30";
+                    if (computedStyle.boxShadow !== "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)") el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
+                    if (computedStyle.left !== "0%") el2.style.left = "0%";
+                    if (computedStyle.transform !== "translateX(0%) scale(0.95)") el2.style.transform = "translateX(0%) scale(0.95)";
+                }
+                else if (index === newBefore1) {
+                    if (computedStyle.opacity !== "1") el2.style.opacity = "1";
+                    if (computedStyle.zIndex !== "40") el2.style.zIndex = "40";
+                    if (computedStyle.boxShadow !== "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)") el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
+                    if (computedStyle.left !== "25%") el2.style.left = "25%";
+                    if (computedStyle.transform !== "translateX(-25%) scale(1.05)") el2.style.transform = "translateX(-25%) scale(1.05)";
+                }
+                else if (index === newCurrent) {
+                    if (computedStyle.opacity !== "1") el2.style.opacity = "1";
+                    if (computedStyle.zIndex !== "50") el2.style.zIndex = "50";
+                    if (computedStyle.boxShadow !== "0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)") el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)";
+                    if (computedStyle.left !== "50%") el2.style.left = "50%";
+                    if (computedStyle.transform !== "translateX(-50%) scale(1.1)") el2.style.transform = "translateX(-50%) scale(1.1)";
+                }
+                else if (index === newAfter1) {
+                    if (computedStyle.opacity !== "1") el2.style.opacity = "1";
+                    if (computedStyle.zIndex !== "40") el2.style.zIndex = "40";
+                    if (computedStyle.boxShadow !== "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)") el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
+                    if (computedStyle.left !== "75%") el2.style.left = "75%";
+                    if (computedStyle.transform !== "translateX(-75%) scale(1.05)") el2.style.transform = "translateX(-75%) scale(1.05)";
+                }
+                else if (index === newAfter2) {
+                    if (computedStyle.opacity !== "1") el2.style.opacity = "1";
+                    if (computedStyle.zIndex !== "30") el2.style.zIndex = "30";
+                    if (computedStyle.boxShadow !== "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)") el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
+                    if (computedStyle.left !== "100%") el2.style.left = "100%";
+                    if (computedStyle.transform !== "translateX(-100%) scale(0.95)") el2.style.transform = "translateX(-100%) scale(0.95)";
+                }
+            }
         });
 
     }, [imagenesLista.length]);
 
-    const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+    /*********** 
     const updateGalleryStyles = useCallback((newIndex: number, prevIndex: number) => {
         const { newCurrent, newBefore1, newBefore2, newAfter1, newAfter2,
             commonElements, exclusiveNewElements, nonCommonElements } = computeGalleryIndexes(newIndex, prevIndex, imagenesLista.length);
@@ -193,12 +280,14 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             }
         });
     }, [imagenesLista.length]);
+*/
 
+/*
     const totalStylesUpdate = useCallback((newIndex: number, prevIndex: number) => {
         updateGalleryStyles(newIndex, prevIndex);
         updateSobreCapaStyles(newIndex, prevIndex);
     }, [updateGalleryStyles,updateSobreCapaStyles]);
-
+*/
 
 
 
@@ -237,6 +326,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             setIsMdScreen(screenSize >= 640);
             setIsLgScreen(screenSize >= 768);
             setIsXlScreen(screenSize >= 1024);
+            // (max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw
         }
         handleResize();
         setScreenReady(true);
@@ -248,11 +338,10 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         intervalRef.current = setInterval(() => {
             setCurrentGalleryIndex((prevIndex) => {
                 const newIndex = (prevIndex + 1) % imagenesLista.length;
-                totalStylesUpdate(newIndex, prevIndex);
                 return newIndex;
             })
         }, iteracionTiempo);
-    }, [imagenesLista.length, iteracionTiempo, totalStylesUpdate]);
+    }, [ imagenesLista.length, iteracionTiempo]);
 
     const clearIntervalTimer = useCallback(() => {
         if (intervalRef.current) clearInterval(intervalRef.current);
@@ -264,9 +353,9 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     }, [startInterval, clearIntervalTimer]);
 
     const handleNavClick = useCallback((newIndex: number) => {
+        totalStylesUpdate(newIndex, currentGalleryIndex); 
         clearIntervalTimer();
         setCurrentGalleryIndex(newIndex); 
-        totalStylesUpdate(newIndex, currentGalleryIndex); 
         startInterval();
     }, [currentGalleryIndex, totalStylesUpdate, clearIntervalTimer, startInterval]);
 
@@ -275,27 +364,24 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 //      return (index + len) % len;
 //  }, [imagenesLista.length]);
 
-
     useEffect(() => {
+        
         const { newCurrent, nonCommonElements, newBefore2, newBefore1, newAfter1, newAfter2 } = computeGalleryIndexes(currentGalleryIndex, (currentGalleryIndex - 1 + imagenesLista.length) % imagenesLista.length, imagenesLista.length);
 
-        // Clear click events to the nonCommonElements except for
-        // the newCurrent if it is between them
+        totalStylesUpdate(currentGalleryIndex, (currentGalleryIndex - 1 + imagenesLista.length) % imagenesLista.length); 
         nonCommonElements
-        .filter(index => index !== newCurrent) // Exclude newCurrent
+        .filter(index => index !== newCurrent)
         .forEach(index => {
             const el = sobreCapaRefs.current[index];
             if (el) el.onclick = null;
         });
 
-
-        // Attach click events only to the ones that need it
         [newBefore2, newBefore1, newAfter1, newAfter2].forEach(index => {
             const el = sobreCapaRefs.current[index];
             if (el) el.onclick = () => handleNavClick(index);
         });
 
-    }, [imagenesLista.length, currentGalleryIndex, handleNavClick]); 
+    }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, handleNavClick]); 
 
     const visibleImages = useMemo(() => {
 
@@ -320,7 +406,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                         !loadedImages[index] && (React.createElement('div', { style: imageBlockStyleC },
                             React.createElement('svg', { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 640 512", fill: 'currentColor' },
                                 React.createElement('path', { fill: 'currentColor', d: 'M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z' })))),
-                        React.createElement(NextImage, { src: typeof item === "string" ? item : item.src, alt: 'Gallery Image', fill: true, style: { objectFit: 'cover', transition: 'opacity 700ms ease-in-out', willChange: "opacity", opacity: loadedImages[index] ? 1 : 0 } }),
+                        React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image', fill: true, style: { objectFit: 'cover', transition: 'opacity 700ms ease-in-out', willChange: "opacity", opacity: loadedImages[index] ? 1 : 0 } }),
                         React.createElement("div", { ref: (el) => { sobreCapaRefs.current[index] = el as HTMLDivElement | null }, style: sobreCapaStyle })
                     )
                 )
