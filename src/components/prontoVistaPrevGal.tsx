@@ -43,9 +43,9 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             newSet, prevSet, commonElements, exclusiveNewElements, nonCommonElements } };
 
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(2);
-    const [isMdScreen, setIsMdScreen] = useState<boolean>(false);
-    const [isLgScreen, setIsLgScreen] = useState<boolean>(false);
-    const [isXlScreen, setIsXlScreen] = useState<boolean>(false);
+    const [isMdParent, setIsMdParent] = useState<boolean>(false);
+    const [isLgParent, setIsLgParent] = useState<boolean>(false);
+    const [isXlParent, setIsXlParent] = useState<boolean>(false);
     const [screenReady, setScreenReady] = useState(false);
 
     const galAlturaXl = Math.min(32, Math.max(18, maxAltura));
@@ -67,21 +67,21 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
         if (innerSpanDiscRefs.current[prevCurrent]) {
             innerSpanDiscRefs.current[prevCurrent].style.opacity = "0";
-            innerSpanDiscRefs.current[prevCurrent].style.width = isXlScreen || isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'; }
+            innerSpanDiscRefs.current[prevCurrent].style.width = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem'; }
 
         if (outerSpanDiscRefs.current[newCurrent]) {
             outerSpanDiscRefs.current[newCurrent].style.cursor = "default";
-            outerSpanDiscRefs.current[newCurrent].style.width = isXlScreen || isLgScreen ? '4rem' : isMdScreen ? '3rem' : '3rem'; }
+            outerSpanDiscRefs.current[newCurrent].style.width = isXlParent || isLgParent ? '4rem' : isMdParent ? '3rem' : '3rem'; }
             
         if (outerSpanDiscRefs.current[prevCurrent]) {
             outerSpanDiscRefs.current[prevCurrent].style.cursor = "pointer";
-            outerSpanDiscRefs.current[prevCurrent].style.width = isXlScreen || isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'; }
+            outerSpanDiscRefs.current[prevCurrent].style.width = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem'; }
 
 
         const remToPixels = (remValue: number): number => {
             const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
             return remValue * rootFontSize; };
-        const currentAltura = (isXlScreen ? galAlturaXl : isLgScreen ? galAlturaLg : isMdScreen ? galAlturaMd : galAlturaSm)-4;
+        const currentAltura = (isXlParent ? galAlturaXl : isLgParent ? galAlturaLg : isMdParent ? galAlturaMd : galAlturaSm)-4;
         const elementAltura = remToPixels(currentAltura ?? 0);
         
         nonCommonElements.forEach(index => {
@@ -176,7 +176,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     applyStyleIfDifferent(el2, "transform","scale(1.05)");
                     applyStyleIfDifferent(el2, "left", (index === newBefore1) ? `calc( 25% - ${elementAltura * 0.25}px )` : `calc( 75% - ${elementAltura * 0.75}px )`); } } 
 
-        } ) }, [isXlScreen, isLgScreen, isMdScreen, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm]);
+        } ) }, [isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm]);
 
     const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
     const handleImageLoad = (index: number) => {
@@ -196,18 +196,18 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     useEffect(() => {
         const handleResize = () => {
             if (!scndContainerCapaRef.current) return;
-            setIsMdScreen(scndContainerCapaWidth >= 640 && scndContainerCapaWidth < 768);
-            setIsLgScreen(scndContainerCapaWidth >= 768 && scndContainerCapaWidth < 1024);
-            setIsXlScreen(scndContainerCapaWidth >= 1024);
-            console.log("isMdScreen is " + isMdScreen);
-            console.log("isLgScreen is " + isLgScreen);
-            console.log("isXlScreen is " + isXlScreen);
+            setIsMdParent(scndContainerCapaWidth >= 640 && scndContainerCapaWidth < 768);
+            setIsLgParent(scndContainerCapaWidth >= 768 && scndContainerCapaWidth < 1024);
+            setIsXlParent(scndContainerCapaWidth >= 1024);
+            console.log("isMdParent is " + isMdParent);
+            console.log("isLgParent is " + isLgParent);
+            console.log("isXlParent is " + isXlParent);
         }
         handleResize();
         setScreenReady(true);
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [isMdScreen,isLgScreen,isXlScreen,scndContainerCapaWidth]);
+    }, [isMdParent,isLgParent,isXlParent,scndContainerCapaWidth]);
 
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const startInterval = useCallback(() => {
@@ -291,23 +291,23 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         return imagenesLista.map((_, index) => {
 
             const outerSpanDisc = {
-                position: 'relative', margin: isXlScreen || isLgScreen ? '0.5rem' : isMdScreen ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: '9999px', overflow: 'hidden', height: isXlScreen || isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem', transition: 'all 300ms linear', backgroundColor: 'rgba(0, 0, 0, 0.2)',
-                cursor: 'pointer', width: isXlScreen || isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem' }
+                position: 'relative', margin: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: '9999px', overflow: 'hidden', height: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem', transition: 'all 300ms linear', backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                cursor: 'pointer', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
             const innerSpanDisc = {
                 pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', borderRadius: '9999px', height: '100%', backgroundColor: seleccionColor, transition: 'width '+iteracionTiempo+'ms linear, opacity 700ms linear',
-                opacity: '0', width: isXlScreen || isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem' }
+                opacity: '0', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
             
             return React.createElement("span", { key: index, onClick: () => handleNavClick(index), ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
                                       React.createElement("span", { ref: (el) => { innerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: innerSpanDisc })
                                       ) } )
-    }, [imagenesLista, isXlScreen, isLgScreen, isMdScreen, seleccionColor, handleNavClick, iteracionTiempo]);
+    }, [imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, handleNavClick, iteracionTiempo]);
 
 
     const mainContainerStyle: React.CSSProperties = { position: 'relative' };
     const scndContainerStyle: React.CSSProperties = {
         position: 'relative', maxWidth: '64rem', width: '100%', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }
     const hghtContainerStyle = (): React.CSSProperties => ({
-        transition: 'all 700ms linear', overflowY: 'visible', overflowX: 'hidden', width: '100%', position: 'relative', height: isXlScreen ? `${galAlturaXl}rem` : isLgScreen ? `${galAlturaLg}rem` : isMdScreen ? `${galAlturaMd}rem` : `${galAlturaSm}rem` })
+        transition: 'all 700ms linear', overflowY: 'visible', overflowX: 'hidden', width: '100%', position: 'relative', height: isXlParent ? `${galAlturaXl}rem` : isLgParent ? `${galAlturaLg}rem` : isMdParent ? `${galAlturaMd}rem` : `${galAlturaSm}rem` })
     const outerImagenesLista: React.CSSProperties = {
         position: "relative", width: "100%", height: "100%", overflow: "hidden", transition: "all 700ms linear" }
     const discContainerStyle: React.CSSProperties = {
