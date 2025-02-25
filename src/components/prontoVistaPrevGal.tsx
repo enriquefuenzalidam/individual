@@ -63,13 +63,17 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
         if (innerSpanDiscRefs.current[newCurrent]) {
             innerSpanDiscRefs.current[newCurrent].style.opacity = "1";
-            innerSpanDiscRefs.current[newCurrent].style.width = "100%";
+            innerSpanDiscRefs.current[newCurrent].style.width = "100%"; }
+
+        if (innerSpanDiscRefs.current[prevCurrent]) {
             innerSpanDiscRefs.current[prevCurrent].style.opacity = "0";
             innerSpanDiscRefs.current[prevCurrent].style.width = isXlScreen || isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'; }
 
         if (outerSpanDiscRefs.current[newCurrent]) {
             outerSpanDiscRefs.current[newCurrent].style.cursor = "default";
-            outerSpanDiscRefs.current[newCurrent].style.width = isXlScreen || isLgScreen ? '4rem' : isMdScreen ? '3rem' : '3rem';
+            outerSpanDiscRefs.current[newCurrent].style.width = isXlScreen || isLgScreen ? '4rem' : isMdScreen ? '3rem' : '3rem'; }
+            
+        if (outerSpanDiscRefs.current[prevCurrent]) {
             outerSpanDiscRefs.current[prevCurrent].style.cursor = "pointer";
             outerSpanDiscRefs.current[prevCurrent].style.width = isXlScreen || isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem'; }
 
