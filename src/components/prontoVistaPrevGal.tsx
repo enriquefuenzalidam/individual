@@ -269,10 +269,10 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         return imagenesLista.map((item, index) => {
 
                 const imageBlockStyleA = {
-                    display: "block", position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", willChange: "transform, opacity", transition: "all 700ms linear", overflow: "hidden",
+                    display: "block", position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all 700ms linear", overflow: "hidden",
                     opacity: 0, zIndex: 10, boxShadow: "none", left: "50%", transform: "translateX(-50%) scale(0.01)" }
                 const sobreCapaStyle = {
-                    willChange: "opacity", position: "absolute", inset: "0", transition: "all 700ms linear", backdropFilter: "grayscale(100%)", opacity: "0", backgroundColor: "transparent", cursor: "default" }
+                    position: "absolute", inset: "0", transition: "all 700ms linear", backdropFilter: "grayscale(100%)", opacity: "0", backgroundColor: "transparent", cursor: "default" }
                 const imageBlockStyleB = {
                     position: 'relative', width: '100%', height: '100%', backgroundColor: "white", display: 'flex', justifyContent: 'center', alignItems: 'center' }
                 const imageBlockStyleC = {
@@ -300,7 +300,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 position: 'relative', margin: isXlScreen || isLgScreen ? '0.5rem' : isMdScreen ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: '9999px', overflow: 'hidden', height: isXlScreen || isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem', transition: 'all 300ms linear', backgroundColor: 'rgba(0, 0, 0, 0.2)',
                 cursor: 'pointer', width: isXlScreen || isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem' }
             const innerSpanDisc = {
-                willChange: "opacity", pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', borderRadius: '9999px', height: '100%', backgroundColor: seleccionColor, transition: 'width '+iteracionTiempo+'ms linear, opacity 700ms linear',
+                pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', borderRadius: '9999px', height: '100%', backgroundColor: seleccionColor, transition: 'width '+iteracionTiempo+'ms linear, opacity 700ms linear',
                 opacity: '0', width: isXlScreen || isLgScreen ? '1rem' : isMdScreen ? '0.75rem' : '0.75rem' }
             
             return React.createElement("span", { key: index, onClick: () => handleNavClick(index), ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
