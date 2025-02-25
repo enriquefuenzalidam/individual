@@ -126,17 +126,11 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     if (index === newBefore2 || index === newAfter2) {
                         el2.style.zIndex = "30";
                         el2.style.transform = "scale(0.95)";
-                        if (index === newBefore2) {
-                            el2.style.left = `0%`; }
-                        else {
-                            el2.style.left = `calc( 100% - ${elementAltura}px )`; } }
+                        el2.style.left = (index === newBefore2) ? `0%` : `calc( 100% - ${elementAltura}px )`; }
                     else {
                         el2.style.zIndex = "40";
                         el2.style.transform = "scale(1.05)";
-                        if (index === newBefore1) {
-                            el2.style.left = `calc( 25% - ${elementAltura * 0.25}px )`; }
-                        else {
-                            el2.style.left = `calc( 75% - ${elementAltura * 0.75}px )`; } } } }
+                        el2.style.left = (index === newBefore1) ? `calc( 25% - ${elementAltura * 0.25}px )` : `calc( 75% - ${elementAltura * 0.75}px )`; } } }
 
         });
 
@@ -156,8 +150,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             else {
                 applyStyleIfDifferent(el,"opacity","0.9");
                 applyStyleIfDifferent(el,"cursor","pointer");
-                if (index === newBefore2 || index === newAfter2) applyStyleIfDifferent(el,"backgroundColor","rgba(255, 255, 255, 0.7)");
-                else applyStyleIfDifferent(el,"backgroundColor","rgba(255, 255, 255, 0.3)"); } 
+                applyStyleIfDifferent(el,"backgroundColor", (index === newBefore2 || index === newAfter2) ?  "rgba(255, 255, 255, 0.7)" : "rgba(255, 255, 255, 0.3)"); } 
 
             const el2 = imageRefs.current[index];
             if (!el2 || !(index === newBefore2 || index === newBefore1 || index === newCurrent || index === newAfter1 || index === newAfter2)) return;
@@ -172,20 +165,12 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 applyStyleIfDifferent(el2, "boxShadow","0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)");
                 if (index === newBefore2 || index === newAfter2) {
                     applyStyleIfDifferent(el2, "zIndex","30");
-                    if (index === newBefore2) {
-                        applyStyleIfDifferent(el2, "transform","scale(0.95)");
-                        applyStyleIfDifferent(el2, "left","0%"); }
-                    else {
-                        applyStyleIfDifferent(el2, "transform","scale(0.95)");
-                        applyStyleIfDifferent(el2, "left",`calc( 100% - ${elementAltura}px )`); } }
+                    applyStyleIfDifferent(el2, "transform","scale(0.95)");
+                    applyStyleIfDifferent(el2, "left", (index === newBefore2) ? "0%" : `calc( 100% - ${elementAltura}px )`); }
                 else {
                     applyStyleIfDifferent(el2, "zIndex","40");
-                    if (index === newBefore1) {
-                        applyStyleIfDifferent(el2, "transform","scale(1.05)");
-                        applyStyleIfDifferent(el2, "left",`calc( 25% - ${elementAltura * 0.25}px )`); }
-                    else {
-                        applyStyleIfDifferent(el2, "transform","scale(1.05)");
-                        applyStyleIfDifferent(el2, "left",`calc( 75% - ${elementAltura * 0.75}px )`); } } } 
+                    applyStyleIfDifferent(el2, "transform","scale(1.05)");
+                    applyStyleIfDifferent(el2, "left", (index === newBefore1) ? `calc( 25% - ${elementAltura * 0.25}px )` : `calc( 75% - ${elementAltura * 0.75}px )`); } } 
 
         } ) }, [isXlScreen, isLgScreen, isMdScreen, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm]);
 
