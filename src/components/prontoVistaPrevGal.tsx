@@ -177,7 +177,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                         applyStyleIfDifferent(el2, "left","75%");
                         applyStyleIfDifferent(el2, "transform","translateX(-75%) scale(1.05)"); } } } 
 
-        } ) }, [isLgScreen, isMdScreen]);
+        } ) }, [isXlScreen, isLgScreen, isMdScreen]);
 
     const galAlturaXl = Math.min(32, Math.max(18, maxAltura));
     const galAlturaLg = Math.min(32, Math.max(18, galAlturaXl - 4));
@@ -194,8 +194,6 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         });
     };
 
-    // const DEFAULT_SCREEN_SIZE = 1024;
-    // const screenSize = typeof window === "undefined" ? DEFAULT_SCREEN_SIZE : window.innerWidth;
     const scndContainerCapaRef = useRef<(HTMLDivElement | null)>(null);
     const getContainerWidth = () => {
         return scndContainerCapaRef.current ? scndContainerCapaRef.current.offsetWidth : 0 };
@@ -280,7 +278,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 const imageBlockStyleC = {
                     width: '10%', height: 'auto', transition: 'all 700ms linear', fontWeight: '500', color: seleccionColor }
                 const imageElementStyle: React.CSSProperties = {
-                    objectFit: 'cover', transition: 'opacity 700ms linear', willChange: "opacity", opacity: loadedImages[index] ? 1 : 0 }
+                    objectFit: 'cover', transition: 'opacity 700ms linear', opacity: loadedImages[index] ? 1 : 0 }
 
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA },
                     React.createElement("div", { style: imageBlockStyleB },
@@ -308,7 +306,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             return React.createElement("span", { key: index, onClick: () => handleNavClick(index), ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
                                       React.createElement("span", { ref: (el) => { innerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: innerSpanDisc })
                                       ) } )
-    }, [imagenesLista, isLgScreen, isMdScreen, seleccionColor, handleNavClick, iteracionTiempo]);
+    }, [imagenesLista, isXlScreen, isLgScreen, isMdScreen, seleccionColor, handleNavClick, iteracionTiempo]);
 
 
     const mainContainerStyle: React.CSSProperties = { position: 'relative' };
