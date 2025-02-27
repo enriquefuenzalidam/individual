@@ -11,10 +11,21 @@ interface ProntoVistaPrevGalProps {
 }
 
 interface GalleryIndexes {
-    newCurrent: number; newBefore1: number; newBefore2: number; newAfter1: number; newAfter2: number; prevCurrent: number; prevBefore1: number; prevBefore2: number; prevAfter1: number; prevAfter2: number; newSet: Set<number>; prevSet: Set<number>; commonElements: number[]; exclusiveNewElements: number[]; nonCommonElements: number[];
+    newCurrent: number; prevCurrent: number;
+
+    newBefore1: number; newBefore2: number;
+    newAfter1: number; newAfter2: number;
+
+    prevBefore1: number; prevBefore2: number;
+    prevAfter1: number; prevAfter2: number;
+
+    newSet: Set<number>; prevSet: Set<number>;
+
+    commonElements: number[]; exclusiveNewElements: number[]; nonCommonElements: number[];
 }
 
 const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, seleccionColor = "#000", maxAltura = 32, iteracionTiempo = 4000 }) => {
+
 
     const computeGalleryIndexes = (newIndex: number, prevIndex: number, total: number): GalleryIndexes => {
 
@@ -42,13 +53,15 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             prevCurrent, prevBefore1, prevBefore2, prevAfter1, prevAfter2,
             newSet, prevSet, commonElements, exclusiveNewElements, nonCommonElements } };
 
+    const [tiempoIntervalo, setTiempoIntervalo] = useState<number>(iteracionTiempo);
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(2);
     const [isMdParent, setIsMdParent] = useState<boolean>(false);
     const [isLgParent, setIsLgParent] = useState<boolean>(false);
     const [isXlParent, setIsXlParent] = useState<boolean>(false);
     const [screenReady, setScreenReady] = useState(false);
 
-    const galAlturaXl = Math.min(32, Math.max(18, maxAltura));
+    const [cajaAltura, setCajaAltura] = useState<number>(maxAltura);
+    const galAlturaXl = Math.min(32, Math.max(18, cajaAltura));
     const galAlturaLg = Math.min(32, Math.max(18, galAlturaXl - 4));
     const galAlturaMd = Math.min(32, Math.max(18, galAlturaLg - 8));
     const galAlturaSm = Math.min(32, Math.max(18, galAlturaMd - 2));
@@ -65,18 +78,18 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             innerSpanDiscRefs.current[newCurrent].style.opacity = "1";
             innerSpanDiscRefs.current[newCurrent].style.width = "100%"; }
 
-        if (innerSpanDiscRefs.current[prevCurrent]) {
-            innerSpanDiscRefs.current[prevCurrent].style.opacity = "0";
-            innerSpanDiscRefs.current[prevCurrent].style.width = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem'; }
-
         if (outerSpanDiscRefs.current[newCurrent]) {
             outerSpanDiscRefs.current[newCurrent].style.cursor = "default";
             outerSpanDiscRefs.current[newCurrent].style.width = isXlParent || isLgParent ? '4rem' : isMdParent ? '3rem' : '3rem'; }
-            
-        if (outerSpanDiscRefs.current[prevCurrent]) {
-            outerSpanDiscRefs.current[prevCurrent].style.cursor = "pointer";
-            outerSpanDiscRefs.current[prevCurrent].style.width = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem'; }
-
+        
+        if ( prevCurrent !== newCurrent) {
+            if (innerSpanDiscRefs.current[prevCurrent]) {
+                innerSpanDiscRefs.current[prevCurrent].style.opacity = "0";
+                innerSpanDiscRefs.current[prevCurrent].style.width = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem'; }
+            if (outerSpanDiscRefs.current[prevCurrent]) {
+                outerSpanDiscRefs.current[prevCurrent].style.cursor = "pointer";
+                outerSpanDiscRefs.current[prevCurrent].style.width = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem'; } }
+    
 
         const remToPixels = (remValue: number): number => {
             const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -122,16 +135,18 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 el2.style.opacity = "1";
                 if (index === newCurrent) {
                     el2.style.zIndex = "50";
-                    el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)";
+                    el2.style.boxShadow = "0 10px 12px -3px rgba(0, 0, 0, 0.6), 0 4px 3px -2px rgba(0, 0, 0, 0.6)";
                     el2.style.transform = "scale(1.1)";
                     el2.style.left = `calc( 50% - ${elementAltura * 0.5}px )`; }
                 else {
-                    el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
+                    
                     if (index === newBefore2 || index === newAfter2) {
+                        el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.2)";
                         el2.style.zIndex = "30";
                         el2.style.transform = "scale(0.95)";
                         el2.style.left = (index === newBefore2) ? `0%` : `calc( 100% - ${elementAltura}px )`; }
                     else {
+                        el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
                         el2.style.zIndex = "40";
                         el2.style.transform = "scale(1.05)";
                         el2.style.left = (index === newBefore1) ? `calc( 25% - ${elementAltura * 0.25}px )` : `calc( 75% - ${elementAltura * 0.75}px )`; } } }
@@ -162,16 +177,18 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             applyStyleIfDifferent(el2, "opacity","1");
             if (index === newCurrent) {
                 applyStyleIfDifferent(el2, "zIndex","50");
-                applyStyleIfDifferent(el2, "boxShadow","0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.6)");
+                applyStyleIfDifferent(el2, "boxShadow","0 10px 12px -3px rgba(0, 0, 0, 0.6), 0 4px 3px -2px rgba(0, 0, 0, 0.6)");
                 applyStyleIfDifferent(el2, "transform","scale(1.1)");
                 applyStyleIfDifferent(el2, "left",`calc( 50% - ${elementAltura * 0.5}px )`); }
             else {
-                applyStyleIfDifferent(el2, "boxShadow","0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)");
+                
                 if (index === newBefore2 || index === newAfter2) {
+                    applyStyleIfDifferent(el2, "boxShadow","0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.2)");
                     applyStyleIfDifferent(el2, "zIndex","30");
                     applyStyleIfDifferent(el2, "transform","scale(0.95)");
                     applyStyleIfDifferent(el2, "left", (index === newBefore2) ? "0%" : `calc( 100% - ${elementAltura}px )`); }
                 else {
+                    applyStyleIfDifferent(el2, "boxShadow","0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)");
                     applyStyleIfDifferent(el2, "zIndex","40");
                     applyStyleIfDifferent(el2, "transform","scale(1.05)");
                     applyStyleIfDifferent(el2, "left", (index === newBefore1) ? `calc( 25% - ${elementAltura * 0.25}px )` : `calc( 75% - ${elementAltura * 0.75}px )`); } } 
@@ -184,15 +201,14 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             if (prev[index]) return prev;
             const updated = [...prev];
             updated[index] = true;
-            return updated;
-        });
+            return updated; });
     };
 
     const scndContainerCapaRef = useRef<(HTMLDivElement | null)>(null);
     const getContainerWidth = () => {
         return scndContainerCapaRef.current ? scndContainerCapaRef.current.offsetWidth : 0 };
     const scndContainerCapaWidth = getContainerWidth();
-    
+
     useEffect(() => {
         const handleResize = () => {
             if (!scndContainerCapaRef.current) return;
@@ -216,8 +232,8 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 const newIndex = (prevIndex + 1) % imagenesLista.length;
                 return newIndex;
             })
-        }, iteracionTiempo);
-    }, [ imagenesLista.length, iteracionTiempo]);
+        }, tiempoIntervalo);
+    }, [ imagenesLista.length, tiempoIntervalo]);
 
     const clearIntervalTimer = useCallback(() => {
         if (intervalRef.current) clearInterval(intervalRef.current);
@@ -234,6 +250,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         clearIntervalTimer();
         setCurrentGalleryIndex(newIndex);
         startInterval();
+        console.log("handleNavClick clicked")
     }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, clearIntervalTimer, startInterval]);
 
     useEffect(() => {
@@ -245,7 +262,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         );
     
         totalStylesUpdate(indexes);
- 
+
         indexes.nonCommonElements
         .filter(index => index !== indexes.newCurrent)
         .forEach(index => {
@@ -294,14 +311,32 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 position: 'relative', margin: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: '9999px', overflow: 'hidden', height: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem', transition: 'all 300ms linear', backgroundColor: 'rgba(0, 0, 0, 0.2)',
                 cursor: 'pointer', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
             const innerSpanDisc = {
-                pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', borderRadius: '9999px', height: '100%', backgroundColor: seleccionColor, transition: 'width '+iteracionTiempo+'ms linear, opacity 700ms linear',
+                pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', borderRadius: '9999px', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity 700ms linear',
                 opacity: '0', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
             
             return React.createElement("span", { key: index, onClick: () => handleNavClick(index), ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
                                       React.createElement("span", { ref: (el) => { innerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: innerSpanDisc })
                                       ) } )
-    }, [imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, handleNavClick, iteracionTiempo]);
+    }, [imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, handleNavClick, tiempoIntervalo]);
 
+////////////////////////////
+// elemento demostración ///
+
+const verOcultarDiscosNavRef = useRef<(HTMLDivElement | null)[]>([]);
+const [discosNavegador, setDiscosNavegador] = useState(true);
+const discosNav = document.getElementById("verOcultarDiscosNavId");
+const discosNavInnerHeight = discosNav?.getElementsByTagName("div")[0].offsetHeight;
+    useEffect(() => {
+
+        if (!(discosNav || discosNavInnerHeight)) return;
+        discosNav.style.overflow = 'hidden';
+        discosNav.style.opacity = discosNavegador===true ? `1`: `0`;
+        discosNav.style.transition = discosNavegador===true ? `height 500ms ease-in-out, opacity 1600ms ease-in-out` :  `height 500ms ease-in-out, opacity 300ms ease-in-out`;
+        discosNav.style.height = discosNavegador===true ? discosNavInnerHeight+"px" : "0";
+
+    }, [discosNav, discosNavegador, discosNavInnerHeight]);
+////////////////////////////
+////////////////////////////
 
     const mainContainerStyle: React.CSSProperties = { position: 'relative' };
     const scndContainerStyle: React.CSSProperties = {
@@ -314,14 +349,48 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         maxWidth: '64rem', width: '100%', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center', paddingTop: '1.25rem', position: 'relative' }
 
     if (!screenReady) return null;
-    return React.createElement( "div", { style: mainContainerStyle }, 
+
+    return React.createElement( "div", { style: mainContainerStyle },
+        React.createElement('h4', { className: ` mt-6 mb-10 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` }, `Galería de Previsualización` ),  /// elemento demostración
+
         React.createElement( "div", { ref: scndContainerCapaRef, style: scndContainerStyle },
             React.createElement( "div", { style: hghtContainerStyle() },
                 !!imagenesLista.length && React.createElement("div", { style: outerImagenesLista }, visibleImages ) ) ),
-        React.createElement( "div", { style: discContainerStyle },
-            !!imagenesLista.length && React.createElement( "div", null, visibleSelectores )
-            )
+
+        React.createElement('div', { ref: verOcultarDiscosNavRef, id: "verOcultarDiscosNavId", style: { maxWidth: `64rem`, margin: `0 auto` } },  /// elemento demostración
+            React.createElement( "div", { style: discContainerStyle },
+                !!imagenesLista.length && React.createElement( "div", null, visibleSelectores ) ) ),
+
+////////////////////////////
+// elemento demostración ///
+        React.createElement('h5', { className: ` mt-8 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` }, `Opciones personalizables` ),
+        React.createElement('h6', { className: ` mt-6 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-regular leading-normal lg:text-xl md:text-lg sm:text-lg text-lg  `}, `Lista de navegación` ),
+        React.createElement('p', { className: ` mt-2 text-left text-slate-700/60 text-lg lg:ml-10 md:ml-8 ml-6 font-light text-slate-700/60 leading-normal ` }, `▪︎ Lista de navegación: `,
+            React.createElement('span', { onClick: () => setDiscosNavegador(!discosNavegador), className: ` font-semibold cursor-pointer text-slate-700/80 ` },
+                `${discosNavegador === true ? 'ocultar' : 'ver'} ` ) ),
+        React.createElement('h6', { className: ` mt-6 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-regular leading-normal lg:text-xl md:text-lg sm:text-lg text-lg  `}, `Altura de la galería de previsualización ` ),
+        // React.createElement('p', { className: `lg:text-2xl md:text-2xl sm:text-xl text-lg font-light text-slate-700/60 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:m-4 md:m-3 sm:m-2 m-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed `}, 'El alto de la galería de previsualización se ajusta en relación su ancho, que es el ancho del bloque dentro del cual se encuentra inscrita. Su altura tiene tres medidas fijas: A, B, C y D, de modo que si, por ejemplo, se elige el menor, el D, esa será la altura para todos lo anchos que alcance la galería de previsualización. Pero si por ejemplo se eligiera el más alto, el A, esa altura solo se alcanzará si el ancho de la galería de previsualización supera los 1280 pixeles; para los anchos inferiores, se auto ajustará siguiendo las cuatro alturas predeterminadas. Aquí, puede ser apreciado el dinamismo descrito, seleccionando una de las alturas predeterminadas, redimesionando la ventana y viendo el alto resultante.'),
+        React.createElement('p', { className: ` mt-2 text-left text-slate-700/60 text-lg lg:ml-10 md:ml-8 ml-6 font-light leading-normal ` }, `▪︎ Alto máximo: `,
+            React.createElement('span', { onClick: () => setCajaAltura(32), className: ` cursor-pointer ${ cajaAltura === 32 ? 'font-semibold text-slate-700/80' : 'font-regular text-slate-700/60' }`}, `A`), ` / `,
+            React.createElement('span', { onClick: () => setCajaAltura(28), className: ` cursor-pointer ${ cajaAltura === 28 ? 'font-semibold text-slate-700/80' : 'font-regular text-slate-700/60' } `}, `B`), ' / ',
+            React.createElement('span', { onClick: () => setCajaAltura(20), className: ` cursor-pointer ${ cajaAltura === 20 ? 'font-semibold text-slate-700/80' : 'font-regular text-slate-700/60' } `}, `C`), ' / ',
+            React.createElement('span', { onClick: () => setCajaAltura(18), className: ` cursor-pointer ${ cajaAltura === 18 ? 'font-semibold text-slate-700/80' : 'font-regular text-slate-700/60' } `}, `D`) ),
+        React.createElement('p', { className: ` mt-1 text-left text-slate-700/60 text-lg lg:ml-12 md:ml-10 ml-8 leading-normal font-light ` }, `┗ Alto resultante: `, React.createElement('span', { className: `font-semibold text-slate-700/80` }, `${isXlParent ? `${galAlturaXl} rem` : isLgParent ? `${galAlturaLg} rem` : isMdParent ? `${galAlturaMd} rem` : `${galAlturaSm} rem`}`)),
+        React.createElement('h6', { className: ` mt-6 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-regular leading-normal lg:text-xl md:text-lg sm:text-lg text-lg  `}, `Intervalo de tiempo ` ),
+        React.createElement('p', { className: ` mt-2 text-left text-slate-700/60 text-lg lg:ml-10 md:ml-8 ml-6 font-light text-slate-700/60 leading-normal ` }, `▪︎ `,
+            React.createElement('span', { onClick: () => setTiempoIntervalo(500), className: ` cursor-pointer ${ tiempoIntervalo === 500 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `500 ms` ), ' / ',
+            React.createElement('span', { onClick: () => setTiempoIntervalo(1000), className: ` cursor-pointer ${ tiempoIntervalo === 1000 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `1000 ms` ), ' / ',
+            React.createElement('span', { onClick: () => setTiempoIntervalo(2000), className: ` cursor-pointer ${ tiempoIntervalo === 2000 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `2000 ms` ), ' / ',
+            React.createElement('span', { onClick: () => setTiempoIntervalo(6000), className: ` cursor-pointer ${ tiempoIntervalo === 6000 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `6000 ms` ) )
+////////////////////////////
+////////////////////////////
+
         )
     }
 
 export default ProntoVistaPrevGal;
+
+
+
+// textIndent: lgScreen ? '1.5rem' : mdScreen ? '1.25rem' : smScreen ? '1rem' : '1rem', margin: lgScreen ? '1rem' : mdScreen ? '0.75rem' : smScreen ? '0.5rem' : '0.5rem'
+<div className={` leading-6  `}></div>
