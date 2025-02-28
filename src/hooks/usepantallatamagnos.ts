@@ -16,9 +16,10 @@ const usePantallaTamagnos = () => {
     return {
         screenReady,
         screenSize: screenSize ?? 1024,
-        lgScreen: screenSize !== null && screenSize >= 1024,
-        mdScreen: screenSize !== null && (screenSize >= 768 && screenSize < 1024),
-        smScreen: screenSize !== null && (screenSize >= 640 && screenSize < 768),
+        xlScreen: screenSize !== null && screenSize >= 1280,
+        lgScreen: screenSize !== null && (screenSize >= 1024),
+        mdScreen: screenSize !== null && (screenSize >= 768),
+        smScreen: screenSize !== null && (screenSize >= 640),
         tnScreen: screenSize !== null && screenSize < 640,
     }
 }
