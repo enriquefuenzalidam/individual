@@ -5,7 +5,7 @@ import NextImage, { StaticImageData } from 'next/image';
 
 interface ProntoVistaPrevGalProps {
   imagenesLista: (string | StaticImageData)[];
-  seleccionColor?: string;
+  discosColor?: string;
   maxAltura?: number;
   iteracionTiempo?: number;
 }
@@ -24,8 +24,15 @@ interface GalleryIndexes {
     commonElements: number[]; exclusiveNewElements: number[]; nonCommonElements: number[];
 }
 
-const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, seleccionColor = "#000", maxAltura = 32, iteracionTiempo = 4000 }) => {
+const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, discosColor = "#000", maxAltura = 32, iteracionTiempo = 3400 }) => {
 
+    const isValidColor = (color: string) => {
+        const s = new Option().style;
+        s.color = color;
+        return s.color !== ""; };
+    
+    const [seleccionColor, setSeleccionColor] = useState(() => isValidColor(discosColor) ? discosColor : "#000" );
+    useEffect(() => { if (isValidColor(discosColor)) setSeleccionColor(discosColor) }, [discosColor]);
 
     const computeGalleryIndexes = (newIndex: number, prevIndex: number, total: number): GalleryIndexes => {
 
@@ -89,7 +96,6 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             if (outerSpanDiscRefs.current[prevCurrent]) {
                 outerSpanDiscRefs.current[prevCurrent].style.cursor = "pointer";
                 outerSpanDiscRefs.current[prevCurrent].style.width = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem'; } }
-    
 
         const remToPixels = (remValue: number): number => {
             const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -204,6 +210,30 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             return updated; });
     };
 
+
+////////////////////////////
+// elemento demostración ///
+
+    const verOcultarDiscosNavRef = useRef<HTMLDivElement | null>(null);
+    const [discosNavegador, setDiscosNavegador] = useState(true);
+    const discNav = verOcultarDiscosNavRef.current;
+    const discosNavInnerHeight = verOcultarDiscosNavRef.current?.querySelector("div")?.offsetHeight;
+
+    useEffect(() => {
+    
+        if (!discNav) return;
+        if (!discosNavInnerHeight) return;
+
+        discNav.style.overflow = 'hidden';
+        discNav.style.opacity = discosNavegador ? `1` : `0`;
+        discNav.style.transition = discosNavegador ? `height 500ms ease-in-out, opacity 1600ms ease-in-out` : `height 500ms ease-in-out, opacity 300ms ease-in-out`;
+        discNav.style.height = discosNavegador ? discosNavInnerHeight + "px" : "0";
+
+    }, [discNav, discosNavInnerHeight, discosNavegador]);
+
+////////////////////////////
+////////////////////////////
+
     const scndContainerCapaRef = useRef<(HTMLDivElement | null)>(null);
     const getContainerWidth = () => {
         return scndContainerCapaRef.current ? scndContainerCapaRef.current.offsetWidth : 0 };
@@ -272,6 +302,11 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         [indexes.newBefore2, indexes.newBefore1, indexes.newAfter1, indexes.newAfter2].forEach(index => {
             const el = sobreCapaRefs.current[index];
             if (el) el.onclick = () => handleNavClick(index); });
+        
+        
+        outerSpanDiscRefs.current.forEach((el, index) => {
+            if (el) el.onclick = index !== indexes.newCurrent ? () => handleNavClick(index) : null });
+   
 
     }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, handleNavClick]); 
 
@@ -313,30 +348,11 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             const innerSpanDisc = {
                 pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', borderRadius: '9999px', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity 700ms linear',
                 opacity: '0', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
-            
-            return React.createElement("span", { key: index, onClick: () => handleNavClick(index), ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
+
+            return React.createElement("span", { key: index, ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
                                       React.createElement("span", { ref: (el) => { innerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: innerSpanDisc })
                                       ) } )
-    }, [imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, handleNavClick, tiempoIntervalo]);
-
-////////////////////////////
-// elemento demostración ///
-
-const verOcultarDiscosNavRef = useRef<(HTMLDivElement | null)[]>([]);
-const [discosNavegador, setDiscosNavegador] = useState(true);
-const discosNav = document.getElementById("verOcultarDiscosNavId");
-const discosNavInnerHeight = discosNav?.getElementsByTagName("div")[0].offsetHeight;
-    useEffect(() => {
-
-        if (!(discosNav || discosNavInnerHeight)) return;
-        discosNav.style.overflow = 'hidden';
-        discosNav.style.opacity = discosNavegador===true ? `1`: `0`;
-        discosNav.style.transition = discosNavegador===true ? `height 500ms ease-in-out, opacity 1600ms ease-in-out` :  `height 500ms ease-in-out, opacity 300ms ease-in-out`;
-        discosNav.style.height = discosNavegador===true ? discosNavInnerHeight+"px" : "0";
-
-    }, [discosNav, discosNavegador, discosNavInnerHeight]);
-////////////////////////////
-////////////////////////////
+    }, [imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, tiempoIntervalo]);
 
     const mainContainerStyle: React.CSSProperties = { position: 'relative' };
     const scndContainerStyle: React.CSSProperties = {
@@ -351,13 +367,13 @@ const discosNavInnerHeight = discosNav?.getElementsByTagName("div")[0].offsetHei
     if (!screenReady) return null;
 
     return React.createElement( "div", { style: mainContainerStyle },
-        React.createElement('h4', { className: ` mt-6 mb-10 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` }, `Galería de Previsualización` ),  /// elemento demostración
+        React.createElement('h4', { className: ` mt-6 mb-10 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` }, `Galería de previsualización` ),  /// elemento demostración
 
         React.createElement( "div", { ref: scndContainerCapaRef, style: scndContainerStyle },
             React.createElement( "div", { style: hghtContainerStyle() },
                 !!imagenesLista.length && React.createElement("div", { style: outerImagenesLista }, visibleImages ) ) ),
 
-        React.createElement('div', { ref: verOcultarDiscosNavRef, id: "verOcultarDiscosNavId", style: { maxWidth: `64rem`, margin: `0 auto` } },  /// elemento demostración
+        React.createElement('div', { ref: verOcultarDiscosNavRef, style: { maxWidth: `64rem`, margin: `0 auto` } },  /// elemento demostración
             React.createElement( "div", { style: discContainerStyle },
                 !!imagenesLista.length && React.createElement( "div", null, visibleSelectores ) ) ),
 
@@ -376,12 +392,25 @@ const discosNavInnerHeight = discosNav?.getElementsByTagName("div")[0].offsetHei
             React.createElement('span', { onClick: () => setCajaAltura(20), className: ` cursor-pointer ${ cajaAltura === 20 ? 'font-semibold text-slate-700/80' : 'font-regular text-slate-700/60' } `}, `C`), ' / ',
             React.createElement('span', { onClick: () => setCajaAltura(18), className: ` cursor-pointer ${ cajaAltura === 18 ? 'font-semibold text-slate-700/80' : 'font-regular text-slate-700/60' } `}, `D`) ),
         React.createElement('p', { className: ` mt-1 text-left text-slate-700/60 text-lg lg:ml-12 md:ml-10 ml-8 leading-normal font-light ` }, `┗ Alto resultante: `, React.createElement('span', { className: `font-semibold text-slate-700/80` }, `${isXlParent ? `${galAlturaXl} rem` : isLgParent ? `${galAlturaLg} rem` : isMdParent ? `${galAlturaMd} rem` : `${galAlturaSm} rem`}`)),
-        React.createElement('h6', { className: ` mt-6 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-regular leading-normal lg:text-xl md:text-lg sm:text-lg text-lg  `}, `Intervalo de tiempo ` ),
-        React.createElement('p', { className: ` mt-2 text-left text-slate-700/60 text-lg lg:ml-10 md:ml-8 ml-6 font-light text-slate-700/60 leading-normal ` }, `▪︎ `,
-            React.createElement('span', { onClick: () => setTiempoIntervalo(500), className: ` cursor-pointer ${ tiempoIntervalo === 500 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `500 ms` ), ' / ',
-            React.createElement('span', { onClick: () => setTiempoIntervalo(1000), className: ` cursor-pointer ${ tiempoIntervalo === 1000 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `1000 ms` ), ' / ',
-            React.createElement('span', { onClick: () => setTiempoIntervalo(2000), className: ` cursor-pointer ${ tiempoIntervalo === 2000 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `2000 ms` ), ' / ',
-            React.createElement('span', { onClick: () => setTiempoIntervalo(6000), className: ` cursor-pointer ${ tiempoIntervalo === 6000 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `6000 ms` ) )
+        React.createElement('h6', { className: ` mt-6 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-regular leading-normal lg:text-xl md:text-lg sm:text-lg text-lg  `}, `Velocidad del iteración` ),
+        React.createElement('p', { className: ` mt-2 text-left text-slate-700/60 text-lg lg:ml-10 md:ml-8 ml-6 font-light text-slate-700/60 leading-normal ` }, `▪︎ Intervalo de tiempo: `,
+            React.createElement('span', { className: `inline-block  ` }, 
+                React.createElement('span', { onClick: () => setTiempoIntervalo(500), className: ` cursor-pointer ${ tiempoIntervalo === 500 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `500 ms` ), ' / ',
+                React.createElement('span', { onClick: () => setTiempoIntervalo(800), className: ` cursor-pointer ${ tiempoIntervalo === 800 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `800 ms` ), ' / ',
+                React.createElement('span', { onClick: () => setTiempoIntervalo(1300), className: ` cursor-pointer ${ tiempoIntervalo === 1300 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `1300 ms` ), ' / ',
+                React.createElement('span', { onClick: () => setTiempoIntervalo(2100), className: ` cursor-pointer ${ tiempoIntervalo === 2100 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `2100 ms` ), ' / ',
+                React.createElement('span', { onClick: () => setTiempoIntervalo(3400), className: ` cursor-pointer ${ tiempoIntervalo === 3400 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `3400 ms` ), ' / ',
+                React.createElement('span', { onClick: () => setTiempoIntervalo(5600), className: ` cursor-pointer ${ tiempoIntervalo === 5600 ? ` font-semibold text-slate-700/80 ` : ` font-regular text-slate-700/60 ` }` }, `5600 ms` ) ) ),
+        React.createElement('h6', { className: ` mt-6 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-regular leading-normal lg:text-xl md:text-lg sm:text-lg text-lg  `}, `Apariencia de los selectores` ),
+        React.createElement('p', { className: ` mt-2 text-left text-slate-700/60 text-lg lg:ml-10 md:ml-8 ml-6 font-light text-slate-700/60 leading-normal ` }, `▪︎ Colores ejemplos: `,
+            React.createElement('span', { className: `inline-block  ` }, 
+                React.createElement('span', { onClick: () => setSeleccionColor("rgba(180,83,9,1)"),   className: ` inline-block font-regular h-6 w-24 bg-amber-700 cursor-pointer rounded-md text-center align-top text-white pb-7   mr-2 mt-2 border-solid border-2 ${seleccionColor === "rgba(180,83,9,1)" ? 'border-black text-opacity-100' : 'border-amber-700 text-opacity-60'} ` }, `Amber` ),
+                React.createElement('span', { onClick: () => setSeleccionColor("rgba(3,105,161,1)"),  className: ` inline-block font-regular h-6 w-24 bg-sky-700 cursor-pointer rounded-md text-center align-top text-white pb-7     mr-2 mt-2 border-solid border-2 ${seleccionColor === "rgba(3,105,161,1)" ? 'border-black text-opacity-100' : 'border-sky-700 text-opacity-60'}  ` }, `Sky` ),
+                React.createElement('span', { onClick: () => setSeleccionColor("rgba(67,56,202,1)"),  className: ` inline-block font-regular h-6 w-24 bg-indigo-700 cursor-pointer rounded-md text-center align-top text-white pb-7  mr-2 mt-2 border-solid border-2 ${seleccionColor === "rgba(67,56,202,1)" ? 'border-black text-opacity-100' : 'border-indigo-700 text-opacity-60'}  ` }, `Indigo` ),
+                React.createElement('span', { onClick: () => setSeleccionColor("rgba(162,28,175,1)"), className: ` inline-block font-regular h-6 w-24 bg-fuchsia-700 cursor-pointer rounded-md text-center align-top text-white pb-7 mr-2 mt-2 border-solid border-2 ${seleccionColor === "rgba(162,28,175,1)" ? 'border-black text-opacity-100' : 'border-fuchsia-700 text-opacity-60'}  ` }, `Fuchsia` ),
+                React.createElement('span', { onClick: () => setSeleccionColor("rgb(51,65,85)"), className: ` inline-block font-regular h-6 w-24 bg-slate-700 cursor-pointer rounded-md text-center align-top text-white pb-7             mt-2 border-solid border-2 ${seleccionColor === "rgb(51,65,85)" ? 'border-black text-opacity-100' : 'border-slate-700 text-opacity-60'}  ` }, `Slate` )
+
+                ) )
 ////////////////////////////
 ////////////////////////////
 
@@ -389,8 +418,3 @@ const discosNavInnerHeight = discosNav?.getElementsByTagName("div")[0].offsetHei
     }
 
 export default ProntoVistaPrevGal;
-
-
-
-// textIndent: lgScreen ? '1.5rem' : mdScreen ? '1.25rem' : smScreen ? '1rem' : '1rem', margin: lgScreen ? '1rem' : mdScreen ? '0.75rem' : smScreen ? '0.5rem' : '0.5rem'
-<div className={` leading-6  `}></div>
