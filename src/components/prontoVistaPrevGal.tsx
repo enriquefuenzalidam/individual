@@ -367,9 +367,14 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     if (!screenReady) return null;
 
     return React.createElement( "div", { style: mainContainerStyle },
-        React.createElement('p', { className: '  lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/80 text-justify lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:m-4 md:m-3 sm:m-2 m-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed  '},
-          'Componente aun en desarrollo conformado por una galería de previsualización para cinco imágenes, más una galería principal para navegar a través de la lista de imágenes y verlas en formato completo. Dispone de algunos ajustes personalizables y está contenida en un bloque cuyas dimensiones se adaptan a la situación.'),
-        React.createElement('h4', { className: ` mt-8 mb-10 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` }, `Galería de previsualización` ),  /// elemento demostración
+
+//////////////////////////////
+/// elemento demostración
+        React.createElement('p', { className: '  lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-justify lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:m-4 md:m-3 sm:m-2 m-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed  '},
+          'Componente aun en desarrollo, conformado por una ', React.createElement('span', { className: 'font-medium' },'galería de previsualización') ,' para cinco imágenes, más una ', React.createElement('span', { className: 'font-medium' },'galería principal') ,' para navegar a través de la lista de imágenes y verlas en formato completo. Dispone de algunos ajustes personalizables y está contenida en un bloque cuyas dimensiones se adaptan a la situación.'),
+        React.createElement('h4', { className: ` mt-8 mb-10 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` }, `Galería de previsualización` ),
+//////////////////////////////
+//////////////////////////////
 
         React.createElement( "div", { ref: scndContainerCapaRef, style: scndContainerStyle },
             React.createElement( "div", { style: hghtContainerStyle() },
@@ -411,7 +416,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             React.createElement('p', { className: ` mt-1 text-left text-slate-700/60 text-lg lg:ml-12 md:ml-10 ml-8 leading-normal font-light ` }, `┗ Alto resultante: `, React.createElement('span', { className: `font-semibold text-slate-700/80` }, `${isXlParent ? `${galAlturaXl} rem` : isLgParent ? `${galAlturaLg} rem` : isMdParent ? `${galAlturaMd} rem` : `${galAlturaSm} rem`}`)),
         React.createElement('h5', { className: ` mt-8 text-left text-slate-700/80 lg:ml-10 md:ml-8 ml-6 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` }, `Acerca de la altura de la galería de previsualización` ),
         React.createElement('div', { style: { }},
-        React.createElement('p', { className: `   lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/80 text-justify lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:m-4 md:m-3 sm:m-2 m-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed `}, 'El alto de la galería de previsualización se ajusta en relación su ancho, que es el ancho del bloque dentro del cual se encuentra inscrita. Su altura tiene tres medidas fijas: A, B, C y D, de modo que si, por ejemplo, se elige el menor, el D, esa será la altura para todos lo anchos que alcance la galería de previsualización. Pero si por ejemplo se eligiera el más alto, el A, esa altura solo se alcanzará si el ancho de la galería de previsualización supera los 1280 pixeles; para los anchos inferiores, se auto ajustará siguiendo las cuatro alturas predeterminadas. Aquí, puede ser apreciado el dinamismo descrito, seleccionando una de las alturas predeterminadas, redimesionando la ventana y viendo el alto resultante.') )
+        React.createElement('p', { className: `   lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-justify lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:m-4 md:m-3 sm:m-2 m-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed `}, 'El alto de la galería de previsualización se ajusta en relación su ancho, que es el ancho del bloque dentro del cual se encuentra inscrita. Su altura tiene tres medidas fijas: A, B, C y D, de modo que si, por ejemplo, se elige el menor, el D, esa será la altura para todos lo anchos que alcance la galería de previsualización. Pero si por ejemplo se eligiera el más alto, el A, esa altura solo se alcanzará si el ancho de la galería de previsualización supera los 1280 pixeles; para los anchos inferiores, se auto ajustará siguiendo las cuatro alturas predeterminadas. Aquí, puede ser apreciado el dinamismo descrito, seleccionando una de las alturas predeterminadas, redimesionando la ventana y viendo el alto resultante.') )
 ////////////////////////////
 ////////////////////////////
 
@@ -420,4 +425,3 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
 export default ProntoVistaPrevGal;
 
-<div className={`lg:text-2xl md:text-xl sm:text-xl text-lg `}></div>

@@ -18,7 +18,7 @@ const Home: React.FC = () => {
           React.createElement(ProntoVistaPrevGal, {
             imagenesLista: ProntoVistaImgsList,
             discosColor: 'rgb(51,65,85)',
-            iteracionTiempo: 3400,
+            iteracionTiempo: 2100,
             maxAltura: 32,
           })
       )
