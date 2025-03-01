@@ -374,7 +374,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
           'Componente aun en desarrollo, conformado por una ', React.createElement('span', { className: 'font-medium' },'galería de previsualización') ,' para cinco imágenes, más una ', React.createElement('span', { className: 'font-medium' },'galería principal') ,' para navegar a través de la lista de imágenes y verlas en formato completo. Dispone de algunos ajustes personalizables y está contenida en un bloque cuyas dimensiones se adaptan a la situación.'),
         React.createElement('h4', { className: `hyphens-none mt-10 mb-2 text-left text-slate-700/80 lg:ml-4 md:ml-3 ml-2 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` }, `Galería de previsualización` ),
         React.createElement('p', { className: ' lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:m-4 md:m-3 sm:m-2 m-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed  '},
-          'La  ', React.createElement('span', { className: 'font-medium' },'galería de previsualización') ,' incluye en su parte inferior una fila de navegación la cual indica la imagen principal en exhibición y el tiempo de iteración.'),
+          'La galería de previsualización incluye en su parte inferior una fila de navegación la cual indica la imagen principal en exhibición y el tiempo de iteración.'),
 //////////////////////////////
 //////////////////////////////
 
