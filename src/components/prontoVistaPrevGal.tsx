@@ -145,7 +145,6 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     el2.style.transform = "scale(1.1)";
                     el2.style.left = `calc( 50% - ${elementAltura * 0.5}px )`; }
                 else {
-                    
                     if (index === newBefore2 || index === newAfter2) {
                         el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.2)";
                         el2.style.zIndex = "30";
@@ -156,14 +155,12 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                         el2.style.zIndex = "40";
                         el2.style.transform = "scale(1.05)";
                         el2.style.left = (index === newBefore1) ? `calc( 25% - ${elementAltura * 0.25}px )` : `calc( 75% - ${elementAltura * 0.75}px )`; } } }
-
         });
 
         commonElements.forEach(index => {
 
             const applyStyleIfDifferent = <T extends keyof CSSStyleDeclaration>( el: HTMLElement, prop: T, value: CSSStyleDeclaration[T] ) => {
-                if (el.style[prop] !== value) el.style[prop] = value;
-            };
+                if (el.style[prop] !== value) el.style[prop] = value; };
             
             const el = sobreCapaRefs.current[index];
             if (!el || !( index === newCurrent || index === newBefore2 || index === newAfter2 || index === newBefore1 || index === newAfter1 )) return;
@@ -310,6 +307,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
     }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, handleNavClick]); 
 
+    
     const visibleImages = useMemo(() => {
 
         return imagenesLista.map((item, index) => {
@@ -318,7 +316,8 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     display: "block", position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all 700ms linear", overflow: "hidden",
                     opacity: 0, zIndex: 10, boxShadow: "none", left: "0", transform: "scale(0.01)" }
                 const sobreCapaStyle = {
-                    position: "absolute", inset: "0", transition: "all 700ms linear", backdropFilter: "grayscale(100%)", opacity: "0", backgroundColor: "transparent", cursor: "default" }
+                    position: "absolute", inset: "0", transition: "all 700ms linear", backdropFilter: "grayscale(100%)",
+                    opacity: "0", backgroundColor: "transparent", cursor: "default" }
                 const imageBlockStyleB = {
                     position: 'relative', width: '100%', height: '100%', backgroundColor: "white", display: 'flex', justifyContent: 'center', alignItems: 'center' }
                 const imageBlockStyleC = {
@@ -397,11 +396,11 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         React.createElement('h5', { className: ` hyphens-none mt-8 text-left text-slate-700/80 lg:ml-4 md:ml-3 ml-2 font-regular leading-normal lg:text-xl md:text-lg sm:text-lg text-lg  `}, `Apariencia de los selectores` ),
         React.createElement('p', { className: ` mt-2 text-left text-lg lg:ml-4 md:ml-3 ml-2 leading-normal ` },
             React.createElement('span', { className: `inline-block  ` }, 
-                React.createElement('span', { onClick: () => setSeleccionColor("rgb(180,83,9)"),   className: ` inline-block h-6 w-24 bg-amber-700   rounded-md text-center align-top text-white pb-7 mr-2 mt-2 border-solid border-2 ${seleccionColor === "rgb(180,83,9)"   ? ' font-medium border-black text-opacity-100 cursor-default' : 'font-regular border-amber-700   text-opacity-60 cursor-pointer '} ` }, `Amber` ),
-                React.createElement('span', { onClick: () => setSeleccionColor("rgb(51,65,85)"),   className: ` inline-block h-6 w-24 bg-slate-700   rounded-md text-center align-top text-white pb-7 mr-2 mt-2 border-solid border-2 ${seleccionColor === "rgb(51,65,85)"   ? ' font-medium border-black text-opacity-100 cursor-default' : 'font-regular border-slate-700   text-opacity-60 cursor-pointer '}  ` }, `Slate` ),
-                React.createElement('span', { onClick: () => setSeleccionColor("rgb(3,105,161)"),  className: ` inline-block h-6 w-24 bg-sky-700     rounded-md text-center align-top text-white pb-7 mr-2 mt-2 border-solid border-2 ${seleccionColor === "rgb(3,105,161)"  ? ' font-medium border-black text-opacity-100 cursor-default' : 'font-regular border-sky-700     text-opacity-60 cursor-pointer '}  ` }, `Sky` ),
-                React.createElement('span', { onClick: () => setSeleccionColor("rgb(67,56,202)"),  className: ` inline-block h-6 w-24 bg-indigo-700  rounded-md text-center align-top text-white pb-7 mr-2 mt-2 border-solid border-2 ${seleccionColor === "rgb(67,56,202)"  ? ' font-medium border-black text-opacity-100 cursor-default' : 'font-regular border-indigo-700  text-opacity-60 cursor-pointer '}  ` }, `Indigo` ),
-                React.createElement('span', { onClick: () => setSeleccionColor("rgb(162,28,175)"), className: ` inline-block h-6 w-24 bg-fuchsia-700 rounded-md text-center align-top text-white pb-7 mt-2      border-solid border-2 ${seleccionColor === "rgb(162,28,175)" ? ' font-medium border-black text-opacity-100 cursor-default' : 'font-regular border-fuchsia-700 text-opacity-60 cursor-pointer '}  ` }, `Fuchsia` ) ) ),
+                React.createElement('span', { onClick: () => setSeleccionColor("rgb(180,83,9)"),   className: ` inline-block h-6 w-24 bg-amber-700   rounded-md text-center align-top text-white pb-7 mr-2 mt-2 border-solid border-2 border-white ${seleccionColor === "rgb(180,83,9)"   ? ' font-medium text-opacity-100 cursor-default border-opacity-0 ' : 'font-regular border-opacity-40 text-opacity-60 cursor-pointer '} ` }, `Amber` ),
+                React.createElement('span', { onClick: () => setSeleccionColor("rgb(51,65,85)"),   className: ` inline-block h-6 w-24 bg-slate-700   rounded-md text-center align-top text-white pb-7 mr-2 mt-2 border-solid border-2 border-white ${seleccionColor === "rgb(51,65,85)"   ? ' font-medium text-opacity-100 cursor-default border-opacity-0 ' : 'font-regular border-opacity-40 text-opacity-60 cursor-pointer '}  ` }, `Slate` ),
+                React.createElement('span', { onClick: () => setSeleccionColor("rgb(3,105,161)"),  className: ` inline-block h-6 w-24 bg-sky-700     rounded-md text-center align-top text-white pb-7 mr-2 mt-2 border-solid border-2 border-white ${seleccionColor === "rgb(3,105,161)"  ? ' font-medium text-opacity-100 cursor-default border-opacity-0 ' : 'font-regular border-opacity-40 text-opacity-60 cursor-pointer '}  ` }, `Sky` ),
+                React.createElement('span', { onClick: () => setSeleccionColor("rgb(67,56,202)"),  className: ` inline-block h-6 w-24 bg-indigo-700  rounded-md text-center align-top text-white pb-7 mr-2 mt-2 border-solid border-2 border-white ${seleccionColor === "rgb(67,56,202)"  ? ' font-medium text-opacity-100 cursor-default border-opacity-0 ' : 'font-regular border-opacity-40 text-opacity-60 cursor-pointer '}  ` }, `Indigo` ),
+                React.createElement('span', { onClick: () => setSeleccionColor("rgb(162,28,175)"), className: ` inline-block h-6 w-24 bg-fuchsia-700 rounded-md text-center align-top text-white pb-7 mt-2      border-solid border-2 border-white ${seleccionColor === "rgb(162,28,175)" ? ' font-medium text-opacity-100 cursor-default border-opacity-0 ' : 'font-regular border-opacity-40 text-opacity-60 cursor-pointer '}  ` }, `Fuchsia` ) ) ),
         React.createElement('h5', { className: ` hyphens-none mt-8 text-left text-slate-700/80 lg:ml-4 md:ml-3 ml-2 font-regular leading-normal lg:text-xl md:text-lg sm:text-lg text-lg  `}, `Velocidad del iteración` ),
         React.createElement('p', { className: ` mt-2 text-left text-lg lg:ml-4 md:ml-3 ml-2 leading-normal ` },
             React.createElement('span', { className: `inline-block  ` }, 
@@ -428,4 +427,3 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     }
 
 export default ProntoVistaPrevGal;
-

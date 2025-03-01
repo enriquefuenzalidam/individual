@@ -48,7 +48,7 @@ export const metadata: Metadata = {
  
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>{
   return React.createElement('html', {lang: 'es', style: { WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', fontFamily: '"Pangea Trial", sans-serif' }},
-          React.createElement('body', {style: { WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', background: 'linear-gradient(to bottom, #fffaf4, white)', hyphens: 'auto', fontFamily: '"Pangea Trial", sans-serif' }},
+          React.createElement('body', {style: { WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', background: 'linear-gradient( 54deg, white 15%, #fffaf4 38%, white)', hyphens: 'auto', fontFamily: '"Pangea Trial", sans-serif' }},
             React.createElement(Header, null),
             children,
             React.createElement(Footer, null))

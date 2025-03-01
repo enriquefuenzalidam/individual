@@ -14,7 +14,7 @@ const Home: React.FC = () => {
           "ProntoVista"),
         React.createElement('div', { style: { transition: 'all 300ms ease-in-out', position: 'relative', display: 'block', padding: '1.5rem', borderTopLeftRadius: '0.3rem', margin: lgScreen ? '1.3rem 0' : mdScreen ? '1.6rem 0' : smScreen ? '1.1rem 0' : '0.6rem 0', overflow: 'hidden' }  },
           React.createElement('div', { style: { position: 'absolute', inset: '0', background: 'linear-gradient( to bottom, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to bottom, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 2%, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 100%)'} }),
-          React.createElement('div', { style: { position: 'absolute', inset: '0', background: 'linear-gradient( to right, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to right, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to bottom, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 100%)' } }),
+          React.createElement('div', { style: { position: 'absolute', inset: '0', background: 'linear-gradient( to right, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to right, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)' } }),
           React.createElement(ProntoVistaPrevGal, {
             imagenesLista: ProntoVistaImgsList,
             discosColor: 'rgb(51,65,85)',
