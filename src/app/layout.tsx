@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   },
   description: 'Componentes Next.Js',
   keywords: 'ProntoVista, Next.JS, Next.js Components, Next.js UI Components, Next.js Image Gallery, Next.js Image Slider, React Next.js, Next.js Open Source, Next.js Carousel, Next.js Slider, Next.js UI Library, React Components, UI Components, Web Components, Open Source UI, Image Carousel, Galería de Imágenes, Deslizador de Imágenes, Carrusel de Imágenes, JavaScript UI, Vercel Components, Componentes de React, Next.js Frontend, Frontend Development, Reusable UI Components, Next.js Free Component',
+  authors: [
+    { name: "Enrique Fuenzalida", url: "https://individual.cl/" } 
+    ],
   icons: {
     icon: [
       { rel: 'icon', type: 'image/png', sizes: '16x16', url: individualIcon16.src },
@@ -47,8 +50,8 @@ export const metadata: Metadata = {
 }
  
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>{
-  return React.createElement('html', {lang: 'es', style: { WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', fontFamily: '"Pangea Trial", sans-serif' }},
-          React.createElement('body', {style: { WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', background: 'linear-gradient( 54deg, white 15%, #fffaf4 38%, white)', hyphens: 'auto', fontFamily: '"Pangea Trial", sans-serif' }},
+  return React.createElement('html', {lang: 'es', style: { WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', fontFamily: '"Pangea Trial", sans-serif', scrollBehavior: 'smooth' }},
+          React.createElement('body', {style: { WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', background: 'linear-gradient( 54deg, white 15%, #fffaf4 38%, white)', hyphens: 'auto', fontFamily: '"Pangea Trial", sans-serif', scrollBehavior: 'smooth'  }},
             React.createElement(Header, null),
             children,
             React.createElement(Footer, null))
