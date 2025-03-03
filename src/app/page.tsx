@@ -19,7 +19,7 @@ const Home: React.FC = () => {
             imagenesLista: ProntoVistaImgsList,
             discosColor: 'rgb(51,65,85)',
             iteracionTiempo: 2100,
-            maxAltura: 32 } ) ) ) ) )
+            maxAltura: 32, } ) ) ) ) )
 }
 
 export default Home;
