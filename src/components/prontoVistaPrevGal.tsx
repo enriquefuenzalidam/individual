@@ -220,9 +220,6 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             setIsMdParent(scndContainerCapaWidth >= 640 && scndContainerCapaWidth < 768);
             setIsLgParent(scndContainerCapaWidth >= 768 && scndContainerCapaWidth < 1024);
             setIsXlParent(scndContainerCapaWidth >= 1024);
-            console.log("isMdParent is " + isMdParent);
-            console.log("isLgParent is " + isLgParent);
-            console.log("isXlParent is " + isXlParent);
         }
         handleResize();
         setScreenReady(true);
@@ -341,8 +338,6 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         [isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm]);
     const outerImagenesLista: React.CSSProperties = {
         position: "relative", width: "100%", height: "100%", overflow: "hidden", transition: "all 700ms linear" }
-    const discContainerStyle: React.CSSProperties = {
-        maxWidth: '64rem', width: '100%', margin: '0 auto', textAlign: 'center', paddingTop: '1.25rem', position: 'relative' }
 
     if (!screenReady) return null;
 
@@ -352,8 +347,8 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             React.createElement( "div", { style: hghtContainerStyle },
                 !!imagenesLista.length && React.createElement("div", { style: outerImagenesLista }, visibleImages ) ) ),
 
-        React.createElement( "div", { style: discContainerStyle },
-                !!imagenesLista.length && React.createElement( "div", null, visibleSelectores ) ) ,
+        !!discosNavegador && ( React.createElement( "div", { style: { maxWidth: '64rem', width: '100%', margin: '0 auto', textAlign: 'center', paddingTop: '1.25rem', position: 'relative' } },
+                !!imagenesLista.length && React.createElement( "div", null, visibleSelectores ) ) ),
 
         )
     }
