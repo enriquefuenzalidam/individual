@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import React from "react";
 import "./globals.css";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import ogImage from '@/assets/individualcl_ogimage.jpg';
 import individualIcon230 from '@/assets/individualcl_icon_230x230.jpg';
 import individualIcon85 from '@/assets/individualcl_icon_85x85.jpg';
@@ -52,9 +50,7 @@ export const metadata: Metadata = {
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>{
   return React.createElement('html', {lang: 'es', style: { WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', fontFamily: '"Pangea Trial", sans-serif', scrollBehavior: 'smooth' }},
           React.createElement('body', {style: { WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', background: 'linear-gradient( 54deg, white 15%, #fffaf4 38%, white)', hyphens: 'auto', fontFamily: '"Pangea Trial", sans-serif', scrollBehavior: 'smooth'  }},
-            React.createElement(Header, null),
-            children,
-            React.createElement(Footer, null))
+            children )
   );
 }
 
