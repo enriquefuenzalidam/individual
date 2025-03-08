@@ -1,10 +1,9 @@
-
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import ProntoVistaPrevGal from '@/components/prontoVistaPrevGal';
 import { ProntoVistaImgsList } from '@/components/prontoVistaImgsLists';
 import usePantallaTamagnos from '@/hooks/usepantallatamagnos';
 
-const ProntoVistaArticle: React.FC = () => {
+const prontoVistaArticulo: React.FC = () => {
   const { screenReady, lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
 
 
@@ -160,5 +159,5 @@ const ProntoVistaArticle: React.FC = () => {
         ) ) )
 }
 
-export default ProntoVistaArticle;
+export default prontoVistaArticulo;
 
