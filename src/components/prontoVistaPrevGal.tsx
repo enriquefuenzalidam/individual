@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import NextImage, { StaticImageData } from 'next/image';
@@ -27,6 +28,8 @@ const isValidColor = (color: string) => {
     return s.color !== ""; };
 
 const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, discosColor = "#000", maxAltura = 32, iteracionTiempo = 3400, navegador = true }) => {
+
+    const router = useRouter();
 
     const seleccionColor =  isValidColor(discosColor) ? discosColor : "#000" ;
 
@@ -104,8 +107,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             const el = sobreCapaRefs.current[index];
             if (el) {
                 el.style.opacity = "0";
-                el.style.backgroundColor = "transparent";
-                el.style.cursor = "default"; }
+                el.style.backgroundColor = "transparent"; }
 
             const el2 = imageRefs.current[index];
             if (el2) {
@@ -124,8 +126,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             else {
                 if (index === newCurrent) {
                     el.style.opacity = "0";
-                    el.style.backgroundColor = "transparent";
-                    el.style.cursor = "default"; }
+                    el.style.backgroundColor = "transparent"; }
                 else {
                     el.style.opacity = "0.9";
                     el.style.cursor = "pointer";
@@ -163,11 +164,9 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
             if (index === newCurrent) {
                 applyStyleIfDifferent(el,"opacity","0");
-                applyStyleIfDifferent(el,"backgroundColor","transparent");
-                applyStyleIfDifferent(el,"cursor","default"); }
+                applyStyleIfDifferent(el,"backgroundColor","transparent"); }
             else {
                 applyStyleIfDifferent(el,"opacity","0.9");
-                applyStyleIfDifferent(el,"cursor","pointer");
                 applyStyleIfDifferent(el,"backgroundColor", (index === newBefore2 || index === newAfter2) ?  "rgba(255, 255, 255, 0.7)" : "rgba(255, 255, 255, 0.3)"); } 
 
             const el2 = imageRefs.current[index];
@@ -203,12 +202,10 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             return updated; });
     };
 
-/***** New customization option ****/
     const [discosNavegador, setDiscosNavegador] = useState(true);
     useEffect(() => {
     setDiscosNavegador(navegador);
     }, [navegador]);
-/***********/
 
     const scndContainerCapaRef = useRef<(HTMLDivElement | null)>(null);
     const getContainerWidth = useCallback(() => scndContainerCapaRef.current?.offsetWidth ?? 0, [] );
@@ -252,7 +249,6 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         clearIntervalTimer();
         setCurrentGalleryIndex(newIndex);
         startInterval();
-        console.log("handleNavClick clicked")
     }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, clearIntervalTimer, startInterval]);
 
     useEffect(() => {
@@ -274,13 +270,19 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         [indexes.newBefore2, indexes.newBefore1, indexes.newAfter1, indexes.newAfter2].forEach(index => {
             const el = sobreCapaRefs.current[index];
             if (el) el.onclick = () => handleNavClick(index); });
-        
-        
+
         outerSpanDiscRefs.current.forEach((el, index) => {
             if (el) el.onclick = index !== indexes.newCurrent ? () => handleNavClick(index) : null });
-   
 
-    }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, handleNavClick]); 
+        const currentElement = sobreCapaRefs.current[indexes.newCurrent];
+        if (currentElement) {
+            currentElement.onclick = () => {
+                const newUrl = `/prontoVistaFull?page.tsx?list=default&index=${indexes.newCurrent}&color=${encodeURIComponent(discosColor)}`;
+                router.push(newUrl);
+            };
+        }
+
+    }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, handleNavClick, discosColor, router]); 
 
     
     const visibleImages = useMemo(() => {
@@ -292,7 +294,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     opacity: 0, zIndex: 10, boxShadow: "none", left: "0", transform: "scale(0.01)" }
                 const sobreCapaStyle = {
                     position: "absolute", inset: "0", transition: "all 700ms linear", backdropFilter: "grayscale(100%)",
-                    opacity: "0", backgroundColor: "transparent", cursor: "default" }
+                    opacity: "0", backgroundColor: "transparent", cursor: "pointer" }
                 const imageBlockStyleB = {
                     position: 'relative', width: '100%', height: '100%', backgroundColor: "white", display: 'flex', justifyContent: 'center', alignItems: 'center' }
                 const imageBlockStyleC = {
@@ -354,3 +356,4 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     }
 
 export default ProntoVistaPrevGal;
+

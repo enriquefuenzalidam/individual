@@ -1,7 +1,7 @@
 "use client";
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import ProntoVistaPrevGal from '@/components/prontoVistaPrevGal';
-import ProntoVistaImgsList from '@/components/prontoVistaImgsList';
+import { ProntoVistaImgsList } from '@/components/prontoVistaImgsLists';
 import usePantallaTamagnos from '@/hooks/usepantallatamagnos';
 
 const Home: React.FC = () => {
@@ -24,9 +24,7 @@ const Home: React.FC = () => {
 
   const verOcultarDiscosNavRef = useRef<HTMLDivElement | null>(null);
   const [verOcultarDiscosNavWidth, setVerOcultarDiscosNavWidth] = useState<number>(verOcultarDiscosNavRef.current?.offsetWidth ?? 880);
-  const verOcultarDiscosNavHeight = verOcultarDiscosNavRef.current?.getElementsByTagName("div")[0].offsetHeight ?? 506;
-  console.log("verOcultarDiscosNavWidth is " + verOcultarDiscosNavWidth);
-  console.log("verOcultarDiscosNavHeight is " + verOcultarDiscosNavHeight);
+  // console.log("verOcultarDiscosNavWidth is " + verOcultarDiscosNavWidth);
   // const [resultanteAlto, setResultanteAlto] = useState<number>(28);
 
 
@@ -153,8 +151,12 @@ const Home: React.FC = () => {
           React.createElement('h4', { className: ` hyphens-none lg:mt-14 md:mt-10 sm:mt-8 mt-8 text-left text-slate-700/80 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` },
             `Acerca de la altura de la galería de previsualización` ),
           React.createElement('p', { className: ` lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:my-4 md:my-3 sm:my-2 my-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed `},
-            'El alto de la galería de previsualización se ajusta en relación su ancho, que es el ancho del bloque dentro del cual se encuentra inscrita. Su altura tiene tres medidas fijas: A, B, C y D, de modo que, por ejemplo, si se elige la menor, la D, esa será la altura para todos lo anchos que alcance la galería de previsualización. Pero si se eligiera la más alta, la A, esa altura solo se alcanzará si el ancho del elemento que contiene a la galería de previsualización, fuera igual o mayor a los 1024 pixeles; para los anchos inferiores, se auto ajustará siguiendo las cuatro alturas predeterminadas.') 
-
+            'El alto de la galería de previsualización se ajusta en relación su ancho, que es el ancho del bloque dentro del cual se encuentra inscrita. Su altura tiene tres medidas fijas: A, B, C y D, de modo que, por ejemplo, si se elige la menor, la D, esa será la altura para todos lo anchos que alcance la galería de previsualización. Pero si se eligiera la más alta, la A, esa altura solo se alcanzará si el ancho del elemento que contiene a la galería de previsualización, fuera igual o mayor a los 1024 pixeles; para los anchos inferiores, se auto ajustará siguiendo las cuatro alturas predeterminadas.'),
+          React.createElement('h4', { className: ` hyphens-none lg:mt-14 md:mt-10 sm:mt-8 mt-8 text-left text-slate-700/80 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` },
+              `La galería principal` ),
+          React.createElement('p', { className: ` lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:my-4 md:my-3 sm:my-2 my-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed `},
+               'Al hacer click en la foto central en muestra, se es dirigido a la página con la galería principal donde se muestra la foto seleccionada en formato completo, junto a una fila inferior con todas las imagenes de la lista para seleccionar y verla en formato completo. La imagen selecionada presenta un borde cuyo color corresponde al seleccionado en la galería de previsualización. Además, incluye en botón para ocultar la lista de imágenes y otro para volver a la página anterior. Aún en desarrollo. '),
+              
 
         ) ) ) )
 }
