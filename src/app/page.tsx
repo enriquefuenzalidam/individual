@@ -2,12 +2,12 @@
 import React from 'react';
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import prontoVistaArticulo from './prontoVistaArticulo';
+import ProntoVistaArticulo from './prontoVistaArticulo';
 
 const Home: React.FC = () => {
   return React.createElement('main', { style: { position: 'relative', width: '100%', maxWidth: '64rem', transition: 'all 300ms ease-in-out' } },
     React.createElement(Header, null),
-    React.createElement(prontoVistaArticulo, null ),
+    React.createElement(ProntoVistaArticulo, null ),
     React.createElement(Footer, null)
    )
 }

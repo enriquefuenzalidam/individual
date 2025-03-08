@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const usePantallaTamagnos = () => {
+const UsePantallaTamagnos = () => {
     const [screenSize, setScreenSize] = useState<number | null>(null);
     const [screenReady, setScreenReady] = useState(false);
 
@@ -24,4 +24,4 @@ const usePantallaTamagnos = () => {
     }
 }
 
-export default usePantallaTamagnos;
+export default UsePantallaTamagnos;

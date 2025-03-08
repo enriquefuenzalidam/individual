@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import ProntoVistaPrevGal from '@/components/prontoVistaPrevGal';
 import { ProntoVistaImgsList } from '@/components/prontoVistaImgsLists';
-import usePantallaTamagnos from '@/hooks/usepantallatamagnos';
+import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
 
-const prontoVistaArticulo: React.FC = () => {
-  const { screenReady, lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
+const ProntoVistaArticulo: React.FC = () => {
+  const { screenReady, lgScreen, mdScreen, smScreen } = UsePantallaTamagnos();
 
 
   const isValidColor = (color: string) => typeof window !== "undefined" && CSS.supports("color", color);
@@ -159,5 +159,5 @@ const prontoVistaArticulo: React.FC = () => {
         ) ) )
 }
 
-export default prontoVistaArticulo;
+export default ProntoVistaArticulo;
 
