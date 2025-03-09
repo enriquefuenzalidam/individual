@@ -45,6 +45,9 @@ export const metadata: Metadata = {
     description: 'Componentes Next.Js',
     images: [ogImage.src],
   },
+  verification: {
+    google: "mdmaekCp2DOJ9GrrIRMmuDSQjprFrE7UNAdw0gRsVok"
+  }
 }
  
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>{
