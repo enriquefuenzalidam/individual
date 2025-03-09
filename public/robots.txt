@@ -2,6 +2,14 @@
 User-agent: *
 Allow: /
 
+# *
+User-agent: *
+Disallow: /src/
+Disallow: /app/
+Disallow: /assets/
+Disallow: /components/
+Disallow: /hooks/
+
 # Host
 Host: https://individual.cl
 
