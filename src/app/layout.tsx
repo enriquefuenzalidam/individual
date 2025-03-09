@@ -20,11 +20,11 @@ export const metadata: Metadata = {
     ],
   icons: {
     icon: [
-      { rel: 'icon', type: 'image/png', sizes: '16x16', url: individualIcon16.src },
-      { rel: 'icon', type: 'image/png', sizes: '32x32', url: individualIcon32.src },
-      { rel: 'icon', type: 'image/png', sizes: '34x34', url: individualIcon34.src },
-      { rel: 'icon', type: 'image/png', sizes: '85x85', url: individualIcon85.src },
-      { rel: 'icon', type: 'image/png', sizes: '230x230', url: individualIcon230.src },
+      { rel: 'icon', type: 'image/jpg', sizes: '16x16', url: individualIcon16.src },
+      { rel: 'icon', type: 'image/jpg', sizes: '32x32', url: individualIcon32.src },
+      { rel: 'icon', type: 'image/jpg', sizes: '34x34', url: individualIcon34.src },
+      { rel: 'icon', type: 'image/jpg', sizes: '85x85', url: individualIcon85.src },
+      { rel: 'icon', type: 'image/jpg', sizes: '230x230', url: individualIcon230.src },
       { rel: 'apple-touch-icon', sizes: '230x230', url: individualIcon230.src },
     ],
   },
