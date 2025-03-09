@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://individual.cl
+
+# Sitemaps
+Sitemap: https://individual.cl/sitemap.xml
