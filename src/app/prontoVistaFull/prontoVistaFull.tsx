@@ -44,8 +44,6 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
         const container = containerRef.current;
         const targetElement = container?.children[currentIndex] as HTMLElement;
     
-        const allImagesLoaded = loadedImages.every((loaded) => loaded);
-
         const smoothScroll = (element: HTMLElement, targetElement: HTMLElement, duration: number) => {
 
             if (typeof window === "undefined") return;
@@ -60,7 +58,7 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
             const animateScroll = (currentTime: number) => {
 
                 const elapsedTime = currentTime - startTime;
-                const progress = Math.min(elapsedTime / duration, 1); // Ensures it stops at 1 (100%)
+                const progress = Math.min(elapsedTime / duration, 1); 
 
                 const easeInOut = progress < 0.5
                     ? 4 * progress * progress * progress
@@ -75,9 +73,9 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
             requestAnimationFrame(animateScroll);
         };
     
-        if (container && targetElement && allImagesLoaded) smoothScroll(container, targetElement, 600);
+        if (container && targetElement && loadedImages[indice]) smoothScroll(container, targetElement, 600);
 
-    }, [currentIndex, loadedImages]); 
+    }, [currentIndex, loadedImages, indice]); 
 
     useEffect(() => {
 
