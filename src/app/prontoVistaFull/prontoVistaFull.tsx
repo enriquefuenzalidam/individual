@@ -58,7 +58,7 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
             const animateScroll = (currentTime: number) => {
 
                 const elapsedTime = currentTime - startTime;
-                const progress = Math.min(elapsedTime / duration, 1); 
+                const progress = Math.min(elapsedTime / duration, 1); // Ensures it stops at 1 (100%)
 
                 const easeInOut = progress < 0.5
                     ? 4 * progress * progress * progress
