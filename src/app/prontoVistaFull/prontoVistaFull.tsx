@@ -117,7 +117,7 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
     }, [seleccionColor])
 
     const loadingImageThumbnail = useMemo(()  => loadingImage({ alto: 24, fondo: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)' }), [loadingImage]);
-    const loadingImageFullImage = useMemo(()  => loadingImage({ alto: 4, color: 'rgba(255,255,255,0.5)' }), [loadingImage])
+    const loadingImageFullImage = useMemo(()  => loadingImage({ alto: 9, color: 'rgba(255,255,255,0.3)' }), [loadingImage])
 
 
     if (!screenReady ) return;
