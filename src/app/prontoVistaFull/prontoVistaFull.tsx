@@ -42,23 +42,32 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
         if (typeof window === "undefined") return;
     
         const container = containerRef.current;
+        
         const targetElement = container?.children[currentIndex] as HTMLElement;
     
-        const smoothScroll = (element: HTMLElement, targetElement: HTMLElement, duration: number) => {
+        const smoothScroll = (element: HTMLElement, targetIndex: number, duration: number) => {
 
             if (typeof window === "undefined") return;
 
             const startScroll = element.scrollLeft;
             const startTime = performance.now();
 
-            const elementWidth = targetElement.offsetWidth;
-            const parentWidth = element.offsetWidth;
-            const targetScroll = targetElement.offsetLeft - parentWidth / 2 + elementWidth / 2; 
+            const thumbnailSize = tnScreen ? 6 : smScreen ? 7 : mdScreen ? 8 : lgScreen ? 9 : xlScreen ? 10 : 10;
+            const paddingSize = 1;
+            const resultingThumbnailSize =  thumbnailSize - ( paddingSize * 2 );
+
+            const thumbnailSizePx = 16 * resultingThumbnailSize;
+            const marginSizePx = 0.15 * 16;
+
+            const thumbnailAndMarginsSize = ( marginSizePx * 2 ) + thumbnailSizePx
+            const halfThumbnailAndMarginSize = thumbnailAndMarginsSize / 2;
+
+            const targetScroll = ( thumbnailAndMarginsSize * targetIndex ) + halfThumbnailAndMarginSize;
 
             const animateScroll = (currentTime: number) => {
 
                 const elapsedTime = currentTime - startTime;
-                const progress = Math.min(elapsedTime / duration, 1); // Ensures it stops at 1 (100%)
+                const progress = Math.min(elapsedTime / duration, 1);
 
                 const easeInOut = progress < 0.5
                     ? 4 * progress * progress * progress
@@ -69,13 +78,13 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
                 if (elapsedTime < duration) requestAnimationFrame(animateScroll);
 
             };
-        
+
             requestAnimationFrame(animateScroll);
         };
-    
-        if (container && targetElement && loadedImages[indice]) smoothScroll(container, targetElement, 600);
 
-    }, [currentIndex, loadedImages, indice]); 
+        if (container && targetElement) smoothScroll(container, currentIndex, 600);
+
+    }, [currentIndex, imagenesLista.length, xlScreen, lgScreen, mdScreen, smScreen, tnScreen ]); 
 
     useEffect(() => {
 
@@ -116,7 +125,7 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
     return React.createElement('div', null,
 
                 React.createElement('section', { style: { display: 'block', position: 'absolute', inset: '0', background: 'black' }},
-                    !loadedImages[indice] && loadingImageFullImage,
+                    !loadedImages[currentIndex] && loadingImageFullImage,
                     imagenesLista?.map((item, index) => React.createElement('div', {key: index, style: { display: 'block', position: 'absolute', inset: '0', background: 'transparent', opacity: currentIndex === index ? '1' : '0', transition: 'opacity 0.5s ease-in-out' } },
                         React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', style: { width: '100%', height: '100%', objectFit: 'contain', opacity: loadedImages[index] ? 1 : 0 } } ) ) ) ),
 
