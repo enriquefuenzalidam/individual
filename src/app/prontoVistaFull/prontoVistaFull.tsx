@@ -125,7 +125,7 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
     return React.createElement('div', null,
 
                 React.createElement('section', { style: { display: 'block', position: 'absolute', inset: '0', background: 'black' }},
-                    !loadedImages[currentIndex] && loadingImageFullImage,
+                    loadingImageFullImage,
                     imagenesLista?.map((item, index) => React.createElement('div', {key: index, style: { display: 'block', position: 'absolute', inset: '0', background: 'transparent', opacity: currentIndex === index ? '1' : '0', transition: 'opacity 0.5s ease-in-out' } },
                         React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', style: { width: '100%', height: '100%', objectFit: 'contain', opacity: loadedImages[index] ? 1 : 0 } } ) ) ) ),
 
