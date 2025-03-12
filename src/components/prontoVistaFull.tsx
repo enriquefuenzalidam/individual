@@ -86,13 +86,15 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
 
     }, [currentIndex, imagenesLista.length, xlScreen, lgScreen, mdScreen, smScreen, tnScreen ]); 
 
+    const mainRef = useRef<HTMLDivElement | null>(null);
+    const mainRefCurrent = mainRef?.current;
     useEffect(() => {
-
-        if (typeof window === "undefined") return;
 
         const handleResize = () => {
 
-            const width = window.innerWidth;
+            if (!mainRefCurrent) return;
+
+            const width = mainRefCurrent.offsetWidth;
 
             setXlScreen(width >= 1280);
             setLgScreen(width >= 1024 && width < 1280);
@@ -105,10 +107,9 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
         handleResize();
         window.addEventListener("resize", handleResize);
         setScreenReady(true);
-
         return () => window.removeEventListener("resize", handleResize);
 
-    }, []);
+    }, [mainRefCurrent]);
 
     const loadingImage = useCallback(({ color = seleccionColor, alto = 24, fondo = 'black' }) => {
         return React.createElement('div', { style: { color: color, position: 'absolute', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: fondo, transition: 'all 300ms ease-in-out' } },
@@ -122,7 +123,7 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
 
     if (!screenReady ) return;
 
-    return React.createElement('div', null,
+    return React.createElement('div', {ref: mainRef, style: { position: 'relative', height: '100%'} },
 
                 React.createElement('section', { style: { display: 'block', position: 'absolute', inset: '0', background: 'black' }},
                     loadingImageFullImage,

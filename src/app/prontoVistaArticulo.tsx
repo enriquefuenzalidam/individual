@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState, useRef } from 'react';
 import ProntoVistaPrevGal from '@/components/prontoVistaPrevGal';
 import { ProntoVistaImgsList } from '@/components/prontoVistaImgsLists';
 import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
+import ProntoVistaFull from '@/components/prontoVistaFull';
 
 const ProntoVistaArticulo: React.FC = () => {
 
@@ -85,7 +86,6 @@ const ProntoVistaArticulo: React.FC = () => {
                 maxAltura: cajaAltura,
                 navegador: discosNavegador, } ) ) ),
 
-
           React.createElement('h4', { className: ` hyphens-none lg:mt-16 md:mt-12 sm:mt-8 mt-8 text-left text-slate-700/80 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` },
             `Opciones personalizables` ),
           React.createElement('p', { className: 'lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:my-4 md:my-3 sm:my-2 my-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed  ' },
@@ -152,8 +152,10 @@ const ProntoVistaArticulo: React.FC = () => {
             'El alto de la galería de previsualización se ajusta en relación su ancho, que es el ancho del bloque dentro del cual se encuentra inscrita. Su altura tiene tres medidas fijas: A, B, C y D, de modo que, por ejemplo, si se elige la menor, la D, esa será la altura para todos lo anchos que alcance la galería de previsualización. Pero si se eligiera la más alta, la A, esa altura solo se alcanzará si el ancho del elemento que contiene a la galería de previsualización, fuera igual o mayor a los 1024 pixeles; para los anchos inferiores, se auto ajustará siguiendo las cuatro alturas predeterminadas.'),
           React.createElement('h4', { className: ` hyphens-none lg:mt-14 md:mt-10 sm:mt-8 mt-8 text-left text-slate-700/80 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` },
               `La galería principal` ),
-          React.createElement('p', { className: ` lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:my-4 md:my-3 sm:my-2 my-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed `},
-               'Al hacer click en la foto central de la ', React.createElement('span', { style: { fontWeight: '500' }}, 'galería de previsualización'), ' se es dirigido a la ', React.createElement('span', { style: { fontWeight: '500' }}, 'galería de principal'), ' donde se muestra la foto seleccionada en formato completo, una fila inferior con todas las imagenes de la lista para seleccionar y ver en formato completo, un botón para ocultar la lista de imágenes y otro para volver a la página anterior. La imagen seleccionada es presentada en la fila inferior con un borde cuyo color corresponde al seleccionado en la galería de previsualización. Aún en desarrollo. '),
+          React.createElement('p', { className: ` lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:mt-4 md:mt-3 sm:mt-2 mt-2 lg:mb-16 md:mb-12 sm:mb-8 mb-8  lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed `},
+               'Al hacer click en la foto central de la ', React.createElement('span', { style: { fontWeight: '500' }}, 'galería de previsualización'), ' se es dirigido a la ', React.createElement('span', { style: { fontWeight: '500' }}, 'galería de principal'), ' donde se muestra la foto seleccionada en formato completo, una fila inferior deslizble con todas las imagenes de la lista para seleccionar y ver en formato completo, un botón para ocultar la lista de imágenes y otro para volver a la página anterior. La imagen seleccionada es presentada en la fila inferior con un borde cuyo color corresponde al seleccionado en la galería de previsualización. '),
+          React.createElement('div', { style: { width: '100%', aspectRatio: '16/9' }, className: 'rounded-md overflow-hidden' },
+            React.createElement(ProntoVistaFull, { imagenesLista: ProntoVistaImgsList, indice: 18, seleccColor: seleccionColor }) )
 
         ) ) )
 }

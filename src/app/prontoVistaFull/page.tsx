@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import React, { Suspense } from "react";
-import ProntoVistaFull from "@/app/prontoVistaFull/prontoVistaFull";
+import ProntoVistaFull from "@/components/prontoVistaFull";
 import { ProntoVistaImgsList } from "@/components/prontoVistaImgsLists";
 import { StaticImageData } from "next/image";
 
@@ -10,7 +10,6 @@ const imageLists: Record<string, (string | StaticImageData)[]> = {
     default: ProntoVistaImgsList
 };
 
-// ✅ Wrap in a Suspense component
 const Page: React.FC = () => {
     return React.createElement(Suspense, { fallback: null }, React.createElement(PageContent));
 };
