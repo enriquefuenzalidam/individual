@@ -144,13 +144,13 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     if (index === newBefore2 || index === newAfter2) {
                         el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.2)";
                         el2.style.zIndex = "30";
-                        el2.style.transform = "scale(0.95)";
+                        el2.style.transform = "scale(0.92)";
                         el2.style.left = (index === newBefore2) ? `0%` : `calc( 100% - ${elementAltura}px )`; }
                     else {
                         el2.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)";
                         el2.style.zIndex = "40";
                         el2.style.transform = "scale(1.05)";
-                        el2.style.left = (index === newBefore1) ? `calc( 25% - ${elementAltura * 0.25}px )` : `calc( 75% - ${elementAltura * 0.75}px )`; } } }
+                        el2.style.left = (index === newBefore1) ? `calc( 20% - ${elementAltura * 0.2}px )` : `calc( 80% - ${elementAltura * 0.8}px )`; } } }
         });
 
         commonElements.forEach(index => {
@@ -182,13 +182,13 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 if (index === newBefore2 || index === newAfter2) {
                     applyStyleIfDifferent(el2, "boxShadow","0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.2)");
                     applyStyleIfDifferent(el2, "zIndex","30");
-                    applyStyleIfDifferent(el2, "transform","scale(0.95)");
+                    applyStyleIfDifferent(el2, "transform","scale(0.92)");
                     applyStyleIfDifferent(el2, "left", (index === newBefore2) ? "0%" : `calc( 100% - ${elementAltura}px )`); }
                 else {
                     applyStyleIfDifferent(el2, "boxShadow","0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)");
                     applyStyleIfDifferent(el2, "zIndex","40");
                     applyStyleIfDifferent(el2, "transform","scale(1.05)");
-                    applyStyleIfDifferent(el2, "left", (index === newBefore1) ? `calc( 25% - ${elementAltura * 0.25}px )` : `calc( 75% - ${elementAltura * 0.75}px )`); } } 
+                    applyStyleIfDifferent(el2, "left", (index === newBefore1) ? `calc( 20% - ${elementAltura * 0.2}px )` : `calc( 80% - ${elementAltura * 0.8}px )`); } } 
 
         } ) }, [isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm]);
 
