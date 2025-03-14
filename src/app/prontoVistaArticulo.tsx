@@ -54,8 +54,8 @@ const ProntoVistaArticulo: React.FC = () => {
 
   const [discosNavegador, setDiscosNavegador] = useState<boolean>(true);
 
-
   if (!screenReady) return null;
+
   return React.createElement('section', { style: { position: 'relative', transition: 'all 300ms ease-in-out' } },
       React.createElement('div', { style: { transition: 'all 300ms ease-in-out', padding: lgScreen ? '5rem 3rem' : mdScreen ? '3.5rem 2.1rem' : smScreen ? '3rem 1.75rem' : '1.8rem 0.5rem' }},
         React.createElement('h3', { style: { margin: lgScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem' /*, marginBottom: lgScreen ? '1.5rem' : mdScreen ? '1rem' : smScreen ? '0.5rem' : '0.25rem'*/, textAlign: 'left', transition: 'all 300ms ease-in-out', fontWeight: '400', color: 'rgb(100,116,139)', fontSize: lgScreen ? '2.2rem': mdScreen ? '2rem' : smScreen ? '1.7rem' : '1.5rem', lineHeight: lgScreen ? '1' : mdScreen ? '2.5rem' : smScreen ? '2.25rem' : '2rem' } },
@@ -156,7 +156,6 @@ const ProntoVistaArticulo: React.FC = () => {
                'Al hacer click en la foto central de la ', React.createElement('span', { style: { fontWeight: '500' }}, 'galería de previsualización'), ' se es dirigido a la ', React.createElement('span', { style: { fontWeight: '500' }}, 'galería de principal'), ' donde se muestra la foto seleccionada en formato completo, una fila inferior deslizble con todas las imagenes de la lista para seleccionar y ver en formato completo, un botón para ocultar la lista de imágenes y otro para volver a la página anterior. La imagen seleccionada es presentada en la fila inferior con un borde cuyo color corresponde al seleccionado en la galería de previsualización. '),
           React.createElement('div', { style: { width: '100%', aspectRatio: '16/9' }, className: 'rounded-md overflow-hidden' },
             React.createElement(ProntoVistaFull, { imagenesLista: ProntoVistaImgsList, indice: 18, seleccColor: seleccionColor }) )
-
         ) ) )
 }
 

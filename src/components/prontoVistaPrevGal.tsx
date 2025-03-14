@@ -1,6 +1,5 @@
 import { useRouter } from "next/navigation";
-import React from "react";
-import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import NextImage, { StaticImageData } from 'next/image';
 
 interface ProntoVistaPrevGalProps {
@@ -59,7 +58,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             newSet, prevSet, commonElements, exclusiveNewElements, nonCommonElements } };
 
     const tiempoIntervalo = iteracionTiempo;
-    const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(2);
+    const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(0);
     const [isMdParent, setIsMdParent] = useState<boolean>(false);
     const [isLgParent, setIsLgParent] = useState<boolean>(false);
     const [isXlParent, setIsXlParent] = useState<boolean>(false);
@@ -291,6 +290,18 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
     const loadingImageThumbnail = useMemo(()  => loadingImage({ alto: 24 }), [loadingImage])
 
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+ 
+    const maximizeSign = useCallback(({ colors = seleccionColor, alto = 24, ndx = 0  }) => {
+        return React.createElement('div', { style: { color: colors, position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', opacity: ndx === hoveredIndex ? 1 : 0, transition: 'opacity '+ tiempoIntervalo/8 +'ms ease-in-out' } },
+            React.createElement('svg', { style: { width: alto+'%', height: alto+'%', background: 'rgba(0,0,0,0.24)', borderRadius: '0.125rem' }, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: 'transparent' },
+                React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M21 9V3H15' } ),
+                React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M3 15V21H9' } ),
+                React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M21 3L13.5 10.5' } ),
+                React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M10.5 13.5L3 21' } )
+            ) )
+    }, [seleccionColor, hoveredIndex, tiempoIntervalo])
+
     const visibleImages = useMemo(() => {
 
         return imagenesLista.map((item, index) => {
@@ -308,15 +319,16 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 const imageElementStyle: React.CSSProperties = {
                     objectFit: 'cover', transition: 'opacity 700ms linear', opacity: loadedImages[index] ? 1 : 0 }
 
-                return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA },
+                return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
                     React.createElement("div", { style: imageBlockStyleB },
                         !loadedImages[index] && loadingImageThumbnail,
                         React.createElement(NextImage, { onLoad: () => handleImageLoad(index), sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image', fill: true, style: imageElementStyle }),
+                        currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index }),
                         React.createElement("div", { ref: (el) => { sobreCapaRefs.current[index] = el as HTMLDivElement | null }, style: sobreCapaStyle })
                     )
                 )
             });
-    }, [imagenesLista, loadedImages, loadingImageThumbnail]);
+    }, [currentGalleryIndex, imagenesLista, loadedImages, loadingImageThumbnail, maximizeSign ]);
 
     const visibleSelectores = useMemo(() => {
 
@@ -324,10 +336,10 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         return imagenesLista.map((_, index) => {
 
             const outerSpanDisc = {
-                position: 'relative', margin: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: '9999px', overflow: 'hidden', height: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem', transition: 'all 300ms linear', backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                position: 'relative', margin: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', overflow: 'hidden', height: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem', transition: 'all 300ms linear', backgroundColor: 'rgba(0, 0, 0, 0.2)',
                 cursor: 'pointer', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
             const innerSpanDisc = {
-                pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', borderRadius: '9999px', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity 700ms linear',
+                pointerEvents: 'none', display: 'inline-block', position: 'absolute', left: '0', top: '0', borderRadius: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity 700ms linear',
                 opacity: '0', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
 
             return React.createElement("span", { key: index, ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
