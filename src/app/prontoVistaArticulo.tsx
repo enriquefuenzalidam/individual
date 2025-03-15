@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ProntoVistaPrevGal from '@/components/prontoVistaPrevGal';
 import { ProntoVistaImgsList } from '@/components/prontoVistaImgsLists';
 import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
@@ -10,55 +10,31 @@ const ProntoVistaArticulo: React.FC = () => {
 
   const isValidColor = (color: string) => typeof window !== "undefined" && CSS.supports("color", color);
 
-  const [isMdParent, setIsMdParent] = useState<boolean>(false);
-  const [isLgParent, setIsLgParent] = useState<boolean>(false);
-  const [isXlParent, setIsXlParent] = useState<boolean>(false);
-
   const [cajaAltura, setCajaAltura] = useState(32);
-  // const galAlturaXl = Math.min(32, Math.max(18, cajaAltura));
-  // const galAlturaLg = Math.min(32, Math.max(18, galAlturaXl - 4));
-  // const galAlturaMd = Math.min(32, Math.max(18, galAlturaLg - 8));
-  // const galAlturaSm = Math.min(32, Math.max(18, galAlturaMd - 2));
+
   const [tiempoIntervalo, setTiempoIntervalo] = useState(2100);
+
   const [seleccionColor, setSeleccionColor] = useState(() => isValidColor("rgb(51,65,85)") ? "rgb(51,65,85)" : "#000");
 
+  const [discosNavegador, setDiscosNavegador] = useState<boolean>(true);
+
   const verOcultarDiscosNavRef = useRef<HTMLDivElement | null>(null);
-  const [verOcultarDiscosNavWidth, setVerOcultarDiscosNavWidth] = useState<number>(verOcultarDiscosNavRef.current?.offsetWidth ?? 880);
-  // console.log("verOcultarDiscosNavWidth is " + verOcultarDiscosNavWidth);
-  // const [resultanteAlto, setResultanteAlto] = useState<number>(28);
 
+  // const [verOcultarDiscosNavCurrentHeight, setVerOcultarDiscosNavCurrentHeight] = useState<number>(1);
 
-  const handleResize = useCallback(() => {
-    if (!verOcultarDiscosNavRef.current) return;
-    setVerOcultarDiscosNavWidth(verOcultarDiscosNavRef.current?.offsetWidth);
-    setIsMdParent(verOcultarDiscosNavWidth >= 640 && verOcultarDiscosNavWidth < 768);
-    setIsLgParent(verOcultarDiscosNavWidth >= 768 && verOcultarDiscosNavWidth < 1024);
-    setIsXlParent(verOcultarDiscosNavWidth >= 1024);
-    console.log("isMdParent is " + isMdParent);
-    console.log("isLgParent is " + isLgParent);
-    console.log("isXlParent is " + isXlParent);
-    // setResultanteAlto(isXlParent ? galAlturaXl : isLgParent ? galAlturaLg : isMdParent ? galAlturaMd : galAlturaSm);
-    // console.log("setResultanteAlto is " + setResultanteAlto);
-  }, [isMdParent, isLgParent, isXlParent, verOcultarDiscosNavWidth]);
+  // const remToPixels = (remValue: number): number => remValue * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [handleResize]);
 
   useEffect(() => {
     if (isValidColor(seleccionColor)) setSeleccionColor(seleccionColor)
   }, [seleccionColor]);
 
 
-  const [discosNavegador, setDiscosNavegador] = useState<boolean>(true);
-
   if (!screenReady) return null;
 
   return React.createElement('section', { style: { position: 'relative', transition: 'all 300ms ease-in-out' } },
       React.createElement('div', { style: { transition: 'all 300ms ease-in-out', padding: lgScreen ? '5rem 3rem' : mdScreen ? '3.5rem 2.1rem' : smScreen ? '3rem 1.75rem' : '1.8rem 0.5rem' }},
-        React.createElement('h3', { style: { margin: lgScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem' /*, marginBottom: lgScreen ? '1.5rem' : mdScreen ? '1rem' : smScreen ? '0.5rem' : '0.25rem'*/, textAlign: 'left', transition: 'all 300ms ease-in-out', fontWeight: '400', color: 'rgb(100,116,139)', fontSize: lgScreen ? '2.2rem': mdScreen ? '2rem' : smScreen ? '1.7rem' : '1.5rem', lineHeight: lgScreen ? '1' : mdScreen ? '2.5rem' : smScreen ? '2.25rem' : '2rem' } },
+        React.createElement('h3', { style: { margin: lgScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', textAlign: 'left', transition: 'all 300ms ease-in-out', fontWeight: '400', color: 'rgb(100,116,139)', fontSize: lgScreen ? '2.2rem': mdScreen ? '2rem' : smScreen ? '1.7rem' : '1.5rem', lineHeight: lgScreen ? '1' : mdScreen ? '2.5rem' : smScreen ? '2.25rem' : '2rem' } },
           "ProntoVista"),
         React.createElement('div', { style: { transition: 'all 300ms ease-in-out', position: 'relative', display: 'block', padding: '1.5rem', borderTopLeftRadius: '0.3rem', overflow: 'hidden' }  },
           React.createElement('div', { style: { position: 'absolute', inset: '0', background: 'linear-gradient( to bottom, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to bottom, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 2%, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 100%)', pointerEvents: 'none' } }),
@@ -107,10 +83,10 @@ const ProntoVistaArticulo: React.FC = () => {
           React.createElement('h5', { className: ` hyphens-none lg:mt-8 md:mt-6 sm:mt-5 mt-5 text-left text-slate-700/80 font-regular leading-normal lg:text-xl md:text-lg sm:text-lg text-lg  `},
             `Visualización de los selectores de navegación` ),
           React.createElement('p', { className: ` lg:mt-2 mt-1 text-left text-lg leading-normal ` },
-            React.createElement('span', { onClick: () => setDiscosNavegador(true),  className: ` inline-block h-6 w-24 rounded-md text-center align-top pb-7 mr-2 mt-2 border-solid border-2 border-slate-700 ${  discosNavegador ? 'font-semibold text-slate-700/80 border-opacity-90 cursor-default' : 'font-regular text-slate-700/60 border-opacity-50 cursor-pointer ' }` },
-              'Mostrar' ),
-            React.createElement('span', { onClick: () => setDiscosNavegador(false), className: ` inline-block h-6 w-24 rounded-md text-center align-top pb-7      mt-2 border-solid border-2 border-slate-700 ${ !discosNavegador ? 'font-semibold text-slate-700/80 border-opacity-90 cursor-default' : 'font-regular text-slate-700/60 border-opacity-50 cursor-pointer ' }` },
-              'Ocultar' ) ),
+            React.createElement('span', { onClick: !discosNavegador ? () => setDiscosNavegador(true) : undefined, className: ` inline-block h-6 w-24 rounded-md text-center align-top pb-7 mr-2 mt-2 border-solid border-2 border-slate-700 ${  discosNavegador ? 'font-semibold text-slate-700/80 border-opacity-90 cursor-default' : 'font-regular text-slate-700/60 border-opacity-50 cursor-pointer ' }` },
+              discosNavegador ? 'Visible' : 'Mostrar' ),
+            React.createElement('span', { onClick: discosNavegador ? () => setDiscosNavegador(false) : undefined, className: ` inline-block h-6 w-24 rounded-md text-center align-top pb-7      mt-2 border-solid border-2 border-slate-700 ${ !discosNavegador ? 'font-semibold text-slate-700/80 border-opacity-90 cursor-default' : 'font-regular text-slate-700/60 border-opacity-50 cursor-pointer ' }` },
+              discosNavegador ? 'Ocultar' : 'Oculto' ) ),
           React.createElement('h5', { className: ` hyphens-none lg:mt-8 md:mt-6 sm:mt-5 mt-5 text-left text-slate-700/80 font-regular leading-normal lg:text-xl md:text-lg sm:text-lg text-lg  `},
             `Velocidad del iteración` ),
           React.createElement('p', { className: ` lg:mt-2 mt-1 text-left text-lg leading-normal ` },
@@ -137,15 +113,7 @@ const ProntoVistaArticulo: React.FC = () => {
             React.createElement('span', { onClick: () => setCajaAltura(20), className: ` inline-block h-6 w-24 rounded-md text-center align-top pb-7 mr-2 mt-2 border-solid border-2 border-slate-700 ${ cajaAltura === 20 ? 'font-semibold text-slate-700/80 border-opacity-90 cursor-default ' : 'font-regular text-slate-700/60 border-opacity-50 cursor-pointer ' } `},
               `Altura C`),
             React.createElement('span', { onClick: () => setCajaAltura(18), className: ` inline-block h-6 w-24 rounded-md text-center align-top pb-7 mr-2 mt-2 border-solid border-2 border-slate-700 ${ cajaAltura === 18 ? 'font-semibold text-slate-700/80 border-opacity-90 cursor-default ' : 'font-regular text-slate-700/60 border-opacity-50 cursor-pointer ' } `},
-              `Altura D`) ), /*
-          React.createElement('p', { className: ` mt-2 text-left text-slate-700/80 text-lg lg:ml-6 md:ml-5 ml-4 leading-normal font-light `},
-            `Altura resultante: `,
-            React.createElement('span', { className: `font-semibold text-slate-700/80` },
-              `${resultanteAlto} rem`)), 
-          React.createElement('p', { className: ` mt-1 text-left text-slate-700/80 text-lg lg:ml-6 md:ml-5 ml-4 leading-normal font-light `},
-            `Ancho del elemento contenedor: `,
-            React.createElement('span', { className: `font-semibold text-slate-700/80` },
-              `${verOcultarDiscosNavWidth} px`)), */
+              `Altura D`) ),
           React.createElement('h4', { className: ` hyphens-none lg:mt-14 md:mt-10 sm:mt-8 mt-8 text-left text-slate-700/80 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` },
             `Acerca de la altura de la galería de previsualización` ),
           React.createElement('p', { className: ` lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:my-4 md:my-3 sm:my-2 my-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed `},
@@ -154,8 +122,13 @@ const ProntoVistaArticulo: React.FC = () => {
               `La galería principal` ),
           React.createElement('p', { className: ` lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:mt-4 md:mt-3 sm:mt-2 mt-2 lg:mb-8 md:mb-7 sm:mb-6 mb-6  lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed `},
                'Al hacer click en la foto central de la ', React.createElement('span', { style: { fontWeight: '500' }}, 'galería de previsualización'), ' se es dirigido a la ', React.createElement('span', { style: { fontWeight: '500' }}, 'galería de principal'), ' donde se muestra la foto seleccionada en formato completo, una fila inferior deslizble con todas las imagenes de la lista para seleccionar y ver en formato completo, un botón para ocultar la lista de imágenes y otro para volver a la página anterior. La imagen seleccionada es presentada en la fila inferior con un borde cuyo color corresponde al seleccionado en la galería de previsualización. '),
+
           React.createElement('div', { style: { width: '100%', aspectRatio: '16/9' }, className: 'rounded-md overflow-hidden' },
-            React.createElement(ProntoVistaFull, { imagenesLista: ProntoVistaImgsList, indice: 18, seleccColor: seleccionColor }) )
+            React.createElement(ProntoVistaFull, {
+              imagenesLista: ProntoVistaImgsList,
+              indice: 18,
+              seleccColor: seleccionColor }) )
+
         ) ) )
 }
 
