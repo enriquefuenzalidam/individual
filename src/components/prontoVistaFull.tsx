@@ -25,17 +25,20 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
     const [smScreen, setSmScreen] = useState(false);
     const [tnScreen, setTnScreen] = useState(false);
 
-    const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
     const [currentIndex, setCurrentIndex] = useState<number>(indice || 0);
     const containerRef = useRef<HTMLDivElement | null>(null);
 
+    const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
     const handleImageLoad = (index: number) => {
         setLoadedImages((prev) => {
             if (prev[index]) return prev;
             const updated = [...prev];
             updated[index] = true;
-            return updated; });
-    };
+            return updated; }); };
+
+    const thumbnailSize = useMemo(() => {
+        return tnScreen ? 6 : smScreen ? 7 : mdScreen ? 8 : lgScreen ? 9 : xlScreen ? 10 : 10;
+    }, [tnScreen, smScreen, mdScreen, lgScreen, xlScreen]);
 
     useEffect(() => {
 
@@ -52,7 +55,6 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
             const startScroll = element.scrollLeft;
             const startTime = performance.now();
 
-            const thumbnailSize = tnScreen ? 6 : smScreen ? 7 : mdScreen ? 8 : lgScreen ? 9 : xlScreen ? 10 : 10;
             const paddingSize = 1;
             const resultingThumbnailSize =  thumbnailSize - ( paddingSize * 2 );
 
@@ -83,7 +85,7 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
 
         if (container && targetElement) smoothScroll(container, currentIndex, 600);
 
-    }, [currentIndex, imagenesLista.length, xlScreen, lgScreen, mdScreen, smScreen, tnScreen ]); 
+    }, [thumbnailSize, currentIndex, xlScreen, lgScreen, mdScreen, smScreen, tnScreen ]); 
 
     const mainRef = useRef<HTMLDivElement | null>(null);
     const mainRefCurrent = mainRef?.current;
@@ -125,7 +127,7 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
     return React.createElement('div', {ref: mainRef, style: { position: 'relative', height: '100%'} },
 
                 React.createElement('section', { role: "region", "aria-label": "Full-size Image",  style: { display: 'block', position: 'absolute', inset: '0', background: 'black' }},
-                    loadingImageFullImage,
+                    !(loadedImages.every((loaded) => loaded)) && loadingImageFullImage,
                     imagenesLista?.map((item, index) => React.createElement('div', {key: index, style: { display: 'block', position: 'absolute', inset: '0', background: 'transparent', opacity: currentIndex === index ? '1' : '0', transition: 'opacity 0.5s ease-in-out' } },
                         React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', style: { width: '100%', height: '100%', objectFit: 'contain', opacity: loadedImages[index] ? 1 : 0 } } ) ) ) ),
 
