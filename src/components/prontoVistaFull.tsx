@@ -127,8 +127,8 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
     return React.createElement('div', {ref: mainRef, style: { position: 'relative', height: '100%'} },
 
                 React.createElement('section', { role: "region", "aria-label": "Full-size Image",  style: { display: 'block', position: 'absolute', inset: '0', background: 'black' }},
-                    !(loadedImages.every((loaded) => loaded)) && loadingImageFullImage,
                     imagenesLista?.map((item, index) => React.createElement('div', {key: index, style: { display: 'block', position: 'absolute', inset: '0', background: 'transparent', opacity: currentIndex === index ? '1' : '0', transition: 'opacity 0.5s ease-in-out' } },
+                        !loadedImages[currentIndex]  && loadingImageFullImage, //!(loadedImages.every((loaded) => loaded))
                         React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', style: { width: '100%', height: '100%', objectFit: 'contain', opacity: loadedImages[index] ? 1 : 0 } } ) ) ) ),
 
                 React.createElement('section', { role: "region", "aria-label": "Image Thumbnails", style: { display: 'block', position: 'absolute', bottom: '0', left: '0', width: '100%', height: tnScreen ? '6rem' : smScreen ? '7rem' : mdScreen ? '8rem' : lgScreen ? '9rem' : xlScreen ? '10rem' : '10rem', overflow: 'hidden', maskImage: 'linear-gradient( to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 13%, rgba(0,0,0,1) 87%, rgba(0,0,0,0) 100%)', transition: 'height 300ms ease-in-out' } },
