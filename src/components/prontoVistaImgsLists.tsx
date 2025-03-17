@@ -25,13 +25,11 @@ import pexelsrandomimage24 from '@/assets/pexelsrandomimages/pexels-travelerchit
 import pexelsrandomimage25 from '@/assets/pexelsrandomimages/pexels-zeynep-sude-emek-193601188-26770601.jpg';
 
 export const ProntoVistaImgsList = [
-    pexelsrandomimage01,
-    pexelsrandomimage02, pexelsrandomimage03, pexelsrandomimage04,
-    pexelsrandomimage05, pexelsrandomimage06, pexelsrandomimage07,
-    pexelsrandomimage08, pexelsrandomimage09, pexelsrandomimage10,
-    pexelsrandomimage11, pexelsrandomimage12, pexelsrandomimage13,
-    pexelsrandomimage14, pexelsrandomimage15, pexelsrandomimage16,
-    pexelsrandomimage17, pexelsrandomimage18, pexelsrandomimage19,
-    pexelsrandomimage20, pexelsrandomimage21, pexelsrandomimage22,
-    pexelsrandomimage23, pexelsrandomimage24, pexelsrandomimage25
+    pexelsrandomimage01, pexelsrandomimage02, pexelsrandomimage03, pexelsrandomimage04,
+    pexelsrandomimage05, pexelsrandomimage06, pexelsrandomimage07, pexelsrandomimage08,
+    pexelsrandomimage09, pexelsrandomimage10, pexelsrandomimage11, pexelsrandomimage12,
+    pexelsrandomimage13, pexelsrandomimage14, pexelsrandomimage15, pexelsrandomimage16,
+    pexelsrandomimage17, pexelsrandomimage18, pexelsrandomimage19, pexelsrandomimage20,
+    pexelsrandomimage21, pexelsrandomimage22, pexelsrandomimage23, pexelsrandomimage24,
+    pexelsrandomimage25
 ];
