@@ -151,7 +151,7 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
             return prev; });
     
         timeoutRef.current = setTimeout(() => {
-            setMostrarOcultarLista(false) }, 3000)  };
+            setMostrarOcultarLista(false) }, 2500)  };
 
     /*  */
 
