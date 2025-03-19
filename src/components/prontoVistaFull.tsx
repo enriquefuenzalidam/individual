@@ -138,8 +138,8 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
     return React.createElement('div', {ref: mainRef, style: { position: 'relative', height: '100%'} },
 
                 React.createElement('section', { role: "region", "aria-label": "Full-size Image", onClick: () => setMostrarOcultarLista(!mostrarOcultarLista), style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', cursor: 'pointer' }},
-                    imagenesLista?.map((item, index) => React.createElement('div', {key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'transparent', opacity: currentIndex === index ? '1' : '0', transition: 'opacity 0.5s ease-in-out' } },
-                        !loadedImages[currentIndex]  && loadingImageFullImage, //!(loadedImages.every((loaded) => loaded))
+                    imagenesLista?.map((item, index) => React.createElement('div', {key: index, onMouseEnter: () => setMostrarOcultarLista(true), style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'transparent', opacity: currentIndex === index ? '1' : '0', transition: 'opacity 0.5s ease-in-out' } },
+                        !(loadedImages.every((loaded) => loaded)) && loadingImageFullImage,
                         React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', style: { width: '100%', height: '100%', objectFit: 'contain', opacity: loadedImages[index] ? 1 : 0 } } ) ) ) ),
 
 //              React.createElement('section', null, 
