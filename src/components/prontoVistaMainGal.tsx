@@ -11,7 +11,7 @@ const isValidColor = (color: string) => {
     s.color = color;
     return s.color !== ""; };
 
-const prontoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice, seleccColor }) => {
+const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice, seleccColor }) => {
 
     const [seleccionColor, setSeleccionColor] = useState<string>("white");
     useEffect(() => {
@@ -182,4 +182,4 @@ const prontoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, ind
 
     ) }
 
-export default prontoVistaMainGal;
+export default ProntoVistaMainGal;
