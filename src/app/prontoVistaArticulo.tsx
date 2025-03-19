@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import ProntoVistaPrevGal from '@/components/prontoVistaPrevGal';
 import { ProntoVistaImgsList } from '@/components/prontoVistaImgsLists';
 import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
-import ProntoVistaFull from '@/components/prontoVistaFull';
+import prontoVistaMainGal from '@/components/prontoVistaMainGal';
 
 const ProntoVistaArticulo: React.FC = () => {
 
@@ -123,8 +123,8 @@ const ProntoVistaArticulo: React.FC = () => {
           React.createElement('p', { className: ` lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:mt-4 md:mt-3 sm:mt-2 mt-2 lg:mb-9 md:mb-8 sm:mb-7 mb-7 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed `},
                'Al hacer click en la fotografía central de la ', React.createElement('span', { style: { fontWeight: '500' }}, 'galería de previsualización'), ' se es dirigido a la ', React.createElement('span', { style: { fontWeight: '500' }}, 'galería de principal'), ' donde se muestra la fotografía seleccionada en formato completo y una fila inferior deslizble con todas las imagenes miniaturas de la lista para seleccionar y ver en formato completo. La imagen miniatura seleccionada es presentada con un borde cuyo color corresponde al seleccionado en la galería de previsualización. La fila inferior se invisibiliza después un momento de inactividad del usuario.'),
 
-          React.createElement('div', { style: { display: 'block', boxSizing: 'border-box', width: '100%', aspectRatio: '16/9' }, className: 'rounded-md overflow-hidden' },
-            React.createElement(ProntoVistaFull, {
+          React.createElement('div', { style: { display: 'block', boxSizing: 'border-box', width: '100%', aspectRatio: '16/9', overflow: 'hidden', borderRadius: '0.375rem' } },
+            React.createElement(prontoVistaMainGal, {
               imagenesLista: ProntoVistaImgsList,
               indice: 18,
               seleccColor: seleccionColor }) )
@@ -133,4 +133,3 @@ const ProntoVistaArticulo: React.FC = () => {
 }
 
 export default ProntoVistaArticulo;
-

@@ -11,7 +11,7 @@ const isValidColor = (color: string) => {
     s.color = color;
     return s.color !== ""; };
 
-const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice, seleccColor }) => {
+const prontoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice, seleccColor }) => {
 
     const [seleccionColor, setSeleccionColor] = useState<string>("white");
     useEffect(() => {
@@ -29,6 +29,7 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
     const containerRef = useRef<HTMLDivElement | null>(null);
 
     const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
+
     const handleImageLoad = (index: number) => {
         setLoadedImages((prev) => {
             if (prev[index]) return prev;
@@ -40,55 +41,61 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
         return tnScreen ? 6 : smScreen ? 7 : mdScreen ? 8 : lgScreen ? 9 : xlScreen ? 10 : 10;
     }, [tnScreen, smScreen, mdScreen, lgScreen, xlScreen]);
 
+    const container = containerRef.current;
+        
+    const mainRef = useRef<HTMLDivElement | null>(null);
+    const mainRefCurrent = mainRef?.current;
+    
+    const smoothScroll = useCallback( (element: HTMLElement, targetIndex: number, duration: number) => {
+
+        if (typeof window === "undefined") return;
+
+        const startScroll = element.scrollLeft;
+        const startTime = performance.now();
+
+        const paddingSize = 1;
+        const resultingThumbnailSize =  thumbnailSize - ( paddingSize * 2 );
+
+        const thumbnailSizePx = 16 * resultingThumbnailSize;
+        const marginSizePx = 0.15 * 16;
+
+        const thumbnailAndMarginsSize = ( marginSizePx * 2 ) + thumbnailSizePx;
+        
+        const targetScroll = thumbnailAndMarginsSize * targetIndex;
+
+        const animateScroll = (currentTime: number) => {
+
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / duration, 1);
+
+            const easeInOut = progress < 0.5
+                ? 4 * progress * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+            element.scrollLeft = startScroll + (targetScroll - startScroll) * easeInOut;
+
+            if (elapsedTime < duration) requestAnimationFrame(animateScroll);
+
+        };
+
+        requestAnimationFrame(animateScroll);
+
+    }, [thumbnailSize ]);
+
     useEffect(() => {
 
         if (typeof window === "undefined") return;
+        if (!container) return;
     
-        const container = containerRef.current;
-        
         const targetElement = container?.children[currentIndex] as HTMLElement;
+        if (!targetElement) return;
     
-        const smoothScroll = (element: HTMLElement, targetIndex: number, duration: number) => {
+        smoothScroll(container, currentIndex, 600);
 
-            if (typeof window === "undefined") return;
+        return () => { if(container) container.scrollLeft = container.scrollLeft; };
 
-            const startScroll = element.scrollLeft;
-            const startTime = performance.now();
+    }, [ container, currentIndex, smoothScroll]); 
 
-            const paddingSize = 1;
-            const resultingThumbnailSize =  thumbnailSize - ( paddingSize * 2 );
-
-            const thumbnailSizePx = 16 * resultingThumbnailSize;
-            const marginSizePx = 0.15 * 16;
-
-            const thumbnailAndMarginsSize = ( marginSizePx * 2 ) + thumbnailSizePx;
-            
-            const targetScroll = thumbnailAndMarginsSize * targetIndex;
-
-            const animateScroll = (currentTime: number) => {
-
-                const elapsedTime = currentTime - startTime;
-                const progress = Math.min(elapsedTime / duration, 1);
-
-                const easeInOut = progress < 0.5
-                    ? 4 * progress * progress * progress
-                    : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-                element.scrollLeft = startScroll + (targetScroll - startScroll) * easeInOut;
-
-                if (elapsedTime < duration) requestAnimationFrame(animateScroll);
-
-            };
-
-            requestAnimationFrame(animateScroll);
-        };
-
-        if (container && targetElement) smoothScroll(container, currentIndex, 600);
-
-    }, [thumbnailSize, currentIndex, xlScreen, lgScreen, mdScreen, smScreen, tnScreen ]); 
-
-    const mainRef = useRef<HTMLDivElement | null>(null);
-    const mainRefCurrent = mainRef?.current;
     useEffect(() => {
 
         const handleResize = () => {
@@ -159,19 +166,20 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
 
     if (!screenReady) return null;
 
-    return React.createElement('div', {ref: mainRef, style: { position: 'relative', height: '100%'} },
+    return React.createElement('main', {ref: mainRef, style: { position: 'relative', height: '100%'} },
 
+                // 
                 React.createElement('section', { role: "region", "aria-label": "Full-size Image", onMouseEnter: resetCountdown, onMouseMove: resetCountdown, onClick: resetCountdown, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', cursor: 'pointer' }},
                     imagenesLista?.map((item, index) => React.createElement('div', {key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'transparent', opacity: currentIndex === index ? '1' : '0', transition: 'opacity 0.5s ease-in-out' } },
                         !(loadedImages.every((loaded) => loaded)) && loadingImageFullImage,
                         React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', style: { width: '100%', height: '100%', objectFit: 'contain', opacity: loadedImages[index] ? 1 : 0 } } ) ) ) ),
 
-                React.createElement('section', { role: "region", "aria-label": "Image Thumbnails", style: { display: 'block', boxSizing: 'border-box', opacity: mostrarOcultarLista ? 1 : 0, position: 'absolute', bottom: '0', left: '0', width: '100%', height: tnScreen ? '6rem' : smScreen ? '7rem' : mdScreen ? '8rem' : lgScreen ? '9rem' : xlScreen ? '10rem' : '10rem', overflow: 'hidden', maskImage: 'linear-gradient( to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 13%, rgba(0,0,0,1) 87%, rgba(0,0,0,0) 100%)', transition: 'all 600ms ease-in-out', pointerEvents: mostrarOcultarLista ? 'auto' : 'none' } },
-                    React.createElement('div', { ref: containerRef, onScroll: resetCountdown, style: { display: 'block', boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', padding: '1rem 0', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none', msOverflowStyle: 'none' } },
+                React.createElement('section', { role: "region", "aria-label": "Image Thumbnails", style: { display: 'block', boxSizing: 'border-box', opacity: mostrarOcultarLista ? 1 : 0, position: 'absolute', bottom: '0', left: '0', width: '100%', height: 'auto', overflow: 'hidden', maskImage: 'linear-gradient( to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 13%, rgba(0,0,0,1) 87%, rgba(0,0,0,0) 100%)', transition: 'all 600ms ease-in-out', pointerEvents: mostrarOcultarLista ? 'auto' : 'none' } },
+                    React.createElement('div', { ref: containerRef, onScroll: resetCountdown, style: { display: 'block', boxSizing: 'border-box', position: 'relative', width: 'auto', height: tnScreen ? '6rem' : smScreen ? '7rem' : mdScreen ? '8rem' : lgScreen ? '9rem' : xlScreen ? '10rem' : '10rem', padding: '1rem 0', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none', msOverflowStyle: 'none' } },
                         imagenesLista?.map((item, index) => React.createElement('div', { key: index, role: "listitem", "aria-label": `Thumbnail ${index + 1}`, onClick: () => { setCurrentIndex(index); resetCountdown() }, style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', borderWidth: currentIndex !== index ? '0' : tnScreen ? '0.3rem' : mdScreen ? '0.4rem' : lgScreen ? '0.4rem' : xlScreen ? '0.4rem' :'0.4rem', borderStyle: 'solid', borderColor: seleccionColor, height: '100%', background: 'black', aspectRatio: '1 / 1', boxShadow: currentIndex !== index ? '0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.8)' : '0 10px 12px -3px rgba(0, 0, 0, 0.6), 0 4px 3px -2px rgba(0, 0, 0, 1)', zIndex: currentIndex === index ? '65' : '62', transform: currentIndex === index ? 'scale(1.16)' : '', overflow: 'hidden', margin: index === 0 ? ` 0 0.15rem 0 calc(50% - ${ tnScreen ? '2rem' : smScreen ? '2.5rem' : mdScreen ? '3rem' : lgScreen ? '3.5rem' : xlScreen ? '4rem' : '4rem' } )` : index === imagenesLista.length-1 ? ` 0 calc(50% - ${ tnScreen ? '2rem' : smScreen ? '2.5rem' : mdScreen ? '3rem' : lgScreen ? '3.5rem' : xlScreen ? '4rem' : '4rem' } ) 0 0.15rem` : `0 0.15rem`, cursor: 'pointer', borderRadius: '0.25rem', transition: 'transform 300ms ease-in-out, border 300ms ease-in-out'  } },
                             !loadedImages[index] && loadingImageThumbnail,
                             React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', sizes: '10vw ', style: { width: '100%', height: '100%', objectFit: 'cover', opacity: loadedImages[index] ? currentIndex === index ? '1' : '0.6' : '0', transition: 'opacity 300ms ease-in-out' } } ) ) ) ) )
 
     ) }
 
-export default ProntoVistaFull;
+export default prontoVistaMainGalFull;
