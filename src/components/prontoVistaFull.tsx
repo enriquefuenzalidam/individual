@@ -121,36 +121,56 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
     const loadingImageThumbnail = useMemo(()  => loadingImage({ alto: 24, fondo: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)' }), [loadingImage]);
     const loadingImageFullImage = useMemo(()  => loadingImage({ alto: 9, color: 'rgba(255,255,255,0.3)' }), [loadingImage])
 
+
+
+    /* the update */
+
     const [mostrarOcultarLista, setMostrarOcultarLista] = useState(true);
-//  const [ mostOculHoverBtn, setMostOculHoverBtn] = useState(false);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        if (mostrarOcultarLista) {
-                const timeout = setTimeout(() => {
-                    setMostrarOcultarLista(false);
-                }, 6000);
-                return () => clearTimeout(timeout); // Cleanup on unmount or if the state changes before timeout
-        }
+
+        if (!mostrarOcultarLista && timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null; }
+    
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null; } };
+
     }, [mostrarOcultarLista]);
+    
+
+    const resetCountdown = () => {
+
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    
+        setMostrarOcultarLista((prev) => {
+            if (!prev) return true; 
+            return prev; });
+    
+        timeoutRef.current = setTimeout(() => {
+            setMostrarOcultarLista(false) }, 3000)  };
+
+    /*  */
+
+
 
     if (!screenReady) return null;
 
     return React.createElement('div', {ref: mainRef, style: { position: 'relative', height: '100%'} },
 
-                React.createElement('section', { role: "region", "aria-label": "Full-size Image", onClick: () => setMostrarOcultarLista(!mostrarOcultarLista), style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', cursor: 'pointer' }},
-                    imagenesLista?.map((item, index) => React.createElement('div', {key: index, onMouseEnter: () => setMostrarOcultarLista(true), style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'transparent', opacity: currentIndex === index ? '1' : '0', transition: 'opacity 0.5s ease-in-out' } },
+                React.createElement('section', { role: "region", "aria-label": "Full-size Image", onMouseEnter: resetCountdown, onMouseMove: resetCountdown, onClick: resetCountdown, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', cursor: 'pointer' }},
+                    imagenesLista?.map((item, index) => React.createElement('div', {key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'transparent', opacity: currentIndex === index ? '1' : '0', transition: 'opacity 0.5s ease-in-out' } },
                         !(loadedImages.every((loaded) => loaded)) && loadingImageFullImage,
                         React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', style: { width: '100%', height: '100%', objectFit: 'contain', opacity: loadedImages[index] ? 1 : 0 } } ) ) ) ),
 
-//              React.createElement('section', null, 
-//                  React.createElement('div', { onClick: () => setMostrarOcultarLista(!mostrarOcultarLista), onMouseEnter: () => setMostOculHoverBtn(true), onMouseLeave: () => setMostOculHoverBtn(false), style: { display: 'block', boxSizing: 'border-box', position: 'absolute', left: '50%', transform: 'translateX(-50%)', bottom: mostrarOcultarLista ? tnScreen ? '6.15rem' : smScreen ? '7.24rem' : mdScreen ? '8.38rem' : lgScreen ? '9.62rem' : xlScreen ? '10.76rem' : '10.76rem' : tnScreen ? '0.62rem' : smScreen ? '0.76rem' : mdScreen ? '0.85rem' : lgScreen ? '0.95rem' : xlScreen ? '1rem' : '1rem', width: 'auto', height: 'auto', margin: '0', padding: tnScreen ? '0.15rem 1.62rem 0.125rem 1.62rem' : smScreen ? '0.09rem 1.76rem' : mdScreen ? '0.15rem 1.85rem 0.125rem 1.85rem' : lgScreen ? '0.185rem 1.95rem 0.15rem 1.95rem' : xlScreen ? '0.185rem 2.05rem 0.125rem 2.05rem' : '0.185rem 2.05rem 0.125rem 2.05rem', color: mostOculHoverBtn ? 'rgba(255,255,255,0.62)' : 'rgba(255,255,255,0.38)', fontFamily: 'Sans-serif', fontWeight: '200', fontSize: tnScreen ? '0.62rem' : smScreen ? '0.62rem' : mdScreen ? '0.62rem' : lgScreen ? '0.62rem' : xlScreen ? '0.62rem' : '0.62rem', lineHeight: 'auto', background: mostOculHoverBtn ? 'rgba(0,0,0,0.62)' : 'rgba(0,0,0,0.38)', borderRadius: '0.38rem', transition: 'all 150ms ease-in-out', textTransform: 'uppercase', letterSpacing: 'normal', cursor: 'pointer' } },
-//                       '◼︎ ◼︎ ◼︎' ) ),
-
                 React.createElement('section', { role: "region", "aria-label": "Image Thumbnails", style: { display: 'block', boxSizing: 'border-box', opacity: mostrarOcultarLista ? 1 : 0, position: 'absolute', bottom: '0', left: '0', width: '100%', height: 'auto', overflow: 'hidden', maskImage: 'linear-gradient( to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 13%, rgba(0,0,0,1) 87%, rgba(0,0,0,0) 100%)', transition: 'all 600ms ease-in-out', pointerEvents: mostrarOcultarLista ? 'auto' : 'none' } },
-                    React.createElement('div', { ref: containerRef, onScroll: () => setMostrarOcultarLista(true), style: { display: 'block', boxSizing: 'border-box', position: 'relative', width: 'auto', height: tnScreen ? '6rem' : smScreen ? '7rem' : mdScreen ? '8rem' : lgScreen ? '9rem' : xlScreen ? '10rem' : '10rem', padding: '1rem 0', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none', msOverflowStyle: 'none' } },
-                        imagenesLista?.map((item, index) => React.createElement('div', { key: index, role: "listitem", "aria-label": `Thumbnail ${index + 1}`, onClick: () => { setCurrentIndex(index); setMostrarOcultarLista(true) }, style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', borderWidth: currentIndex !== index ? '0' : tnScreen ? '0.3rem' : mdScreen ? '0.4rem' : lgScreen ? '0.4rem' : xlScreen ? '0.4rem' :'0.4rem', borderStyle: 'solid', borderColor: seleccionColor, height: '100%', background: 'black', aspectRatio: '1 / 1', boxShadow: currentIndex !== index ? '0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.8)' : '0 10px 12px -3px rgba(0, 0, 0, 0.6), 0 4px 3px -2px rgba(0, 0, 0, 1)', zIndex: currentIndex === index ? '65' : '62', transform: currentIndex === index ? 'scale(1.16)' : '', overflow: 'hidden', margin: index === 0 ? ` 0 0.15rem 0 calc(50% - ${ tnScreen ? '2rem' : smScreen ? '2.5rem' : mdScreen ? '3rem' : lgScreen ? '3.5rem' : xlScreen ? '4rem' : '4rem' } )` : index === imagenesLista.length-1 ? ` 0 calc(50% - ${ tnScreen ? '2rem' : smScreen ? '2.5rem' : mdScreen ? '3rem' : lgScreen ? '3.5rem' : xlScreen ? '4rem' : '4rem' } ) 0 0.15rem` : `0 0.15rem`, cursor: 'pointer', borderRadius: '0.25rem', transition: 'transform 300ms ease-in-out, border 300ms ease-in-out'  } },
+                    React.createElement('div', { ref: containerRef, onScroll: resetCountdown, style: { display: 'block', boxSizing: 'border-box', position: 'relative', width: 'auto', height: tnScreen ? '6rem' : smScreen ? '7rem' : mdScreen ? '8rem' : lgScreen ? '9rem' : xlScreen ? '10rem' : '10rem', padding: '1rem 0', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none', msOverflowStyle: 'none' } },
+                        imagenesLista?.map((item, index) => React.createElement('div', { key: index, role: "listitem", "aria-label": `Thumbnail ${index + 1}`, onClick: () => { setCurrentIndex(index); resetCountdown() }, style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', borderWidth: currentIndex !== index ? '0' : tnScreen ? '0.3rem' : mdScreen ? '0.4rem' : lgScreen ? '0.4rem' : xlScreen ? '0.4rem' :'0.4rem', borderStyle: 'solid', borderColor: seleccionColor, height: '100%', background: 'black', aspectRatio: '1 / 1', boxShadow: currentIndex !== index ? '0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.8)' : '0 10px 12px -3px rgba(0, 0, 0, 0.6), 0 4px 3px -2px rgba(0, 0, 0, 1)', zIndex: currentIndex === index ? '65' : '62', transform: currentIndex === index ? 'scale(1.16)' : '', overflow: 'hidden', margin: index === 0 ? ` 0 0.15rem 0 calc(50% - ${ tnScreen ? '2rem' : smScreen ? '2.5rem' : mdScreen ? '3rem' : lgScreen ? '3.5rem' : xlScreen ? '4rem' : '4rem' } )` : index === imagenesLista.length-1 ? ` 0 calc(50% - ${ tnScreen ? '2rem' : smScreen ? '2.5rem' : mdScreen ? '3rem' : lgScreen ? '3.5rem' : xlScreen ? '4rem' : '4rem' } ) 0 0.15rem` : `0 0.15rem`, cursor: 'pointer', borderRadius: '0.25rem', transition: 'transform 300ms ease-in-out, border 300ms ease-in-out'  } },
                             !loadedImages[index] && loadingImageThumbnail,
-                            React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', sizes: '10vw ', style: { width: '100%', height: '100%', objectFit: 'cover', opacity: loadedImages[index] ? currentIndex === index ? '1' : '0.6' : '0', transition: 'opacity 300ms ease-in-out'  } } ) ) ) ) )
+                            React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', sizes: '10vw ', style: { width: '100%', height: '100%', objectFit: 'cover', opacity: loadedImages[index] ? currentIndex === index ? '1' : '0.6' : '0', transition: 'opacity 300ms ease-in-out' } } ) ) ) ) )
 
     ) }
 
