@@ -128,7 +128,7 @@ const ProntoVistaFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice
         if (mostrarOcultarLista) {
                 const timeout = setTimeout(() => {
                     setMostrarOcultarLista(false);
-                }, 3000);
+                }, 6000);
                 return () => clearTimeout(timeout); // Cleanup on unmount or if the state changes before timeout
         }
     }, [mostrarOcultarLista]);
