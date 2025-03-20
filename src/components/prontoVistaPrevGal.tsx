@@ -291,7 +291,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     const loadingImageThumbnail = useMemo(()  => loadingImage({ alto: 24 }), [loadingImage])
 
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
- 
+
     const maximizeSign = useCallback(({ colors = seleccionColor, alto = 24, ndx = 0  }) => {
         return React.createElement('div', { style: { color: colors, position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', opacity: ndx === hoveredIndex ? 1 : 0, transition: 'opacity '+ tiempoIntervalo/8 +'ms ease-in-out' } },
             React.createElement('svg', { style: { width: alto+'%', height: alto+'%', background: 'rgba(0,0,0,0.24)', borderRadius: '0.125rem' }, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: 'transparent' },
@@ -328,7 +328,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     )
                 )
             });
-    }, [currentGalleryIndex, imagenesLista, loadedImages, loadingImageThumbnail, maximizeSign ]);
+    }, [currentGalleryIndex, imagenesLista, loadedImages, loadingImageThumbnail, maximizeSign ]); 
 
     const visibleSelectores = useMemo(() => {
 

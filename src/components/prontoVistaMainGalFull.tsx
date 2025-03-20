@@ -11,7 +11,7 @@ const isValidColor = (color: string) => {
     s.color = color;
     return s.color !== ""; };
 
-const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice, seleccColor }) => {
+const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, indice, seleccColor }) => {
 
     const [seleccionColor, setSeleccionColor] = useState<string>("white");
     const [screenReady, setScreenReady] = useState(false);
@@ -147,9 +147,9 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, ind
 
     if (!screenReady) return null;
 
-    return React.createElement('div', {ref: mainRef, style: { position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%' } },
+    return React.createElement('main', {ref: mainRef, style: { display: 'block', position: 'fixed', inset: 0, boxSizing: 'border-box' } },
 
-                React.createElement('section', { role: "region", "aria-label": "Full-size Image", onMouseMove: resetCountdown, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', cursor: 'default' }},
+                React.createElement('section', { onClick: resetCountdown, role: "region", "aria-label": "Full-size Image", style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', cursor: 'default' }},
                     imagenesLista?.map((item, index) => React.createElement('div', {key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'transparent', opacity: currentIndex === index ? '1' : '0', transition: 'opacity 0.5s ease-in-out' } },
                         !(loadedImages.every((loaded) => loaded)) && loadingImageFullImage,
                         React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', style: { width: '100%', height: '100%', objectFit: 'contain', opacity: loadedImages[index] ? 1 : 0 } } ) ) ) ),
@@ -162,4 +162,4 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, ind
 
     ) }
 
-export default ProntoVistaMainGal;
+export default ProntoVistaMainGalFull;
