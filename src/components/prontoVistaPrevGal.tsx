@@ -17,7 +17,7 @@ interface GalleryIndexes {
     prevBefore1: number; prevBefore2: number;
     prevAfter1: number; prevAfter2: number;
     newSet: Set<number>; prevSet: Set<number>;
-    commonElements: number[]; exclusiveNewElements: number[]; nonCommonElements: number[];
+    commonElements: number[]; exclusiveNewElements: number[]; exclusivePrevElements: number[];
 }
 
 const isValidColor = (color: string) => {
@@ -49,13 +49,13 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         const prevSet = new Set([prevCurrent, prevBefore1, prevBefore2, prevAfter1, prevAfter2]);
 
         const commonElements = [...newSet].filter(index => prevSet.has(index));
-        const exclusiveNewElements = [...newSet].filter(index => !commonElements.includes(index));
-        const nonCommonElements = [...newSet, ...prevSet].filter(index => !commonElements.includes(index));
+        const exclusiveNewElements = [...newSet].filter(index => !prevSet.has(index));
+        const exclusivePrevElements = [...prevSet].filter(index => !newSet.has(index));
 
         return {
             newCurrent, newBefore1, newBefore2, newAfter1, newAfter2,
             prevCurrent, prevBefore1, prevBefore2, prevAfter1, prevAfter2,
-            newSet, prevSet, commonElements, exclusiveNewElements, nonCommonElements } };
+            newSet, prevSet, commonElements, exclusiveNewElements, exclusivePrevElements } };
 
     const tiempoIntervalo = iteracionTiempo;
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(0);
@@ -74,33 +74,80 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
     const innerSpanDiscRefs = useRef<(HTMLSpanElement)[]>([]);
     const outerSpanDiscRefs = useRef<(HTMLSpanElement)[]>([]);
+/*
+    const animateElement = (
+        el: HTMLElement | null, 
+        property: "opacity" | "width" | "height" | "transform" | "left", 
+        start: number | string, 
+        end: number | string, 
+        duration: number = 300 ) => {
+        if (!el) return;
+    
+        // Extract numeric values
+        const startValue = typeof start === "string" ? parseFloat(start) : start;
+        const endValue = typeof end === "string" ? parseFloat(end) : end;
+    
+        // Extract units (e.g., "px", "%")
+        const startUnit = typeof start === "string" ? start.replace(/[\d.-]/g, "").trim() : "";
+        const endUnit = typeof end === "string" ? end.replace(/[\d.-]/g, "").trim() : "";
+    
+        // If units are different, log a warning and use end unit (assumption)
+        if (startUnit && endUnit && startUnit !== endUnit) {
+            console.warn(`animateElement: Different units detected (${startUnit} → ${endUnit}). Using '${endUnit}'.`);
+        }
+        const unit = endUnit || startUnit; // Prefer `endUnit`, fallback to `startUnit`
+    
+        const startTime: number = performance.now();
+    
+        const step = (currentTime: number) => {
+            const elapsed: number = currentTime - startTime;
+            const progress: number = Math.min(elapsed / duration, 1); // Normalize progress (0 to 1)
+    
+            // Interpolate between start and end values
+            const interpolatedValue: number = startValue + (endValue - startValue) * progress;
+            
+            el.style[property] = `${interpolatedValue}${unit}`; // Apply the final unit
+    
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            }
+        };
+    
+        requestAnimationFrame(step);
+    };
+*/
     const totalStylesUpdate = useCallback((indexes: GalleryIndexes) => {
+
         const { newCurrent, newBefore1, newBefore2, newAfter1, newAfter2,
-            prevCurrent, commonElements, exclusiveNewElements, nonCommonElements } = indexes;
+            prevCurrent, commonElements, exclusiveNewElements, exclusivePrevElements } = indexes;
 
-        if (innerSpanDiscRefs.current[newCurrent]) {
-            innerSpanDiscRefs.current[newCurrent].style.opacity = "1";
-            innerSpanDiscRefs.current[newCurrent].style.width = "100%"; }
+            const runningWidth = isXlParent || isLgParent ? '4rem' : isMdParent ? '3rem' : '3rem';
+            const stillWidth = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem';
 
-        if (outerSpanDiscRefs.current[newCurrent]) {
-            outerSpanDiscRefs.current[newCurrent].style.cursor = "default";
-            outerSpanDiscRefs.current[newCurrent].style.width = isXlParent || isLgParent ? '4rem' : isMdParent ? '3rem' : '3rem'; }
-        
-        if ( prevCurrent !== newCurrent) {
-            if (innerSpanDiscRefs.current[prevCurrent]) {
-                innerSpanDiscRefs.current[prevCurrent].style.opacity = "0";
-                innerSpanDiscRefs.current[prevCurrent].style.width = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem'; }
-            if (outerSpanDiscRefs.current[prevCurrent]) {
-                outerSpanDiscRefs.current[prevCurrent].style.cursor = "pointer";
-                outerSpanDiscRefs.current[prevCurrent].style.width = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem'; } }
+            if (innerSpanDiscRefs.current[newCurrent]) {
+                innerSpanDiscRefs.current[newCurrent].style.opacity = "1";
+                innerSpanDiscRefs.current[newCurrent].style.width = runningWidth; }
+    
+            if (outerSpanDiscRefs.current[newCurrent]) {
+                outerSpanDiscRefs.current[newCurrent].style.cursor = "default";
+                outerSpanDiscRefs.current[newCurrent].style.width = runningWidth; }
+            
+            if ( prevCurrent !== newCurrent) {
+                if (innerSpanDiscRefs.current[prevCurrent]) {
+                    innerSpanDiscRefs.current[prevCurrent].style.opacity = "0";
+                    innerSpanDiscRefs.current[prevCurrent].style.width = stillWidth; }
+                if (outerSpanDiscRefs.current[prevCurrent]) {
+                    outerSpanDiscRefs.current[prevCurrent].style.cursor = "pointer";
+                    outerSpanDiscRefs.current[prevCurrent].style.width = stillWidth; } }
+    
 
         const remToPixels = (remValue: number): number => {
             const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
             return remValue * rootFontSize; };
-        const currentAltura = (isXlParent ? galAlturaXl : isLgParent ? galAlturaLg : isMdParent ? galAlturaMd : galAlturaSm)-4;
+        const currentAltura = (isXlParent ? galAlturaXl : isLgParent ? galAlturaLg : isMdParent ? galAlturaMd : galAlturaSm) - 4;
         const elementAltura = remToPixels(currentAltura ?? 0);
-        
-        nonCommonElements.forEach(index => {
+
+        exclusivePrevElements.forEach(index => {
 
             const el = sobreCapaRefs.current[index];
             if (el) {
@@ -189,7 +236,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     applyStyleIfDifferent(el2, "transform","scale(1.05)");
                     applyStyleIfDifferent(el2, "left", (index === newBefore1) ? `calc( 20% - ${elementAltura * 0.2}px )` : `calc( 80% - ${elementAltura * 0.8}px )`); } } 
 
-        } ) }, [isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm]);
+        } ) }, [isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm, iteracionTiempo]);
 
     const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
     const handleImageLoad = (index: number) => {
@@ -202,7 +249,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
     const [discosNavegador, setDiscosNavegador] = useState(true);
     useEffect(() => {
-    setDiscosNavegador(navegador);
+        setDiscosNavegador(navegador);
     }, [navegador]);
 
     const scndContainerCapaRef = useRef<(HTMLDivElement | null)>(null);
@@ -250,35 +297,34 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, clearIntervalTimer, startInterval]);
 
     useEffect(() => {
-        
+
         const indexes = computeGalleryIndexes(
             currentGalleryIndex,
             (currentGalleryIndex - 1 + imagenesLista.length) % imagenesLista.length,
-            imagenesLista.length
-        );
-    
+            imagenesLista.length );
+
         totalStylesUpdate(indexes);
 
-        indexes.nonCommonElements
+        indexes.exclusivePrevElements
         .filter(index => index !== indexes.newCurrent)
         .forEach(index => {
             const el = sobreCapaRefs.current[index];
-            if (el) el.onclick = null; });
+            if (el) el.onclick = null; } );
 
         [indexes.newBefore2, indexes.newBefore1, indexes.newAfter1, indexes.newAfter2].forEach(index => {
             const el = sobreCapaRefs.current[index];
-            if (el) el.onclick = () => handleNavClick(index); });
-
-        outerSpanDiscRefs.current.forEach((el, index) => {
-            if (el) el.onclick = index !== indexes.newCurrent ? () => handleNavClick(index) : null });
+            if (el) el.onclick = () => handleNavClick(index); } );
 
         const currentElement = sobreCapaRefs.current[indexes.newCurrent];
         if (currentElement) {
             currentElement.onclick = () => {
                 const newUrl = `/prontoVistaFull?page.tsx?list=default&index=${indexes.newCurrent}&color=${encodeURIComponent(discosColor)}`;
-                router.push(newUrl);
-            };
-        }
+                router.push(newUrl); } };
+
+        outerSpanDiscRefs.current.forEach((el, index) => {
+            if (!el) return;
+            if (index === indexes.newCurrent) el.onclick = null;
+            else el.onclick = () => handleNavClick(index); } );
 
     }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, handleNavClick, discosColor, router]); 
 
@@ -298,8 +344,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M21 9V3H15' } ),
                 React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M3 15V21H9' } ),
                 React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M21 3L13.5 10.5' } ),
-                React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M10.5 13.5L3 21' } )
-            ) )
+                React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M10.5 13.5L3 21' } ) ) )
     }, [seleccionColor, hoveredIndex, tiempoIntervalo])
 
     const visibleImages = useMemo(() => {
@@ -324,7 +369,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                         !loadedImages[index] && loadingImageThumbnail,
                         React.createElement(NextImage, { onLoad: () => handleImageLoad(index), sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image', fill: true, style: imageElementStyle }),
                         currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index }),
-                        React.createElement("div", { ref: (el) => { sobreCapaRefs.current[index] = el as HTMLDivElement | null }, style: sobreCapaStyle })
+                        React.createElement("div", { ref: (el) => { sobreCapaRefs.current[index] = el as HTMLDivElement | null }, style: sobreCapaStyle } )
                     )
                 )
             });
@@ -345,7 +390,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             return React.createElement("span", { key: index, ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
                                       React.createElement("span", { ref: (el) => { innerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: innerSpanDisc })
                                       ) } )
-    }, [discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, tiempoIntervalo]);
+    }, [discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor]);
 
     const mainContainerStyle: React.CSSProperties = {
         position: 'relative', boxSizing: 'border-box', display: 'block' };
@@ -355,7 +400,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         boxSizing: 'border-box', display: 'block', transition: 'all 700ms linear', overflowY: 'visible', overflowX: 'hidden', width: '100%', position: 'relative', height: isXlParent ? `${galAlturaXl}rem` : isLgParent ? `${galAlturaLg}rem` : isMdParent ? `${galAlturaMd}rem` : `${galAlturaSm}rem` }),
         [isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm]);
     const outerImagenesLista: React.CSSProperties = {
-        position: "relative", boxSizing: 'border-box', display: 'block', width: "100%", height: "100%", overflow: "hidden", transition: "all 700ms linear" }
+        position: "relative", boxSizing: 'border-box', display: 'block', width: "100%", height: "100%", overflow: "hidden", transition: "width 700ms linear" }
 
     if (!screenReady) return null;
 
