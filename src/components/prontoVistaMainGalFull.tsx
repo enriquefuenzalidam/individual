@@ -165,7 +165,7 @@ const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista,
                   const copy = [...latest];
                   copy[i] = false;
                   return copy; } ) }, 500) } } );
-          return updated } ) }, [currentIndex, imagenesLista]);
+          return updated } ) }, [currentIndex, imagenesLista, loadedImages]);
       
 
     if (!screenReady) return null;
