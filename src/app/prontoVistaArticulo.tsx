@@ -60,7 +60,8 @@ const ProntoVistaArticulo: React.FC = () => {
                 discosColor: seleccionColor,
                 iteracionTiempo: tiempoIntervalo,
                 maxAltura: cajaAltura,
-                navegador: discosNavegador, } ) ) ),
+                navegador: discosNavegador,
+                listKey: 'default' } ) ) ),
 
           React.createElement('h4', { className: ` hyphens-none lg:mt-16 md:mt-12 sm:mt-8 mt-8 text-left text-slate-700/80 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` },
             `Opciones personalizables` ),

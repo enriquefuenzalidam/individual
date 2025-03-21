@@ -8,6 +8,7 @@ interface ProntoVistaPrevGalProps {
   maxAltura?: number;
   iteracionTiempo?: number;
   navegador?: boolean;
+  listKey?: string;
 }
 
 interface GalleryIndexes {
@@ -25,7 +26,7 @@ const isValidColor = (color: string) => {
     s.color = color;
     return s.color !== ""; };
 
-const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, discosColor = "#000", maxAltura = 32, iteracionTiempo = 3400, navegador = true }) => {
+const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, discosColor = "#000", maxAltura = 32, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
 
     const router = useRouter();
 
@@ -338,7 +339,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         const currentElement = imageRefsB.current[indexes.newCurrent];
         if (currentElement) {
             currentElement.onclick = () => {
-                const newUrl = `/prontoVistaFull?page.tsx?list=default&index=${indexes.newCurrent}&color=${encodeURIComponent(discosColor)}`;
+                const newUrl = `/prontoVistaFull?page.tsx?list=${encodeURIComponent(listKey)}&index=${indexes.newCurrent}&color=${encodeURIComponent(discosColor)}`;
                 router.push(newUrl); } };
 
         outerSpanDiscRefs.current.forEach((el, index) => {
@@ -346,7 +347,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             if (index === indexes.newCurrent) el.onclick = null;
             else el.onclick = () => handleNavClick(index); } );
 
-    }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, handleNavClick, discosColor, router]); 
+    }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, handleNavClick, discosColor, router, listKey]); 
 
     const loadingImage = useCallback(({ color = seleccionColor, alto = 24 }) => {
         return React.createElement('div', { style: { color: color, position: 'absolute', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)', transition: 'all 300ms ease-in-out' } },

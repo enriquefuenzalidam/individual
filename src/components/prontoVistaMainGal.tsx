@@ -158,29 +158,21 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
         setVisibleImages((prev) => {
           const updated = [...prev];
           imagenesLista.forEach((_, i) => {
-            if (i === currentIndex) {
-              updated[i] = true;
-            } else if (prev[i]) {
-              // Only set to false after delay if it was previously visible
+            if (i === currentIndex) updated[i] = true;
+            else if (prev[i]) {
               setTimeout(() => {
                 setVisibleImages((latest) => {
                   const copy = [...latest];
                   copy[i] = false;
-                  return copy;
-                });
-              }, 500);
-            }
-          });
-          return updated;
-        });
-      }, [currentIndex, imagenesLista]);
+                  return copy; } ) }, 500) } } );
+          return updated } ) }, [currentIndex, imagenesLista]);
       
 
     if (!screenReady) return null;
 
     return React.createElement('div', {ref: mainRef, style: { position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%' } },
 
-                React.createElement('section', { onMouseMove: resetCountdown, role: "region", "aria-label": "Full-size Image", style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', cursor: 'default' }},
+                React.createElement('section', { onClick: resetCountdown, role: "region", "aria-label": "Full-size Image", style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', cursor: 'default' }},
                     imagenesLista?.map((item, index) => React.createElement('div', {key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'transparent', opacity: currentIndex === index ? '1' : '0', transition: 'opacity 0.5s ease-in-out', pointerEvents: currentIndex === index ? 'auto' : 'none' } },
                         !(loadedImages.every((loaded) => loaded)) && loadingImageFullImage,
                         visibleImages[index] && React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image', style: { position: 'relative', width: '100%', height: '100%', objectFit: 'contain' } } ) ) ) ),

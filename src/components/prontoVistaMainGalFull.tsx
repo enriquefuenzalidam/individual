@@ -158,22 +158,14 @@ const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista,
         setVisibleImages((prev) => {
           const updated = [...prev];
           imagenesLista.forEach((_, i) => {
-            if (i === currentIndex) {
-              updated[i] = true;
-            } else if (prev[i]) {
-              // Only set to false after delay if it was previously visible
+            if (i === currentIndex) updated[i] = true;
+            else if (prev[i]) {
               setTimeout(() => {
                 setVisibleImages((latest) => {
                   const copy = [...latest];
                   copy[i] = false;
-                  return copy;
-                });
-              }, 500);
-            }
-          });
-          return updated;
-        });
-      }, [currentIndex, imagenesLista]);
+                  return copy; } ) }, 500) } } );
+          return updated } ) }, [currentIndex, imagenesLista]);
       
 
     if (!screenReady) return null;
