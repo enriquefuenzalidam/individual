@@ -405,7 +405,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 position: 'relative', boxSizing: 'border-box', margin: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: isXlParent || isLgParent ? '0.3rem' : isMdParent ? '0.225rem' : '0.225rem', overflow: 'hidden', height: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem', transition: 'all ' + tiempoIntervalo/8 + 'ms linear', backgroundColor: 'rgba(0,0,0,0.08)',
                 cursor: 'pointer', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
             const innerSpanDisc = {
-                pointerEvents: 'none', display: 'inline-block', boxSizing: 'border-box', position: 'absolute', left: '0', top: '0', borderRadius: '0', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity ' + tiempoIntervalo/8 + 'ms linear',
+                pointerEvents: 'none', display: 'inline-block', boxSizing: 'border-box', position: 'absolute', left: '0', top: '0', borderRadius: isXlParent || isLgParent ? '0.3rem' : isMdParent ? '0.225rem' : '0.225rem', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity ' + tiempoIntervalo/8 + 'ms linear',
                 opacity: '0', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
 
             return React.createElement("span", { key: index, ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
