@@ -12,7 +12,7 @@ const ProntoVistaArticulo: React.FC = () => {
 
   const [cajaAltura, setCajaAltura] = useState(32);
 
-  const [tiempoIntervalo, setTiempoIntervalo] = useState(2100);
+  const [tiempoIntervalo, setTiempoIntervalo] = useState(3400);
 
   const [seleccionColor, setSeleccionColor] = useState(() => isValidColor("rgb(51,65,85)") ? "rgb(51,65,85)" : "#000");
 

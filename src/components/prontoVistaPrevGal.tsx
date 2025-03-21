@@ -24,7 +24,8 @@ interface GalleryIndexes {
 const isValidColor = (color: string) => {
     const s = new Option().style;
     s.color = color;
-    return s.color !== ""; };
+    return s.color !== "";
+};
 
 const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, discosColor = "#000", maxAltura = 32, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
 
@@ -401,10 +402,10 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         return imagenesLista.map((_, index) => {
 
             const outerSpanDisc = {
-                position: 'relative', boxSizing: 'border-box', margin: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', overflow: 'hidden', height: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem', transition: 'all ' + tiempoIntervalo/8 + 'ms linear', backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                position: 'relative', boxSizing: 'border-box', margin: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: isXlParent || isLgParent ? '0.3rem' : isMdParent ? '0.225rem' : '0.225rem', overflow: 'hidden', height: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem', transition: 'all ' + tiempoIntervalo/8 + 'ms linear', backgroundColor: 'rgba(0,0,0,0.08)',
                 cursor: 'pointer', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
             const innerSpanDisc = {
-                pointerEvents: 'none', display: 'inline-block', boxSizing: 'border-box', position: 'absolute', left: '0', top: '0', borderRadius: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity ' + tiempoIntervalo/8 + 'ms linear',
+                pointerEvents: 'none', display: 'inline-block', boxSizing: 'border-box', position: 'absolute', left: '0', top: '0', borderRadius: '0', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity ' + tiempoIntervalo/8 + 'ms linear',
                 opacity: '0', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
 
             return React.createElement("span", { key: index, ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
@@ -430,7 +431,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             React.createElement( "div", { style: hghtContainerStyle },
                 !!imagenesLista.length && React.createElement("div", { style: outerImagenesLista }, visibleImages ) ) ),
 
-        !!discosNavegador && ( React.createElement( "div", { style: { maxWidth: '64rem', width: '100%', margin: '0 auto', textAlign: 'center', paddingTop: '1.25rem', position: 'relative', boxSizing: 'border-box', display: 'block' } },
+        !!discosNavegador && ( React.createElement( "div", { style: { maxWidth: '40rem', width: '100%', margin: '0 auto', textAlign: 'center', paddingTop: '1.25rem', position: 'relative', boxSizing: 'border-box', display: 'block' } },
                 !!imagenesLista.length && React.createElement( "div", null, visibleSelectores ) ) ),
 
         )
