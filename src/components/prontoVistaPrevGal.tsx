@@ -70,8 +70,9 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     const galAlturaMd = Math.min(32, Math.max(18, galAlturaLg - 8));
     const galAlturaSm = Math.min(32, Math.max(18, galAlturaMd - 2));
 
-    const sobreCapaRefs = useRef<(HTMLDivElement | null)[]>([]);
+    // const sobreCapaRefs = useRef<(HTMLDivElement | null)[]>([]);
     const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const imageRefsB = useRef<(HTMLDivElement | null)[]>([]);
     const innerSpanDiscRefs = useRef<(HTMLSpanElement)[]>([]);
     const outerSpanDiscRefs = useRef<(HTMLSpanElement)[]>([]);
 /*
@@ -149,10 +150,10 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
         exclusivePrevElements.forEach(index => {
 
-            const el = sobreCapaRefs.current[index];
-            if (el) {
-                el.style.opacity = "0";
-                el.style.backgroundColor = "transparent"; }
+            // const el = sobreCapaRefs.current[index];
+            // if (el) {
+            //     el.style.opacity = "0";
+            //     el.style.backgroundColor = "transparent"; }
 
             const el2 = imageRefs.current[index];
             if (el2) {
@@ -161,21 +162,24 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 el2.style.boxShadow = "none";
                 el2.style.transform = "scale(0.01)";
                 el2.style.left = `calc( 50% - ${elementAltura * 0.5}px )`; }
+            
+            const el3 = imageRefsB.current[index];
+            if (el3) el3.style.opacity = "0";
 
         });
 
         exclusiveNewElements.forEach(index => {
 
-            const el = sobreCapaRefs.current[index];
-            if (!el || !(index === newCurrent || index === newBefore2 || index === newAfter2 || index === newBefore1 || index === newAfter1)) return;
-            else {
-                if (index === newCurrent) {
-                    el.style.opacity = "0";
-                    el.style.backgroundColor = "transparent"; }
-                else {
-                    el.style.opacity = "0.9";
-                    el.style.cursor = "pointer";
-                    el.style.backgroundColor = (index === newBefore2 || index === newAfter2) ? "rgba(255, 255, 255, 0.7)" : "rgba(255, 255, 255, 0.3)" }}
+            // const el = sobreCapaRefs.current[index];
+            // if (!el || !(index === newCurrent || index === newBefore2 || index === newAfter2 || index === newBefore1 || index === newAfter1)) return;
+            // else {
+            //     if (index === newCurrent) {
+            //         el.style.opacity = "0";
+            //         el.style.backgroundColor = "transparent"; }
+            //     else {
+            //         el.style.opacity = "0.9";
+            //         el.style.cursor = "pointer";
+            //         el.style.backgroundColor = (index === newBefore2 || index === newAfter2) ? "rgba(255, 255, 255, 0.7)" : "rgba(255, 255, 255, 0.3)" }}
 
             const el2 = imageRefs.current[index];
             if (!el2 || !(index === newBefore2 || index === newBefore1 || index === newCurrent || index === newAfter1 || index === newAfter2) ) return;
@@ -197,6 +201,15 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                         el2.style.zIndex = "40";
                         el2.style.transform = "scale(1.05)";
                         el2.style.left = (index === newBefore1) ? `calc( 20% - ${elementAltura * 0.2}px )` : `calc( 80% - ${elementAltura * 0.8}px )`; } } }
+                
+                
+            const el3 = imageRefsB.current[index];
+            if (!el3 || !(index === newCurrent || index === newBefore2 || index === newAfter2 || index === newBefore1 || index === newAfter1)) return;
+            else {
+                if (index === newCurrent) el3.style.opacity = "1";
+                else if (index === newBefore1 || index === newAfter1) el3.style.opacity = "0.62";
+                else el3.style.opacity = "0.24"; }
+
         });
 
         commonElements.forEach(index => {
@@ -204,15 +217,15 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             const applyStyleIfDifferent = <T extends keyof CSSStyleDeclaration>( el: HTMLElement, prop: T, value: CSSStyleDeclaration[T] ) => {
                 if (el.style[prop] !== value) el.style[prop] = value; };
             
-            const el = sobreCapaRefs.current[index];
-            if (!el || !( index === newCurrent || index === newBefore2 || index === newAfter2 || index === newBefore1 || index === newAfter1 )) return;
+            // const el = sobreCapaRefs.current[index];
+            // if (!el || !( index === newCurrent || index === newBefore2 || index === newAfter2 || index === newBefore1 || index === newAfter1 )) return;
 
-            if (index === newCurrent) {
-                applyStyleIfDifferent(el,"opacity","0");
-                applyStyleIfDifferent(el,"backgroundColor","transparent"); }
-            else {
-                applyStyleIfDifferent(el,"opacity","0.9");
-                applyStyleIfDifferent(el,"backgroundColor", (index === newBefore2 || index === newAfter2) ?  "rgba(255, 255, 255, 0.7)" : "rgba(255, 255, 255, 0.3)"); } 
+            // if (index === newCurrent) {
+            //     applyStyleIfDifferent(el,"opacity","0");
+            //     applyStyleIfDifferent(el,"backgroundColor","transparent"); }
+            // else {
+            //     applyStyleIfDifferent(el,"opacity","0.9");
+            //     applyStyleIfDifferent(el,"backgroundColor", (index === newBefore2 || index === newAfter2) ?  "rgba(255, 255, 255, 0.7)" : "rgba(255, 255, 255, 0.3)"); } 
 
             const el2 = imageRefs.current[index];
             if (!el2 || !(index === newBefore2 || index === newBefore1 || index === newCurrent || index === newAfter1 || index === newAfter2)) return;
@@ -236,7 +249,14 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     applyStyleIfDifferent(el2, "transform","scale(1.05)");
                     applyStyleIfDifferent(el2, "left", (index === newBefore1) ? `calc( 20% - ${elementAltura * 0.2}px )` : `calc( 80% - ${elementAltura * 0.8}px )`); } } 
 
-        } ) }, [isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm, iteracionTiempo]);
+            const el3 = imageRefsB.current[index];
+            if (!el3 || !( index === newCurrent || index === newBefore2 || index === newAfter2 || index === newBefore1 || index === newAfter1 )) return;
+
+            if (index === newCurrent) applyStyleIfDifferent(el3,"opacity","1");
+            else if (index === newBefore1 || index === newAfter1) applyStyleIfDifferent(el3,"opacity","0.62"); 
+            else applyStyleIfDifferent(el3,"opacity","0.24"); 
+
+        } ) }, [isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm]);
 
     const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
     const handleImageLoad = (index: number) => {
@@ -308,14 +328,14 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         indexes.exclusivePrevElements
         .filter(index => index !== indexes.newCurrent)
         .forEach(index => {
-            const el = sobreCapaRefs.current[index];
+            const el = imageRefsB.current[index];
             if (el) el.onclick = null; } );
 
         [indexes.newBefore2, indexes.newBefore1, indexes.newAfter1, indexes.newAfter2].forEach(index => {
-            const el = sobreCapaRefs.current[index];
+            const el = imageRefsB.current[index];
             if (el) el.onclick = () => handleNavClick(index); } );
 
-        const currentElement = sobreCapaRefs.current[indexes.newCurrent];
+        const currentElement = imageRefsB.current[indexes.newCurrent];
         if (currentElement) {
             currentElement.onclick = () => {
                 const newUrl = `/prontoVistaFull?page.tsx?list=default&index=${indexes.newCurrent}&color=${encodeURIComponent(discosColor)}`;
@@ -335,11 +355,10 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     }, [seleccionColor])
 
     const loadingImageThumbnail = useMemo(()  => loadingImage({ alto: 24 }), [loadingImage])
-
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     const maximizeSign = useCallback(({ colors = seleccionColor, alto = 24, ndx = 0  }) => {
-        return React.createElement('div', { style: { color: colors, position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', opacity: ndx === hoveredIndex ? 1 : 0, transition: 'opacity '+ tiempoIntervalo/8 +'ms ease-in-out' } },
+        return React.createElement('div', { style: { color: colors, position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', opacity: ndx === hoveredIndex ? 1 : 0, transition: 'opacity '+ tiempoIntervalo/8 +'ms ease-in-out', pointerEvents: 'none' } },
             React.createElement('svg', { style: { width: alto+'%', height: alto+'%', background: 'rgba(0,0,0,0.24)', borderRadius: '0.125rem' }, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: 'transparent' },
                 React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M21 9V3H15' } ),
                 React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M3 15V21H9' } ),
@@ -352,24 +371,24 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         return imagenesLista.map((item, index) => {
 
                 const imageBlockStyleA = {
-                    display: "block", position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all 700ms linear", overflow: "hidden",
+                    display: "block", boxSizing: 'border-box', position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all 700ms linear", overflow: "hidden", background: '#ccc', 
                     opacity: 0, zIndex: 10, boxShadow: "none", left: "0", transform: "scale(0.01)" }
-                const sobreCapaStyle = {
-                    position: "absolute", inset: "0", transition: "all 700ms linear", backdropFilter: "grayscale(100%)",
-                    opacity: "0", backgroundColor: "transparent", cursor: "pointer" }
+                // const sobreCapaStyle = {
+                //     position: "absolute", inset: "0", transition: "all 700ms linear", backdropFilter: "grayscale(100%)",
+                //     opacity: "0", backgroundColor: "transparent", cursor: "pointer" }
                 const imageBlockStyleB = {
-                    position: 'relative', width: '100%', height: '100%', background: "linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)", display: 'flex', justifyContent: 'center', alignItems: 'center' }
+                    position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all 700ms linear", cursor: "pointer" }
                 // const imageBlockStyleC = {
                 //   width: '15%', height: 'auto', transition: 'all 700ms linear', fontWeight: '500', color: seleccionColor }
                 const imageElementStyle: React.CSSProperties = {
                     objectFit: 'cover', transition: 'opacity 700ms linear', opacity: loadedImages[index] ? 1 : 0 }
 
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
-                    React.createElement("div", { style: imageBlockStyleB },
+                    React.createElement("div", { ref: (el) => { imageRefsB.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleB },
                         !loadedImages[index] && loadingImageThumbnail,
                         React.createElement(NextImage, { onLoad: () => handleImageLoad(index), sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image', fill: true, style: imageElementStyle }),
                         currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index }),
-                        React.createElement("div", { ref: (el) => { sobreCapaRefs.current[index] = el as HTMLDivElement | null }, style: sobreCapaStyle } )
+                        // React.createElement("div", { ref: (el) => { sobreCapaRefs.current[index] = el as HTMLDivElement | null }, style: sobreCapaStyle } )
                     )
                 )
             });
@@ -381,16 +400,16 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         return imagenesLista.map((_, index) => {
 
             const outerSpanDisc = {
-                position: 'relative', boxSizing: 'border-box', margin: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', overflow: 'hidden', height: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem', transition: 'all 300ms linear', backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                position: 'relative', boxSizing: 'border-box', margin: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', overflow: 'hidden', height: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem', transition: 'all ' + tiempoIntervalo/8 + 'ms linear', backgroundColor: 'rgba(0, 0, 0, 0.2)',
                 cursor: 'pointer', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
             const innerSpanDisc = {
-                pointerEvents: 'none', display: 'inline-block', boxSizing: 'border-box', position: 'absolute', left: '0', top: '0', borderRadius: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity 700ms linear',
+                pointerEvents: 'none', display: 'inline-block', boxSizing: 'border-box', position: 'absolute', left: '0', top: '0', borderRadius: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity ' + tiempoIntervalo/8 + 'ms linear',
                 opacity: '0', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
 
             return React.createElement("span", { key: index, ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
                                       React.createElement("span", { ref: (el) => { innerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: innerSpanDisc })
                                       ) } )
-    }, [discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor]);
+    }, [discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, tiempoIntervalo]);
 
     const mainContainerStyle: React.CSSProperties = {
         position: 'relative', boxSizing: 'border-box', display: 'block' };
