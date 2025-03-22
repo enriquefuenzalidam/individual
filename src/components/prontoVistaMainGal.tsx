@@ -35,18 +35,10 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
         if (seleccColor && isValidColor(seleccColor)) {
             setSeleccionColor(seleccColor); } }, [seleccColor]);
 
-    const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
     const [loadedThumbnails, setLoadedThumbnails] = useState<boolean[]>(new Array(thumbnailsLista.length).fill(false));
 
     const handleThumbnailLoad = (index: number) => {
         setLoadedThumbnails((prev) => {
-            if (prev[index]) return prev;
-            const updated = [...prev];
-            updated[index] = true;
-            return updated; } ) };
-
-    const handleImageLoad = (index: number) => {
-        setLoadedImages((prev) => {
             if (prev[index]) return prev;
             const updated = [...prev];
             updated[index] = true;
@@ -231,7 +223,7 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
         if (!previousIndex) return;
         const timeout = setTimeout(() => {
           setPreviousIndex(null);
-        }, 1000);
+        }, 2000);
         return () => clearTimeout(timeout);
     }, [previousIndex]);
 
@@ -242,9 +234,9 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
     return React.createElement('div', {ref: mainRef, style: { position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%' } },
 
                 React.createElement('section', { onClick: resetCountdown, role: "region", "aria-label": "Full-size Image", style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', cursor: 'default', background: 'black' }},
-                    !loadedImages[currentIndex] && loadingImageFullImage,
+                    loadingImageFullImage,
                     imagenesLista?.map((item, index) => (currentIndex === index || previousIndex === index) && (React.createElement('div', {key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', pointerEvents: currentIndex === index ? 'auto' : 'none', zIndex: previousIndex === index ? 2 : 1, opacity: currentIndex === index ? 1 : 0, transition: 'opacity 500ms ease-in-out' } },
-                        React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image ' + index, style: { position: 'relative', width: '100%', height: '100%', objectFit: 'contain'  } } ) ) ) ) ),
+                        React.createElement(NextImage, { key: index, src: item, alt: 'Gallery Image ' + index, style: { position: 'relative', width: '100%', height: '100%', objectFit: 'contain'  } } ) ) ) ) ),
 
                 React.createElement('section', { role: "region", "aria-label": "Image Thumbnails", style: { display: 'block', boxSizing: 'border-box', opacity: mostrarOcultarLista ? 1 : 0, position: 'absolute', bottom: '0', left: '0', width: '100%', height: tnScreen ? '6rem' : smScreen ? '7rem' : mdScreen ? '8rem' : lgScreen ? '9rem' : xlScreen ? '10rem' : '10rem', overflow: 'hidden', maskImage: 'linear-gradient( to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 13%, rgba(0,0,0,1) 87%, rgba(0,0,0,0) 100%)', transition: 'all 600ms ease-in-out', pointerEvents: mostrarOcultarLista ? 'auto' : 'none', zIndex: 3 } },
                     React.createElement('div', { ref: containerRef, onScroll: resetCountdown, style: { display: 'block', boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', padding: '1rem 0', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none', msOverflowStyle: 'none' } },
