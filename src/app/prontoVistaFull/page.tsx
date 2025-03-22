@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import React, { Suspense } from "react";
-import ProntoVistaMainGalFull from "@/components/prontoVistaMainGalFull";
+import ProntoVistaMainGal from "@/components/prontoVistaMainGal";
 import { ProntoVistaImgsList, ProntoVistaImgsListMainGalMin } from "@/components/prontoVistaImgsLists";
 import { StaticImageData } from "next/image";
 
@@ -29,8 +29,8 @@ const PageContent: React.FC = () =>{
     const indice = parseInt(searchParams.get("index") || "0", 10);
     const seleccColor = searchParams.get("color") || "white";
 
-    return React.createElement('div', {
+    return React.createElement('main', {
         style: { display: 'block', position: 'absolute', inset: 0, zIndex: 70, overflow: 'hidden', boxSizing: 'border-box'  } },
-            React.createElement(ProntoVistaMainGalFull,{ imagenesLista, thumbnailsLista, indice, seleccColor } ) ) }
+            React.createElement(ProntoVistaMainGal,{ imagenesLista, thumbnailsLista, indice, seleccColor } ) ) }
 
 export default Page;

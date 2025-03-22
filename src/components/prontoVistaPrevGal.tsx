@@ -338,17 +338,21 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             if (el) el.onclick = () => handleNavClick(index); } );
 
         const currentElement = imageRefsB.current[indexes.newCurrent];
-        if (currentElement) {
-            currentElement.onclick = () => {
-                const newUrl = `/prontoVistaFull?page.tsx?list=${encodeURIComponent(listKey)}&index=${indexes.newCurrent}&color=${encodeURIComponent(discosColor)}`;
-                router.push(newUrl); } };
+
+        const timeout = setTimeout(() => {
+            if (currentElement) {
+                currentElement.onclick = () => {
+                    const newUrl = `/prontoVistaFull?page.tsx?list=${encodeURIComponent(listKey)}&index=${indexes.newCurrent}&color=${encodeURIComponent(discosColor)}`;
+                    router.push(newUrl); } } }, tiempoIntervalo/4);
 
         outerSpanDiscRefs.current.forEach((el, index) => {
             if (!el) return;
             if (index === indexes.newCurrent) el.onclick = null;
             else el.onclick = () => handleNavClick(index); } );
+        
+        return () => clearTimeout(timeout);
 
-    }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, handleNavClick, discosColor, router, listKey]); 
+    }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, handleNavClick, discosColor, router, listKey, tiempoIntervalo]); 
 
     const loadingImage = useCallback(({ color = seleccionColor, alto = 24 }) => {
         return React.createElement('div', { style: { color: color, position: 'absolute', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)', transition: 'all 300ms ease-in-out' } },
@@ -373,7 +377,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         return imagenesLista.map((item, index) => {
 
                 const imageBlockStyleA = {
-                    display: "block", boxSizing: 'border-box', position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all 700ms linear", overflow: "hidden", background: '#ccc', 
+                    display: "block", boxSizing: 'border-box', position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all "+ tiempoIntervalo/4 + "ms linear", overflow: "hidden", background: '#ccc', 
                     opacity: 0, zIndex: 10, boxShadow: "none", left: "0", transform: "scale(0.01)" }
                 // const sobreCapaStyle = {
                 //     position: "absolute", inset: "0", transition: "all 700ms linear", backdropFilter: "grayscale(100%)",
@@ -394,7 +398,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     )
                 )
             });
-    }, [currentGalleryIndex, imagenesLista, loadedImages, loadingImageThumbnail, maximizeSign ]); 
+    }, [currentGalleryIndex, imagenesLista, loadedImages, loadingImageThumbnail, tiempoIntervalo, maximizeSign ]); 
 
     const visibleSelectores = useMemo(() => {
 
@@ -409,8 +413,8 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                 opacity: '0', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
 
             return React.createElement("span", { key: index, ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
-                                      React.createElement("span", { ref: (el) => { innerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: innerSpanDisc })
-                                      ) } )
+                                      React.createElement("span", { ref: (el) => { innerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: innerSpanDisc } ) ) } )
+
     }, [discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, tiempoIntervalo]);
 
     const mainContainerStyle: React.CSSProperties = {

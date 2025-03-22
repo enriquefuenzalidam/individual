@@ -128,7 +128,7 @@ const ProntoVistaArticulo: React.FC = () => {
             React.createElement(prontoVistaMainGal, {
               imagenesLista: ProntoVistaImgsList,
               thumbnailsLista: ProntoVistaImgsListMainGalMin, 
-              indice: 18,
+              indice: 11,
               seleccColor: seleccionColor }) )
 
         ) ) )
