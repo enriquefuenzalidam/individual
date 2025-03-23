@@ -227,8 +227,6 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
         return () => clearTimeout(timeout);
     }, [previousIndex]);
 
-
-
     if (!screenReady) return null;
 
     return React.createElement('div', {ref: mainRef, style: { position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%' } },
