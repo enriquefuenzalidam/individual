@@ -374,18 +374,21 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
     const visibleImages = useMemo(() => {
 
+        const indexes = computeGalleryIndexes(
+            currentGalleryIndex,
+            (currentGalleryIndex - 1 + imagenesLista.length) % imagenesLista.length,
+            imagenesLista.length );
+
+        const { newCurrent, newBefore1, newBefore2, newAfter1, newAfter2 } = indexes;
+        
         return imagenesLista.map((item, index) => {
 
+            if (index === newBefore2-1 || index === newBefore2 || index === newBefore1 || index === newCurrent || index === newAfter1 || index === newAfter2 || index === newAfter2+1) {
                 const imageBlockStyleA = {
                     display: "block", boxSizing: 'border-box', position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all "+ tiempoIntervalo/4 + "ms linear", overflow: "hidden", background: '#ccc', 
                     opacity: 0, zIndex: 10, boxShadow: "none", left: "0", transform: "scale(0.01)" }
-                // const sobreCapaStyle = {
-                //     position: "absolute", inset: "0", transition: "all 700ms linear", backdropFilter: "grayscale(100%)",
-                //     opacity: "0", backgroundColor: "transparent", cursor: "pointer" }
                 const imageBlockStyleB = {
                     position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all 700ms linear", cursor: "pointer" }
-                // const imageBlockStyleC = {
-                //   width: '15%', height: 'auto', transition: 'all 700ms linear', fontWeight: '500', color: seleccionColor }
                 const imageElementStyle: React.CSSProperties = {
                     objectFit: 'cover', transition: 'opacity 700ms linear', opacity: loadedImages[index] ? 1 : 0 }
 
@@ -393,11 +396,8 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     React.createElement("div", { ref: (el) => { imageRefsB.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleB },
                         !loadedImages[index] && loadingImageThumbnail,
                         React.createElement(NextImage, { onLoad: () => handleImageLoad(index), sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image', fill: true, style: imageElementStyle }),
-                        currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index }),
-                        // React.createElement("div", { ref: (el) => { sobreCapaRefs.current[index] = el as HTMLDivElement | null }, style: sobreCapaStyle } )
-                    )
-                )
-            });
+                        currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index } ) ) ) } } );
+
     }, [currentGalleryIndex, imagenesLista, loadedImages, loadingImageThumbnail, tiempoIntervalo, maximizeSign ]); 
 
     const visibleSelectores = useMemo(() => {
