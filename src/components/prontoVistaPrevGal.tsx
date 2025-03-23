@@ -144,35 +144,6 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     const innerSpanDiscRefs = useRef<(HTMLSpanElement)[]>([]);
     const outerSpanDiscRefs = useRef<(HTMLSpanElement)[]>([]);
 
-    const totalStylesUpdate = useCallback((indexes: GalleryIndexes) => {
-
-        const { newCurrent, prevCurrent } = indexes;
-
-            const runningWidth = isXlParent || isLgParent ? '4rem' : isMdParent ? '3rem' : '3rem';
-            const stillWidth = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem';
-
-            outerSpanDiscRefs.current.forEach((el) => {
-                if(el) el.style.opacity = "1";
-            });
-            
-            if (innerSpanDiscRefs.current[newCurrent]) {
-                innerSpanDiscRefs.current[newCurrent].style.opacity = "1";
-                innerSpanDiscRefs.current[newCurrent].style.width = runningWidth; }
-    
-            if (outerSpanDiscRefs.current[newCurrent]) {
-                outerSpanDiscRefs.current[newCurrent].style.cursor = "default";
-                outerSpanDiscRefs.current[newCurrent].style.width = runningWidth; }
-            
-            if ( prevCurrent !== newCurrent) {
-                if (innerSpanDiscRefs.current[prevCurrent]) {
-                    innerSpanDiscRefs.current[prevCurrent].style.opacity = "0";
-                    innerSpanDiscRefs.current[prevCurrent].style.width = stillWidth; }
-                if (outerSpanDiscRefs.current[prevCurrent]) {
-                    outerSpanDiscRefs.current[prevCurrent].style.cursor = "pointer";
-                    outerSpanDiscRefs.current[prevCurrent].style.width = stillWidth; } }
-
-         }, [isXlParent, isLgParent, isMdParent]);
-
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const startInterval = useCallback(() => {
         intervalRef.current = setInterval(() => setCurrentGalleryIndex((prevIndex) => (prevIndex + 1) % imagenesLista.length), tiempoIntervalo);
@@ -188,12 +159,10 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     }, [ startInterval, clearIntervalTimer]);
 
     const handleNavClick = useCallback((newIndex: number) => {
-        const indexes = computeGalleryIndexes(newIndex, currentGalleryIndex, imagenesLista.length);
-        totalStylesUpdate(indexes);
         clearIntervalTimer();
         setCurrentGalleryIndex(newIndex);
         startInterval();
-    }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, clearIntervalTimer, startInterval]);
+    }, [clearIntervalTimer, startInterval]);
 
     useEffect(() => {
 
@@ -201,8 +170,6 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             currentGalleryIndex,
             (currentGalleryIndex - 1 + imagenesLista.length) % imagenesLista.length,
             imagenesLista.length );
-
-        totalStylesUpdate(indexes);
 
         indexes.exclusivePrevElements
         .filter(index => index !== indexes.newCurrent)
@@ -229,7 +196,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         
         return () => clearTimeout(timeout);
 
-    }, [imagenesLista.length, currentGalleryIndex, totalStylesUpdate, handleNavClick, discosColor, router, listKey, tiempoIntervalo]); 
+    }, [imagenesLista.length, currentGalleryIndex,, handleNavClick, discosColor, router, listKey, tiempoIntervalo]); 
 
     const loadingImage = useCallback(({ color = seleccionColor, alto = 24 }) => {
         return React.createElement('div', { style: { color: color, position: 'absolute', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)', transition: 'all 300ms ease-in-out' } },
@@ -298,20 +265,28 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
     const visibleSelectores = useMemo(() => {
 
+        const indexes = computeGalleryIndexes( currentGalleryIndex, previousGalleryIndexRef.current, imagenesLista.length );
+        const { prevCurrent, newCurrent } = indexes;
+
+        const runningWidth = isXlParent || isLgParent ? '4rem' : isMdParent ? '3rem' : '3rem';
+        const stillWidth = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem';
+
         if(!discosNavegador) return;
         return imagenesLista.map((_, index) => {
 
             const outerSpanDisc = {
                 position: 'relative', boxSizing: 'border-box', margin: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: isXlParent || isLgParent ? '0.3rem' : isMdParent ? '0.225rem' : '0.225rem', overflow: 'hidden', height: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem', transition: 'all ' + tiempoIntervalo/8 + 'ms linear', backgroundColor: 'rgba(0,0,0,0.08)',
-                cursor: 'pointer', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
+                cursor:  newCurrent === index ? 'default' : ( prevCurrent !== newCurrent ) && prevCurrent === index ? 'pointer' : 'pointer',
+                width: newCurrent === index ? runningWidth : ( prevCurrent !== newCurrent ) && prevCurrent === index ? stillWidth : stillWidth }
             const innerSpanDisc = {
                 pointerEvents: 'none', display: 'inline-block', boxSizing: 'border-box', position: 'absolute', left: '0', top: '0', borderRadius: isXlParent || isLgParent ? '0.3rem' : isMdParent ? '0.225rem' : '0.225rem', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity ' + tiempoIntervalo/8 + 'ms linear',
-                opacity: '0', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
+                opacity: newCurrent === index ? 1 : ( prevCurrent !== newCurrent ) && prevCurrent === index ? 0 : 0,
+                width: newCurrent === index ? runningWidth : ( prevCurrent !== newCurrent ) && prevCurrent === index ? stillWidth : stillWidth }
 
             return React.createElement("span", { key: index, ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
                         React.createElement("span", { ref: (el) => { innerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: innerSpanDisc } ) ) } )
 
-    }, [discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, tiempoIntervalo]);
+    }, [currentGalleryIndex, previousGalleryIndexRef, discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, tiempoIntervalo]);
 
     const mainContainerStyle: React.CSSProperties = {
         position: 'relative', boxSizing: 'border-box', display: 'block', minHeight: 'auto' };

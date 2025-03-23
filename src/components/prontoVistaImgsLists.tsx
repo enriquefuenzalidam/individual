@@ -16,13 +16,12 @@ import pexelsrandomimage15 from '@/assets/pexelsrandomimages/pexels-pixabay-7696
 import pexelsrandomimage16 from '@/assets/pexelsrandomimages/pexels-pixabay-461940.jpg';
 import pexelsrandomimage17 from '@/assets/pexelsrandomimages/pexels-regan-dsouza-1315522347-30692712.jpg';
 import pexelsrandomimage18 from '@/assets/pexelsrandomimages/pexels-shafi_fotumcatcher-1249695-2378278.jpg';
-import pexelsrandomimage19 from '@/assets/pexelsrandomimages/pexels-davegarcia-30752923.jpg';
-import pexelsrandomimage20 from '@/assets/pexelsrandomimages/pexels-sebastian-luna-736234668-30749714.jpg';
-import pexelsrandomimage21 from '@/assets/pexelsrandomimages/pexels-souvenirpixels-417074.jpg';
-import pexelsrandomimage22 from '@/assets/pexelsrandomimages/pexels-szafran-30735040.jpg';
-import pexelsrandomimage23 from '@/assets/pexelsrandomimages/pexels-szafran-30747387.jpg';
-import pexelsrandomimage24 from '@/assets/pexelsrandomimages/pexels-travelerchitect-30730409.jpg';
-import pexelsrandomimage25 from '@/assets/pexelsrandomimages/pexels-zeynep-sude-emek-193601188-26770601.jpg';
+import pexelsrandomimage19 from '@/assets/pexelsrandomimages/pexels-sebastian-luna-736234668-30749714.jpg';
+import pexelsrandomimage20 from '@/assets/pexelsrandomimages/pexels-souvenirpixels-417074.jpg';
+import pexelsrandomimage21 from '@/assets/pexelsrandomimages/pexels-szafran-30735040.jpg';
+import pexelsrandomimage22 from '@/assets/pexelsrandomimages/pexels-szafran-30747387.jpg';
+import pexelsrandomimage23 from '@/assets/pexelsrandomimages/pexels-travelerchitect-30730409.jpg';
+import pexelsrandomimage24 from '@/assets/pexelsrandomimages/pexels-zeynep-sude-emek-193601188-26770601.jpg';
 
 export const ProntoVistaImgsList = [
     pexelsrandomimage01, pexelsrandomimage02, pexelsrandomimage03, pexelsrandomimage04,
@@ -30,8 +29,7 @@ export const ProntoVistaImgsList = [
     pexelsrandomimage09, pexelsrandomimage10, pexelsrandomimage11, pexelsrandomimage12,
     pexelsrandomimage13, pexelsrandomimage14, pexelsrandomimage15, pexelsrandomimage16,
     pexelsrandomimage17, pexelsrandomimage18, pexelsrandomimage19, pexelsrandomimage20,
-    pexelsrandomimage21, pexelsrandomimage22, pexelsrandomimage23, pexelsrandomimage24,
-    pexelsrandomimage25
+    pexelsrandomimage21, pexelsrandomimage22, pexelsrandomimage23, pexelsrandomimage24
 ];
 
 import pexelsrandomimagesPrevGal01 from '@/assets/pexelsrandomimages_prevGal/pexels-2148789464-30748283.jpg';
@@ -52,13 +50,12 @@ import pexelsrandomimagesPrevGal15 from '@/assets/pexelsrandomimages_prevGal/pex
 import pexelsrandomimagesPrevGal16 from '@/assets/pexelsrandomimages_prevGal/pexels-pixabay-461940.jpg';
 import pexelsrandomimagesPrevGal17 from '@/assets/pexelsrandomimages_prevGal/pexels-regan-dsouza-1315522347-30692712.jpg';
 import pexelsrandomimagesPrevGal18 from '@/assets/pexelsrandomimages_prevGal/pexels-shafi_fotumcatcher-1249695-2378278.jpg';
-import pexelsrandomimagesPrevGal19 from '@/assets/pexelsrandomimages_prevGal/pexels-davegarcia-30752923.jpg';
-import pexelsrandomimagesPrevGal20 from '@/assets/pexelsrandomimages_prevGal/pexels-sebastian-luna-736234668-30749714.jpg';
-import pexelsrandomimagesPrevGal21 from '@/assets/pexelsrandomimages_prevGal/pexels-souvenirpixels-417074.jpg';
-import pexelsrandomimagesPrevGal22 from '@/assets/pexelsrandomimages_prevGal/pexels-szafran-30735040.jpg';
-import pexelsrandomimagesPrevGal23 from '@/assets/pexelsrandomimages_prevGal/pexels-szafran-30747387.jpg';
-import pexelsrandomimagesPrevGal24 from '@/assets/pexelsrandomimages_prevGal/pexels-travelerchitect-30730409.jpg';
-import pexelsrandomimagesPrevGal25 from '@/assets/pexelsrandomimages_prevGal/pexels-zeynep-sude-emek-193601188-26770601.jpg';
+import pexelsrandomimagesPrevGal19 from '@/assets/pexelsrandomimages_prevGal/pexels-sebastian-luna-736234668-30749714.jpg';
+import pexelsrandomimagesPrevGal20 from '@/assets/pexelsrandomimages_prevGal/pexels-souvenirpixels-417074.jpg';
+import pexelsrandomimagesPrevGal21 from '@/assets/pexelsrandomimages_prevGal/pexels-szafran-30735040.jpg';
+import pexelsrandomimagesPrevGal22 from '@/assets/pexelsrandomimages_prevGal/pexels-szafran-30747387.jpg';
+import pexelsrandomimagesPrevGal23 from '@/assets/pexelsrandomimages_prevGal/pexels-travelerchitect-30730409.jpg';
+import pexelsrandomimagesPrevGal24 from '@/assets/pexelsrandomimages_prevGal/pexels-zeynep-sude-emek-193601188-26770601.jpg';
 
 export const ProntoVistaImgsListPrevGal = [
     pexelsrandomimagesPrevGal01, pexelsrandomimagesPrevGal02, pexelsrandomimagesPrevGal03, pexelsrandomimagesPrevGal04,
@@ -66,8 +63,7 @@ export const ProntoVistaImgsListPrevGal = [
     pexelsrandomimagesPrevGal09, pexelsrandomimagesPrevGal10, pexelsrandomimagesPrevGal11, pexelsrandomimagesPrevGal12,
     pexelsrandomimagesPrevGal13, pexelsrandomimagesPrevGal14, pexelsrandomimagesPrevGal15, pexelsrandomimagesPrevGal16,
     pexelsrandomimagesPrevGal17, pexelsrandomimagesPrevGal18, pexelsrandomimagesPrevGal19, pexelsrandomimagesPrevGal20,
-    pexelsrandomimagesPrevGal21, pexelsrandomimagesPrevGal22, pexelsrandomimagesPrevGal23, pexelsrandomimagesPrevGal24,
-    pexelsrandomimagesPrevGal25
+    pexelsrandomimagesPrevGal21, pexelsrandomimagesPrevGal22, pexelsrandomimagesPrevGal23, pexelsrandomimagesPrevGal24
 ];
 
 import pexelsrandomimagesMainGalMin01 from '@/assets/pexelsrandomimages_mainGalMin/pexels-2148789464-30748283.jpg';
@@ -88,13 +84,12 @@ import pexelsrandomimagesMainGalMin15 from '@/assets/pexelsrandomimages_mainGalM
 import pexelsrandomimagesMainGalMin16 from '@/assets/pexelsrandomimages_mainGalMin/pexels-pixabay-461940.jpg';
 import pexelsrandomimagesMainGalMin17 from '@/assets/pexelsrandomimages_mainGalMin/pexels-regan-dsouza-1315522347-30692712.jpg';
 import pexelsrandomimagesMainGalMin18 from '@/assets/pexelsrandomimages_mainGalMin/pexels-shafi_fotumcatcher-1249695-2378278.jpg';
-import pexelsrandomimagesMainGalMin19 from '@/assets/pexelsrandomimages_mainGalMin/pexels-davegarcia-30752923.jpg';
-import pexelsrandomimagesMainGalMin20 from '@/assets/pexelsrandomimages_mainGalMin/pexels-sebastian-luna-736234668-30749714.jpg';
-import pexelsrandomimagesMainGalMin21 from '@/assets/pexelsrandomimages_mainGalMin/pexels-souvenirpixels-417074.jpg';
-import pexelsrandomimagesMainGalMin22 from '@/assets/pexelsrandomimages_mainGalMin/pexels-szafran-30735040.jpg';
-import pexelsrandomimagesMainGalMin23 from '@/assets/pexelsrandomimages_mainGalMin/pexels-szafran-30747387.jpg';
-import pexelsrandomimagesMainGalMin24 from '@/assets/pexelsrandomimages_mainGalMin/pexels-travelerchitect-30730409.jpg';
-import pexelsrandomimagesMainGalMin25 from '@/assets/pexelsrandomimages_mainGalMin/pexels-zeynep-sude-emek-193601188-26770601.jpg';
+import pexelsrandomimagesMainGalMin19 from '@/assets/pexelsrandomimages_mainGalMin/pexels-sebastian-luna-736234668-30749714.jpg';
+import pexelsrandomimagesMainGalMin20 from '@/assets/pexelsrandomimages_mainGalMin/pexels-souvenirpixels-417074.jpg';
+import pexelsrandomimagesMainGalMin21 from '@/assets/pexelsrandomimages_mainGalMin/pexels-szafran-30735040.jpg';
+import pexelsrandomimagesMainGalMin22 from '@/assets/pexelsrandomimages_mainGalMin/pexels-szafran-30747387.jpg';
+import pexelsrandomimagesMainGalMin23 from '@/assets/pexelsrandomimages_mainGalMin/pexels-travelerchitect-30730409.jpg';
+import pexelsrandomimagesMainGalMin24 from '@/assets/pexelsrandomimages_mainGalMin/pexels-zeynep-sude-emek-193601188-26770601.jpg';
 
 export const ProntoVistaImgsListMainGalMin = [
     pexelsrandomimagesMainGalMin01, pexelsrandomimagesMainGalMin02, pexelsrandomimagesMainGalMin03, pexelsrandomimagesMainGalMin04,
@@ -102,6 +97,5 @@ export const ProntoVistaImgsListMainGalMin = [
     pexelsrandomimagesMainGalMin09, pexelsrandomimagesMainGalMin10, pexelsrandomimagesMainGalMin11, pexelsrandomimagesMainGalMin12,
     pexelsrandomimagesMainGalMin13, pexelsrandomimagesMainGalMin14, pexelsrandomimagesMainGalMin15, pexelsrandomimagesMainGalMin16,
     pexelsrandomimagesMainGalMin17, pexelsrandomimagesMainGalMin18, pexelsrandomimagesMainGalMin19, pexelsrandomimagesMainGalMin20,
-    pexelsrandomimagesMainGalMin21, pexelsrandomimagesMainGalMin22, pexelsrandomimagesMainGalMin23, pexelsrandomimagesMainGalMin24,
-    pexelsrandomimagesMainGalMin25
+    pexelsrandomimagesMainGalMin21, pexelsrandomimagesMainGalMin22, pexelsrandomimagesMainGalMin23, pexelsrandomimagesMainGalMin24
 ];
