@@ -164,6 +164,10 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             const runningWidth = isXlParent || isLgParent ? '4rem' : isMdParent ? '3rem' : '3rem';
             const stillWidth = isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem';
 
+            outerSpanDiscRefs.current.forEach((el) => {
+                if(el) el.style.opacity = "1";
+            });
+            
             if (innerSpanDiscRefs.current[newCurrent]) {
                 innerSpanDiscRefs.current[newCurrent].style.opacity = "1";
                 innerSpanDiscRefs.current[newCurrent].style.width = runningWidth; }
@@ -294,12 +298,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const startInterval = useCallback(() => {
-        intervalRef.current = setInterval(() => {
-            setCurrentGalleryIndex((prevIndex) => {
-                const newIndex = (prevIndex + 1) % imagenesLista.length;
-                return newIndex;
-            })
-        }, tiempoIntervalo);
+        intervalRef.current = setInterval(() => setCurrentGalleryIndex((prevIndex) => (prevIndex + 1) % imagenesLista.length), tiempoIntervalo);
     }, [ imagenesLista.length, tiempoIntervalo]);
 
     const clearIntervalTimer = useCallback(() => {
@@ -382,23 +381,23 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
         const indexes = computeGalleryIndexes( currentGalleryIndex, previousGalleryIndexRef.current, imagenesLista.length );
         const { commonElements, exclusiveNewElements, exclusivePrevElements } = indexes;
-        const  visibleIndexes = new Set([ ...commonElements, ...exclusiveNewElements, ...exclusivePrevElements ]);
+        const  previousAndCurrentIndexes = new Set([ ...commonElements, ...exclusiveNewElements, ...exclusivePrevElements ]);
 
         return imagenesLista.map((item, index) => {
 
                 const imageBlockStyleA = {
                     display: "block", boxSizing: 'border-box', position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all "+ tiempoIntervalo/4 + "ms linear", overflow: "hidden", background: '#ccc', 
-                    opacity: 0, zIndex: 10, boxShadow: "none", left: "0", transform: "scale(0.01)" }
+                    opacity: previousAndCurrentIndexes.has(index) ? 1 : 0, zIndex: 10, boxShadow: "none", left: "50%", transform: "scale(0.01)" }
                 const imageBlockStyleB = {
                     position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all "+ tiempoIntervalo/4 + "ms linear", cursor: "pointer" }
                 const imageElementStyle: React.CSSProperties = {
                     objectFit: 'cover', transition: 'opacity ' + tiempoIntervalo/4 + 'ms linear', opacity: loadedImages[index] ? 1 : 0 }
 
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
-                        visibleIndexes.has(index) && React.createElement("div", { ref: (el) => { imageRefsB.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleB },
-                            !loadedImages[index] && loadingImageThumbnail,
+                            previousAndCurrentIndexes.has(index) && React.createElement("div", { ref: (el) => { imageRefsB.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleB },
                             React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, style: imageElementStyle }),
-                            currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index } ) ) ) } );
+                            currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index } ),
+                            !loadedImages[index] && loadingImageThumbnail ) ) } );
 
     }, [currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadedImages, loadingImageThumbnail, tiempoIntervalo, maximizeSign ]); 
 
@@ -409,7 +408,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
             const outerSpanDisc = {
                 position: 'relative', boxSizing: 'border-box', margin: isXlParent || isLgParent ? '0.5rem' : isMdParent ? '0.375rem' : '0.375rem', display: 'inline-block', borderRadius: isXlParent || isLgParent ? '0.3rem' : isMdParent ? '0.225rem' : '0.225rem', overflow: 'hidden', height: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem', transition: 'all ' + tiempoIntervalo/8 + 'ms linear', backgroundColor: 'rgba(0,0,0,0.08)',
-                cursor: 'pointer', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
+                opacity: '0', cursor: 'pointer', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
             const innerSpanDisc = {
                 pointerEvents: 'none', display: 'inline-block', boxSizing: 'border-box', position: 'absolute', left: '0', top: '0', borderRadius: isXlParent || isLgParent ? '0.3rem' : isMdParent ? '0.225rem' : '0.225rem', height: '100%', backgroundColor: seleccionColor, transition: 'width '+tiempoIntervalo+'ms linear, opacity ' + tiempoIntervalo/8 + 'ms linear',
                 opacity: '0', width: isXlParent || isLgParent ? '1rem' : isMdParent ? '0.75rem' : '0.75rem' }
@@ -420,7 +419,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     }, [discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, tiempoIntervalo]);
 
     const mainContainerStyle: React.CSSProperties = {
-        position: 'relative', boxSizing: 'border-box', display: 'block' };
+        position: 'relative', boxSizing: 'border-box', display: 'block', minHeight: 'auto' };
     const scndContainerStyle: React.CSSProperties = {
         position: 'relative', boxSizing: 'border-box', display: 'block', maxWidth: '64rem', width: '100%', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }
     const hghtContainerStyle = useMemo(() => ({

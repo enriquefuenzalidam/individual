@@ -53,8 +53,8 @@ const ProntoVistaArticulo: React.FC = () => {
           React.createElement('p', { className: ' lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:mt-4 md:mt-3 sm:mt-2 mt-2 lg:mb-16 md:mb-12 sm:mb-8 mb-8 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed  '},
             'La galería de previsualización incluye en su parte inferior una fila de navegación la cual indica la imagen principal en exhibición y el tiempo de iteración.'),
           
-          React.createElement('div', { ref: verOcultarDiscosNavRef, style: { display: 'block', boxSizing: 'border-box', maxWidth: `880px`, width: `100%`, transition: discosNavegador ? `height 500ms ease-in-out, opacity 1600ms ease-in-out` : `height 500ms ease-in-out, opacity 300ms ease-in-out`} },
-            React.createElement('div', { style: { display: 'block', boxSizing: 'border-box', maxWidth: `880px`, width: `100%` }},
+          React.createElement('div', { ref: verOcultarDiscosNavRef, style: { display: 'block', boxSizing: 'border-box', width: `100%`, transition: discosNavegador ? `height 500ms ease-in-out, opacity 1600ms ease-in-out` : `height 500ms ease-in-out, opacity 300ms ease-in-out`} },
+            React.createElement('div', { style: { display: 'block', boxSizing: 'border-box', width: `100%` }},
               React.createElement(ProntoVistaPrevGal, {
                 imagenesLista: ProntoVistaImgsListPrevGal,
                 discosColor: seleccionColor,
