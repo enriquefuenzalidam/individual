@@ -1,12 +1,12 @@
+import React from "react";
 
-const IndividualLogo = () => {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1"  viewBox="0 0 173 239">
-            <g enableBackground="new">
-                <g>
-                    <clipPath id="cp0">
-                        <path transform="matrix(2.7777777,0,0,-2.7777777,0,2200)" d="M 0 0 L 612.2835 0 L 612.2835 792 L 0 792 Z " />
-                    </clipPath>
+const IndividualLogo: React.FC = () => {
+    return React.createElement('svg', { xmlns: "http://www.w3.org/2000/svg", xmlnsXlink: "http://www.w3.org/1999/xlink", version: "1.1", viewBox: "0 0 173 239" },
+        React.createElement('g', { enableBackground: "new"},
+            React.createElement('g', null, 
+                React.createElement('clipPath', { id: "cp0" },
+                    React.createElement('path', { transform: "matrix(2.7777777,0,0,-2.7777777,0,2200)", d: "M 0 0 L 612.2835 0 L 612.2835 792 L 0 792 Z" } ) ),
+                <>
                     <g clipPath="url(#cp0)">
                         <path transform="matrix(2.7777777,0,0,-2.7777777,0,2200)" d="M 0 0 L 613 0 L 613 792 L 0 792 Z " fill="#ffffff" />
                     </g>
@@ -304,9 +304,9 @@ const IndividualLogo = () => {
                             </g>
                         </g>
                     </g>
-                </g>
-            </g>
-        </svg>
+                </>
+            )
+        )
     )
 };
 
