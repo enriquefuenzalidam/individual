@@ -1,20 +1,28 @@
 "use client";
 import React from "react";
 import NextLogo from "./nextlogo";
+// import IndividualLogo from "./individualLogo";
+import IndividualLogoB from "@/assets/individual_B_.svg";
+import NextImage from "next/image";
 import usePantallaTamagnos from "@/hooks/usepantallatamagnos";
 
 const Header: React.FC = () => {
     const { screenReady, lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
     if (!screenReady) return null;
     return React.createElement("header", { style: { position: "relative", boxSizing: 'border-box', display: "block" } },
-        React.createElement("section", { style: { maxWidth: "64rem", position: "relative", boxSizing: 'border-box', zIndex: "20", paddingTop: smScreen ? "1.875rem" : "1.5rem", paddingLeft: lgScreen ? "3rem" : mdScreen ? "2.25rem" : smScreen ? "1.875rem" : "1.5rem", paddingRight: lgScreen ? "3rem" : mdScreen ? "2.25rem" : smScreen ? "1.875rem" : "1.5rem", paddingBottom: lgScreen ? "1.2rem" : mdScreen ? "1rem" : smScreen ? "0.8rem" : "0.65rem", display: "block", transition: "all 300ms ease-in-out" } },
-            React.createElement("div", { style: { display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to bottom, #f1f5f9, transparent)", maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)' } }),
+        React.createElement("section", { style: { maxWidth: "64rem", position: "relative", boxSizing: 'border-box', zIndex: "20", /* paddingTop: smScreen ? "1.875rem" : "1.5rem", paddingLeft: lgScreen ? '3rem' : mdScreen ? '2.1rem' : smScreen ? '1.75rem' : '0.5rem', paddingRight: lgScreen ? "3rem" : mdScreen ? "2.25rem" : smScreen ? "1.875rem" : "1.5rem", */ paddingBottom: lgScreen ? "0.4rem" : mdScreen ? "0.3rem" : smScreen ? "0.3rem" : "0.3rem", display: "block", transition: "all 300ms ease-in-out", height: 'auto' } },
             React.createElement("div", { style: { display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 1rem, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.01) 0.3rem, rgba(0,0,0,0) 100%)", maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 100%)' } } ),
-            React.createElement("h1", { style: { display: 'block', boxSizing: 'border-box', position: "relative", fontWeight: "700", fontFamily: "'Pangea Trial', sans-serif", lineHeight: "1" } },
-                React.createElement("span", { style: { transition: "all 300ms ease-in-out", fontSize: lgScreen ? "6rem" : mdScreen ? "4.5rem" : smScreen ? "3.75rem" : "3rem", color: "rgb(71, 85, 105)" } }, "individual"),
-                React.createElement("span", { style: { transition: "all 300ms ease-in-out", fontSize: lgScreen ? "3rem" : mdScreen ? "2.25rem" : smScreen ? "1.85rem" : "1.5rem", color: "rgb(30, 41, 59)" } }, ".cl") ),
-            React.createElement("h2", { style: { display: 'block', boxSizing: 'border-box', position: "relative", fontFamily: "'Pangea Trial', sans-serif", color: "rgb(148, 163, 184)", marginTop: lgScreen ? "-0.75rem" : mdScreen ? "-0.5rem" : smScreen ? "-0.3rem" : "-0.3rem", lineHeight: "1.15" } },
-                React.createElement("span", { style: { textTransform: "uppercase", transition: "all 300ms ease-in-out", fontSize: lgScreen ? "2.25rem" : mdScreen ? "1.875rem" : smScreen ? "1.5rem" : "1.25rem", fontWeight: "500", display: "inline-block", verticalAlign: "middle", marginRight: lgScreen ? "0.5rem" : mdScreen ? "0.5rem" : smScreen ? "0.25rem" : "0.25rem" } }, "Componentes"),
-                React.createElement("span", { style: { transition: "all 300ms ease-in-out", color: "rgb(71,85,105)", width: lgScreen ? "7.9rem": mdScreen ? "5.925rem" : smScreen ? "4.938rem" : "3.95rem", height: "auto", display: "inline-block", verticalAlign: "middle", marginTop: lgScreen ? "0.15rem" : mdScreen ? "0.075rem" : smScreen ? "0.063rem" : "0.050rem" }},
-                    React.createElement(NextLogo) ) ) ) ) };
+            React.createElement("div", { style: { display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to bottom, #f1f5f9, transparent)", maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)' } }),
+
+            React.createElement("h1", { style: { position: 'relative', boxSizing: 'border-box', background: 'black', display: 'inline-block', width: lgScreen ? '8rem' : mdScreen ? '6.5rem' : smScreen ? '5.9rem' : '5rem', aspectRatio: 173 / 239, overflow: 'hidden', borderRadius: '0.2rem', boxShadow: "0 6px 12px 1px rgba(0, 0, 0, 0.4), 0 2px 8px 2px rgba(0, 0, 0, 0.4)", transition: 'all 300ms ease-in-out', marginTop: smScreen ? "1.875rem" : "1.5rem", marginLeft: lgScreen ? '4.5rem' : mdScreen ? '3.7rem' : smScreen ? '3.4rem' : '2.1rem', marginBottom: lgScreen ? '-3.8rem': mdScreen ? '-3.1rem' : smScreen ? '-2.7rem' : '-2.2rem' }}, 
+                React.createElement(NextImage, { src: IndividualLogoB, alt: 'individual.cl logo' } ) ),
+
+            // React.createElement("h1", { style: { display: 'block', boxSizing: 'border-box', position: "relative", fontWeight: "700", fontFamily: "'Pangea Trial', sans-serif", lineHeight: "1", marginLeft: lgScreen ? '8rem' : mdScreen ? '6.5rem' : smScreen ? '5.9rem' : '5rem' } },
+                // React.createElement("span", { style: { transition: "all 300ms ease-in-out", fontSize: lgScreen ? "6rem" : mdScreen ? "4.5rem" : smScreen ? "3.75rem" : "3rem", color: "rgb(71, 85, 105)" } }, "individual"),
+                // React.createElement("span", { style: { transition: "all 300ms ease-in-out", fontSize: lgScreen ? "3rem" : mdScreen ? "2.25rem" : smScreen ? "1.85rem" : "1.5rem", color: "rgb(30, 41, 59)" } }, ".cl") ),
+            React.createElement("h2", { style: { display: 'inline-block', boxSizing: 'border-box', position: "relative", fontFamily: "'Pangea Trial', sans-serif", color: "rgb(148, 163, 184)",  lineHeight: "1.15", marginLeft: lgScreen ? '1rem' : mdScreen ? '0.9rem' : smScreen ? '0.8rem' : '0.8rem' } },
+                React.createElement("span", { style: { textTransform: "uppercase", transition: "all 300ms ease-in-out", fontSize: lgScreen ? "1.5rem" : mdScreen ? "1.3rem" : smScreen ? "1.15rem" : "1.15rem", fontWeight: "500", display: "inline-block", verticalAlign: "middle", marginRight: lgScreen ? "0.23rem" : mdScreen ? "0.2rem" : smScreen ? "0.2rem" : "0.25rem" } }, "Componentes"),
+                React.createElement("span", { style: { transition: "all 300ms ease-in-out", color: "rgb(71,85,105)", width: lgScreen ? "5.31rem": mdScreen ? "4.7rem" : smScreen ? "4rem" : "4rem", height: "auto", display: "inline-block", verticalAlign: "middle", marginTop: lgScreen ? "0.05rem" : mdScreen ? "0.03rem" : smScreen ? "0rem" : "0rem" }},
+                    React.createElement(NextLogo) ) )
+                ) ) };
 export default Header;
