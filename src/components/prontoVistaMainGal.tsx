@@ -44,25 +44,18 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
             updated[index] = true;
             return updated; } ) };
 
-    const preloadedImagesRef = useRef<Set<number>>(new Set());
-    const preloadedThumbnailsRef = useRef<Set<number>>(new Set());
-
     useEffect(() => {
 
         if (!imagenesLista || imagenesLista.length === 0) return;
     
         const preloadQueue = [...imagenesLista.keys()].sort((a, b) => {
-            // Start with currentIndex, then preload others
             if (a === currentIndex) return -1;
             if (b === currentIndex) return 1;
             return 0; } );
 
         preloadQueue.forEach( (index) => {
-            if (preloadedImagesRef.current.has(index)) return; 
-            preloadedImagesRef.current.add(index);
             const src = imagenesLista[index];
             const img = new Image();
-            img.onload = () => console.log(`Preloaded image at index ${index}: ${img.src}`);
             try { 
                 if (typeof src === 'string') img.src = src; 
                 else if (typeof src === 'object' && 'src' in src) img.src = src.src; }
@@ -75,17 +68,13 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
         if (!thumbnailsLista || thumbnailsLista.length === 0) return;
     
         const preloadQueue = [...thumbnailsLista.keys()].sort((a, b) => {
-            // Start with currentIndex, then preload others
             if (a === currentIndex) return -1;
             if (b === currentIndex) return 1;
             return 0; } );
 
         preloadQueue.forEach( (index) => {
-            if (preloadedThumbnailsRef.current.has(index)) return;
-            preloadedThumbnailsRef.current.add(index);
             const src = thumbnailsLista[index];
             const img = new Image();
-            img.onload = () => console.log(`Preloaded thumbnail at index ${index}: ${img.src}`);
             try { 
                 if (typeof src === 'string') img.src = src; 
                 else if (typeof src === 'object' && 'src' in src) img.src = src.src; }
@@ -97,7 +86,7 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
         return tnScreen ? 6 : smScreen ? 7 : mdScreen ? 8 : lgScreen ? 9 : xlScreen ? 10 : 10;
     }, [tnScreen, smScreen, mdScreen, lgScreen, xlScreen]);
 
-    const loadingImage = useCallback(({ color = seleccionColor, alto = 24, fondo = 'black' }) => {
+    const loadingImage = useCallback(({ color = seleccionColor, alto = 24, fondo = 'transparent' }) => {
         return React.createElement('div', { style: { color: color, position: 'absolute', boxSizing: 'border-box', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: fondo, transition: 'all 300ms ease-in-out' } },
             React.createElement('svg', { style: {  position: 'relative', width: alto+'%', height: 'auto' }, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 640 512", fill: 'currentColor' },
                 React.createElement('path', { fill: 'currentColor', d: 'M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z' } ) ) )
@@ -197,22 +186,6 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
 
     }, [mainRefCurrent]);
 
-/*
-    const [visibleImages, setVisibleImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
-    useEffect(() => {
-        setVisibleImages((prev) => {
-          const updated = [...prev];
-          imagenesLista.forEach((_, i) => {
-            if (i === currentIndex && loadedImages[i]) updated[i] = true;
-            else if (prev[i]) {
-              setTimeout(() => {
-                setVisibleImages((latest) => {
-                  const copy = [...latest];
-                  copy[i] = false;
-                  return copy; } ) }, 500) } } );
-          return updated } ) }, [currentIndex, imagenesLista, loadedImages]);
-*/
-
     const handleThumbnailClick = (index: number) => {
         if (index === currentIndex) return;
         setPreviousIndex(currentIndex);
@@ -238,8 +211,8 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
     return React.createElement('div', {ref: mainRef, style: { position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', background: 'black' } },
 
                 React.createElement('section', { onClick: resetCountdown, role: "region", "aria-label": "Full-size Image", style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', cursor: 'default', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none' }},
-                    loadingImageFullImage,
                     imagenesLista?.map((item, index) => (currentIndex === index || previousIndex === index) && (React.createElement('div', { key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', pointerEvents: currentIndex === index ? 'auto' : 'none', zIndex: previousIndex === index ? 2 : 1, opacity: currentIndex === index ? 1 : 0, transition: 'opacity 500ms ease-in-out' } },
+                        loadingImageFullImage,
                         React.createElement(NextImage, { key: index, src: item, alt: 'Gallery Image ' + index, style: { position: 'relative', width: '100%', height: '100%', objectFit: 'contain'  } } ) ) ) ) ),
 
                 React.createElement('section', { role: "region", "aria-label": "Image Thumbnails", style: { display: 'block', boxSizing: 'border-box', opacity: mostrarOcultarLista ? 1 : 0, position: 'absolute', bottom: '0', left: '0', width: '100%', height: tnScreen ? '6rem' : smScreen ? '7rem' : mdScreen ? '8rem' : lgScreen ? '9rem' : xlScreen ? '10rem' : '10rem', overflow: 'hidden', maskImage: 'linear-gradient( to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 13%, rgba(0,0,0,1) 87%, rgba(0,0,0,0) 100%)', transition: 'all 600ms ease-in-out', pointerEvents: mostrarOcultarLista ? 'auto' : 'none', zIndex: 3 } },
