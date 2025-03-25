@@ -4,6 +4,7 @@ import NextImage, { StaticImageData } from 'next/image';
 
 interface ProntoVistaPrevGalProps {
   imagenesLista: (string | StaticImageData)[];
+  initialIndex?: number;
   discosColor?: string;
   maxAltura?: number;
   initialWidth?: number;
@@ -28,9 +29,9 @@ const isValidColor = (color: string) => {
     return s.color !== "";
 };
 
-const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
+const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
 
-    const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>(0);
+    const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>( initialIndex === 0 ? imagenesLista.length - 1 : initialIndex - 1);
     const preloadedImagesRef = useRef<Set<number>>(new Set());
 
     useEffect(() => {
@@ -96,7 +97,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             newSet, prevSet, commonElements, exclusiveNewElements, exclusivePrevElements } };
 
     const scndContainerCapaRef = useRef<(HTMLDivElement | null)>(null);
-    const [scndContainerCapaWidth, setScndContainerCapaWidth] = useState<number>(initialWidth);
+    const [scndContainerCapaWidth, setScndContainerCapaWidth] = useState<number>(initialWidth || 0);
 
     const tiempoIntervalo = iteracionTiempo;
     const [isMdParent, setIsMdParent] = useState<boolean>(scndContainerCapaWidth >= 640 && scndContainerCapaWidth < 768);
@@ -146,9 +147,19 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     const outerSpanDiscRefs = useRef<(HTMLSpanElement)[]>([]);
 
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const firstIntervalDoneRef = useRef(false);
+
+    const galleryIndexChange = useCallback(() => setCurrentGalleryIndex((prevIndex) => (prevIndex + 1) % imagenesLista.length), [imagenesLista.length]);
+      
     const startInterval = useCallback(() => {
-        intervalRef.current = setInterval(() => setCurrentGalleryIndex((prevIndex) => (prevIndex + 1) % imagenesLista.length), tiempoIntervalo);
-    }, [ imagenesLista.length, tiempoIntervalo]);
+        if (!screenReady) return;
+        if (!firstIntervalDoneRef.current) {
+            setTimeout(() => {
+                galleryIndexChange();
+                firstIntervalDoneRef.current = true;
+                intervalRef.current = setInterval(galleryIndexChange, tiempoIntervalo) }, 50)  }
+        else intervalRef.current = setInterval(galleryIndexChange, tiempoIntervalo);
+    }, [ firstIntervalDoneRef, tiempoIntervalo, screenReady, galleryIndexChange]);
 
     const clearIntervalTimer = useCallback(() => {
         if (intervalRef.current) clearInterval(intervalRef.current); }, []);
@@ -194,7 +205,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
         
         return () => clearTimeout(timeout);
 
-    }, [imagenesLista.length, currentGalleryIndex,, handleNavClick, discosColor, router, listKey, tiempoIntervalo]); 
+    }, [imagenesLista.length, currentGalleryIndex, handleNavClick, discosColor, router, listKey, tiempoIntervalo]); 
 
     const loadingImage = useCallback(({ color = seleccionColor, alto = 24 }) => {
         return React.createElement('div', { style: { color: color, position: 'absolute', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)', transition: 'all 300ms ease-in-out' } },
@@ -287,7 +298,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     }, [currentGalleryIndex, previousGalleryIndexRef, discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, tiempoIntervalo]);
 
     const mainContainerStyle = useMemo(() => ({
-        position: 'relative', boxSizing: 'border-box', display: 'block', minHeight: 'auto', opacity: previousGalleryIndexRef.current === currentGalleryIndex ? 0 : 1, transition: 'opacity ' + tiempoIntervalo/8 + 'ms ease-in-out' }), [currentGalleryIndex, previousGalleryIndexRef, tiempoIntervalo]);
+        position: 'relative', boxSizing: 'border-box', display: 'block', minHeight: 'auto', opacity: firstIntervalDoneRef ? 1 : 0, transition: 'opacity ' + tiempoIntervalo/8 + 'ms ease-in-out' }), [ firstIntervalDoneRef, tiempoIntervalo]);
     const scndContainerStyle: React.CSSProperties = {
         position: 'relative', boxSizing: 'border-box', display: 'block', maxWidth: '64rem', width: '100%', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }
     const hghtContainerStyle = useMemo(() => ({

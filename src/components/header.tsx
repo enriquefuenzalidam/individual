@@ -1,13 +1,19 @@
-"use client";
-import React from "react";
+import React, { useState, useEffect} from "react";
 import NextLogo from "./nextlogo";
 import IndividualLogo from "./individualLogo";
 import usePantallaTamagnos from "@/hooks/usepantallatamagnos";
 
 const Header: React.FC = () => {
     const { screenReady, lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
+
+    const [pageLoaded, setPageLoaded] = useState(false);
+    useEffect(() => {
+        if (!screenReady) return;
+        const timeout = setTimeout(() => setPageLoaded(true), 100);
+        return () => clearTimeout(timeout); }, [screenReady]);
+      
     if (!screenReady) return null;
-    return React.createElement("header", { style: { position: "relative", boxSizing: 'border-box', display: "block" } },
+    return React.createElement("header", { style: { position: "relative", boxSizing: 'border-box', display: "block", transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none' } },
         React.createElement("section", { style: { maxWidth: "64rem", position: "relative", boxSizing: 'border-box', zIndex: "20", paddingBottom: lgScreen ? "0.4rem" : mdScreen ? "0.3rem" : smScreen ? "0.3rem" : "0.3rem", display: "block", transition: "all 300ms ease-in-out", height: 'auto' } },
             React.createElement("div", { style: { display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 1rem, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.01) 0.3rem, rgba(0,0,0,0) 100%)", maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 100%)' } } ),
             React.createElement("div", { style: { display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to bottom, #f1f5f9, transparent)", maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)' } }),
