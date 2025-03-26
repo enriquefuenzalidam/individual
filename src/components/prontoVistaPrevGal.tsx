@@ -37,7 +37,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     useEffect(() => {
 
         if (!imagenesLista || imagenesLista.length === 0) return;
-    
+
         const preloadQueue = [...imagenesLista.keys()].sort((a, b) => {
             if (a === currentGalleryIndex) return -1;
             if (b === currentGalleryIndex) return 1;
@@ -266,7 +266,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
                             previousAndCurrentIndexes.has(index) && React.createElement("div", { ref: (el) => { imageRefsB.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleB },
-                            React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, style: imageElementStyle }),
+                            React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, unoptimized: true, style: imageElementStyle }),
                             currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index } ),
                             !loadedImages[index] && loadingImageThumbnail ) ) } );
 

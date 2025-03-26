@@ -1,101 +1,123 @@
-import pexelsrandomimage01 from '@/assets/pexelsrandomimages/pexels-2148789464-30748283.jpg';
-import pexelsrandomimage02 from '@/assets/pexelsrandomimages/pexels-ahmetyuksek-30214899.jpg';
-import pexelsrandomimage03 from '@/assets/pexelsrandomimages/pexels-ahmetyuksek-30778798.jpg';
-import pexelsrandomimage04 from '@/assets/pexelsrandomimages/pexels-ahmetyuksek-30778799.jpg';
-import pexelsrandomimage05 from '@/assets/pexelsrandomimages/pexels-eberhardgross-1468555.jpg';
-import pexelsrandomimage06 from '@/assets/pexelsrandomimages/pexels-ellusionist-30736887.jpg';
-import pexelsrandomimage07 from '@/assets/pexelsrandomimages/pexels-igud-supian-2003800907-30765287.jpg';
-import pexelsrandomimage08 from '@/assets/pexelsrandomimages/pexels-laurathexplaura-3608263.jpg';
-import pexelsrandomimage09 from '@/assets/pexelsrandomimages/pexels-maxfrancis-2246476.jpg';
-import pexelsrandomimage10 from '@/assets/pexelsrandomimages/pexels-md-farhabi-helal-1973415-3596102.jpg';
-import pexelsrandomimage11 from '@/assets/pexelsrandomimages/pexels-navlakha-30718468.jpg';
-import pexelsrandomimage12 from '@/assets/pexelsrandomimages/pexels-njeromin-11542516.jpg';
-import pexelsrandomimage13 from '@/assets/pexelsrandomimages/pexels-njeromin-19400410.jpg';
-import pexelsrandomimage14 from '@/assets/pexelsrandomimages/pexels-pixabay-41006.jpg';
-import pexelsrandomimage15 from '@/assets/pexelsrandomimages/pexels-pixabay-76969.jpg';
-import pexelsrandomimage16 from '@/assets/pexelsrandomimages/pexels-pixabay-461940.jpg';
-import pexelsrandomimage17 from '@/assets/pexelsrandomimages/pexels-regan-dsouza-1315522347-30692712.jpg';
-import pexelsrandomimage18 from '@/assets/pexelsrandomimages/pexels-shafi_fotumcatcher-1249695-2378278.jpg';
-import pexelsrandomimage19 from '@/assets/pexelsrandomimages/pexels-sebastian-luna-736234668-30749714.jpg';
-import pexelsrandomimage20 from '@/assets/pexelsrandomimages/pexels-souvenirpixels-417074.jpg';
-import pexelsrandomimage21 from '@/assets/pexelsrandomimages/pexels-szafran-30735040.jpg';
-import pexelsrandomimage22 from '@/assets/pexelsrandomimages/pexels-szafran-30747387.jpg';
-import pexelsrandomimage23 from '@/assets/pexelsrandomimages/pexels-travelerchitect-30730409.jpg';
-import pexelsrandomimage24 from '@/assets/pexelsrandomimages/pexels-zeynep-sude-emek-193601188-26770601.jpg';
 
-export const ProntoVistaImgsList = [
-    pexelsrandomimage01, pexelsrandomimage02, pexelsrandomimage03, pexelsrandomimage04,
-    pexelsrandomimage05, pexelsrandomimage06, pexelsrandomimage07, pexelsrandomimage08,
-    pexelsrandomimage09, pexelsrandomimage10, pexelsrandomimage11, pexelsrandomimage12,
-    pexelsrandomimage13, pexelsrandomimage14, pexelsrandomimage15, pexelsrandomimage16,
-    pexelsrandomimage17, pexelsrandomimage18, pexelsrandomimage19, pexelsrandomimage20,
-    pexelsrandomimage21, pexelsrandomimage22, pexelsrandomimage23, pexelsrandomimage24
-];
+import exampleImage01   from '@/assets/exampleimages/30748283.jpg';
+import exampleImageSm01 from '@/assets/exampleimages/30748283sm.jpg';
+import exampleImageMd01 from '@/assets/exampleimages/30748283md.jpg';
 
-import pexelsrandomimagesPrevGal01 from '@/assets/pexelsrandomimages_prevGal/pexels-2148789464-30748283.jpg';
-import pexelsrandomimagesPrevGal02 from '@/assets/pexelsrandomimages_prevGal/pexels-ahmetyuksek-30214899.jpg';
-import pexelsrandomimagesPrevGal03 from '@/assets/pexelsrandomimages_prevGal/pexels-ahmetyuksek-30778798.jpg';
-import pexelsrandomimagesPrevGal04 from '@/assets/pexelsrandomimages_prevGal/pexels-ahmetyuksek-30778799.jpg';
-import pexelsrandomimagesPrevGal05 from '@/assets/pexelsrandomimages_prevGal/pexels-eberhardgross-1468555.jpg';
-import pexelsrandomimagesPrevGal06 from '@/assets/pexelsrandomimages_prevGal/pexels-ellusionist-30736887.jpg';
-import pexelsrandomimagesPrevGal07 from '@/assets/pexelsrandomimages_prevGal/pexels-igud-supian-2003800907-30765287.jpg';
-import pexelsrandomimagesPrevGal08 from '@/assets/pexelsrandomimages_prevGal/pexels-laurathexplaura-3608263.jpg';
-import pexelsrandomimagesPrevGal09 from '@/assets/pexelsrandomimages_prevGal/pexels-maxfrancis-2246476.jpg';
-import pexelsrandomimagesPrevGal10 from '@/assets/pexelsrandomimages_prevGal/pexels-md-farhabi-helal-1973415-3596102.jpg';
-import pexelsrandomimagesPrevGal11 from '@/assets/pexelsrandomimages_prevGal/pexels-navlakha-30718468.jpg';
-import pexelsrandomimagesPrevGal12 from '@/assets/pexelsrandomimages_prevGal/pexels-njeromin-11542516.jpg';
-import pexelsrandomimagesPrevGal13 from '@/assets/pexelsrandomimages_prevGal/pexels-njeromin-19400410.jpg';
-import pexelsrandomimagesPrevGal14 from '@/assets/pexelsrandomimages_prevGal/pexels-pixabay-41006.jpg';
-import pexelsrandomimagesPrevGal15 from '@/assets/pexelsrandomimages_prevGal/pexels-pixabay-76969.jpg';
-import pexelsrandomimagesPrevGal16 from '@/assets/pexelsrandomimages_prevGal/pexels-pixabay-461940.jpg';
-import pexelsrandomimagesPrevGal17 from '@/assets/pexelsrandomimages_prevGal/pexels-regan-dsouza-1315522347-30692712.jpg';
-import pexelsrandomimagesPrevGal18 from '@/assets/pexelsrandomimages_prevGal/pexels-shafi_fotumcatcher-1249695-2378278.jpg';
-import pexelsrandomimagesPrevGal19 from '@/assets/pexelsrandomimages_prevGal/pexels-sebastian-luna-736234668-30749714.jpg';
-import pexelsrandomimagesPrevGal20 from '@/assets/pexelsrandomimages_prevGal/pexels-souvenirpixels-417074.jpg';
-import pexelsrandomimagesPrevGal21 from '@/assets/pexelsrandomimages_prevGal/pexels-szafran-30735040.jpg';
-import pexelsrandomimagesPrevGal22 from '@/assets/pexelsrandomimages_prevGal/pexels-szafran-30747387.jpg';
-import pexelsrandomimagesPrevGal23 from '@/assets/pexelsrandomimages_prevGal/pexels-travelerchitect-30730409.jpg';
-import pexelsrandomimagesPrevGal24 from '@/assets/pexelsrandomimages_prevGal/pexels-zeynep-sude-emek-193601188-26770601.jpg';
+import exampleImage02   from '@/assets/exampleimages/30214899.jpg';
+import exampleImageSm02 from '@/assets/exampleimages/30214899sm.jpg';
+import exampleImageMd02 from '@/assets/exampleimages/30214899md.jpg';
 
-export const ProntoVistaImgsListPrevGal = [
-    pexelsrandomimagesPrevGal01, pexelsrandomimagesPrevGal02, pexelsrandomimagesPrevGal03, pexelsrandomimagesPrevGal04,
-    pexelsrandomimagesPrevGal05, pexelsrandomimagesPrevGal06, pexelsrandomimagesPrevGal07, pexelsrandomimagesPrevGal08,
-    pexelsrandomimagesPrevGal09, pexelsrandomimagesPrevGal10, pexelsrandomimagesPrevGal11, pexelsrandomimagesPrevGal12,
-    pexelsrandomimagesPrevGal13, pexelsrandomimagesPrevGal14, pexelsrandomimagesPrevGal15, pexelsrandomimagesPrevGal16,
-    pexelsrandomimagesPrevGal17, pexelsrandomimagesPrevGal18, pexelsrandomimagesPrevGal19, pexelsrandomimagesPrevGal20,
-    pexelsrandomimagesPrevGal21, pexelsrandomimagesPrevGal22, pexelsrandomimagesPrevGal23, pexelsrandomimagesPrevGal24
-];
+import exampleImage03   from '@/assets/exampleimages/30778798.jpg';
+import exampleImageSm03 from '@/assets/exampleimages/30778798sm.jpg';
+import exampleImageMd03 from '@/assets/exampleimages/30778798md.jpg';
 
-import pexelsrandomimagesMainGalMin01 from '@/assets/pexelsrandomimages_mainGalMin/pexels-2148789464-30748283.jpg';
-import pexelsrandomimagesMainGalMin02 from '@/assets/pexelsrandomimages_mainGalMin/pexels-ahmetyuksek-30214899.jpg';
-import pexelsrandomimagesMainGalMin03 from '@/assets/pexelsrandomimages_mainGalMin/pexels-ahmetyuksek-30778798.jpg';
-import pexelsrandomimagesMainGalMin04 from '@/assets/pexelsrandomimages_mainGalMin/pexels-ahmetyuksek-30778799.jpg';
-import pexelsrandomimagesMainGalMin05 from '@/assets/pexelsrandomimages_mainGalMin/pexels-eberhardgross-1468555.jpg';
-import pexelsrandomimagesMainGalMin06 from '@/assets/pexelsrandomimages_mainGalMin/pexels-ellusionist-30736887.jpg';
-import pexelsrandomimagesMainGalMin07 from '@/assets/pexelsrandomimages_mainGalMin/pexels-igud-supian-2003800907-30765287.jpg';
-import pexelsrandomimagesMainGalMin08 from '@/assets/pexelsrandomimages_mainGalMin/pexels-laurathexplaura-3608263.jpg';
-import pexelsrandomimagesMainGalMin09 from '@/assets/pexelsrandomimages_mainGalMin/pexels-maxfrancis-2246476.jpg';
-import pexelsrandomimagesMainGalMin10 from '@/assets/pexelsrandomimages_mainGalMin/pexels-md-farhabi-helal-1973415-3596102.jpg';
-import pexelsrandomimagesMainGalMin11 from '@/assets/pexelsrandomimages_mainGalMin/pexels-navlakha-30718468.jpg';
-import pexelsrandomimagesMainGalMin12 from '@/assets/pexelsrandomimages_mainGalMin/pexels-njeromin-11542516.jpg';
-import pexelsrandomimagesMainGalMin13 from '@/assets/pexelsrandomimages_mainGalMin/pexels-njeromin-19400410.jpg';
-import pexelsrandomimagesMainGalMin14 from '@/assets/pexelsrandomimages_mainGalMin/pexels-pixabay-41006.jpg';
-import pexelsrandomimagesMainGalMin15 from '@/assets/pexelsrandomimages_mainGalMin/pexels-pixabay-76969.jpg';
-import pexelsrandomimagesMainGalMin16 from '@/assets/pexelsrandomimages_mainGalMin/pexels-pixabay-461940.jpg';
-import pexelsrandomimagesMainGalMin17 from '@/assets/pexelsrandomimages_mainGalMin/pexels-regan-dsouza-1315522347-30692712.jpg';
-import pexelsrandomimagesMainGalMin18 from '@/assets/pexelsrandomimages_mainGalMin/pexels-shafi_fotumcatcher-1249695-2378278.jpg';
-import pexelsrandomimagesMainGalMin19 from '@/assets/pexelsrandomimages_mainGalMin/pexels-sebastian-luna-736234668-30749714.jpg';
-import pexelsrandomimagesMainGalMin20 from '@/assets/pexelsrandomimages_mainGalMin/pexels-souvenirpixels-417074.jpg';
-import pexelsrandomimagesMainGalMin21 from '@/assets/pexelsrandomimages_mainGalMin/pexels-szafran-30735040.jpg';
-import pexelsrandomimagesMainGalMin22 from '@/assets/pexelsrandomimages_mainGalMin/pexels-szafran-30747387.jpg';
-import pexelsrandomimagesMainGalMin23 from '@/assets/pexelsrandomimages_mainGalMin/pexels-travelerchitect-30730409.jpg';
-import pexelsrandomimagesMainGalMin24 from '@/assets/pexelsrandomimages_mainGalMin/pexels-zeynep-sude-emek-193601188-26770601.jpg';
+import exampleImage04   from '@/assets/exampleimages/30778799.jpg';
+import exampleImageSm04 from '@/assets/exampleimages/30778799sm.jpg';
+import exampleImageMd04 from '@/assets/exampleimages/30778799md.jpg';
 
-export const ProntoVistaImgsListMainGalMin = [
-    pexelsrandomimagesMainGalMin01, pexelsrandomimagesMainGalMin02, pexelsrandomimagesMainGalMin03, pexelsrandomimagesMainGalMin04,
-    pexelsrandomimagesMainGalMin05, pexelsrandomimagesMainGalMin06, pexelsrandomimagesMainGalMin07, pexelsrandomimagesMainGalMin08,
-    pexelsrandomimagesMainGalMin09, pexelsrandomimagesMainGalMin10, pexelsrandomimagesMainGalMin11, pexelsrandomimagesMainGalMin12,
-    pexelsrandomimagesMainGalMin13, pexelsrandomimagesMainGalMin14, pexelsrandomimagesMainGalMin15, pexelsrandomimagesMainGalMin16,
-    pexelsrandomimagesMainGalMin17, pexelsrandomimagesMainGalMin18, pexelsrandomimagesMainGalMin19, pexelsrandomimagesMainGalMin20,
-    pexelsrandomimagesMainGalMin21, pexelsrandomimagesMainGalMin22, pexelsrandomimagesMainGalMin23, pexelsrandomimagesMainGalMin24
+import exampleImage05   from '@/assets/exampleimages/1468555.jpg';
+import exampleImageSm05 from '@/assets/exampleimages/1468555sm.jpg';
+import exampleImageMd05 from '@/assets/exampleimages/1468555md.jpg';
+
+import exampleImage06   from '@/assets/exampleimages/30736887.jpg';
+import exampleImageSm06 from '@/assets/exampleimages/30736887sm.jpg';
+import exampleImageMd06 from '@/assets/exampleimages/30736887md.jpg';
+
+import exampleImage07   from '@/assets/exampleimages/30765287.jpg';
+import exampleImageSm07 from '@/assets/exampleimages/30765287sm.jpg';
+import exampleImageMd07 from '@/assets/exampleimages/30765287md.jpg';
+
+import exampleImage08   from '@/assets/exampleimages/3608263.jpg';
+import exampleImageSm08 from '@/assets/exampleimages/3608263sm.jpg';
+import exampleImageMd08 from '@/assets/exampleimages/3608263md.jpg';
+
+import exampleImage09   from '@/assets/exampleimages/2246476.jpg';
+import exampleImageSm09 from '@/assets/exampleimages/2246476sm.jpg';
+import exampleImageMd09 from '@/assets/exampleimages/2246476md.jpg';
+
+import exampleImage10   from '@/assets/exampleimages/3596102.jpg';
+import exampleImageSm10 from '@/assets/exampleimages/3596102sm.jpg';
+import exampleImageMd10 from '@/assets/exampleimages/3596102md.jpg';
+
+import exampleImage11   from '@/assets/exampleimages/30718468.jpg';
+import exampleImageSm11 from '@/assets/exampleimages/30718468sm.jpg';
+import exampleImageMd11 from '@/assets/exampleimages/30718468md.jpg';
+
+import exampleImage12   from '@/assets/exampleimages/11542516.jpg';
+import exampleImageSm12 from '@/assets/exampleimages/11542516sm.jpg';
+import exampleImageMd12 from '@/assets/exampleimages/11542516md.jpg';
+
+import exampleImage13   from '@/assets/exampleimages/19400410.jpg';
+import exampleImageSm13 from '@/assets/exampleimages/19400410sm.jpg';
+import exampleImageMd13 from '@/assets/exampleimages/19400410md.jpg';
+
+import exampleImage14   from '@/assets/exampleimages/41006.jpg';
+import exampleImageSm14 from '@/assets/exampleimages/41006sm.jpg';
+import exampleImageMd14 from '@/assets/exampleimages/41006md.jpg';
+
+import exampleImage15   from '@/assets/exampleimages/76969.jpg';
+import exampleImageSm15 from '@/assets/exampleimages/76969sm.jpg';
+import exampleImageMd15 from '@/assets/exampleimages/76969md.jpg';
+
+import exampleImage16   from '@/assets/exampleimages/461940.jpg';
+import exampleImageSm16 from '@/assets/exampleimages/461940sm.jpg';
+import exampleImageMd16 from '@/assets/exampleimages/461940md.jpg';
+
+import exampleImage17   from '@/assets/exampleimages/30692712.jpg';
+import exampleImageSm17 from '@/assets/exampleimages/30692712sm.jpg';
+import exampleImageMd17 from '@/assets/exampleimages/30692712md.jpg';
+
+import exampleImage18   from '@/assets/exampleimages/2378278.jpg';
+import exampleImageSm18 from '@/assets/exampleimages/2378278sm.jpg';
+import exampleImageMd18 from '@/assets/exampleimages/2378278md.jpg';
+
+import exampleImage19   from '@/assets/exampleimages/30749714.jpg';
+import exampleImageSm19 from '@/assets/exampleimages/30749714sm.jpg';
+import exampleImageMd19 from '@/assets/exampleimages/30749714md.jpg';
+
+import exampleImage20   from '@/assets/exampleimages/417074.jpg';
+import exampleImageSm20 from '@/assets/exampleimages/417074sm.jpg';
+import exampleImageMd20 from '@/assets/exampleimages/417074md.jpg';
+
+import exampleImage21   from '@/assets/exampleimages/30735040.jpg';
+import exampleImageSm21 from '@/assets/exampleimages/30735040sm.jpg';
+import exampleImageMd21 from '@/assets/exampleimages/30735040md.jpg';
+
+import exampleImage22   from '@/assets/exampleimages/30747387.jpg';
+import exampleImageSm22 from '@/assets/exampleimages/30747387sm.jpg';
+import exampleImageMd22 from '@/assets/exampleimages/30747387md.jpg';
+
+import exampleImage23   from '@/assets/exampleimages/30730409.jpg';
+import exampleImageSm23 from '@/assets/exampleimages/30730409sm.jpg';
+import exampleImageMd23 from '@/assets/exampleimages/30730409md.jpg';
+
+import exampleImage24   from '@/assets/exampleimages/26770601.jpg';
+import exampleImageSm24 from '@/assets/exampleimages/26770601sm.jpg';
+import exampleImageMd24 from '@/assets/exampleimages/26770601md.jpg';
+
+export const ProntoVistaImages = [
+    { mainSize: exampleImage01, mdSize: exampleImageMd01, smSize: exampleImageSm01 },
+    { mainSize: exampleImage02, mdSize: exampleImageMd02, smSize: exampleImageSm02 },
+    { mainSize: exampleImage03, mdSize: exampleImageMd03, smSize: exampleImageSm03 },
+    { mainSize: exampleImage04, mdSize: exampleImageMd04, smSize: exampleImageSm04 },
+    { mainSize: exampleImage05, mdSize: exampleImageMd05, smSize: exampleImageSm05 },
+    { mainSize: exampleImage06, mdSize: exampleImageMd06, smSize: exampleImageSm06 },
+    { mainSize: exampleImage07, mdSize: exampleImageMd07, smSize: exampleImageSm07 },
+    { mainSize: exampleImage08, mdSize: exampleImageMd08, smSize: exampleImageSm08 },
+    { mainSize: exampleImage09, mdSize: exampleImageMd09, smSize: exampleImageSm09 },
+    { mainSize: exampleImage10, mdSize: exampleImageMd10, smSize: exampleImageSm10 },
+    { mainSize: exampleImage11, mdSize: exampleImageMd11, smSize: exampleImageSm11 },
+    { mainSize: exampleImage12, mdSize: exampleImageMd12, smSize: exampleImageSm12 },
+    { mainSize: exampleImage13, mdSize: exampleImageMd13, smSize: exampleImageSm13 },
+    { mainSize: exampleImage14, mdSize: exampleImageMd14, smSize: exampleImageSm14 },
+    { mainSize: exampleImage15, mdSize: exampleImageMd15, smSize: exampleImageSm15 },
+    { mainSize: exampleImage16, mdSize: exampleImageMd16, smSize: exampleImageSm16 },
+    { mainSize: exampleImage17, mdSize: exampleImageMd17, smSize: exampleImageSm17 },
+    { mainSize: exampleImage18, mdSize: exampleImageMd18, smSize: exampleImageSm18 },
+    { mainSize: exampleImage19, mdSize: exampleImageMd19, smSize: exampleImageSm19 },
+    { mainSize: exampleImage20, mdSize: exampleImageMd20, smSize: exampleImageSm20 },
+    { mainSize: exampleImage21, mdSize: exampleImageMd21, smSize: exampleImageSm21 },
+    { mainSize: exampleImage22, mdSize: exampleImageMd22, smSize: exampleImageSm22 },
+    { mainSize: exampleImage23, mdSize: exampleImageMd23, smSize: exampleImageSm23 },
+    { mainSize: exampleImage24, mdSize: exampleImageMd24, smSize: exampleImageSm24 }
 ];

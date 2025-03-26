@@ -1,43 +1,32 @@
 import React, { useEffect, useState, useRef } from 'react';
 import ProntoVistaPrevGal from '@/components/prontoVistaPrevGal';
-import { ProntoVistaImgsList, ProntoVistaImgsListPrevGal, ProntoVistaImgsListMainGalMin } from '@/components/prontoVistaImgsLists';
+import ProntoVistaImages from '@/data/prontoVistaImages.json';
 import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
 import prontoVistaMainGal from '@/components/prontoVistaMainGal';
 
 const ProntoVistaArticulo: React.FC = () => {
 
+  const imagenesListaMainSize = ProntoVistaImages.map(item => item.mainSize);
+  const imagenesListaMdSize = ProntoVistaImages.map(item => item.mdSize);
+  const imagenesListaSmSize = ProntoVistaImages.map(item => item.smSize);
+
   const { screenReady, lgScreen, mdScreen, smScreen } = UsePantallaTamagnos();
-
   const isValidColor = (color: string) => typeof window !== "undefined" && CSS.supports("color", color);
-
   const [cajaAltura, setCajaAltura] = useState(32);
-
   const [tiempoIntervalo, setTiempoIntervalo] = useState(3400);
-
   const [seleccionColor, setSeleccionColor] = useState(() => isValidColor("rgb(51,65,85)") ? "rgb(51,65,85)" : "#000");
-
   const [discosNavegador, setDiscosNavegador] = useState<boolean>(true);
-
   const verOcultarDiscosNavRef = useRef<HTMLDivElement | null>(null);
-
-  // const [verOcultarDiscosNavCurrentHeight, setVerOcultarDiscosNavCurrentHeight] = useState<number>(1);
-
-  // const remToPixels = (remValue: number): number => remValue * parseFloat(getComputedStyle(document.documentElement).fontSize);
-
 
   useEffect(() => {
     if (isValidColor(seleccionColor)) setSeleccionColor(seleccionColor)
   }, [seleccionColor]);
-
-
 
   const [pageLoaded, setPageLoaded] = useState(false);
   useEffect(() => {
     if (!screenReady) return;
     const timeout = setTimeout(() => setPageLoaded(true), 100);
     return () => clearTimeout(timeout); }, [screenReady]);
-  
-
 
   if (!screenReady) return null;
 
@@ -65,7 +54,7 @@ const ProntoVistaArticulo: React.FC = () => {
           React.createElement('div', { ref: verOcultarDiscosNavRef, style: { display: 'block', boxSizing: 'border-box', width: `100%`, transition: discosNavegador ? `height 500ms ease-in-out, opacity 1600ms ease-in-out` : `height 500ms ease-in-out, opacity 300ms ease-in-out`} },
             React.createElement('div', { style: { display: 'block', boxSizing: 'border-box', width: `100%` }},
               React.createElement(ProntoVistaPrevGal, {
-                imagenesLista: ProntoVistaImgsListPrevGal,
+                imagenesLista: imagenesListaMdSize,
                 discosColor: seleccionColor,
                 iteracionTiempo: tiempoIntervalo,
                 maxAltura: cajaAltura,
@@ -135,8 +124,8 @@ const ProntoVistaArticulo: React.FC = () => {
 
           React.createElement('div', { style: { display: 'block', boxSizing: 'border-box', width: '100%', aspectRatio: '16/9', overflow: 'hidden', borderRadius: '0.375rem' } },
             React.createElement(prontoVistaMainGal, {
-              imagenesLista: ProntoVistaImgsList,
-              thumbnailsLista: ProntoVistaImgsListMainGalMin, 
+              imagenesLista: imagenesListaMainSize,
+              thumbnailsLista: imagenesListaSmSize, 
               indice: 11,
               seleccColor: seleccionColor }) )
 
