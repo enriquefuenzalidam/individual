@@ -75,7 +75,7 @@ const ProntoVistaArticulo: React.FC = () => {
           React.createElement('h4', { className: ` hyphens-none lg:mt-16 md:mt-12 sm:mt-8 mt-8 text-left text-slate-700/80 font-semibold leading-normal lg:text-2xl md:text-xl sm:text-xl text-xl ` },
             `Opciones personalizables` ),
           React.createElement('p', { className: 'lg:text-2xl md:text-xl sm:text-xl text-lg font-light text-slate-700/70 text-left lg:indent-6 md:indent-5 sm:indent-4 indent-4 lg:my-4 md:my-3 sm:my-2 my-2 lg:leading-relaxed md:leading-relaxed sm:leading-relaxed leading-relaxed  ' },
-            'En esta interfaz se pueden apreciar las opciones personalizables que dispone el componente.'),
+            'En esta interfaz se pueden conocer las opciones personalizables que dispone el componente.'),
           React.createElement('h5', { className: ` hyphens-none lg:mt-8 md:mt-6 sm:mt-5 mt-5 text-left text-slate-700/80 font-regular leading-normal lg:text-xl md:text-lg sm:text-lg text-lg  `},
             `Apariencia de los selectores de navegación` ),
           React.createElement('p', { className: ` lg:mt-2 mt-1 text-left text-lg leading-normal ` },
