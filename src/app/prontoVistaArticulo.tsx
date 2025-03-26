@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
 import ProntoVistaPrevGal from '@/components/prontoVistaPrevGal';
-import ProntoVistaImages from '@/data/prontoVistaImages.json';
+// import ProntoVistaImages from '@/data/prontoVistaImages.json';
+import { ImportedImages } from '@/components/prontoVistaImgsLists';
 import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
 import prontoVistaMainGal from '@/components/prontoVistaMainGal';
 
 const ProntoVistaArticulo: React.FC = () => {
 
-  const imagenesListaMainSize = ProntoVistaImages.map(item => item.mainSize);
-  const imagenesListaMdSize = ProntoVistaImages.map(item => item.mdSize);
-  const imagenesListaSmSize = ProntoVistaImages.map(item => item.smSize);
+  const imagenesListaMdSize = ImportedImages.map(item => item.mdSize);
+
+  const imagenesListaMainSize = ImportedImages.map(item => item.mainSize);
+  const imagenesListaSmSize = ImportedImages.map(item => item.smSize);
 
   const { screenReady, lgScreen, mdScreen, smScreen } = UsePantallaTamagnos();
   const isValidColor = (color: string) => typeof window !== "undefined" && CSS.supports("color", color);

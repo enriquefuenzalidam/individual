@@ -4,6 +4,7 @@ import NextImage, { StaticImageData } from 'next/image';
 
 interface ProntoVistaPrevGalProps {
   imagenesLista: (string | StaticImageData)[];
+  jsonLista?: boolean;
   initialIndex?: number;
   discosColor?: string;
   maxAltura?: number;
@@ -29,7 +30,7 @@ const isValidColor = (color: string) => {
     return s.color !== "";
 };
 
-const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
+const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
 
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>( initialIndex === 0 ? imagenesLista.length - 1 : initialIndex - 1);
     const preloadedImagesRef = useRef<Set<number>>(new Set());
@@ -266,11 +267,11 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
                             previousAndCurrentIndexes.has(index) && React.createElement("div", { ref: (el) => { imageRefsB.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleB },
-                            React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, unoptimized: true, style: imageElementStyle }),
+                            React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, style: imageElementStyle }),
                             currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index } ),
                             !loadedImages[index] && loadingImageThumbnail ) ) } );
 
-    }, [ currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadedImages, loadingImageThumbnail, tiempoIntervalo, maximizeSign, isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm ]);  
+    }, [ jsonLista, currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadedImages, loadingImageThumbnail, tiempoIntervalo, maximizeSign, isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm ]);  
 
     const visibleSelectores = useMemo(() => {
 

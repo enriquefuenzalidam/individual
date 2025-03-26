@@ -3,10 +3,11 @@ import React from "react";
 import { useSearchParams } from "next/navigation";
 import { StaticImageData } from "next/image";
 import ProntoVistaMainGal from "@/components/prontoVistaMainGal";
-import ProntoVistaImages from '@/data/prontoVistaImages.json';
+// import ProntoVistaImages from '@/data/prontoVistaImages.json';
+import { ImportedImages } from '@/components/prontoVistaImgsLists';
 
-const imagenesListaMainSize = ProntoVistaImages.map(item => item.mainSize);
-const imagenesListaSmSize = ProntoVistaImages.map(item => item.smSize);
+const imagenesListaMainSize = ImportedImages.map(item => item.mainSize);
+const imagenesListaSmSize = ImportedImages.map(item => item.smSize);
 
 const imageLists: Record<string, {
     full: (string | StaticImageData)[];
