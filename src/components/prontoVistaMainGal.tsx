@@ -215,13 +215,27 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
       const timeout = setTimeout(() => setPageLoaded(true), 100);
       return () => clearTimeout(timeout); }, [screenReady]);
 
+    const [loadedImagesDelay, setLoadedImagesDelay] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
+    useEffect(() => {
+        const timeouts: NodeJS.Timeout[] = [];
+        loadedImages.forEach((isLoaded, index) => {
+            if (isLoaded && !loadedImagesDelay[index]) {
+                const timeout = setTimeout(() => {
+                    setLoadedImagesDelay(prev => {
+                        const updated = [...prev];
+                        updated[index] = true;
+                        return updated; } ) }, 400);
+                timeouts.push(timeout); } } );
+        return () => timeouts.forEach(clearTimeout);
+    }, [loadedImages, loadedImagesDelay]);
+
     if (!screenReady) return null;
 
-    return React.createElement('div', {ref: mainRef, style: { position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', background: 'black' } },
+    return React.createElement('div', {ref: mainRef, style: { position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%' } },
 
-                React.createElement('section', { onMouseMove: !mostrarOcultarLista ? resetCountdown : null, role: "region", "aria-label": "Full-size Image", style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', cursor: 'default', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none' }},
-                    imagenesLista?.map((item, index) => (currentIndex === index || previousIndex === index) && (React.createElement('div', { key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', pointerEvents: currentIndex === index ? 'auto' : 'none', zIndex: previousIndex === index ? 2 : 1, opacity: currentIndex === index && loadedImages[index] ? 1 : 0, transition: 'opacity 500ms ease-in-out' } },
-                        loadingImageFullImage,
+                React.createElement('section', { onMouseMove: !mostrarOcultarLista ? resetCountdown : null, role: "region", "aria-label": "Full-size Image", style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', cursor: 'default', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none', background: 'black' }},
+                    loadingImageFullImage,
+                    imagenesLista?.map((item, index) => (currentIndex === index || previousIndex === index) && (React.createElement('div', { key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', pointerEvents: currentIndex === index ? 'auto' : 'none', zIndex: previousIndex === index ? 2 : 1, opacity: currentIndex === index && loadedImagesDelay[index] ? 1 : 0, transition: 'opacity 500ms ease-in-out' } },
                         React.createElement(NextImage, { key: index, /* onLoad: () => handleImagelLoad(index), */ src: item, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, style: { objectFit: 'contain' } } )
                         ) ) ) ),
 
