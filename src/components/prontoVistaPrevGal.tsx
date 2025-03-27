@@ -33,7 +33,6 @@ const isValidColor = (color: string) => {
 const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
 
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>( initialIndex === 0 ? imagenesLista.length - 1 : initialIndex - 1);
-    const preloadedImagesRef = useRef<Set<number>>(new Set());
 
     useEffect(() => {
 
@@ -45,12 +44,8 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
             return 0; } );
 
         preloadQueue.forEach( (index) => {
-            if (preloadedImagesRef.current.has(index)) return; 
-            handleImageLoad(index);
-            preloadedImagesRef.current.add(index);
             const src = imagenesLista[index];
             const img = new Image();
-            img.onload = () => console.log(`Galería de Previsualización, imagen index preloaded ${index}: ${img.src}`);
             try { 
                 if (typeof src === 'string') img.src = src; 
                 else if (typeof src === 'object' && 'src' in src) img.src = src.src; }
@@ -209,8 +204,8 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
     }, [imagenesLista.length, currentGalleryIndex, handleNavClick, discosColor, router, listKey, tiempoIntervalo]); 
 
     const loadingImage = useCallback(({ color = seleccionColor, alto = 24, imageIndex = 1 }) => {
-        return React.createElement('div', { style: { color: color, position: 'absolute', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)', opacity: imageIndex, transition: 'all 300ms ease-in-out' } },
-            React.createElement('svg', { style: { width: alto+'%', height: 'auto', opacity: 0.38 }, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 640 512", fill: 'currentColor' },
+        return React.createElement('div', { style: { color: color, position: 'absolute', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: 'transparent', opacity: imageIndex, transition: 'all 300ms ease-in-out' } },
+            React.createElement('svg', { style: { width: alto+'%', height: 'auto', opacity: 0.15 }, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 640 512", fill: 'currentColor' },
                 React.createElement('path', { fill: 'currentColor', d: 'M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z' } ) ) )
     }, [seleccionColor])
 
@@ -259,15 +254,15 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
                 const imageBlockStyleB = {
                     position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all "+ tiempoIntervalo/4 + "ms linear", cursor: "pointer",
-                    opacity: !loadedImages[index] ? 0 : onlyPrvIndexes.has(index) ? 0 : onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24 }
+                    opacity: onlyPrvIndexes.has(index) ? 0 : onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24, background: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)' }
 
                 const imageElementStyle: React.CSSProperties = {
-                    objectFit: 'cover', transition: 'opacity 300ms linear', opacity: loadedImages[index] ? 1 : 0 }
+                    objectFit: 'cover', transition: 'opacity 300ms ease-in-out', opacity: loadedImages[index] ? 1 : 0 }
 
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
-                            loadingImage({ alto: 24, imageIndex: !loadedImages[index] ? 1 : 0 }),
                             previousAndCurrentIndexes.has(index) && React.createElement("div", { ref: (el) => { imageRefsB.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleB },
-                                React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, style: imageElementStyle }),
+                                loadingImage({ alto: 24, imageIndex: !loadedImages[index] ? 1 : 0 }),
+                                React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, onLoad: () => handleImageLoad(index), style: imageElementStyle }),
                                 currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index } ) ) ) } );
 
     }, [ jsonLista, currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadingImage, loadedImages, tiempoIntervalo, maximizeSign, isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm ]);  

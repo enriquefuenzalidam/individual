@@ -39,7 +39,7 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
     const [loadedThumbnails, setLoadedThumbnails] = useState<boolean[]>(new Array(thumbnailsLista.length).fill(false));
     const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
 
-    const handleImagelLoad = (index: number) => {
+    const handleImageLoad = (index: number) => {
         setLoadedImages((prev) => {
             if (prev[index]) return prev;
             const updated = [...prev];
@@ -219,7 +219,7 @@ const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thu
                 React.createElement('section', { onMouseMove: !mostrarOcultarLista ? resetCountdown : null, role: "region", "aria-label": "Full-size Image", style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', cursor: 'default', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none', background: 'black' }},
                     loadingImage({ alto: 6, color: 'rgba(255,255,255,0.38)', imageIndex: loadedImages[currentIndex] ? 0 : 1 } ),
                     imagenesLista?.map((item, index) => (currentIndex === index || previousIndex === index) && (React.createElement('div', { key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', pointerEvents: currentIndex === index ? 'auto' : 'none', zIndex: previousIndex === index ? 2 : 1, opacity: currentIndex === index && loadedImages[index] ? 1 : 0, transition: 'opacity 500ms ease-in-out' } },
-                        React.createElement(NextImage, { key: index, onLoad: () => handleImagelLoad(index), src: item, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, style: { objectFit: 'contain' } } )
+                        React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, style: { objectFit: 'contain' } } )
                         ) ) ) ),
 
                 React.createElement('section', { role: "region", "aria-label": "Image Thumbnails", style: { display: 'block', boxSizing: 'border-box', opacity: mostrarOcultarLista ? 1 : 0, position: 'absolute', bottom: '0', left: '0', width: '100%', height: tnScreen ? '6rem' : smScreen ? '7rem' : mdScreen ? '8rem' : lgScreen ? '9rem' : xlScreen ? '10rem' : '10rem', overflow: 'hidden', maskImage: 'linear-gradient( to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 13%, rgba(0,0,0,1) 87%, rgba(0,0,0,0) 100%)', transition: 'all 600ms ease-in-out', pointerEvents: mostrarOcultarLista ? 'auto' : 'none', zIndex: 3 } },
