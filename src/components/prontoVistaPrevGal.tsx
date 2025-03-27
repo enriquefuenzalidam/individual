@@ -260,10 +260,10 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
                 const imageBlockStyleB = {
                     position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all "+ tiempoIntervalo/4 + "ms linear", cursor: "pointer",
-                    opacity: onlyPrvIndexes.has(index) ? 0 : onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24 }
+                    opacity:  loadedImages[index] ? onlyPrvIndexes.has(index) ? 0 : onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24 : 0 }
 
                 const imageElementStyle: React.CSSProperties = {
-                    objectFit: 'cover', transition: 'opacity ' + tiempoIntervalo/4 + 'ms linear', opacity: loadedImages[index] ? 1 : 0 }
+                    objectFit: 'cover', transition: 'opacity ' + tiempoIntervalo/4 + 'ms linear', opacity: 1 }
 
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
                             loadingImageThumbnail,
