@@ -259,13 +259,13 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
                 const imageBlockStyleB = {
                     position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all "+ tiempoIntervalo/4 + "ms linear", cursor: "pointer",
-                    opacity: loadedImages[index] ? onlyPrvIndexes.has(index) ? 0 : onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24 : 0 }
+                    opacity: !loadedImages[index] ? 0 : onlyPrvIndexes.has(index) ? 0 : onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24 }
 
                 const imageElementStyle: React.CSSProperties = {
-                    objectFit: 'cover', transition: 'opacity ' + tiempoIntervalo/4 + 'ms linear', opacity: loadedImages[index] ? 1 : 0 }
+                    objectFit: 'cover', transition: 'opacity 300ms linear', opacity: loadedImages[index] ? 1 : 0 }
 
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
-                            loadingImage({ alto: 24, imageIndex: loadedImages[index] ? 0 : 1 }),
+                            loadingImage({ alto: 24, imageIndex: !loadedImages[index] ? 1 : 0 }),
                             previousAndCurrentIndexes.has(index) && React.createElement("div", { ref: (el) => { imageRefsB.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleB },
                                 React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, style: imageElementStyle }),
                                 currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index } ) ) ) } );
