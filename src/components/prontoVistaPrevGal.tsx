@@ -257,7 +257,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
                     opacity: onlyPrvIndexes.has(index) ? 0 : onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24 }
 
                 const imageElementStyle: React.CSSProperties = {
-                    objectFit: 'cover', transition: 'opacity 300ms ease-in-out', opacity: loadedImages[index] ? 1 : 0 }
+                    objectFit: 'cover', transition: 'opacity 300ms ease-in-out', opacity: previousAndCurrentIndexes.has(index) ? loadedImages[index] ? 1 : 0 : 0 }
 
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
                             loadingImage( { alto: 15, imageIndex: !previousAndCurrentIndexes.has(index) || !loadedImages[index] ? 1 : 0 } ),
