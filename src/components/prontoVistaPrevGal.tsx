@@ -254,7 +254,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, 
 
                 const imageBlockStyleB = {
                     position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all 300ms linear", cursor: "pointer",
-                    opacity: onlyPrvIndexes.has(index) ? 0 : onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24 }
+                    opacity: onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24 }
 
                 const imageElementStyle: React.CSSProperties = {
                     objectFit: 'cover', transition: 'opacity 300ms ease-in-out', opacity: previousAndCurrentIndexes.has(index) ? loadedImages[index] ? 1 : 0 : 0 }
