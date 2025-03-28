@@ -2,8 +2,14 @@ import { useRouter } from "next/navigation";
 import React, { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import NextImage, { StaticImageData } from 'next/image';
 
+interface ImageSizes {
+    mainSize: string | StaticImageData;
+    mdSize: string | StaticImageData;
+    smSize: string | StaticImageData;
+};
+
 interface ProntoVistaPrevGalProps {
-  imagenesLista: (string | StaticImageData)[];
+  imgsTamgnos: ImageSizes[];
   jsonLista?: boolean;
   initialIndex?: number;
   discosColor?: string;
@@ -30,8 +36,9 @@ const isValidColor = (color: string) => {
     return s.color !== "";
 };
 
-const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imagenesLista, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
+const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imgsTamgnos, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
 
+    const imagenesLista = imgsTamgnos.map(item => item.mdSize);
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>( initialIndex === 0 ? imagenesLista.length - 1 : initialIndex - 1);
 
     useEffect(() => {

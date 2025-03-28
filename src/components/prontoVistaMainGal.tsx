@@ -1,9 +1,14 @@
 import React, {useRef, useState, useEffect, useCallback, useMemo} from "react";
 import NextImage, { StaticImageData } from "next/image";
 
+interface ImageSizes {
+    mainSize: string | StaticImageData;
+    mdSize: string | StaticImageData;
+    smSize: string | StaticImageData;
+};
+
 interface ProntoVistaFullProps {
-    imagenesLista: (string | StaticImageData)[];
-    thumbnailsLista: (string | StaticImageData)[];
+    imgsTamgnos: ImageSizes[];
     jsonLista?: boolean;
     indice: number;
     seleccColor?: string; }
@@ -13,7 +18,10 @@ const isValidColor = (color: string) => {
     s.color = color;
     return s.color !== ""; };
 
-const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thumbnailsLista, jsonLista = false, indice, seleccColor }) => {
+const ProntoVistaMainGal: React.FC<ProntoVistaFullProps> = ({ imgsTamgnos, jsonLista = false, indice, seleccColor }) => {
+
+    const thumbnailsLista = imgsTamgnos.map(item => item.smSize);
+    const imagenesLista = imgsTamgnos.map(item => item.mainSize);
 
     const [currentIndex, setCurrentIndex] = useState<number>(indice || 0);
     const [previousIndex, setPreviousIndex] = useState<number | null>(null);
