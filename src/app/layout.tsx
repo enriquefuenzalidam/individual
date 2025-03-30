@@ -51,10 +51,14 @@ export const metadata: Metadata = {
 }
  
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>{
-  return React.createElement('html', { lang: 'es', style: { WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', fontFamily: '"Pangea Trial", sans-serif', scrollBehavior: 'smooth', boxSizing: 'border-box', display: 'block', height: '100%', width: '100%', position: 'relative' }},
-          React.createElement('body', { style: { WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', background: 'linear-gradient( 54deg, white 15%, #fffaf4 38%, white)', hyphens: 'auto', fontFamily: '"Pangea Trial", sans-serif', scrollBehavior: 'smooth', boxSizing: 'border-box', position: 'relative', display: 'block', height: '100%', width: '100%' }},
-            children )
-  );
+
+  const baseStyle = {   boxSizing: 'border-box', display: 'block', position: 'static', margin: '0', padding: '0',
+                        WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', scrollBehavior: 'smooth' }
+
+  return React.createElement('html', { lang: 'es', style: baseStyle },
+          React.createElement('body', { style: baseStyle },
+            children ) );
+
 }
 
 export default RootLayout;

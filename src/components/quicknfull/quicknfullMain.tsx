@@ -1,9 +1,14 @@
 import React, {useRef, useState, useEffect, useCallback, useMemo} from "react";
 import NextImage, { StaticImageData } from "next/image";
 
+interface ImageSizes {
+    lgSize: string | StaticImageData;
+    mdSize: string | StaticImageData;
+    smSize: string | StaticImageData; };
+
 interface ProntoVistaFullProps {
-    imagenesLista: (string | StaticImageData)[];
-    thumbnailsLista: (string | StaticImageData)[];
+    imagesList: ImageSizes[];
+    jsonLista?: boolean;
     indice: number;
     seleccColor?: string; }
 
@@ -12,7 +17,10 @@ const isValidColor = (color: string) => {
     s.color = color;
     return s.color !== ""; };
 
-const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista, thumbnailsLista, indice, seleccColor }) => {
+const QuicknfullMain: React.FC<ProntoVistaFullProps> = ({ imagesList, jsonLista = false, indice, seleccColor }) => {
+
+    const thumbnailsLista = imagesList.map(item => item.smSize);
+    const imagenesLista = imagesList.map(item => item.lgSize);
 
     const [currentIndex, setCurrentIndex] = useState<number>(indice || 0);
     const [previousIndex, setPreviousIndex] = useState<number | null>(null);
@@ -36,6 +44,14 @@ const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista,
             setSeleccionColor(seleccColor); } }, [seleccColor]);
 
     const [loadedThumbnails, setLoadedThumbnails] = useState<boolean[]>(new Array(thumbnailsLista.length).fill(false));
+    const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
+
+    const handleImageLoad = (index: number) => {
+        setLoadedImages((prev) => {
+            if (prev[index]) return prev;
+            const updated = [...prev];
+            updated[index] = true;
+            return updated; } ) };
 
     const handleThumbnailLoad = (index: number) => {
         setLoadedThumbnails((prev) => {
@@ -44,27 +60,20 @@ const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista,
             updated[index] = true;
             return updated; } ) };
 
-    const preloadedImagesRef = useRef<Set<number>>(new Set());
-    const preloadedThumbnailsRef = useRef<Set<number>>(new Set());
-
     useEffect(() => {
 
         if (!imagenesLista || imagenesLista.length === 0) return;
     
         const preloadQueue = [...imagenesLista.keys()].sort((a, b) => {
-            // Start with currentIndex, then preload others
             if (a === currentIndex) return -1;
             if (b === currentIndex) return 1;
             return 0; } );
 
         preloadQueue.forEach( (index) => {
-            if (preloadedImagesRef.current.has(index)) return; 
-            preloadedImagesRef.current.add(index);
             const src = imagenesLista[index];
             const img = new Image();
-            img.onload = () => console.log(`Preloaded image at index ${index}: ${img.src}`);
             try { 
-                if (typeof src === 'string') img.src = src; 
+                if (typeof src === 'string') img.src = src;
                 else if (typeof src === 'object' && 'src' in src) img.src = src.src; }
             catch (error) { console.warn(`Image preload failed at index ${index}: `, error); } } );
 
@@ -75,19 +84,15 @@ const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista,
         if (!thumbnailsLista || thumbnailsLista.length === 0) return;
     
         const preloadQueue = [...thumbnailsLista.keys()].sort((a, b) => {
-            // Start with currentIndex, then preload others
             if (a === currentIndex) return -1;
             if (b === currentIndex) return 1;
             return 0; } );
 
         preloadQueue.forEach( (index) => {
-            if (preloadedThumbnailsRef.current.has(index)) return;
-            preloadedThumbnailsRef.current.add(index);
             const src = thumbnailsLista[index];
             const img = new Image();
-            img.onload = () => console.log(`Preloaded thumbnail at index ${index}: ${img.src}`);
             try { 
-                if (typeof src === 'string') img.src = src; 
+                if (typeof src === 'string') img.src = src;
                 else if (typeof src === 'object' && 'src' in src) img.src = src.src; }
             catch (error) { console.warn(`Image preload failed at index ${index}: `, error); } } );
 
@@ -97,14 +102,11 @@ const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista,
         return tnScreen ? 6 : smScreen ? 7 : mdScreen ? 8 : lgScreen ? 9 : xlScreen ? 10 : 10;
     }, [tnScreen, smScreen, mdScreen, lgScreen, xlScreen]);
 
-    const loadingImage = useCallback(({ color = seleccionColor, alto = 24, fondo = 'black' }) => {
-        return React.createElement('div', { style: { color: color, position: 'absolute', boxSizing: 'border-box', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: fondo, transition: 'all 300ms ease-in-out' } },
-            React.createElement('svg', { style: {  position: 'relative', width: alto+'%', height: 'auto' }, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 640 512", fill: 'currentColor' },
+    const loadingImage = useCallback(({ color = seleccionColor, alto = 24, fondo = 'transparent', imageIndex = 1 }) => {
+        return React.createElement('div', { style: { color: color, position: 'absolute', boxSizing: 'border-box', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: fondo, opacity: imageIndex, transition: 'opacity 500ms ease-in-out' } },
+            React.createElement('svg', { style: {  position: 'relative', width: alto+'%', height: 'auto', opacity: 0.38 }, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 640 512", fill: 'currentColor' },
                 React.createElement('path', { fill: 'currentColor', d: 'M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z' } ) ) )
-    }, [seleccionColor])
-
-    const loadingImageThumbnail = useMemo(()  => loadingImage({ alto: 24, fondo: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)' }), [loadingImage]);
-    const loadingImageFullImage = useMemo(()  => loadingImage({ alto: 9, color: 'rgba(255,255,255,0.1)' }), [loadingImage])
+    }, [seleccionColor]);
 
     useEffect(() => {
         return () => {
@@ -152,13 +154,9 @@ const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista,
 
             element.scrollLeft = startScroll + (targetScroll - startScroll) * easeInOut;
 
-            if (elapsedTime < duration) requestAnimationFrame(animateScroll);
+            if (elapsedTime < duration) requestAnimationFrame(animateScroll); };
 
-        };
-
-        requestAnimationFrame(animateScroll);
-
-    }, [thumbnailSize ]);
+        requestAnimationFrame(animateScroll); }, [thumbnailSize ]);
 
     useEffect(() => {
 
@@ -179,16 +177,13 @@ const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista,
         const handleResize = () => {
 
             if (!mainRefCurrent) return;
-
             const width = mainRefCurrent.offsetWidth;
 
             setXlScreen(width >= 1280);
             setLgScreen(width >= 1024 && width < 1280);
             setMdScreen(width >= 768 && width < 1024);
             setSmScreen(width >= 640 && width < 768);
-            setTnScreen(width < 640);
-
-        };
+            setTnScreen(width < 640); };
 
         handleResize();
         window.addEventListener("resize", handleResize);
@@ -196,22 +191,6 @@ const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista,
         return () => window.removeEventListener("resize", handleResize);
 
     }, [mainRefCurrent]);
-
-/*
-    const [visibleImages, setVisibleImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
-    useEffect(() => {
-        setVisibleImages((prev) => {
-          const updated = [...prev];
-          imagenesLista.forEach((_, i) => {
-            if (i === currentIndex && loadedImages[i]) updated[i] = true;
-            else if (prev[i]) {
-              setTimeout(() => {
-                setVisibleImages((latest) => {
-                  const copy = [...latest];
-                  copy[i] = false;
-                  return copy; } ) }, 500) } } );
-          return updated } ) }, [currentIndex, imagenesLista, loadedImages]);
-*/
 
     const handleThumbnailClick = (index: number) => {
         if (index === currentIndex) return;
@@ -227,23 +206,29 @@ const ProntoVistaMainGalFull: React.FC<ProntoVistaFullProps> = ({ imagenesLista,
         return () => clearTimeout(timeout);
     }, [previousIndex]);
 
-
+    const [pageLoaded, setPageLoaded] = useState(false);
+    useEffect(() => {
+      if (!screenReady) return;
+      const timeout = setTimeout(() => setPageLoaded(true), 100);
+      return () => clearTimeout(timeout); }, [screenReady]);
 
     if (!screenReady) return null;
 
-    return React.createElement('main', {ref: mainRef, style: { display: 'block', position: 'fixed', inset: 0, boxSizing: 'border-box' } },
+    return React.createElement('div', {ref: mainRef, style: { position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%' } },
 
-                React.createElement('section', { onClick: resetCountdown, role: "region", "aria-label": "Full-size Image", style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', cursor: 'default' }},
-                    loadingImageFullImage,
-                    imagenesLista?.map((item, index) => (currentIndex === index || previousIndex === index) && (React.createElement('div', { key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', pointerEvents: currentIndex === index ? 'auto' : 'none', zIndex: previousIndex === index ? 2 : 1, opacity: currentIndex === index ? 1 : 0, transition: 'opacity 500ms ease-in-out' } },
-                        React.createElement(NextImage, { key: index, src: item, alt: 'Gallery Image ' + index, style: { position: 'relative', width: '100%', height: '100%', objectFit: 'contain'  } } ) ) ) ) ),
+                React.createElement('section', { onMouseMove: !mostrarOcultarLista ? resetCountdown : null, role: "region", "aria-label": "Full-size Image", style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', cursor: 'default', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none', background: 'black' }},
+                    loadingImage({ alto: 6, color: 'rgba(255,255,255,0.38)', imageIndex: loadedImages[currentIndex] ? 0 : 1 } ),
+                    imagenesLista?.map((item, index) => (currentIndex === index || previousIndex === index) && (React.createElement('div', { key: index, style: { display: 'block', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'black', pointerEvents: currentIndex === index ? 'auto' : 'none', zIndex: previousIndex === index ? 2 : 1, opacity: currentIndex === index && loadedImages[index] ? 1 : 0, transition: 'opacity 500ms ease-in-out' } },
+                        React.createElement(NextImage, { key: index, onLoad: () => handleImageLoad(index), src: item, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, style: { objectFit: 'contain' } } )
+                        ) ) ) ),
 
                 React.createElement('section', { role: "region", "aria-label": "Image Thumbnails", style: { display: 'block', boxSizing: 'border-box', opacity: mostrarOcultarLista ? 1 : 0, position: 'absolute', bottom: '0', left: '0', width: '100%', height: tnScreen ? '6rem' : smScreen ? '7rem' : mdScreen ? '8rem' : lgScreen ? '9rem' : xlScreen ? '10rem' : '10rem', overflow: 'hidden', maskImage: 'linear-gradient( to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 13%, rgba(0,0,0,1) 87%, rgba(0,0,0,0) 100%)', transition: 'all 600ms ease-in-out', pointerEvents: mostrarOcultarLista ? 'auto' : 'none', zIndex: 3 } },
                     React.createElement('div', { ref: containerRef, onScroll: resetCountdown, style: { display: 'block', boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', padding: '1rem 0', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none', msOverflowStyle: 'none' } },
                         thumbnailsLista?.map((item, index) => React.createElement('div', { key: index, role: "listitem", "aria-label": `Thumbnail ${index + 1}`, onClick: () => currentIndex !== index ? handleThumbnailClick(index) : null, style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', borderWidth: currentIndex !== index ? '0' : tnScreen ? '0.3rem' : mdScreen ? '0.4rem' : lgScreen ? '0.4rem' : xlScreen ? '0.4rem' :'0.4rem', borderStyle: 'solid', borderColor: seleccionColor, height: '100%', background: 'black', aspectRatio: '1 / 1', boxShadow: currentIndex !== index ? '0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.8)' : '0 10px 12px -3px rgba(0, 0, 0, 0.6), 0 4px 3px -2px rgba(0, 0, 0, 1)', zIndex: currentIndex === index ? '65' : '62', transform: currentIndex === index ? 'scale(1.16)' : '', overflow: 'hidden', margin: index === 0 ? ` 0 0.15rem 0 calc(50% - ${ tnScreen ? '2rem' : smScreen ? '2.5rem' : mdScreen ? '3rem' : lgScreen ? '3.5rem' : xlScreen ? '4rem' : '4rem' } )` : index === thumbnailsLista.length-1 ? ` 0 calc(50% - ${ tnScreen ? '2rem' : smScreen ? '2.5rem' : mdScreen ? '3rem' : lgScreen ? '3.5rem' : xlScreen ? '4rem' : '4rem' } ) 0 0.15rem` : `0 0.15rem`, cursor: currentIndex !== index ? 'pointer' : 'default', borderRadius: '0.25rem', transition: 'transform 300ms ease-in-out, border 300ms ease-in-out'  } },
-                            !loadedThumbnails[index] && loadingImageThumbnail,
-                            React.createElement(NextImage, { key: index, onLoad: () => handleThumbnailLoad(index), src: item, alt: 'Thumbnail Image ' + index, sizes: '10vw ', style: { width: '100%', height: '100%', objectFit: 'cover', opacity: loadedThumbnails[index] ? currentIndex === index ? '1' : '0.6' : '0', transition: 'opacity 300ms ease-in-out' } } ) ) ) ) )
+                            loadingImage({ alto: 24, fondo: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)', imageIndex: loadedThumbnails[index] ? 0 : 1 }),
+                            React.createElement(NextImage, { key: index, onLoad: () => handleThumbnailLoad(index), src: item, alt: 'Thumbnail Image ' + index, sizes: '10vw ', fill: true, unoptimized: jsonLista ? true : false, style: { objectFit: 'cover', opacity: loadedThumbnails[index] ? currentIndex === index ? '1' : '0.6' : '0', transition: 'opacity 300ms ease-in-out' } } ),
+                            ) ) ) )
 
-    ) }
+    ) };
 
-export default ProntoVistaMainGalFull;
+export default QuicknfullMain;

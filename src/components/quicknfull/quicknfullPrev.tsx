@@ -3,13 +3,12 @@ import React, { useMemo, useRef, useState, useEffect, useCallback } from 'react'
 import NextImage, { StaticImageData } from 'next/image';
 
 interface ImageSizes {
-    mainSize: string | StaticImageData;
+    lgSize: string | StaticImageData;
     mdSize: string | StaticImageData;
-    smSize: string | StaticImageData;
-};
+    smSize: string | StaticImageData; };
 
 interface ProntoVistaPrevGalProps {
-  imgsTamgnos: ImageSizes[];
+  imagesList: ImageSizes[];
   jsonLista?: boolean;
   initialIndex?: number;
   discosColor?: string;
@@ -17,8 +16,7 @@ interface ProntoVistaPrevGalProps {
   initialWidth?: number;
   iteracionTiempo?: number;
   navegador?: boolean;
-  listKey?: string;
-}
+  listKey?: string; }
 
 interface GalleryIndexes {
     newCurrent: number; prevCurrent: number;
@@ -27,18 +25,16 @@ interface GalleryIndexes {
     prevBefore1: number; prevBefore2: number;
     prevAfter1: number; prevAfter2: number;
     newSet: Set<number>; prevSet: Set<number>;
-    commonElements: number[]; exclusiveNewElements: number[]; exclusivePrevElements: number[];
-}
+    commonElements: number[]; exclusiveNewElements: number[]; exclusivePrevElements: number[]; }
 
 const isValidColor = (color: string) => {
     const s = new Option().style;
     s.color = color;
-    return s.color !== "";
-};
+    return s.color !== ""; };
 
-const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imgsTamgnos, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
+const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
 
-    const imagenesLista = imgsTamgnos.map(item => item.mdSize);
+    const imagenesLista = imagesList.map(item => item.mdSize);
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>( initialIndex === 0 ? imagenesLista.length - 1 : initialIndex - 1);
 
     useEffect(() => {
@@ -198,7 +194,7 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imgsTamgnos, js
         const timeout = setTimeout(() => {
             if (currentElement) {
                 currentElement.onclick = () => {
-                    const newUrl = `/prontoVistaFull?page.tsx?list=${encodeURIComponent(listKey)}&index=${indexes.newCurrent}&color=${encodeURIComponent(discosColor)}`;
+                    const newUrl = `/quicknfullMain?page.tsx?list=${encodeURIComponent(listKey)}&index=${indexes.newCurrent}&color=${encodeURIComponent(discosColor)}`;
                     router.push(newUrl); } } }, tiempoIntervalo/4);
 
         outerSpanDiscRefs.current.forEach((el, index) => {
@@ -320,7 +316,6 @@ const ProntoVistaPrevGal: React.FC<ProntoVistaPrevGalProps> = ({ imgsTamgnos, js
         !!discosNavegador && ( React.createElement( "div", { style: { maxWidth: '40rem', width: '100%', margin: '0 auto', textAlign: 'center', paddingTop: '1.25rem', position: 'relative', boxSizing: 'border-box', display: 'block' } },
                 !!imagenesLista.length && React.createElement( "div", null, visibleSelectores ) ) ),
 
-        )
-    }
+    ) };
 
-export default ProntoVistaPrevGal;
+export default QuicknfullPrev;
