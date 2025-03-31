@@ -32,7 +32,7 @@ const isValidColor = (color: string) => {
     s.color = color;
     return s.color !== ""; };
 
-const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "default" }) => {
+const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "exampleImagesList" }) => {
 
     const imagenesLista = imagesList.map(item => item.mdSize);
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>( initialIndex === 0 ? imagenesLista.length - 1 : initialIndex - 1);
@@ -201,7 +201,7 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
             if (!el) return;
             if (index === indexes.newCurrent) el.onclick = null;
             else el.onclick = () => handleNavClick(index); } );
-        
+
         return () => clearTimeout(timeout);
 
     }, [imagenesLista.length, currentGalleryIndex, handleNavClick, discosColor, router, listKey, tiempoIntervalo]); 

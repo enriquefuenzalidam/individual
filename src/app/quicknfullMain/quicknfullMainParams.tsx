@@ -5,13 +5,13 @@ import ProntoVistaMainGal from "@/components/quicknfull/quicknfullMain";
 import ExampleImagesList from '@/components/quicknfull/exampleImagesList';
 
 const imageLists: Record<string, { imagesList: typeof ExampleImagesList }> = {
-    default: { imagesList: ExampleImagesList } };
+    exampleImagesList: { imagesList: ExampleImagesList } };
 
 const QuicknfullMainParams: React.FC = () => {
 
     const searchParams = useSearchParams();
-    const listKey = searchParams.get("list") || "default";
-    const { imagesList } = imageLists[listKey] || imageLists["default"];
+    const listKey = searchParams.get("list") || "exampleImagesList";
+    const { imagesList } = imageLists[listKey] || imageLists["exampleImagesList"];
     const indice = parseInt(searchParams.get("index") || "0", 10);
     const seleccColor = searchParams.get("color") || "white";
 

@@ -21,7 +21,7 @@ const QuicknFullArticulo: React.FC = () => {
   const [pageLoaded, setPageLoaded] = useState(false);
   useEffect(() => {
     if (!screenReady) return;
-    const timeout = setTimeout(() => setPageLoaded(true), 100);
+    const timeout = setTimeout(() => setPageLoaded(true), 500);
     return () => clearTimeout(timeout); }, [screenReady]);
 
   const pStyle = useMemo(() => ({
