@@ -2,7 +2,7 @@
 import React from 'react';
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import NotFoundContenido from './notFoundContent';
+import NotFoundContenido from './notFoundContenido';
 
 const NotFound: React.FC = () => {
 
