@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
 
-const NotFoundContent: React.FC = () => {
+const NotFoundContenido: React.FC = () => {
 
   const { screenReady, xlScreen, lgScreen, mdScreen, smScreen } = UsePantallaTamagnos();
   const [ pageLoaded, setPageLoaded] = useState(false);
@@ -23,4 +23,4 @@ const NotFoundContent: React.FC = () => {
 
 };
 
-export default NotFoundContent;
+export default NotFoundContenido;
