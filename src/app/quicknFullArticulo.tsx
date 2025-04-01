@@ -57,7 +57,7 @@ const QuicknFullArticulo: React.FC = () => {
                 iteracionTiempo: tiempoIntervalo,
                 maxAltura: cajaAltura,
                 navegador: discosNavegador,
-                listKey: 'default' } ) ) ),
+                listKey: 'exampleImagesList' } ) ) ),
 
           React.createElement('h4', { style: { ...h4Style, margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
             `Opciones personalizables` ),

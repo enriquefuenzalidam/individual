@@ -194,7 +194,9 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
         const timeout = setTimeout(() => {
             if (currentElement) {
                 currentElement.onclick = () => {
-                    const newUrl = `/quicknfullMain?page.tsx?list=${encodeURIComponent(listKey)}&index=${indexes.newCurrent}&color=${encodeURIComponent(discosColor)}`;
+                    console.log("listKey value:", listKey);
+                    const newUrl = `/quicknfullMain/${listKey}/${indexes.newCurrent}/${encodeURIComponent(discosColor)}`;
+                    console.log("Navigating to:", newUrl);
                     router.push(newUrl); } } }, tiempoIntervalo/4);
 
         outerSpanDiscRefs.current.forEach((el, index) => {
