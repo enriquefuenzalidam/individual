@@ -12,11 +12,6 @@ interface ProntoVistaFullProps {
     indice: number;
     seleccColor?: string; }
 
-const isValidColor = (color: string) => {
-    const s = new Option().style;
-    s.color = color;
-    return s.color !== ""; };
-
 const QuicknfullMain: React.FC<ProntoVistaFullProps> = ({ imagesList, jsonLista = false, indice, seleccColor }) => {
 
     const thumbnailsLista = imagesList.map(item => item.smSize);
@@ -39,9 +34,13 @@ const QuicknfullMain: React.FC<ProntoVistaFullProps> = ({ imagesList, jsonLista 
     const mainRefCurrent = mainRef?.current;
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    useEffect(() => {
-        if (seleccColor && isValidColor(seleccColor)) {
-            setSeleccionColor(seleccColor); } }, [seleccColor]);
+    const isValidColor = (color: string) => {
+        if (typeof window === "undefined") return false;
+        const s = new Option().style;
+        s.color = color;
+        return s.color !== ""; };
+
+    useEffect(() => setSeleccionColor(seleccColor ? isValidColor(seleccColor) ? seleccColor : isValidColor("#" + seleccColor) ? "#" + seleccColor : "rgba(0,0,0,1)" : "rgba(0,0,0,1)"), [seleccColor])
 
     const [loadedThumbnails, setLoadedThumbnails] = useState<boolean[]>(new Array(thumbnailsLista.length).fill(false));
     const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));

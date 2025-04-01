@@ -32,6 +32,13 @@ const isValidColor = (color: string) => {
     s.color = color;
     return s.color !== ""; };
 
+const toHexColor = (color: string): string => {
+    const ctx = document.createElement("canvas").getContext("2d");
+    if (!ctx) return "000000"; 
+    ctx.fillStyle = color;
+    const computed = ctx.fillStyle;
+    return computed.replace(/^#/, ""); };
+
 const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "exampleImagesList" }) => {
 
     const imagenesLista = imagesList.map(item => item.mdSize);
@@ -65,9 +72,9 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
             return updated; });
     };
 
-    const router = useRouter();
-
-    const seleccionColor =  isValidColor(discosColor) ? discosColor : "#000" ;
+    const seleccionColor = isValidColor(discosColor) ? discosColor : "#000";
+    const hexSeleccColor = toHexColor(seleccionColor);
+    
 
     const computeGalleryIndexes = (newIndex: number, prevIndex: number, total: number): GalleryIndexes => {
 
@@ -172,6 +179,8 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
         setCurrentGalleryIndex(newIndex);
         startInterval(); }, [clearIntervalTimer, startInterval]);
 
+    const router = useRouter();
+
     useEffect(() => {
 
         const indexes = computeGalleryIndexes(
@@ -195,7 +204,7 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
             if (currentElement) {
                 currentElement.onclick = () => {
                     console.log("listKey value:", listKey);
-                    const newUrl = `/quicknfullMain/${listKey}/${indexes.newCurrent}/${encodeURIComponent(discosColor)}`;
+                    const newUrl = `/quicknfullMain/${listKey}/${indexes.newCurrent}/${encodeURIComponent(hexSeleccColor)}`;
                     console.log("Navigating to:", newUrl);
                     router.push(newUrl); } } }, tiempoIntervalo/4);
 
@@ -206,7 +215,7 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
 
         return () => clearTimeout(timeout);
 
-    }, [imagenesLista.length, currentGalleryIndex, handleNavClick, discosColor, router, listKey, tiempoIntervalo]); 
+    }, [imagenesLista.length, currentGalleryIndex, handleNavClick, discosColor, hexSeleccColor, router, listKey, tiempoIntervalo]); 
 
     const loadingImage = useCallback(({ color = seleccionColor, alto = 24, imageIndex = 1 }) => {
         return React.createElement('div', { style: { color: color, position: 'absolute', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: 'transparent', opacity: imageIndex, transition: 'all 300ms ease-in-out', pointerEvents: 'none' } },
