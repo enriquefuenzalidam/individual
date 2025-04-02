@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import React, { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import NextImage, { StaticImageData } from 'next/image';
 
@@ -148,7 +147,7 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
     useEffect(() => setDiscosNavegador(navegador), [navegador]);
 
     const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const imageRefsB = useRef<(HTMLDivElement | null)[]>([]);
+    const imageRefsB = useRef<(HTMLAnchorElement | null)[]>([]);
     const innerSpanDiscRefs = useRef<(HTMLSpanElement)[]>([]);
     const outerSpanDiscRefs = useRef<(HTMLSpanElement)[]>([]);
 
@@ -179,9 +178,9 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
         setCurrentGalleryIndex(newIndex);
         startInterval(); }, [clearIntervalTimer, startInterval]);
 
-    const router = useRouter();
-
     useEffect(() => {
+        const imageRefsSnapshot = imageRefsB.current;
+        const outerSpanRefsSnapshot = outerSpanDiscRefs.current;
 
         const indexes = computeGalleryIndexes(
             currentGalleryIndex,
@@ -191,31 +190,27 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
         indexes.exclusivePrevElements
         .filter(index => index !== indexes.newCurrent)
         .forEach(index => {
-            const el = imageRefsB.current[index];
-            if (el) el.onclick = null; } );
+            const el = imageRefsSnapshot[index];
+            if (el) el.onclick = (e: MouseEvent) => e.preventDefault(); } );
 
         [indexes.newBefore2, indexes.newBefore1, indexes.newAfter1, indexes.newAfter2].forEach(index => {
-            const el = imageRefsB.current[index];
-            if (el) el.onclick = () => handleNavClick(index); } );
+            const el = imageRefsSnapshot[index];
+            if (el) {
+                el.onclick = (e: MouseEvent) => {
+                    e.preventDefault();
+                    handleNavClick(index); } } } );
 
-        const currentElement = imageRefsB.current[indexes.newCurrent];
-
-        const timeout = setTimeout(() => {
-            if (currentElement) {
-                currentElement.onclick = () => {
-                    console.log("listKey value:", listKey);
-                    const newUrl = `/quicknfullMain/${listKey}/${indexes.newCurrent}/${encodeURIComponent(hexSeleccColor)}`;
-                    console.log("Navigating to:", newUrl);
-                    router.push(newUrl); } } }, tiempoIntervalo/4);
-
-        outerSpanDiscRefs.current.forEach((el, index) => {
+        outerSpanRefsSnapshot.forEach((el, index) => {
             if (!el) return;
             if (index === indexes.newCurrent) el.onclick = null;
             else el.onclick = () => handleNavClick(index); } );
+        
+        return () => {
+            imageRefsSnapshot.forEach(el => (el) && (el.onclick = null) );
+            outerSpanRefsSnapshot.forEach(el => (el) && (el.onclick = null) ); }
 
-        return () => clearTimeout(timeout);
+    }, [imagenesLista.length, currentGalleryIndex, handleNavClick, discosColor ]); 
 
-    }, [imagenesLista.length, currentGalleryIndex, handleNavClick, discosColor, hexSeleccColor, router, listKey, tiempoIntervalo]); 
 
     const loadingImage = useCallback(({ color = seleccionColor, alto = 24, imageIndex = 1 }) => {
         return React.createElement('div', { style: { color: color, position: 'absolute', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: 'transparent', opacity: imageIndex, transition: 'all 300ms ease-in-out', pointerEvents: 'none' } },
@@ -238,7 +233,7 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
     useEffect(() => {
         previousGalleryIndexRef.current = currentGalleryIndex;
     }, [currentGalleryIndex]);
-    
+
     const visibleImages = useMemo(() => {
 
         const indexes = computeGalleryIndexes( currentGalleryIndex, previousGalleryIndexRef.current, imagenesLista.length );
@@ -266,8 +261,8 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
                     transform: onlyPrvIndexes.has(index) ? "scale(0.01)" : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? "scale(1.1)" : beforeAfter1.has(index) ? "scale(1.05)" : "scale(0.92)" : "scale(0.01)",
                     left: onlyPrvIndexes.has(index) ? `calc( 50% - ${currentAltura * 0.5}rem )` : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? `calc( 50% - ${currentAltura * 0.5}rem )` : onlyNewBefore2.has(index) ? `0%` : onlyNewBefore1.has(index) ? `calc( 20% - ${currentAltura * 0.2}rem )` : onlyNewwAfter1.has(index) ? `calc( 80% - ${currentAltura * 0.8}rem )` : `calc( 100% - ${currentAltura}rem )` : `calc( 50% - ${currentAltura * 0.5}rem )` }
 
-                const imageBlockStyleB = {
-                    position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all 300ms linear", cursor: "pointer",
+                const imageBlockStyleB: React.CSSProperties = {
+                    position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all 300ms linear", cursor: "pointer", margin: '0', padding: '0',
                     opacity: onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24 }
 
                 const imageElementStyle: React.CSSProperties = {
@@ -275,11 +270,19 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
 
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
                             loadingImage( { alto: 15, imageIndex: !previousAndCurrentIndexes.has(index) || !loadedImages[index] ? 1 : 0 } ),
-                            previousAndCurrentIndexes.has(index) && React.createElement("div", { ref: (el) => { imageRefsB.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleB },
+                            previousAndCurrentIndexes.has(index) && React.createElement('a', { href: '#', ref: (el) => { imageRefsB.current[index] = el as HTMLAnchorElement | null }, style: imageBlockStyleB },
                                 React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, onLoad: () => handleImageLoad(index), style: imageElementStyle }),
                                 currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index } ) ) ) } );
 
     }, [ jsonLista, currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadingImage, loadedImages, tiempoIntervalo, maximizeSign, isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm ]);  
+
+    useEffect(() => {
+        const currentElement = imageRefsB.current[currentGalleryIndex];
+        if (!currentElement) return;
+        const delayedHref = `/quicknfullMain/${listKey}/${currentGalleryIndex}/${encodeURIComponent(hexSeleccColor)}`;
+        const timeout = setTimeout(() => currentElement.href = delayedHref, tiempoIntervalo / 4);
+        return () => clearTimeout(timeout);
+    }, [currentGalleryIndex, listKey, hexSeleccColor, tiempoIntervalo]);
 
     const visibleSelectores = useMemo(() => {
 
