@@ -25,7 +25,7 @@ const QuicknFullArticulo: React.FC = () => {
     return () => clearTimeout(timeout); }, [screenReady]);
 
   const pStyle = useMemo(() => ({
-      display: 'block', boxSizing: 'border-box', position: 'relative', padding: '0', textIndent: lgScreen || xlScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.24rem' : '1.125rem', fontWeight: 300, textAlign: 'left', color: 'rgba(51,65,85,0.7)', lineHeight: 1.625
+      display: 'block', boxSizing: 'border-box', position: 'relative', padding: '0', textIndent: lgScreen || xlScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.24rem' : '1.125rem', fontWeight: 300, textAlign: 'left', color: 'rgba(51,65,85,0.7)', lineHeight: 1.625, hyphens: 'auto'
   }), [lgScreen, xlScreen, mdScreen, smScreen]);
   
   const h4Style = useMemo(() =>({
