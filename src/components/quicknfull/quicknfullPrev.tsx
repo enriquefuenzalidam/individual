@@ -178,40 +178,6 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
         setCurrentGalleryIndex(newIndex);
         startInterval(); }, [clearIntervalTimer, startInterval]);
 
-    useEffect(() => {
-        const imageRefsSnapshot = imageRefsB.current;
-        const outerSpanRefsSnapshot = outerSpanDiscRefs.current;
-
-        const indexes = computeGalleryIndexes(
-            currentGalleryIndex,
-            (currentGalleryIndex - 1 + imagenesLista.length) % imagenesLista.length,
-            imagenesLista.length );
-
-        indexes.exclusivePrevElements
-        .filter(index => index !== indexes.newCurrent)
-        .forEach(index => {
-            const el = imageRefsSnapshot[index];
-            if (el) el.onclick = (e: MouseEvent) => e.preventDefault(); } );
-
-        [indexes.newBefore2, indexes.newBefore1, indexes.newAfter1, indexes.newAfter2].forEach(index => {
-            const el = imageRefsSnapshot[index];
-            if (el) {
-                el.onclick = (e: MouseEvent) => {
-                    e.preventDefault();
-                    handleNavClick(index); } } } );
-
-        outerSpanRefsSnapshot.forEach((el, index) => {
-            if (!el) return;
-            if (index === indexes.newCurrent) el.onclick = null;
-            else el.onclick = () => handleNavClick(index); } );
-        
-        return () => {
-            imageRefsSnapshot.forEach(el => (el) && (el.onclick = null) );
-            outerSpanRefsSnapshot.forEach(el => (el) && (el.onclick = null) ); }
-
-    }, [imagenesLista.length, currentGalleryIndex, handleNavClick, discosColor ]); 
-
-
     const loadingImage = useCallback(({ color = seleccionColor, alto = 24, imageIndex = 1 }) => {
         return React.createElement('div', { style: { color: color, position: 'absolute', inset: '0', display: 'flex', alignContent: 'center', justifyContent: 'center', background: 'transparent', opacity: imageIndex, transition: 'all 300ms ease-in-out', pointerEvents: 'none' } },
             React.createElement('svg', { style: { width: alto+'%', height: 'auto', opacity: 0.15 }, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 640 512", fill: 'currentColor' },
@@ -277,12 +243,48 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
     }, [ jsonLista, currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadingImage, loadedImages, tiempoIntervalo, maximizeSign, isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm ]);  
 
     useEffect(() => {
-        const currentElement = imageRefsB.current[currentGalleryIndex];
-        if (!currentElement) return;
+
+        const imageRefsSnapshot = imageRefsB.current;
+        const outerSpanRefsSnapshot = outerSpanDiscRefs.current;
+
+        const indexes = computeGalleryIndexes(
+            currentGalleryIndex,
+            (currentGalleryIndex - 1 + imagenesLista.length) % imagenesLista.length,
+            imagenesLista.length );
+
+        indexes.exclusivePrevElements
+        .filter(index => index !== indexes.newCurrent)
+        .forEach(index => {
+            const el = imageRefsSnapshot[index];
+            if (el) el.onclick = (e: MouseEvent) => e.preventDefault(); } );
+
+        [indexes.newBefore2, indexes.newBefore1, indexes.newAfter1, indexes.newAfter2].forEach(index => {
+            const el = imageRefsSnapshot[index];
+            if (el) {
+                el.onclick = (e: MouseEvent) => {
+                    e.preventDefault();
+                    handleNavClick(index); } } } );
+
+        const newCurrentElement = imageRefsSnapshot[indexes.newCurrent];
+        if (!newCurrentElement) return;
         const delayedHref = `/quicknfullMain/${listKey}/${currentGalleryIndex}/${encodeURIComponent(hexSeleccColor)}`;
-        const timeout = setTimeout(() => currentElement.href = delayedHref, tiempoIntervalo / 4);
-        return () => clearTimeout(timeout);
-    }, [currentGalleryIndex, listKey, hexSeleccColor, tiempoIntervalo]);
+        const timeout = setTimeout(() => newCurrentElement.href = delayedHref, tiempoIntervalo / 4);
+
+        const prevCurrentElement = imageRefsSnapshot[indexes.prevCurrent];
+        if (!prevCurrentElement) return;
+        prevCurrentElement.href = "#";
+
+        outerSpanRefsSnapshot.forEach((el, index) => {
+            if (!el) return;
+            if (index === indexes.newCurrent) el.onclick = null;
+            else el.onclick = () => handleNavClick(index); } );
+
+        return () => {
+            clearTimeout(timeout);
+            imageRefsSnapshot.forEach(el => (el) && (el.onclick = null) );
+            outerSpanRefsSnapshot.forEach(el => (el) && (el.onclick = null) ); };
+
+    }, [ handleNavClick, imagenesLista.length, currentGalleryIndex, listKey, hexSeleccColor, tiempoIntervalo]);
 
     const visibleSelectores = useMemo(() => {
 
