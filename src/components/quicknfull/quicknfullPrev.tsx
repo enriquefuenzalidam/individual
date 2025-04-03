@@ -38,6 +38,7 @@ const toHexColor = (color: string): string => {
     const computed = ctx.fillStyle;
     return computed.replace(/^#/, ""); };
 
+
 const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "exampleImagesList" }) => {
 
     const imagenesLista = imagesList.map(item => item.mdSize);
@@ -73,7 +74,6 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
 
     const seleccionColor = isValidColor(discosColor) ? discosColor : "#000";
     const hexSeleccColor = toHexColor(seleccionColor);
-    
 
     const computeGalleryIndexes = (newIndex: number, prevIndex: number, total: number): GalleryIndexes => {
 
@@ -203,8 +203,9 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
     const visibleImages = useMemo(() => {
 
         const indexes = computeGalleryIndexes( currentGalleryIndex, previousGalleryIndexRef.current, imagenesLista.length );
-        const { newBefore2, newBefore1, newCurrent, newAfter1, commonElements, exclusiveNewElements, exclusivePrevElements } = indexes;
+        const { newBefore2, newBefore1, newCurrent, newAfter1, newAfter2, commonElements, exclusiveNewElements, exclusivePrevElements } = indexes;
 
+        const newsBeforeAndAfter = new Set([newBefore2, newBefore1, newAfter1, newAfter2]);
         const beforeAfter1 = new Set([ newBefore1, newAfter1 ]);
 
         const onlyNewCurrent = new Set([ newCurrent ]);
@@ -236,55 +237,30 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
 
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
                             loadingImage( { alto: 15, imageIndex: !previousAndCurrentIndexes.has(index) || !loadedImages[index] ? 1 : 0 } ),
-                            previousAndCurrentIndexes.has(index) && React.createElement('a', { href: '#', ref: (el) => { imageRefsB.current[index] = el as HTMLAnchorElement | null }, style: imageBlockStyleB },
+                            previousAndCurrentIndexes.has(index) && React.createElement('a', { href: '#', onClick: (e) => { if (newsBeforeAndAfter.has(index)) { e.preventDefault(); handleNavClick(index); } else if (!onlyNewCurrent.has(index)) e.preventDefault() }, ref: (el) => { imageRefsB.current[index] = el as HTMLAnchorElement | null }, style: imageBlockStyleB },
                                 React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, onLoad: () => handleImageLoad(index), style: imageElementStyle }),
                                 currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index } ) ) ) } );
 
-    }, [ jsonLista, currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadingImage, loadedImages, tiempoIntervalo, maximizeSign, isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm ]);  
+    }, [ handleNavClick, jsonLista, currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadingImage, loadedImages, tiempoIntervalo, maximizeSign, isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm ]);  
 
     useEffect(() => {
 
+        const indexes = computeGalleryIndexes( currentGalleryIndex, previousGalleryIndexRef.current, imagenesLista.length );
+
         const imageRefsSnapshot = imageRefsB.current;
-        const outerSpanRefsSnapshot = outerSpanDiscRefs.current;
-
-        const indexes = computeGalleryIndexes(
-            currentGalleryIndex,
-            (currentGalleryIndex - 1 + imagenesLista.length) % imagenesLista.length,
-            imagenesLista.length );
-
-        indexes.exclusivePrevElements
-        .filter(index => index !== indexes.newCurrent)
-        .forEach(index => {
-            const el = imageRefsSnapshot[index];
-            if (el) el.onclick = (e: MouseEvent) => e.preventDefault(); } );
-
-        [indexes.newBefore2, indexes.newBefore1, indexes.newAfter1, indexes.newAfter2].forEach(index => {
-            const el = imageRefsSnapshot[index];
-            if (el) {
-                el.onclick = (e: MouseEvent) => {
-                    e.preventDefault();
-                    handleNavClick(index); } } } );
-
         const newCurrentElement = imageRefsSnapshot[indexes.newCurrent];
+        const prevCurrentElement = imageRefsSnapshot[indexes.prevCurrent];
+
         if (!newCurrentElement) return;
         const delayedHref = `/quicknfullMain/${listKey}/${currentGalleryIndex}/${encodeURIComponent(hexSeleccColor)}`;
         const timeout = setTimeout(() => newCurrentElement.href = delayedHref, tiempoIntervalo / 4);
 
-        const prevCurrentElement = imageRefsSnapshot[indexes.prevCurrent];
         if (!prevCurrentElement) return;
         prevCurrentElement.href = "#";
 
-        outerSpanRefsSnapshot.forEach((el, index) => {
-            if (!el) return;
-            if (index === indexes.newCurrent) el.onclick = null;
-            else el.onclick = () => handleNavClick(index); } );
+        return () => clearTimeout(timeout);
 
-        return () => {
-            clearTimeout(timeout);
-            imageRefsSnapshot.forEach(el => (el) && (el.onclick = null) );
-            outerSpanRefsSnapshot.forEach(el => (el) && (el.onclick = null) ); };
-
-    }, [ handleNavClick, imagenesLista.length, currentGalleryIndex, listKey, hexSeleccColor, tiempoIntervalo]);
+    }, [ imagenesLista.length, currentGalleryIndex, listKey, hexSeleccColor, tiempoIntervalo]);
 
     const visibleSelectores = useMemo(() => {
 
@@ -306,10 +282,10 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
                 opacity: newCurrent === index ? 1 : ( prevCurrent !== newCurrent ) && prevCurrent === index ? 0 : 0,
                 width: newCurrent === index ? runningWidth : ( prevCurrent !== newCurrent ) && prevCurrent === index ? stillWidth : stillWidth }
 
-            return React.createElement("span", { key: index, ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
+            return React.createElement("span", { key: index, onClick: () => currentGalleryIndex === index ? null : handleNavClick(index), ref: (el) => { outerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: outerSpanDisc },
                         React.createElement("span", { ref: (el) => { innerSpanDiscRefs.current[index] = el as HTMLSpanElement }, style: innerSpanDisc } ) ) } )
 
-    }, [currentGalleryIndex, previousGalleryIndexRef, discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, tiempoIntervalo]);
+    }, [handleNavClick, currentGalleryIndex, previousGalleryIndexRef, discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, tiempoIntervalo]);
 
     const mainContainerStyle = useMemo(() => ({
         position: 'relative', boxSizing: 'border-box', display: 'block', minHeight: 'auto', opacity: firstIntervalDoneRef ? 1 : 0, transition: 'opacity ' + tiempoIntervalo/8 + 'ms ease-in-out' }), [ firstIntervalDoneRef, tiempoIntervalo]);
