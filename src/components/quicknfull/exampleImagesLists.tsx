@@ -95,7 +95,7 @@ import exampleImageSm24 from '@/assets/exampleImages/26770601sm.jpg';
 import exampleImageMd24 from '@/assets/exampleImages/26770601md.jpg';
 import exampleImageLg24 from '@/assets/exampleImages/26770601lg.jpg';
 
-const ExampleImagesList = [
+const A1 = [
     { lgSize: exampleImageLg01, mdSize: exampleImageMd01, smSize: exampleImageSm01 },
     { lgSize: exampleImageLg02, mdSize: exampleImageMd02, smSize: exampleImageSm02 },
     { lgSize: exampleImageLg03, mdSize: exampleImageMd03, smSize: exampleImageSm03 },
@@ -107,7 +107,9 @@ const ExampleImagesList = [
     { lgSize: exampleImageLg09, mdSize: exampleImageMd09, smSize: exampleImageSm09 },
     { lgSize: exampleImageLg10, mdSize: exampleImageMd10, smSize: exampleImageSm10 },
     { lgSize: exampleImageLg11, mdSize: exampleImageMd11, smSize: exampleImageSm11 },
-    { lgSize: exampleImageLg12, mdSize: exampleImageMd12, smSize: exampleImageSm12 },
+    { lgSize: exampleImageLg12, mdSize: exampleImageMd12, smSize: exampleImageSm12 } ];
+
+const A2 = [
     { lgSize: exampleImageLg13, mdSize: exampleImageMd13, smSize: exampleImageSm13 },
     { lgSize: exampleImageLg14, mdSize: exampleImageMd14, smSize: exampleImageSm14 },
     { lgSize: exampleImageLg15, mdSize: exampleImageMd15, smSize: exampleImageSm15 },
@@ -121,4 +123,4 @@ const ExampleImagesList = [
     { lgSize: exampleImageLg23, mdSize: exampleImageMd23, smSize: exampleImageSm23 },
     { lgSize: exampleImageLg24, mdSize: exampleImageMd24, smSize: exampleImageSm24 } ];
 
-export default ExampleImagesList;
+export const ExampleImagesLists = { A1, A2 };

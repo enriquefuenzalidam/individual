@@ -8,17 +8,21 @@ interface ImageSizes {
     smSize: string | StaticImageData; };
 
 interface ProntoVistaFullProps {
-    imagesList: ImageSizes[];
+    imagesList: { [key: string]: ImageSizes[] };
+    listKey?: string;
     jsonLista?: boolean;
-    indice: number;
+    indiceInicial: number;
     seleccColor?: string; }
 
-const QuicknfullMain: React.FC<ProntoVistaFullProps> = ({ imagesList, jsonLista = false, indice, seleccColor }) => {
+const QuicknfullMain: React.FC<ProntoVistaFullProps> = ({ imagesList, listKey, jsonLista = false, indiceInicial, seleccColor }) => {
 
-    const thumbnailsLista = imagesList.map(item => item.smSize);
-    const imagenesLista = imagesList.map(item => item.lgSize);
+    const listKeys = Object.keys(imagesList);
+    const selectedKey = listKey && imagesList[listKey] ? listKey : listKeys[0];
+    const currentList = imagesList[selectedKey] || [];
+    const thumbnailsLista = currentList.map(item => item.smSize);
+    const imagenesLista = currentList.map(item => item.lgSize);
 
-    const [currentIndex, setCurrentIndex] = useState<number>(indice || 0);
+    const [currentIndex, setCurrentIndex] = useState<number>(indiceInicial || 0);
     const [previousIndex, setPreviousIndex] = useState<number | null>(null);
     const [seleccionColor, setSeleccionColor] = useState<string>("white");
     const [screenReady, setScreenReady] = useState(false);

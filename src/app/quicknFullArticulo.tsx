@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
-import ExampleImagesList from '@/components/quicknfull/exampleImagesList';
+import { ExampleImagesLists } from '@/components/quicknfull/exampleImagesLists';
 import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
 import QuicknfullPrev from '@/components/quicknfull/quicknfullPrev';
 import QuicknfullMain from '@/components/quicknfull/quicknfullMain';
@@ -57,12 +57,13 @@ const QuicknFullArticulo: React.FC = () => {
           React.createElement('div', { ref: verOcultarDiscosNavRef, style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'relative', width: `100%`, transition: discosNavegador ? `height 500ms ease-in-out, opacity 1600ms ease-in-out` : `height 500ms ease-in-out, opacity 300ms ease-in-out`} },
             React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
               React.createElement(QuicknfullPrev, {
-                imagesList: ExampleImagesList,
+                imagesList: ExampleImagesLists,
+                listKey: 'A1',
+                initialIndex: 6,
                 discosColor: seleccionColor,
                 iteracionTiempo: tiempoIntervalo,
                 maxAltura: cajaAltura,
-                navegador: discosNavegador,
-                listKey: 'A1' } ) ) ),
+                navegador: discosNavegador } ) ) ),
 
           React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
             `Opciones personalizables` ),
@@ -123,12 +124,13 @@ const QuicknFullArticulo: React.FC = () => {
           React.createElement('h4', { style: { ...h4Style }, className: ` lg:mt-14 md:mt-10 sm:mt-8 mt-8 ` },
               `La galería principal` ),
           React.createElement('p', { style: { ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 2.25rem' : mdScreen ? '0.75rem 0 2rem 0' : smScreen ? '0.5rem 0 1.75rem 0' : '0.5rem 0 1.75rem 0' } },
-               'Al hacer click en la fotografía central de la ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería de previsualización'), ' se es dirigido a la ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería de principal'), ' donde se muestra la fotografía seleccionada en formato completo y una fila inferior deslizble con todas las imagenes miniaturas de la lista para seleccionar y ver en formato completo. La imagen miniatura seleccionada es presentada con un borde cuyo color corresponde al seleccionado en la galería de previsualización. La fila inferior se invisibiliza después un momento de inactividad del usuario.'),
+               'Al hacer click en la fotografía central de la ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería de previsualización'), ' se es dirigido a la ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería de principal'), ' donde se muestra la fotografía seleccionada en formato completo y una fila inferior deslizable con todas las imagenes miniaturas de la lista para seleccionar y ver en formato completo. La imagen miniatura seleccionada es presentada con un borde cuyo color corresponde al seleccionado en la galería de previsualización. La fila inferior se invisibiliza luego de un momento de inactividad del usuario.'),
 
           React.createElement('div', { style: { display: 'block', boxSizing: 'border-box', width: '100%', aspectRatio: '16/9', overflow: 'hidden', borderRadius: '0.375rem', margin: '0', padding: '0' } },
             React.createElement(QuicknfullMain, {
-              imagesList: ExampleImagesList,
-              indice: 11,
+              imagesList: ExampleImagesLists,
+              listKey: 'A2',
+              indiceInicial: 7,
               seleccColor: seleccionColor } ) )
 
         ) ) )

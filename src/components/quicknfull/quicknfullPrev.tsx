@@ -8,15 +8,15 @@ interface ImageSizes {
     smSize: string | StaticImageData; };
 
 interface ProntoVistaPrevGalProps {
-  imagesList: ImageSizes[];
+  imagesList: { [key: string]: ImageSizes[] };
+  listKey?: string;
   jsonLista?: boolean;
   initialIndex?: number;
   discosColor?: string;
   maxAltura?: number;
   initialWidth?: number;
   iteracionTiempo?: number;
-  navegador?: boolean;
-  listKey?: string; }
+  navegador?: boolean; }
 
 interface GalleryIndexes {
     newCurrent: number; prevCurrent: number;
@@ -27,9 +27,13 @@ interface GalleryIndexes {
     newSet: Set<number>; prevSet: Set<number>;
     commonElements: number[]; exclusiveNewElements: number[]; exclusivePrevElements: number[]; }
 
-const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "A1" }) => {
+const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, listKey, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true }) => {
 
-    const imagenesLista = imagesList.map(item => item.mdSize);
+    const listKeys = Object.keys(imagesList);
+    const selectedKey = listKey && imagesList[listKey] ? listKey : listKeys[0];
+    const currentList = imagesList[selectedKey] || [];
+    const imagenesLista = currentList.map(item => item.mdSize);
+
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>( initialIndex === 0 ? imagenesLista.length - 1 : initialIndex - 1);
 
     useEffect(() => {
@@ -173,9 +177,20 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
     }, [seleccionColor])
 
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    
+    const handleHoverTrigger = useCallback((index: number) => {
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+      setHoveredIndex(index);
+      hoverTimeoutRef.current = setTimeout(() => {
+        setHoveredIndex(null);
+        hoverTimeoutRef.current = null; }, tiempoIntervalo/2);
+    }, [tiempoIntervalo]);
+
+    useEffect(() => { return () => { if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current) } }, []);
 
     const maximizeSign = useCallback(({ colors = seleccionColor, alto = 24, ndx = 0  }) => {
-        return React.createElement('div', { style: { color: colors, position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', opacity: ndx === hoveredIndex ? 1 : 0, transition: 'opacity '+ tiempoIntervalo/8 +'ms ease-in-out', pointerEvents: 'none' } },
+        return React.createElement('div', { style: { color: colors, position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', opacity: hoveredIndex === ndx ? 1 : 0, transition: 'opacity '+ tiempoIntervalo/8 +'ms ease-in-out', pointerEvents: 'none' } },
             React.createElement('svg', { style: { width: alto+'%', height: alto+'%', background: 'rgba(0,0,0,0.24)', borderRadius: '0.125rem' }, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: 'transparent' },
                 React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M21 9V3H15' } ),
                 React.createElement('path', { stroke: 'currentColor', strokeWidth: '0.62', strokeLinejoin: 'butt', strokeLinecap: 'butt', d: 'M3 15V21H9' } ),
@@ -185,8 +200,7 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
 
     const previousGalleryIndexRef = useRef<number>(currentGalleryIndex);
     useEffect(() => {
-        previousGalleryIndexRef.current = currentGalleryIndex;
-    }, [currentGalleryIndex]);
+        previousGalleryIndexRef.current = currentGalleryIndex; }, [currentGalleryIndex]);
 
     const visibleImages = useMemo(() => {
 
@@ -208,20 +222,20 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
 
         return imagenesLista.map((item, index) => {
 
-                const imageBlockStyleA = {
-                    display: "block", boxSizing: 'border-box', position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all "+ tiempoIntervalo/4 + "ms linear", overflow: "hidden", background: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)', 
+                const imageBlockStyleA: React.CSSProperties = ({
+                    display: "block", pointerEvents: 'auto', cursor: 'pointer', boxSizing: 'border-box', position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all "+ tiempoIntervalo/4 + "ms linear", overflow: "hidden", background: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)', 
                     opacity: previousAndCurrentIndexes.has(index) ? onlyPrvIndexes.has(index) ? 0.09 : 1 : 0,
                     zIndex: onlyPrvIndexes.has(index) ? 10 : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? 50 : beforeAfter1.has(index) ? 40 : 30 : 10,
                     boxShadow: onlyPrvIndexes.has(index) ? "none" : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? "0 10px 12px -3px rgba(0, 0, 0, 0.6), 0 4px 3px -2px rgba(0, 0, 0, 0.6)" : beforeAfter1.has(index) ? "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)" : "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.2)" : "none",
                     transform: onlyPrvIndexes.has(index) ? "scale(0.01)" : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? "scale(1.1)" : beforeAfter1.has(index) ? "scale(1.05)" : "scale(0.92)" : "scale(0.01)",
-                    left: onlyPrvIndexes.has(index) ? `calc( 50% - ${currentAltura * 0.5}rem )` : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? `calc( 50% - ${currentAltura * 0.5}rem )` : onlyNewBefore2.has(index) ? `0%` : onlyNewBefore1.has(index) ? `calc( 20% - ${currentAltura * 0.2}rem )` : onlyNewwAfter1.has(index) ? `calc( 80% - ${currentAltura * 0.8}rem )` : `calc( 100% - ${currentAltura}rem )` : `calc( 50% - ${currentAltura * 0.5}rem )` }
+                    left: onlyPrvIndexes.has(index) ? `calc( 50% - ${currentAltura * 0.5}rem )` : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? `calc( 50% - ${currentAltura * 0.5}rem )` : onlyNewBefore2.has(index) ? `0%` : onlyNewBefore1.has(index) ? `calc( 20% - ${currentAltura * 0.2}rem )` : onlyNewwAfter1.has(index) ? `calc( 80% - ${currentAltura * 0.8}rem )` : `calc( 100% - ${currentAltura}rem )` : `calc( 50% - ${currentAltura * 0.5}rem )` })
 
-                const imageBlockStyleB: React.CSSProperties = {
-                    position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all 300ms linear", cursor: "pointer", margin: '0', padding: '0',
-                    opacity: onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24 }
+                const imageBlockStyleB: React.CSSProperties = ({
+                    position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all 300ms linear", margin: '0', padding: '0',
+                    opacity: onlyNewCurrent.has(index) ? 1 : beforeAfter1.has(index) ? 0.62 : 0.24 })
 
-                const imageElementStyle: React.CSSProperties = {
-                    objectFit: 'cover', transition: 'opacity 300ms ease-in-out', opacity: previousAndCurrentIndexes.has(index) ? loadedImages[index] ? 1 : 0 : 0 }
+                const imageElementStyle: React.CSSProperties = ({
+                    objectFit: 'cover', transition: 'opacity 300ms ease-in-out', opacity: previousAndCurrentIndexes.has(index) ? loadedImages[index] ? 1 : 0 : 0 })
 
                 const delayedHref = onlyNewCurrent.has(index) ? `/quicknfullMain/${listKey}/${currentGalleryIndex}/${encodeURIComponent(hexSeleccColor)}` : '#';
 
@@ -229,13 +243,13 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
                     if (newsBeforeAndAfter.has(index)) { e.preventDefault(); handleNavClick(index); }
                     else if (!onlyNewCurrent.has(index)) e.preventDefault() };
         
-                return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
+                return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseMove: () => handleHoverTrigger(index), onMouseLeave: () => setHoveredIndex(null) }) },
                             loadingImage( { alto: 15, imageIndex: !previousAndCurrentIndexes.has(index) || !loadedImages[index] ? 1 : 0 } ),
                             previousAndCurrentIndexes.has(index) && React.createElement('a', { href: delayedHref, onClick: (e) => clickHandler(e, index), ref: (el) => { imageRefsB.current[index] = el as HTMLAnchorElement | null }, style: imageBlockStyleB },
                                 React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, onLoad: () => handleImageLoad(index), style: imageElementStyle }),
                                 currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index } ) ) ) } );
 
-    }, [ handleNavClick, hexSeleccColor, listKey, jsonLista, currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadingImage, loadedImages, tiempoIntervalo, maximizeSign, isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm ]);  
+    }, [ handleHoverTrigger, handleNavClick, hexSeleccColor, listKey, jsonLista, currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadingImage, loadedImages, tiempoIntervalo, maximizeSign, isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm ]);  
 
     const visibleSelectores = useMemo(() => {
 
