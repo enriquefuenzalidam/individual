@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect, useCallback, useMemo} from "react";
 import NextImage, { StaticImageData } from "next/image";
-import { isValidColor } from './quicknfullHelpers';
+import { isValidColor, useImagenesPreload } from './quicknfullComm';
 
 interface ImageSizes {
     lgSize: string | StaticImageData;
@@ -58,43 +58,8 @@ const QuicknfullMain: React.FC<ProntoVistaFullProps> = ({ imagesList, listKey, j
             updated[index] = true;
             return updated; } ) };
 
-    useEffect(() => {
-
-        if (!imagenesLista || imagenesLista.length === 0) return;
-    
-        const preloadQueue = [...imagenesLista.keys()].sort((a, b) => {
-            if (a === currentIndex) return -1;
-            if (b === currentIndex) return 1;
-            return 0; } );
-
-        preloadQueue.forEach( (index) => {
-            const src = imagenesLista[index];
-            const img = new Image();
-            try { 
-                if (typeof src === 'string') img.src = src;
-                else if (typeof src === 'object' && 'src' in src) img.src = src.src; }
-            catch (error) { console.warn(`Image preload failed at index ${index}: `, error); } } );
-
-    }, [imagenesLista, currentIndex]);
-
-    useEffect(() => {
-
-        if (!thumbnailsLista || thumbnailsLista.length === 0) return;
-    
-        const preloadQueue = [...thumbnailsLista.keys()].sort((a, b) => {
-            if (a === currentIndex) return -1;
-            if (b === currentIndex) return 1;
-            return 0; } );
-
-        preloadQueue.forEach( (index) => {
-            const src = thumbnailsLista[index];
-            const img = new Image();
-            try { 
-                if (typeof src === 'string') img.src = src;
-                else if (typeof src === 'object' && 'src' in src) img.src = src.src; }
-            catch (error) { console.warn(`Image preload failed at index ${index}: `, error); } } );
-
-    }, [thumbnailsLista, currentIndex]);
+    useImagenesPreload(imagenesLista, currentIndex, "main image");
+    useImagenesPreload(thumbnailsLista, currentIndex, "thumbnail");
 
     const thumbnailSize = useMemo(() => {
         return tnScreen ? 6 : smScreen ? 7 : mdScreen ? 8 : lgScreen ? 9 : xlScreen ? 10 : 10;

@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import NextImage, { StaticImageData } from 'next/image';
-import { isValidColor, toHexColor } from './quicknfullHelpers';
+import { isValidColor, toHexColor, useImagenesPreload } from './quicknfullComm';
 
 interface ImageSizes {
     lgSize: string | StaticImageData;
@@ -36,24 +36,7 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, listKey
 
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>( initialIndex === 0 ? imagenesLista.length - 1 : initialIndex - 1);
 
-    useEffect(() => {
-
-        if (!imagenesLista || imagenesLista.length === 0) return;
-
-        const preloadQueue = [...imagenesLista.keys()].sort((a, b) => {
-            if (a === currentGalleryIndex) return -1;
-            if (b === currentGalleryIndex) return 1;
-            return 0; } );
-
-        preloadQueue.forEach( (index) => {
-            const src = imagenesLista[index];
-            const img = new Image();
-            try { 
-                if (typeof src === 'string') img.src = src; 
-                else if (typeof src === 'object' && 'src' in src) img.src = src.src; }
-            catch (error) { console.warn(`Imagen index preloaded failed: ${index} - `, error); } } );
-
-    }, [imagenesLista, currentGalleryIndex]);
+    useImagenesPreload(imagenesLista, currentGalleryIndex, "gallery image");
 
     const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(imagenesLista.length).fill(false));
     const handleImageLoad = (index: number) => {

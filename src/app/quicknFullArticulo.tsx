@@ -61,6 +61,7 @@ const QuicknFullArticulo: React.FC = () => {
                 listKey: 'A1',
                 initialIndex: 6,
                 discosColor: seleccionColor,
+
                 iteracionTiempo: tiempoIntervalo,
                 maxAltura: cajaAltura,
                 navegador: discosNavegador } ) ) ),
@@ -130,7 +131,7 @@ const QuicknFullArticulo: React.FC = () => {
             React.createElement(QuicknfullMain, {
               imagesList: ExampleImagesLists,
               listKey: 'A2',
-              indiceInicial: 7,
+              indiceInicial: 6,
               seleccColor: seleccionColor } ) )
 
         ) ) )
