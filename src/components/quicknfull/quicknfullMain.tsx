@@ -1,5 +1,6 @@
 import React, {useRef, useState, useEffect, useCallback, useMemo} from "react";
 import NextImage, { StaticImageData } from "next/image";
+import { isValidColor } from './quicknfullHelpers';
 
 interface ImageSizes {
     lgSize: string | StaticImageData;
@@ -33,12 +34,6 @@ const QuicknfullMain: React.FC<ProntoVistaFullProps> = ({ imagesList, jsonLista 
     const mainRef = useRef<HTMLDivElement | null>(null);
     const mainRefCurrent = mainRef?.current;
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-    const isValidColor = (color: string) => {
-        if (typeof window === "undefined") return false;
-        const s = new Option().style;
-        s.color = color;
-        return s.color !== ""; };
 
     useEffect(() => setSeleccionColor(seleccColor ? isValidColor(seleccColor) ? seleccColor : isValidColor("#" + seleccColor) ? "#" + seleccColor : "rgba(0,0,0,1)" : "rgba(0,0,0,1)"), [seleccColor])
 

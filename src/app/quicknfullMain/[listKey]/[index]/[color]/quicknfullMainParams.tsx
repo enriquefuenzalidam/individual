@@ -5,13 +5,13 @@ import ProntoVistaMainGal from "@/components/quicknfull/quicknfullMain";
 import ExampleImagesList from '@/components/quicknfull/exampleImagesList';
 
 const imageLists: Record<string, { imagesList: typeof ExampleImagesList }> = {
-    exampleImagesList: { imagesList: ExampleImagesList } };
+  A1: { imagesList: ExampleImagesList } };
 
 const QuicknfullMainParams = () => {
   const params = useParams();
   const rawListKey = params.listKey;
-  const listKey = Array.isArray(rawListKey) ? rawListKey[0] : rawListKey || "exampleImagesList";
-  const { imagesList } = imageLists[listKey] || imageLists["exampleImagesList"];
+  const listKey = Array.isArray(rawListKey) ? rawListKey[0] : rawListKey || "A1";
+  const { imagesList } = imageLists[listKey] || imageLists["A1"];
 
   const indexStr = Array.isArray(params.index) ? params.index[0] : params.index || "0";
   const indice = parseInt(indexStr, 10);

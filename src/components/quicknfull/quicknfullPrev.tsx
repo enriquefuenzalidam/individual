@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import NextImage, { StaticImageData } from 'next/image';
+import { isValidColor, toHexColor } from './quicknfullHelpers';
 
 interface ImageSizes {
     lgSize: string | StaticImageData;
@@ -26,20 +27,7 @@ interface GalleryIndexes {
     newSet: Set<number>; prevSet: Set<number>;
     commonElements: number[]; exclusiveNewElements: number[]; exclusivePrevElements: number[]; }
 
-const isValidColor = (color: string) => {
-    const s = new Option().style;
-    s.color = color;
-    return s.color !== ""; };
-
-const toHexColor = (color: string): string => {
-    const ctx = document.createElement("canvas").getContext("2d");
-    if (!ctx) return "000000"; 
-    ctx.fillStyle = color;
-    const computed = ctx.fillStyle;
-    return computed.replace(/^#/, ""); };
-
-
-const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "exampleImagesList" }) => {
+const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLista = false, initialIndex = 0, discosColor = "#000", maxAltura = 32, initialWidth = 880, iteracionTiempo = 3400, navegador = true, listKey = "A1" }) => {
 
     const imagenesLista = imagesList.map(item => item.mdSize);
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<number>( initialIndex === 0 ? imagenesLista.length - 1 : initialIndex - 1);
@@ -235,32 +223,19 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, jsonLis
                 const imageElementStyle: React.CSSProperties = {
                     objectFit: 'cover', transition: 'opacity 300ms ease-in-out', opacity: previousAndCurrentIndexes.has(index) ? loadedImages[index] ? 1 : 0 : 0 }
 
+                const delayedHref = onlyNewCurrent.has(index) ? `/quicknfullMain/${listKey}/${currentGalleryIndex}/${encodeURIComponent(hexSeleccColor)}` : '#';
+
+                const clickHandler = (e: React.MouseEvent<HTMLElement>, index: number) => {
+                    if (newsBeforeAndAfter.has(index)) { e.preventDefault(); handleNavClick(index); }
+                    else if (!onlyNewCurrent.has(index)) e.preventDefault() };
+        
                 return React.createElement("div", { key: index, ref: (el) => { imageRefs.current[index] = el as HTMLDivElement | null }, style: imageBlockStyleA, ...(currentGalleryIndex === index && { onMouseEnter: () => setHoveredIndex(index), onMouseLeave: () => setHoveredIndex(null) }) },
                             loadingImage( { alto: 15, imageIndex: !previousAndCurrentIndexes.has(index) || !loadedImages[index] ? 1 : 0 } ),
-                            previousAndCurrentIndexes.has(index) && React.createElement('a', { href: '#', onClick: (e) => { if (newsBeforeAndAfter.has(index)) { e.preventDefault(); handleNavClick(index); } else if (!onlyNewCurrent.has(index)) e.preventDefault() }, ref: (el) => { imageRefsB.current[index] = el as HTMLAnchorElement | null }, style: imageBlockStyleB },
+                            previousAndCurrentIndexes.has(index) && React.createElement('a', { href: delayedHref, onClick: (e) => clickHandler(e, index), ref: (el) => { imageRefsB.current[index] = el as HTMLAnchorElement | null }, style: imageBlockStyleB },
                                 React.createElement(NextImage, { sizes: '(max-width: 1024px) 50vw, 512px', src: typeof item === "string" ? item : item.src, alt: 'Gallery Image ' + index, fill: true, unoptimized: jsonLista ? true : false, onLoad: () => handleImageLoad(index), style: imageElementStyle }),
                                 currentGalleryIndex === index && maximizeSign({ colors: 'rgba(255,255,255,0.76)', alto: 24, ndx: index } ) ) ) } );
 
-    }, [ handleNavClick, jsonLista, currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadingImage, loadedImages, tiempoIntervalo, maximizeSign, isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm ]);  
-
-    useEffect(() => {
-
-        const indexes = computeGalleryIndexes( currentGalleryIndex, previousGalleryIndexRef.current, imagenesLista.length );
-
-        const imageRefsSnapshot = imageRefsB.current;
-        const newCurrentElement = imageRefsSnapshot[indexes.newCurrent];
-        const prevCurrentElement = imageRefsSnapshot[indexes.prevCurrent];
-
-        if (!newCurrentElement) return;
-        const delayedHref = `/quicknfullMain/${listKey}/${currentGalleryIndex}/${encodeURIComponent(hexSeleccColor)}`;
-        const timeout = setTimeout(() => newCurrentElement.href = delayedHref, tiempoIntervalo / 4);
-
-        if (!prevCurrentElement) return;
-        prevCurrentElement.href = "#";
-
-        return () => clearTimeout(timeout);
-
-    }, [ imagenesLista.length, currentGalleryIndex, listKey, hexSeleccColor, tiempoIntervalo]);
+    }, [ handleNavClick, hexSeleccColor, listKey, jsonLista, currentGalleryIndex, previousGalleryIndexRef, imagenesLista, loadingImage, loadedImages, tiempoIntervalo, maximizeSign, isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm ]);  
 
     const visibleSelectores = useMemo(() => {
 
