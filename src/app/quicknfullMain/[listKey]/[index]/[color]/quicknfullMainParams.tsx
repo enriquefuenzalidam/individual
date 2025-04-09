@@ -8,15 +8,12 @@ const QuicknfullMainParams = () => {
 
   const params = useParams();
 
-  // Parse and sanitize the listKey
   const rawListKey = params.listKey;
   const listKey = Array.isArray(rawListKey) ? rawListKey[0] : rawListKey || "A1";
 
-  // Parse and sanitize the index
   const indexStr = Array.isArray(params.index) ? params.index[0] : params.index || "0";
   const indiceInicial = parseInt(indexStr, 10);
 
-  // Parse and sanitize the color
   const colorStr = Array.isArray(params.color) ? params.color[0] : params.color || "white";
   const seleccColor = decodeURIComponent(colorStr);
 
