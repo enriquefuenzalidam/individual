@@ -3,6 +3,8 @@ import { ExampleImagesLists } from '@/components/quicknfull/exampleImagesLists';
 import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
 import QuicknfullPrev from '@/components/quicknfull/quicknfullPrev';
 import QuicknfullMain from '@/components/quicknfull/quicknfullMain';
+import Link from 'next/link';
+import ExtLink from '@/components/extLink';
 
 const QuicknFullArticulo: React.FC = () => {
 
@@ -12,7 +14,21 @@ const QuicknFullArticulo: React.FC = () => {
   const [tiempoIntervalo, setTiempoIntervalo] = useState(3400);
   const [seleccionColor, setSeleccionColor] = useState(() => isValidColor("rgb(51,65,85)") ? "rgb(51,65,85)" : "#000");
   const [discosNavegador, setDiscosNavegador] = useState<boolean>(true);
-  const verOcultarDiscosNavRef = useRef<HTMLDivElement | null>(null);
+  const verOcultarDiscosNavRef = useRef<HTMLDivElement>(null);
+
+  const [repIsHovered, setRepIsHovered] = useState(false);
+
+  const prevGalTtl = useRef<HTMLHeadingElement>(null);
+  const persOpcTtl = useRef<HTMLHeadingElement>(null);
+  const altAcecTtl = useRef<HTMLHeadingElement>(null);
+  const prinGalTtl = useRef<HTMLHeadingElement>(null);
+  const repDemoTtl = useRef<HTMLHeadingElement>(null);
+
+  const scrollTo = (ref: React.RefObject<HTMLElement | null>) => {
+    const el = ref.current;
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.pageYOffset - 48;
+    window.scrollTo({ top: y, behavior: 'smooth' }); };
 
   useEffect(() => {
     if (isValidColor(seleccionColor)) setSeleccionColor(seleccionColor)
@@ -31,12 +47,21 @@ const QuicknFullArticulo: React.FC = () => {
       ...nullStyle, display: 'block', position: 'relative' 
   }), [nullStyle]);
   const pStyle = useMemo(() => ({
-      ...nullBlockStyle, hyphens: 'auto', textAlign: 'left', textIndent: lgScreen || xlScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.24rem' : '1.125rem', fontWeight: 300, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625
+      ...nullBlockStyle, hyphens: 'auto', textAlign: 'left', textIndent: lgScreen || xlScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem', fontWeight: 300, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625
   }), [nullBlockStyle, lgScreen, xlScreen, mdScreen, smScreen]);
   const h4Style = useMemo(() =>({
       ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,0.8)', fontWeight: '600', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem'
   }),[nullBlockStyle, lgScreen, xlScreen ]);
-  
+  const h4BStyle = useMemo(() =>({
+      ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,0.8)', fontWeight: '400', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0.5rem 1.5rem' : mdScreen ? '2.5rem 0 0.5rem 1.25rem' : '1.5rem 0 0.5rem 1rem'
+  }),[nullBlockStyle, mdScreen, lgScreen, xlScreen ]);
+  const navRapLi = useMemo(() => ({
+    ...nullBlockStyle, hyphens: 'auto', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 400, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 0 1.5rem' : mdScreen ? '0.75rem 0 0 1.25rem' : smScreen ? '0.5rem 0 0 0' : '0.5rem 0 0 1rem'
+  }), [ nullBlockStyle, xlScreen, lgScreen, mdScreen, smScreen]);
+  const navRapSp = useMemo(() => ({
+      ...nullStyle, cursor: 'pointer', display: 'inline', padding: '0', margin: '0'
+  }), [nullStyle]);
+
   if (!screenReady) return null;
 
   return React.createElement('section', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'relative', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none', fontFamily: '"Pangea Trial", sans-serif' } },
@@ -48,9 +73,24 @@ const QuicknFullArticulo: React.FC = () => {
           React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'linear-gradient( to right, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to right, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)', pointerEvents: 'none' } }),
 
           React.createElement('p', { style: { ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0' : mdScreen ? '0.75rem 0' : smScreen ? '0.5rem 0' : '0.5rem 0' } },
-            'Componente aun en desarrollo, conformado por una ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería de previsualización') , ' para cinco imágenes, más una ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería principal') , ' para navegar a través de toda la lista de imágenes y verlas en formato completo. Tiene opciones personalizables y se adapta a las dimensiones del elemento contenedor.' ),
-          React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0.5rem 0' : mdScreen ? '2.5rem 0 0.5rem 0' : '1.5rem 0 0.5rem 0' } },
-            `Galería de previsualización` ),
+            'Componente conformado por una ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería de previsualización') , ' para cinco imágenes, más una ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería principal') , ' para navegar a través de toda la lista de imágenes y verlas en formato completo. Tiene opciones personalizables y se adapta a las dimensiones del elemento contenedor.' ),
+
+          React.createElement('h4', { style: { ...h4BStyle } },
+            'Contenidos:' ),
+          React.createElement('ul', { style: { ...nullBlockStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 4rem 0' : mdScreen ? '0.75rem 0 3rem 0' : smScreen ? '0.5rem 0 2rem 0' : '0.5rem 0 2rem 0' } },
+
+            [ { label: 'La galería de previsualización', ref: prevGalTtl },
+              { label: 'Opciones personalizables', ref: persOpcTtl },
+              { label: 'Acerca de la altura de la galería de previsualización', ref: altAcecTtl },
+              { label: 'La galería principal', ref: prinGalTtl },
+              { label: 'Repositorio demo', ref: repDemoTtl } ].map(({ label, ref }, index) =>
+              React.createElement('li', { key: index, style: { ...navRapLi } },
+                '— ', React.createElement('span', { onClick: () => scrollTo(ref), style: { ...navRapSp }, className: `hover:underline` }, label) ) )
+
+          ),
+
+          React.createElement('h4', { ref: prevGalTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0.5rem 0' : mdScreen ? '2.5rem 0 0.5rem 0' : '1.5rem 0 0.5rem 0' } },
+            'La galería de previsualización' ),
           React.createElement('p', { style: { ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 4rem 0' : mdScreen ? '0.75rem 0 3rem 0' : smScreen ? '0.5rem 0 2rem 0' : '0.5rem 0 2rem 0' } },
             'La galería de previsualización incluye en su parte inferior una fila de navegación la cual indica la imagen principal en exhibición y el tiempo de iteración.'),
 
@@ -66,7 +106,9 @@ const QuicknFullArticulo: React.FC = () => {
                 maxAltura: cajaAltura,
                 navegador: discosNavegador } ) ) ),
 
-          React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
+          React.createElement('p', { style: { ...nullBlockStyle, hyphens: 'none', padding: '0', margin: xlScreen || lgScreen ? '0.5rem' : mdScreen ? '0.375rem 0 0 0' : smScreen ? '0.25rem 0 0 0' : '0.25rem 0 0 0', textAlign: 'center', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 300, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625 }}, 'Imágenes cortesía de ', React.createElement(Link, { style: { fontWeight: '500' }, href: 'https://www.pexels.com/' }, 'Pexels', React.createElement('span', { style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', margin: '0 0 0 0.35rem', padding: '0', width: lgScreen || xlScreen ? '1.25rem' : mdScreen || smScreen ? '1.125rem' : '1.1rem', height: 'auto', verticalAlign: 'text-bottom' } }, React.createElement(ExtLink, null) ) ) ),
+
+          React.createElement('h4', { ref: persOpcTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
             `Opciones personalizables` ),
           React.createElement('p', { style: { ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0' : mdScreen ? '0.75rem 0' : smScreen ? '0.5rem 0' : '0.5rem 0' } },
             'En esta interfaz se pueden conocer las opciones personalizables que dispone el componente.'),
@@ -118,11 +160,11 @@ const QuicknFullArticulo: React.FC = () => {
               `Altura C`),
             React.createElement('span', { onClick: () => setCajaAltura(18), className: ` inline-block h-6 w-24 rounded-md text-center align-top pb-7 mr-2 mt-2 border-solid border-2 border-slate-700 ${ cajaAltura === 18 ? 'font-semibold text-slate-700/80 border-opacity-90 cursor-default ' : 'font-regular text-slate-700/60 border-opacity-50 cursor-pointer ' } `},
               `Altura D`) ),
-          React.createElement('h4', { style: { ...h4Style }, className: ` lg:mt-14 md:mt-10 sm:mt-8 mt-8 ` },
+          React.createElement('h4', { ref: altAcecTtl, style: { ...h4Style }, className: ` lg:mt-14 md:mt-10 sm:mt-8 mt-8 ` },
             `Acerca de la altura de la galería de previsualización` ),
           React.createElement('p', { style: { ...pStyle, margin: xlScreen || lgScreen ? '1rem 0' : mdScreen ? '0.75rem 0' : smScreen ? '0.5rem 0' : '0.5rem 0' } },
             'El alto de la galería de previsualización se ajusta en relación su ancho, que es el ancho del bloque dentro del cual se encuentra inscrita. Su altura tiene tres medidas fijas: A, B, C y D, de modo que, por ejemplo, si se elige la menor, la D, esa será la altura para todos lo anchos que alcance la galería de previsualización. Pero si se eligiera la más alta, la A, esa altura solo se alcanzará si el ancho del elemento contenedor de la galería de previsualización, fuera igual o mayor a 1024 pixeles; para los anchos inferiores, se auto ajustará siguiendo las cuatro alturas predeterminadas.'),
-          React.createElement('h4', { style: { ...h4Style }, className: ` lg:mt-14 md:mt-10 sm:mt-8 mt-8 ` },
+          React.createElement('h4', { ref: prinGalTtl, style: { ...h4Style }, className: ` lg:mt-14 md:mt-10 sm:mt-8 mt-8 ` },
               `La galería principal` ),
           React.createElement('p', { style: { ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 2.25rem' : mdScreen ? '0.75rem 0 2rem 0' : smScreen ? '0.5rem 0 1.75rem 0' : '0.5rem 0 1.75rem 0' } },
                'Al hacer click en la fotografía central de la ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería de previsualización'), ' se es dirigido a la ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería de principal'), ' donde se muestra la fotografía seleccionada en formato completo y una fila inferior deslizable con todas las imagenes miniaturas de la lista para seleccionar y ver en formato completo. La imagen miniatura seleccionada es presentada con un borde cuyo color corresponde al seleccionado en la galería de previsualización. La fila inferior se invisibiliza luego de un momento de inactividad del usuario.'),
@@ -132,7 +174,16 @@ const QuicknFullArticulo: React.FC = () => {
               imagesList: ExampleImagesLists,
               listKey: 'A2',
               indiceInicial: 6,
-              seleccColor: seleccionColor } ) )
+              seleccColor: seleccionColor } ) ),
+
+          React.createElement('p', { style: { ...nullBlockStyle, hyphens: 'none', padding: '0', margin: xlScreen || lgScreen ? '0.5rem' : mdScreen ? '0.375rem 0 0 0' : smScreen ? '0.25rem 0 0 0' : '0.25rem 0 0 0', textAlign: 'center', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 300, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625 }}, 'Imágenes cortesía de ', React.createElement(Link, { style: { fontWeight: '500' }, href: 'https://www.pexels.com/' }, 'Pexels', React.createElement('span', { style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', margin: '0 0 0 0.35rem', padding: '0', width: lgScreen || xlScreen ? '1.25rem' : mdScreen || smScreen ? '1.125rem' : '1.1rem', height: 'auto', verticalAlign: 'text-bottom' } }, React.createElement(ExtLink, null) ) ) ),
+
+          React.createElement('h4', { ref: repDemoTtl, style: { ...h4Style }, className: ` lg:mt-14 md:mt-10 sm:mt-8 mt-8 ` },
+              `Repositorio demo` ),
+          React.createElement('p', { style: { ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 2.25rem' : mdScreen ? '0.75rem 0 2rem 0' : smScreen ? '0.5rem 0 1.75rem 0' : '0.5rem 0 1.75rem 0' } },
+              'En el siguiente enlace se encuentra un respositorio GitHub el cual contiene un proyecto Next.js en blanco, solo con el componente ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'Quick\'n\'Full'), ' implementado. Al descargarlo y seguir las instrucciones del archivo ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontStyle: 'italic' } }, 'README.md'), ', el proyecto corre de forma local, permite ver ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'Quick\'n\'Full'), ' funcionado, conocer sus opciones, su código fuente y usarlo para otros proyectos Next.js.'),
+          React.createElement('p', { style: { ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 2.25rem' : mdScreen ? '0.75rem 0 2rem 0' : smScreen ? '0.5rem 0 1.75rem 0' : '0.5rem 0 1.75rem 0' } },
+            React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, '—'), React.createElement(Link, { onMouseEnter: () => setRepIsHovered(true), onMouseLeave: () => setRepIsHovered(false), href: 'https://github.com/enriquefuenzalidam/quicknfulldemo', target: '_blank', rel: 'noopener noreferrer', title: 'Ir repositorio en GitHub de Quick\'n\'Full', style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontStyle: 'italic', fontWeight: '500', textDecoration: repIsHovered ? 'underline' : 'none', } }, 'github.com/enriquefuenzalidam/quicknfulldemo', React.createElement('span', { style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', margin: '0 0 0 0.35rem', padding: '0', width: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem', height: 'auto', verticalAlign: 'text-bottom' } }, React.createElement(ExtLink, null) ) ) )
 
         ) ) )
 }
