@@ -201,17 +201,19 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, listKey
         const onlyPrvIndexes = new Set([ ...exclusivePrevElements ]);
         const previousAndCurrentIndexes = new Set([ ...commonElements, ...exclusiveNewElements, ...exclusivePrevElements ]);
 
-        const currentAltura = (isXlParent ? galAlturaXl : isLgParent ? galAlturaLg : isMdParent ? galAlturaMd : galAlturaSm) - 4;
+        const currentAltura = isXlParent ? galAlturaXl - 5.4 : isLgParent ? galAlturaLg - 4.6 : isMdParent ? galAlturaMd - 3.6 : galAlturaSm - 3;
 
         return imagenesLista.map((item, index) => {
 
                 const imageBlockStyleA: React.CSSProperties = ({
-                    display: "block", pointerEvents: 'auto', cursor: 'pointer', boxSizing: 'border-box', position: "absolute", top: "1.25rem", height: "calc(100% - 4rem)", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all "+ tiempoIntervalo/4 + "ms linear", overflow: "hidden", background: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)', 
+                    display: "block", pointerEvents: 'auto', cursor: 'pointer', boxSizing: 'border-box', position: "absolute", top: isXlParent ? "1.8rem" : isLgParent ? "1.4rem" : isMdParent ? "1.2rem" : "1rem", aspectRatio: "1 / 1", borderRadius: "0.125rem", transition: "all "+ tiempoIntervalo/4 + "ms linear", overflow: "hidden", background: 'linear-gradient(0deg, rgba(187,187,187,1) 0%, rgba(245,245,245,1) 100%)', 
                     opacity: previousAndCurrentIndexes.has(index) ? onlyPrvIndexes.has(index) ? 0.09 : 1 : 0,
                     zIndex: onlyPrvIndexes.has(index) ? 10 : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? 50 : beforeAfter1.has(index) ? 40 : 30 : 10,
                     boxShadow: onlyPrvIndexes.has(index) ? "none" : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? "0 10px 12px -3px rgba(0, 0, 0, 0.6), 0 4px 3px -2px rgba(0, 0, 0, 0.6)" : beforeAfter1.has(index) ? "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.4)" : "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.2)" : "none",
+                    left: onlyPrvIndexes.has(index) ? `calc( 50% - ${currentAltura * 0.5}rem )` : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? `calc( 50% - ${currentAltura * 0.5}rem )` : onlyNewBefore2.has(index) ? `0%` : onlyNewBefore1.has(index) ? `calc( 20% - ${currentAltura * 0.2}rem )` : onlyNewwAfter1.has(index) ? `calc( 80% - ${currentAltura * 0.8}rem )` : `calc( 100% - ${currentAltura}rem )` : `calc( 50% - ${currentAltura * 0.5}rem )`,
                     transform: onlyPrvIndexes.has(index) ? "scale(0.01)" : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? "scale(1.1)" : beforeAfter1.has(index) ? "scale(1.05)" : "scale(0.92)" : "scale(0.01)",
-                    left: onlyPrvIndexes.has(index) ? `calc( 50% - ${currentAltura * 0.5}rem )` : previousAndCurrentIndexes.has(index) ? onlyNewCurrent.has(index) ? `calc( 50% - ${currentAltura * 0.5}rem )` : onlyNewBefore2.has(index) ? `0%` : onlyNewBefore1.has(index) ? `calc( 20% - ${currentAltura * 0.2}rem )` : onlyNewwAfter1.has(index) ? `calc( 80% - ${currentAltura * 0.8}rem )` : `calc( 100% - ${currentAltura}rem )` : `calc( 50% - ${currentAltura * 0.5}rem )` })
+                    height: `${currentAltura}rem`
+                })
 
                 const imageBlockStyleB: React.CSSProperties = ({
                     position: 'relative', boxSizing: 'border-box', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', transition: "all 300ms linear", margin: '0', padding: '0',
@@ -259,11 +261,11 @@ const QuicknfullPrev: React.FC<ProntoVistaPrevGalProps> = ({ imagesList, listKey
 
     }, [handleNavClick, currentGalleryIndex, previousGalleryIndexRef, discosNavegador, imagenesLista, isXlParent, isLgParent, isMdParent, seleccionColor, tiempoIntervalo]);
 
-    const mainContainerStyle = useMemo(() => ({
+    const mainContainerStyle: React.CSSProperties = useMemo(() => ({
         position: 'relative', boxSizing: 'border-box', display: 'block', minHeight: 'auto', opacity: firstIntervalDoneRef ? 1 : 0, transition: 'opacity ' + tiempoIntervalo/8 + 'ms ease-in-out' }), [ firstIntervalDoneRef, tiempoIntervalo]);
     const scndContainerStyle: React.CSSProperties = {
         position: 'relative', boxSizing: 'border-box', display: 'block', maxWidth: '64rem', width: '100%', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }
-    const hghtContainerStyle = useMemo(() => ({
+    const hghtContainerStyle: React.CSSProperties = useMemo(() => ({
         boxSizing: 'border-box', display: 'block', transition: 'all 700ms linear', overflowY: 'visible', overflowX: 'hidden', width: '100%', position: 'relative', height: isXlParent ? `${galAlturaXl}rem` : isLgParent ? `${galAlturaLg}rem` : isMdParent ? `${galAlturaMd}rem` : `${galAlturaSm}rem` }),
         [isXlParent, isLgParent, isMdParent, galAlturaXl, galAlturaLg, galAlturaMd, galAlturaSm]);
     const outerImagenesLista: React.CSSProperties = {
