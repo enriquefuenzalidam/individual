@@ -76,7 +76,7 @@ const QuicknFullArticulo: React.FC = () => {
             'Componente conformado por una ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería de previsualización') , ' para cinco imágenes, más una ', React.createElement('span', { style: { display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500' } }, 'galería principal') , ' para navegar a través de toda la lista de imágenes y verlas en formato completo. Tiene opciones personalizables y se adapta a las dimensiones del elemento contenedor.' ),
 
           React.createElement('h4', { style: { ...h4BStyle } },
-            'Contenidos:' ),
+            'Navegación rápida:' ),
           React.createElement('ul', { style: { ...nullBlockStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 4rem 0' : mdScreen ? '0.75rem 0 3rem 0' : smScreen ? '0.5rem 0 2rem 0' : '0.5rem 0 2rem 0' } },
 
             [ { label: 'La galería de previsualización', ref: prevGalTtl },
@@ -85,11 +85,13 @@ const QuicknFullArticulo: React.FC = () => {
               { label: 'La galería principal', ref: prinGalTtl },
               { label: 'Repositorio demo', ref: repDemoTtl } ].map(({ label, ref }, index) =>
               React.createElement('li', { key: index, style: { ...navRapLi } },
-                '— ', React.createElement('span', { onClick: () => scrollTo(ref), style: { ...navRapSp }, className: `hover:underline` }, label) ) )
+                `${index + 1}.— `, React.createElement('span', { onClick: () => scrollTo(ref), style: { ...navRapSp }, className: `hover:underline` }, label ) ) )
 
           ),
 
-          React.createElement('h4', { ref: prevGalTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0.5rem 0' : mdScreen ? '2.5rem 0 0.5rem 0' : '1.5rem 0 0.5rem 0' } },
+          React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: xlScreen || lgScreen ? '0.1rem' : mdScreen ? '0.075rem' :  '0.05rem', background: 'rgba(51,65,85,0.3)' } } ), 
+
+          React.createElement('h4', { ref: prevGalTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '4rem 0 0.5rem 0' : mdScreen ? '3rem 0 0.5rem 0' : '2rem 0 0.5rem 0' } },
             'La galería de previsualización' ),
           React.createElement('p', { style: { ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 4rem 0' : mdScreen ? '0.75rem 0 3rem 0' : smScreen ? '0.5rem 0 2rem 0' : '0.5rem 0 2rem 0' } },
             'La galería de previsualización incluye en su parte inferior una fila de navegación la cual indica la imagen principal en exhibición y el tiempo de iteración.'),
