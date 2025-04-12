@@ -3,11 +3,13 @@ import { useEffect } from "react";
 
 
 export const isValidColor = (color: string) => {
+    if (typeof window === "undefined") return false;
     const s = new Option().style;
     s.color = color;
     return s.color !== ""; };
 
 export const toHexColor = (color: string): string => {
+    if (typeof window === "undefined") return "000000";
     const ctx = document.createElement("canvas").getContext("2d");
     if (!ctx) return "000000"; 
     ctx.fillStyle = color;
