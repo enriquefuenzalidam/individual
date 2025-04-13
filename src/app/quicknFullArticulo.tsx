@@ -40,27 +40,37 @@ const QuicknFullArticulo: React.FC = () => {
     const timeout = setTimeout(() => setPageLoaded(true), 500);
     return () => clearTimeout(timeout); }, [screenReady]);
 
-  const nullStyle = useMemo(() => ({
-      boxSizing: 'border-box' 
+  const nullStyle: React.CSSProperties = useMemo(() => ({
+    boxSizing: 'border-box' 
   }), []);
-  const nullBlockStyle = useMemo(() => ({
-      ...nullStyle, display: 'block', position: 'relative' 
+
+  const nullBlockStyle: React.CSSProperties = useMemo(() => ({
+    ...nullStyle, display: 'block', position: 'relative' 
   }), [nullStyle]);
-  const pStyle = useMemo(() => ({
-      ...nullBlockStyle, hyphens: 'auto', textAlign: 'left', textIndent: lgScreen || xlScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem', fontWeight: 300, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625
+
+  const pStyle: React.CSSProperties = useMemo(() => ({
+    ...nullBlockStyle, hyphens: 'auto', textAlign: 'left', textIndent: lgScreen || xlScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem', fontWeight: 300, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625
   }), [nullBlockStyle, lgScreen, xlScreen, mdScreen, smScreen]);
-  const h4Style = useMemo(() =>({
-      ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,0.8)', fontWeight: '600', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem'
+
+  const h4Style: React.CSSProperties = useMemo(() =>({
+    ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,0.8)', fontWeight: '600', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem'
   }),[nullBlockStyle, lgScreen, xlScreen ]);
-  const h4BStyle = useMemo(() =>({
-      ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,0.8)', fontWeight: '400', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0.5rem 1.5rem' : mdScreen ? '2.5rem 0 0.5rem 1.25rem' : '1.5rem 0 0.5rem 1rem'
+
+  const h4BStyle: React.CSSProperties = useMemo(() =>({
+    ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,0.8)', fontWeight: '400', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0.5rem 1.5rem' : mdScreen ? '2.5rem 0 0.5rem 1.25rem' : '1.5rem 0 0.5rem 1rem'
   }),[nullBlockStyle, mdScreen, lgScreen, xlScreen ]);
-  const navRapLi = useMemo(() => ({
+
+  const navRapLi: React.CSSProperties = useMemo(() => ({
     ...nullBlockStyle, hyphens: 'auto', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 400, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 0 1.5rem' : mdScreen ? '0.75rem 0 0 1.25rem' : smScreen ? '0.5rem 0 0 0' : '0.5rem 0 0 1rem'
   }), [ nullBlockStyle, xlScreen, lgScreen, mdScreen, smScreen]);
-  const navRapSp = useMemo(() => ({
-      ...nullStyle, cursor: 'pointer', display: 'inline', padding: '0', margin: '0'
+
+  const navRapSp: React.CSSProperties = useMemo(() => ({
+    ...nullStyle, cursor: 'pointer', display: 'inline', padding: '0', margin: '0'
   }), [nullStyle]);
+
+  const imgsDesc: React.CSSProperties = useMemo(() => ({
+    ...nullBlockStyle, hyphens: 'none', padding: '0', margin: xlScreen || lgScreen ? '0.5rem' : mdScreen ? '0.375rem 0 0 0' : smScreen ? '0.25rem 0 0 0' : '0.25rem 0 0 0', textAlign: 'center', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 300, color: 'rgba(51,65,85,0.4)', lineHeight: 1.625
+  }), [nullBlockStyle, xlScreen, lgScreen, mdScreen, smScreen])
 
   if (!screenReady) return null;
 
@@ -108,7 +118,7 @@ const QuicknFullArticulo: React.FC = () => {
                 maxAltura: cajaAltura,
                 navegador: discosNavegador } ) ) ),
 
-          React.createElement('p', { style: { ...nullBlockStyle, hyphens: 'none', padding: '0', margin: xlScreen || lgScreen ? '0.5rem' : mdScreen ? '0.375rem 0 0 0' : smScreen ? '0.25rem 0 0 0' : '0.25rem 0 0 0', textAlign: 'center', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 300, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625 }}, 'Imágenes cortesía de ', React.createElement(Link, { style: { fontWeight: '500' }, href: 'https://www.pexels.com/' }, 'Pexels', React.createElement('span', { style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', margin: '0 0 0 0.35rem', padding: '0', width: lgScreen || xlScreen ? '1.25rem' : mdScreen || smScreen ? '1.125rem' : '1.1rem', height: 'auto', verticalAlign: 'text-bottom' } }, React.createElement(ExtLink, null) ) ) ),
+          React.createElement('p', { style: { ...imgsDesc }}, 'Imágenes cortesía de ', React.createElement(Link, { style: { fontWeight: '500' }, href: 'https://www.pexels.com/' }, 'Pexels', React.createElement('span', { style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', margin: '0 0 0 0.35rem', padding: '0', width: lgScreen || xlScreen ? '1.25rem' : mdScreen || smScreen ? '1.125rem' : '1.1rem', height: 'auto', verticalAlign: 'text-bottom' } }, React.createElement(ExtLink, null) ) ) ),
 
           React.createElement('h4', { ref: persOpcTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
             `Opciones personalizables` ),
@@ -178,7 +188,7 @@ const QuicknFullArticulo: React.FC = () => {
               indiceInicial: 6,
               seleccColor: seleccionColor } ) ),
 
-          React.createElement('p', { style: { ...nullBlockStyle, hyphens: 'none', padding: '0', margin: xlScreen || lgScreen ? '0.5rem' : mdScreen ? '0.375rem 0 0 0' : smScreen ? '0.25rem 0 0 0' : '0.25rem 0 0 0', textAlign: 'center', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 300, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625 }}, 'Imágenes cortesía de ', React.createElement(Link, { style: { fontWeight: '500' }, href: 'https://www.pexels.com/' }, 'Pexels', React.createElement('span', { style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', margin: '0 0 0 0.35rem', padding: '0', width: lgScreen || xlScreen ? '1.25rem' : mdScreen || smScreen ? '1.125rem' : '1.1rem', height: 'auto', verticalAlign: 'text-bottom' } }, React.createElement(ExtLink, null) ) ) ),
+          React.createElement('p', { style: { ...imgsDesc }}, 'Imágenes cortesía de ', React.createElement(Link, { style: { fontWeight: '500' }, href: 'https://www.pexels.com/' }, 'Pexels', React.createElement('span', { style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', margin: '0 0 0 0.35rem', padding: '0', width: lgScreen || xlScreen ? '1.25rem' : mdScreen || smScreen ? '1.125rem' : '1.1rem', height: 'auto', verticalAlign: 'text-bottom' } }, React.createElement(ExtLink, null) ) ) ),
 
           React.createElement('h4', { ref: repDemoTtl, style: { ...h4Style }, className: ` lg:mt-14 md:mt-10 sm:mt-8 mt-8 ` },
               `Repositorio demo` ),
