@@ -57,7 +57,7 @@ const QuicknFullArticulo: React.FC = () => {
   }),[nullBlockStyle, lgScreen, xlScreen ]);
 
   const h4BStyle: React.CSSProperties = useMemo(() =>({
-    ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,0.8)', fontWeight: '400', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0.5rem 1.5rem' : mdScreen ? '2.5rem 0 0.5rem 1.25rem' : '1.5rem 0 0.5rem 1rem'
+    ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,0.8)', fontWeight: '400', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem', padding: '0', margin: xlScreen || lgScreen ? '1.7rem 0 0.5rem 1.5rem' : mdScreen ? '1.3rem 0 0.5rem 1.25rem' : '1rem 0 0.5rem 1rem'
   }),[nullBlockStyle, mdScreen, lgScreen, xlScreen ]);
 
   const navRapLi: React.CSSProperties = useMemo(() => ({
