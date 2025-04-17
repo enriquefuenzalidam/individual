@@ -1,8 +1,10 @@
 import React, { useState, useEffect} from "react";
 import usePantallaTamagnos from "@/hooks/usepantallatamagnos";
+import Link from "next/link";
+import PayPalLogo from "./paypal";
 
 const Footer: React.FC = () => {
-    const { screenReady, lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
+    const { screenReady, xlScreen, lgScreen, mdScreen, smScreen } = usePantallaTamagnos();
 
     const [pageLoaded, setPageLoaded] = useState(false);
     useEffect(() => {
@@ -16,6 +18,8 @@ const Footer: React.FC = () => {
         React.createElement('div', { style: { pointerEvents: 'none', boxSizing: 'border-box', position: 'absolute', inset: '0', display: 'block', backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 1rem, rgba(0,0,0,0) 100%), linear-gradient( to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.01) 0.3rem, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 100%)'}} ),
         React.createElement('p', { style: { boxSizing: 'border-box', position: 'relative' } },
             'individual.cl es diseño y desarrollo propio, corre en ', React.createElement('a', { style: { position: 'relative', fontWeight: '700' }, href: 'https://nextjs.org'}, 'Next.js'), ' y es hospedado por ', React.createElement('a', { style: { position: 'relative', fontWeight: '700' }, href: 'https://www.netlify.com'} , 'Netlify'), '.'),
-        React.createElement('p', { style: { boxSizing: 'border-box', position: 'relative', marginTop: '0.1rem' } },
-            '© 2025 individual.cl. Distribuido bajo ', React.createElement('a', { style: { position: 'relative', fontWeight: '700' }, href: '/license.txt'} , 'Licencia MIT'), '.') ) }
+        React.createElement('p', { style: { boxSizing: 'border-box', position: 'relative', margin: xlScreen || lgScreen ? '0.43rem 0 0 0' : mdScreen ? '0.32rem 0 0 0' : smScreen ? '0.21rem 0 0 0' : '0.1rem 0 0 0' } },
+            '© 2025 individual.cl. Distribuido bajo ',
+            React.createElement(Link, { style: { position: 'relative', fontWeight: '700' }, href: '/license.txt'} , 'Licencia MIT'),
+            '. Aportes ', React.createElement(Link, { href: "https://paypal.me/enriquefuenzalidacl", style: { display: 'inline-block', position: 'relative', boxSizing: 'border-box', height: 'auto', width: xlScreen || lgScreen ? '5rem' : mdScreen ? '4.5rem' : smScreen ? '4rem' : '3rem', verticalAlign: 'bottom' } }, React.createElement(PayPalLogo, null ) ) ) ) }
 export default Footer;
