@@ -29,25 +29,6 @@ const QuicknFullArticulo: React.FC = () => {
     if (!el) return;
     const y = el.getBoundingClientRect().top + window.pageYOffset - 48;
     window.scrollTo({ top: y, behavior: 'smooth' } ) };
-/*
-  const scrollTo = (ref: React.RefObject<HTMLElement | null>) => {
-    const el = ref.current;
-    if (!el) return;
-
-    const startY = window.pageYOffset;
-    const targetY = el.getBoundingClientRect().top + startY - 48;
-    const distance = targetY - startY;
-    const duration = 400;
-    const startTime = performance.now();
-  
-    const step = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1); 
-      window.scrollTo(0, startY + distance * progress);
-      if (progress < 1) requestAnimationFrame(step); }
-
-    requestAnimationFrame(step); };
-*/
 
   useEffect(() => {
     if (isValidColor(seleccionColor)) setSeleccionColor(seleccionColor)
