@@ -57,8 +57,8 @@ const QuicknFullArticulo: React.FC = () => {
   }), [pStyle, lgScreen, xlScreen, mdScreen, smScreen]);
 
   const pStyleC: React.CSSProperties = useMemo(() => ({
-    marginTop: lgScreen ? '0.5rem' : '0.25rem', textAlign: 'left', fontSize: '1.125rem', lineHeight: '1.5'
-  }), [lgScreen])
+    marginTop: xlScreen || lgScreen ? '0.5rem' : '0.25rem', textAlign: 'left', fontSize: '1.125rem', lineHeight: '1.5'
+  }), [lgScreen, xlScreen])
 
   const pBold: React.CSSProperties = useMemo(() =>({
     ...pStyle, display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500', color: 'rgba(51,65,85,1)'
@@ -69,8 +69,8 @@ const QuicknFullArticulo: React.FC = () => {
   }),[nullBlockStyle, lgScreen, xlScreen ]);
 
   const h4StyleB: React.CSSProperties = useMemo(() => ({
-    ...h4Style, marginTop: lgScreen ? '3.5rem' : mdScreen ? '2.5rem' : smScreen ? '2rem' : '2rem'
-  }), [h4Style, lgScreen, mdScreen, smScreen])
+    ...h4Style, marginTop: xlScreen || lgScreen ? '3.5rem' : mdScreen ? '2.5rem' : smScreen ? '2rem' : '2rem'
+  }), [h4Style, xlScreen, lgScreen, mdScreen, smScreen])
 
   const h4BStyle: React.CSSProperties = useMemo(() =>({
     ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,1)', fontWeight: '500', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem', padding: '0', margin: xlScreen || lgScreen ? '1.7rem 0 0.5rem 1.5rem' : mdScreen ? '1.3rem 0 0.5rem 1.25rem' : '1rem 0 0.5rem 1rem'
