@@ -71,6 +71,10 @@ const LayeredTabsArticulo: React.FC = () => {
     }), []);
   */
 
+  const shoulderHeight = useMemo(() => lgScreen || xlScreen ? 2.5 : mdScreen || smScreen ? 2.25 : 2.125, [xlScreen, lgScreen, mdScreen, smScreen] );
+  const shoulderHeightRem: React.CSSProperties = useMemo(() => ({ height: shoulderHeight + 'rem' }), [shoulderHeight]);
+  const shoulderWidth = shoulderHeight * 0.7104;
+
   const [currentTab, setCurrentTab] = useState(0);
 
   if (!screenReady) return null;
@@ -89,15 +93,15 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto`, background: '#fff' } },
           React.createElement('div', { style: { display: 'grid', gridTemplateRows: 'auto 1fr', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto` } },
 
-            React.createElement('div', { style: { display: 'block', padding: '0 3rem', margin: '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, height:  lgScreen || xlScreen ? '2.5rem' : mdScreen || smScreen ? '2.25rem' : '2.125rem' } },
+            React.createElement('div', { style: { display: 'block', padding: lgScreen || xlScreen ? '0 2.5rem' : mdScreen || smScreen ? '0 1.7rem' : '0 1.5rem', margin: '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, ...shoulderHeightRem } },
 
               React.createElement("div", { style: { zIndex: 10, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 1rem, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 0.3rem, rgba(0,0,0,0) 100%)", maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%)', pointerEvents: 'none' } }),
 
-              [ 'Tab A', 'Tab B', 'Tab C', 'Tab D', 'Tab E', 'Tab F', 'Tab G' ].map((titulo, index) => React.createElement('div', { key: index, onClick: () => setCurrentTab(index), style: { cursor: 'pointer', zIndex: currentTab == index ? 11 : 9, opacity: currentTab == index ? 1 : 0.9, filter: "drop-shadow(0 -0.3rem 0.5rem rgba(0,0,0,0.15))", display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%` } },
+              [ 'Tab A', 'Tab B', 'Tab C', 'Tab D' ].map((titulo, index) => React.createElement('div', { key: index, onClick: () => setCurrentTab(index), style: { transform: `translateX(calc(-${shoulderWidth * index}rem))`, cursor: 'pointer', zIndex: currentTab == index ? 11 : 9 - index, filter: "drop-shadow(0 -0.3rem 0.5rem rgba(0,0,0,0.15))", display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%` } },
                 React.createElement('div', { style: { filter: "drop-shadow(0 -0.1rem 0.1rem rgba(0,0,0,0.15))", display: 'flex', flexDirection: 'row', alignItems: 'stretch', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%` } },
                   React.createElement('div', { style: { display: 'block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder } }),
-                  React.createElement('div', { style: { display: 'block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, width: '100%', maxWidth: '21rem', color: "black", alignContent: 'end', textAlign: 'center' } },
-                    React.createElement('span', { style: { display: 'inline', padding: '0', margin: '0', boxSizing: 'border-box', fontWeight: 600, opacity: 0.6, fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem' } },
+                  React.createElement('div', { style: { display: 'block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, width: '100%', maxWidth: '21rem', alignContent: 'end', textAlign: 'center' } },
+                    React.createElement('span', { style: { display: 'inline-block', padding: lgScreen || xlScreen ? '0 0.5rem' : mdScreen || smScreen ? '0 0.3rem' : '0 0.1rem', margin: '0', boxSizing: 'border-box', fontWeight: 600, fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem', color: "black", opacity: currentTab == index ? 0.6 : 0.4,  } },
                       titulo) ),
                   React.createElement('div', { style: { display: 'block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder, transform: "scaleX(-1)" } } ) ) ), ),
 
@@ -108,7 +112,7 @@ const LayeredTabsArticulo: React.FC = () => {
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus egestas mi, quis mollis magna dapibus in. Aliquam non blandit nibh, vel mattis tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur arcu nulla, tincidunt et tincidunt nec, ornare ac ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aenean tempus congue augue, sit amet facilisis massa scelerisque nec. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec consectetur rhoncus purus sit amet scelerisque.") )
 
           ),
-          React.createElement('div', { style: { zIndex: 30, display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: 0, boxShadow: 'inset 0 0.1rem 0.6rem rgba(0, 0, 0, 0.15)', pointerEvents: 'none' } } )
+          React.createElement('div', { style: { zIndex: 200, display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: 0, boxShadow: 'inset 0 0.1rem 0.6rem rgba(0, 0, 0, 0.15)', pointerEvents: 'none' } } )
         
         )
       )
