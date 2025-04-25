@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
 
 
@@ -71,8 +71,12 @@ const LayeredTabsArticulo: React.FC = () => {
     }), []);
   */
 
-  const shoulderHeight = useMemo(() => lgScreen || xlScreen ? 2.5 : mdScreen || smScreen ? 2.25 : 2.125, [xlScreen, lgScreen, mdScreen, smScreen] );
-  const shoulderHeightRem: React.CSSProperties = useMemo(() => ({ height: shoulderHeight + 'rem' }), [shoulderHeight]);
+    const dinamicSize = useCallback((value: number) => {
+      return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
+    }, [xlScreen, lgScreen, mdScreen, smScreen])
+  
+  // const shoulderHeight = useMemo(() => xlScreen ? 3 : lgScreen ? 2.75 : mdScreen ? 2.5 : smScreen ? 2.375 : 2.125, [xlScreen, lgScreen, mdScreen, smScreen] );
+  const shoulderHeight = dinamicSize(2.125);
   const shoulderWidth = shoulderHeight * 0.7104;
 
   const [currentTab, setCurrentTab] = useState(0);
@@ -88,30 +92,37 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'linear-gradient( to right, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to right, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)', pointerEvents: 'none' } }),
 
         React.createElement('p', { style: { ...pStyleB } },
-          'Presentar contenido en capas facilita la navegación y en algunos casos se vuelve imprescindible.  ', ' Organizar textos, documentos y/o contenido web con ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' es simple y proporciona formatos distintos. En desarrollo.'),
+          'Presentar contenido en capas facilita la navegación y en algunos casos se vuelve imprescindible.  ', ' Organizar textos, documentos y/o contenido web con ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' es simple y proporciona formatos distintos. Aún en desarrollo.'),
 
         React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto`, background: '#fff' } },
-          React.createElement('div', { style: { display: 'grid', gridTemplateRows: 'auto 1fr', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto` } },
 
-            React.createElement('div', { style: { display: 'block', padding: lgScreen || xlScreen ? '0 2.5rem' : mdScreen || smScreen ? '0 1.7rem' : '0 1.5rem', margin: '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, ...shoulderHeightRem } },
+// LayeredTabs
 
-              React.createElement("div", { style: { zIndex: 10, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 1rem, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 0.3rem, rgba(0,0,0,0) 100%)", maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%)', pointerEvents: 'none' } }),
+          React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto` } },
 
-              [ 'Tab A', 'Tab B', 'Tab C', 'Tab D' ].map((titulo, index) => React.createElement('div', { key: index, onClick: () => setCurrentTab(index), style: { transform: `translateX(calc(-${shoulderWidth * index}rem))`, cursor: 'pointer', zIndex: currentTab == index ? 11 : 9 - index, filter: "drop-shadow(0 -0.3rem 0.5rem rgba(0,0,0,0.15))", display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%` } },
-                React.createElement('div', { style: { filter: "drop-shadow(0 -0.1rem 0.1rem rgba(0,0,0,0.15))", display: 'flex', flexDirection: 'row', alignItems: 'stretch', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%` } },
-                  React.createElement('div', { style: { display: 'block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder } }),
-                  React.createElement('div', { style: { display: 'block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, width: '100%', maxWidth: '21rem', alignContent: 'end', textAlign: 'center' } },
-                    React.createElement('span', { style: { display: 'inline-block', padding: lgScreen || xlScreen ? '0 0.5rem' : mdScreen || smScreen ? '0 0.3rem' : '0 0.1rem', margin: '0', boxSizing: 'border-box', fontWeight: 600, fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem', color: "black", opacity: currentTab == index ? 0.6 : 0.4,  } },
-                      titulo) ),
-                  React.createElement('div', { style: { display: 'block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder, transform: "scaleX(-1)" } } ) ) ), ),
+            React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)' } },
 
+              React.createElement("div", { style: { zIndex: 10, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)", pointerEvents: 'none' } }),
+
+              React.createElement("div", { style: { display: 'block', padding: `${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem 0 ${dinamicSize(2.5)}rem`, margin: `0`, boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none' } },
+                [ 'Lorem Ipsum', 'Dolor Sit Amet', 'Consectetur', 'Adipiscing Elit' ].map((titulo, index) => React.createElement('div', { key: index, onClick: () => setCurrentTab(index), style: { transform: `translateX(calc(-${shoulderWidth * index}rem))`, cursor: 'pointer', zIndex: currentTab === index ? 11 : 9 - index, filter: `drop-shadow(0 -${dinamicSize(0.3)}rem ${dinamicSize(0.5)}rem rgba(0,0,0,${currentTab === index ? 0.15 : 0.09}))`, display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%` } },
+                  React.createElement('div', { style: { filter: `drop-shadow(0 -${dinamicSize(0.1)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.15 : 0.09}))`, display: 'block', whiteSpace: 'nowrap', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%` } },
+                    React.createElement('div', { style: { display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder } }),
+                    React.createElement('div', { style: { transform: 'translateX(-0.05rem)', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, maxWidth: '21rem', textAlign: 'center', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden' } },
+                      React.createElement('span', { style: { transition: 'all 100ms ease-in-out', display: 'inline-block', padding: `0 ${dinamicSize(0.25)}rem`, margin: '0', boxSizing: 'border-box', fontWeight: '600', fontSize: `${dinamicSize(1.125)}rem`, color: 'rgba(51,65,85,1)', opacity: currentTab === index ? 1 : 0.2,  } },
+                        titulo) ),
+                    React.createElement('div', { style: { transform: "translateX(-0.1rem) scaleX(-1)", display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder } } ) ) ), ),
+              )
             ),
 
-            React.createElement('div', { style: { zIndex: 11, display: 'block', background: '#fff', padding: xlScreen || lgScreen ? '1rem 3rem' : mdScreen ? '0.5rem 2rem' : smScreen ? '0.5rem 2rem' : '0.5rem 2rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
-              React.createElement('p', { style: { ...pStyleB } },
+            React.createElement('div', { style: { zIndex: 11, display: 'block', background: '#fff', padding: dinamicSize(1.6)+ 'rem ' + dinamicSize(2) + 'rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
+              React.createElement('p', { style: { display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'left', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625 } },
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus egestas mi, quis mollis magna dapibus in. Aliquam non blandit nibh, vel mattis tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur arcu nulla, tincidunt et tincidunt nec, ornare ac ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aenean tempus congue augue, sit amet facilisis massa scelerisque nec. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec consectetur rhoncus purus sit amet scelerisque.") )
 
           ),
+
+// 
+
           React.createElement('div', { style: { zIndex: 200, display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: 0, boxShadow: 'inset 0 0.1rem 0.6rem rgba(0, 0, 0, 0.15)', pointerEvents: 'none' } } )
         
         )
