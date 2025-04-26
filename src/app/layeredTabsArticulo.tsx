@@ -130,7 +130,7 @@ const LayeredTabsArticulo: React.FC = () => {
 
             tabsContentList.map((content,index) => (currentTab === index && React.createElement('div', { key: index, style: { height: '20rem', overflowY: 'scroll', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.3) 91%, rgba(0,0,0,0.3) 100%)', display: 'block', background: '#fff', padding: dinamicSize(1.6)+ 'rem ' + dinamicSize(2) + 'rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
 
-              React.createElement('p', { style: { transition: 'all 100ms ease-in-out', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'left', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625 } }, content )
+              React.createElement('p', { style: { transition: 'all 100ms ease-in-out', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625 } }, content )
 
             ) ) )
 
