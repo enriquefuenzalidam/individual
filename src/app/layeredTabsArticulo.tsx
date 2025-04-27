@@ -81,10 +81,7 @@ const LayeredTabsArticulo: React.FC = () => {
 
   const [currentTab, setCurrentTab] = useState(0);
 
-  const tabsTitleList = [ 'Lorem Ipsum', 'Dolor Sit Amet', 'Consectetur Adipiscing Elit', 'Suspendisse Luctus', 'Egestas Mi', 'Quis Mollis Magna', 'Dapibus In' ];
-  const zIndexMax = tabsTitleList.length + 10;
-  const getZIndex = (index: number, currentTab: number, topZIndex: number) => topZIndex - Math.abs(index - currentTab);
-
+  const tabsTitleList = [ 'Lorem Ipsum', 'Proin Vitae', 'Maecenas Lorem Sapien', 'Pellentesque Habitant', 'In At Aliquam Orci', 'Quisque Luctus', 'Vestibulum Hendrerit' ];
   const tabsContentList = [ 
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus scelerisque, odio ac consectetur tincidunt, nisi eros ornare nisl, varius consequat justo eros a purus. Sed quis pellentesque augue. Nulla scelerisque porttitor pulvinar. Pellentesque commodo, sem in pretium iaculis, nulla ex auctor elit, in accumsan nisi ante sed diam. Pellentesque semper cursus augue vitae suscipit. Suspendisse pulvinar leo diam, ultricies accumsan nibh molestie quis. Nulla eget efficitur nunc. Nullam iaculis a augue et finibus. Nunc tempor, nibh at interdum egestas, ligula massa vestibulum enim, quis facilisis arcu urna viverra justo. Curabitur cursus euismod sagittis. Aenean quis sapien lacus. Donec pellentesque ipsum turpis, sed ornare magna tincidunt ac. Sed sit amet nisl condimentum, mollis risus ac, molestie elit. Donec blandit, dui id mollis ullamcorper, ligula massa scelerisque diam, eget lobortis velit ante eget ipsum. Sed consectetur nunc nibh.',
     'Proin vitae molestie tellus, sit amet molestie dui. Cras rhoncus dui nec ante consequat, vel malesuada dui pharetra. Nunc sollicitudin interdum bibendum. Sed id posuere tortor. Mauris id metus in ante gravida finibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut finibus sed lacus et aliquet.',
@@ -93,6 +90,9 @@ const LayeredTabsArticulo: React.FC = () => {
     'In at aliquam orci, eget consequat enim. Nam ultricies faucibus auctor. In laoreet quis dolor vel suscipit. Donec ut pellentesque arcu. Phasellus magna felis, porttitor in neque nec, laoreet pretium purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin mattis finibus mauris id interdum. Integer imperdiet feugiat vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac leo id magna efficitur feugiat non nec justo. Nulla dapibus nulla suscipit justo pulvinar vestibulum. Donec aliquet arcu eu gravida rhoncus. Aliquam quis eleifend dolor, placerat fringilla neque. Suspendisse vel dolor quis erat hendrerit ullamcorper.',
     'Quisque luctus ac nulla feugiat egestas. Donec non felis sed enim aliquet gravida. Nam rhoncus sapien quis lacus bibendum sagittis. Sed ligula risus, porta sed venenatis et, interdum id sem. Proin viverra at eros non convallis. Nulla finibus mollis enim, in placerat lacus facilisis eget. Maecenas placerat elementum lectus, ultrices tristique justo cursus elementum. Donec dolor risus, accumsan ac nunc eu, volutpat feugiat libero. Ut id augue nisi. Pellentesque at felis non massa interdum rhoncus. Morbi consectetur blandit tincidunt. Curabitur a odio gravida, consectetur metus vitae, sagittis diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer non pulvinar nisl.',
     'Vestibulum hendrerit metus sit amet maximus euismod. Sed nec elementum nisi, non lobortis tellus. Curabitur odio felis, commodo hendrerit dui ut, ultrices pretium odio. Nunc congue et nisl et facilisis. Etiam porta erat purus, nec cursus felis elementum a. Cras eu arcu commodo, lobortis nulla quis, porttitor ligula. Duis nec odio elit. Aenean sed viverra lorem, vitae mattis est. Donec fringilla sollicitudin nulla, sed fermentum elit sollicitudin sed. Sed ut ligula in urna lobortis lacinia. Phasellus nisl velit, euismod quis lorem at, aliquet tristique urna. Proin at pellentesque enim, ac finibus elit.' ]
+
+  const zIndexMax = tabsTitleList.length + 10;
+  const getZIndex = (index: number, currentTab: number, topZIndex: number) => topZIndex - Math.abs(index - currentTab);
 
   if (!screenReady) return null;
 
@@ -105,7 +105,7 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'linear-gradient( to right, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to right, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)', pointerEvents: 'none' } }),
 
         React.createElement('p', { style: { ...pStyleB } },
-          'Presentar contenido en capas facilita la navegación y en algunos casos se vuelve imprescindible.  ', ' Organizar textos, documentos y/o contenido web con ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' es simple y proporciona formatos distintos. En desarrollo.'),
+          'Presentar contenido en capas facilita la navegación y en algunos casos se vuelve imprescindible. Organizar textos, documentos y/o contenido web con ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' es simple y proporciona formatos distintos. En desarrollo.'),
 
         React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto`, background: '#fff' } },
 
@@ -128,7 +128,7 @@ const LayeredTabsArticulo: React.FC = () => {
               )
             ),
 
-            tabsContentList.map((content,index) => (currentTab === index && React.createElement('div', { key: index, style: { height: '20rem', overflowY: 'scroll', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.3) 91%, rgba(0,0,0,0.3) 100%)', display: 'block', background: '#fff', padding: dinamicSize(1.6)+ 'rem ' + dinamicSize(2) + 'rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
+            tabsContentList.map((content,index) => (currentTab === index && React.createElement('div', { key: index, style: { height: dinamicSize(13) + 'rem', overflowY: 'scroll', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.3) 91%, rgba(0,0,0,0.3) 100%)', display: 'block', background: '#fff', padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
 
               React.createElement('p', { style: { transition: 'all 100ms ease-in-out', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625 } }, content )
 
