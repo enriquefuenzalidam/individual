@@ -75,7 +75,6 @@ const LayeredTabsArticulo: React.FC = () => {
       return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
     }, [xlScreen, lgScreen, mdScreen, smScreen])
   
-  // const shoulderHeight = useMemo(() => xlScreen ? 3 : lgScreen ? 2.75 : mdScreen ? 2.5 : smScreen ? 2.375 : 2.125, [xlScreen, lgScreen, mdScreen, smScreen] );
   const shoulderHeight = dinamicSize(2.125);
   const shoulderWidth = shoulderHeight * 0.7104;
 
