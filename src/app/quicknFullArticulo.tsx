@@ -120,7 +120,7 @@ const QuicknFullArticulo: React.FC = () => {
           React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'linear-gradient( to right, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to right, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)', pointerEvents: 'none' } }),
 
           React.createElement('p', { style: { ...pStyleB } },
-            'Componente conformado por una ', React.createElement('span', { style: {  ...pBold } }, 'galería de previsualización') , ' para cinco imágenes, más una ', React.createElement('span', { style: { ...pBold } }, 'galería principal') , ' para navegar a través de toda la lista de imágenes y verlas en formato completo. Tiene opciones personalizables y se adapta a las dimensiones del elemento contenedor.' ),
+            'Componente constituido por una ', React.createElement('span', { style: {  ...pBold } }, 'galería de previsualización') , ' para cinco imágenes, más una ', React.createElement('span', { style: { ...pBold } }, 'galería principal') , ' para navegar a través de toda la lista de imágenes y verlas en formato completo. Tiene opciones personalizables y se adapta a las dimensiones del elemento contenedor.' ),
 
           React.createElement('h4', { style: { ...h4BStyle } },
             'Navegación rápida:' ),

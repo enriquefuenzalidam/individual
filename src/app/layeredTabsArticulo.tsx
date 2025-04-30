@@ -99,7 +99,7 @@ const LayeredTabsArticulo: React.FC = () => {
   const zIndexMax = tabsTitleList.length + 10;
   const getZIndex = (index: number, currentTab: number, topZIndex: number) => topZIndex - Math.abs(index - currentTab);
 
-  const [topOrBottom, setTopOrBottom] = useState<boolean>(false);
+  const [topOrBottom, setTopOrBottom] = useState<boolean>(true);
 
   if (!screenReady) return null;
 
