@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useCallback, useState, useRef, useMemo } from 'react';
 import { ExampleImagesLists } from '@/components/quicknfull/exampleImagesLists';
 import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
 import QuicknfullPrev from '@/components/quicknfull/quicknfullPrev';
@@ -109,9 +109,13 @@ const QuicknFullArticulo: React.FC = () => {
     ...intrfzSelecc, fontWeight: dscNavg ? 600 : 400, color: dscNavg ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: dscNavg ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: dscNavg ? 'default' : 'pointer'
   })
 
+  const dinamicSize = useCallback((value: number) => {
+    return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
+  }, [xlScreen, lgScreen, mdScreen, smScreen])
+  
   if (!screenReady) return null;
 
-  return React.createElement('section', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'relative', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none', fontFamily: '"Pangea Trial", sans-serif' } },
+  return React.createElement('section', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'relative', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none', fontFamily: '"Pangea Trial", sans-serif', letterSpacing: dinamicSize(-0.008) + 'rem' } },
       React.createElement('div', { style: { display: 'block', margin: '0', boxSizing: 'border-box', position: 'relative', transition: 'all 300ms ease-in-out', padding: lgScreen ? '0 3rem 5rem 3rem' : mdScreen ? '0 2.1rem 3.5rem 2.1rem' : smScreen ? '0 1.75rem 3rem 1.75rem' : '0 0.5rem 1.8rem 0.5rem' }},
         React.createElement('h3', { style: { display: 'block', padding: '0', boxSizing: 'border-box', margin: lgScreen ? '0 1.4rem 1.3rem 1.4rem' : mdScreen ? '0 1.4rem 0.8rem 1.4rem' : smScreen ? '0 1.5rem 0.8rem 1.5rem' : '0 1.5rem 0.8rem 1.5rem', textAlign: 'left', transition: 'all 300ms ease-in-out', fontWeight: '600', color: 'rgba(50,66,89,1)', fontSize: lgScreen ? '2.2rem': mdScreen ? '2rem' : smScreen ? '1.7rem' : '1.5rem', lineHeight: lgScreen ? '1' : mdScreen ? '2.5rem' : smScreen ? '2.25rem' : '2rem' } },
           "Quick'n'Full"),
