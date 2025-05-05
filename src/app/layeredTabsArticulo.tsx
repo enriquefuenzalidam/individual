@@ -120,127 +120,27 @@ const LayeredTabsArticulo: React.FC = () => {
 
           React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto` } },
 
-            tabBarPosition === 0 && React.createElement('div', { style: { overflowY: 'hidden', display: 'block', padding: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)', height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', margin: '0 0 -' + dinamicSize(1.4164) + 'rem  0' } },
+            ( tabBarPosition === 2 || tabBarPosition === 3 ) && tabsContentList.map((content,index) => (currentTab === index && React.createElement('div', { key: index, style: { zIndex: 10, height: dinamicSize(13) + 'rem', overflowY: 'scroll', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)', display: 'block', background: 'white', padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
+              React.createElement('p', { style: { transition: 'all 150ms ease-in-out', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625 } }, content ) ) ) ),
 
-              React.createElement("div", { style: { zIndex: zIndexMax, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)", pointerEvents: 'none' } }),
+            React.createElement('div', { style: { overflowY: 'hidden', display: 'block', padding: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)', margin: tabBarPosition === 0 ? '0 0 -' + dinamicSize(1.4164) + 'rem  0' : tabBarPosition === 3 ? '-' + dinamicSize(1.4164) + 'rem 0 0 0' : '0' } },
 
-              React.createElement("div", { style: { display: 'block', padding: `0 ${dinamicSize(2.5)}rem ${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem`, margin: `0`, boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none' } },
-                tabsTitleList.map((titulo, index) => React.createElement('div', { key: index, onClick: () => setCurrentTab(index), style: { transform: `translateX(calc(-${shoulderWidth * index}rem))`, cursor: 'pointer', zIndex: getZIndex(index,currentTab,zIndexMax), filter: `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem ${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))`, display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%` } },
-                  React.createElement('div', { style: { transition: 'all 100ms ease-in-out', filter: `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem ${dinamicSize(0.1)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.35 : 0.2}))`, display: 'block', whiteSpace: 'nowrap', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%` } },
-                    React.createElement('div', { style: { transition: 'all 100ms ease-in-out', transform: "scale(1,-1)", display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder } }),
-                    React.createElement('div', { style: { transition: 'all 200ms ease-in-out', transform: 'translateX(-0.05rem)', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, maxWidth: '21rem', textAlign: 'center', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden' } },
-                      React.createElement('span', { style: { transition: 'all 200ms ease-in-out', display: 'inline-block', padding: `0 ${dinamicSize(0.25)}rem`, margin: '0', boxSizing: 'border-box', fontWeight: '600', fontSize: `${dinamicSize(1.125)}rem`, color: 'rgba(51,65,85,1)', opacity: currentTab === index ? 1 : 0.3,  } },
-                        titulo ) ),
-                    React.createElement('div', { style: { transition: 'all 200ms ease-in-out', transform: "translateX(-0.1rem) scale(-1,-1)", display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder } } ) ) ) ) )
+	            React.createElement("div", { style: { zIndex: zIndexMax, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", pointerEvents: 'none', backgroundImage: tabBarPosition === 0 || tabBarPosition === 2 ? "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)" : "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)" } } ),
 
-            ),
+	            React.createElement("div", { style: { transition: 'all 150ms ease-in-out', display: 'block', margin: `0`, boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none', padding: tabBarPosition === 0 || tabBarPosition === 2 ? `0 ${dinamicSize(2.5)}rem ${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem` : `${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem 0 ${dinamicSize(2.5)}rem` } },
+		            tabsTitleList.map((titulo, index) => React.createElement('div', { key: index, onClick: () => currentTab === index ? null : setCurrentTab(index), style: { transition: 'all 150ms ease-in-out', transform: `translateX(calc(-${shoulderWidth * index}rem))`, cursor: 'pointer', zIndex: getZIndex(index,currentTab,zIndexMax),  display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%`, filter: tabBarPosition === 0 || tabBarPosition === 2 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem ${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` : `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem -${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` } },
+			            React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'block', whiteSpace: 'nowrap', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%`, filter: tabBarPosition === 0 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem  ${dinamicSize(0.1)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.35 : 0.2}))` : tabBarPosition === 1 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem -${dinamicSize(0.05)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.3 : 0.15}))` : tabBarPosition === 2 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem  ${dinamicSize(0.1)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.35 : 0.2}))` : `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem -${dinamicSize(0.05)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.3 : 0.2} ) )` } },
+				            React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder, transform: tabBarPosition === 0 || tabBarPosition === 2 ? "scale(1,-1)" : "none" } } ),
+				            React.createElement('div', { style: { transition: 'all 150ms ease-in-out', transform: 'translateX(-0.05rem)', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, maxWidth: '21rem', textAlign: 'center', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden' } },
+					            React.createElement('span', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', padding: `0 ${dinamicSize(0.25)}rem`, margin: '0', boxSizing: 'border-box', fontWeight: '600', fontSize: `${dinamicSize(1.125)}rem`, color: 'rgba(51,65,85,1)', opacity: currentTab === index ? 1 : 0.3,  } },
+						            titulo ) ),
+				            React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder, transform: tabBarPosition === 0 || tabBarPosition === 2 ? "translateX(-0.1rem) scale(-1,-1)" : "translateX(-0.1rem) scaleX(-1)" } } ) ) ) ) ) ),
 
-            tabBarPosition === 1 && React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', /*  maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)'  */ } },
-
-              React.createElement("div", { style: { zIndex: zIndexMax, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)" , pointerEvents: 'none' } }),
-
-              React.createElement("div", { style: { background: 'transparent', display: 'block', padding: `${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem 0 ${dinamicSize(2.5)}rem`, margin: `0`, boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none' } },
-                tabsTitleList.map((titulo, index) => React.createElement('div', { key: index, onClick: () => setCurrentTab(index), style: { transform: `translateX(calc(-${shoulderWidth * index}rem))`, cursor: 'pointer', zIndex: getZIndex(index,currentTab,zIndexMax), filter: `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem -${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))`, display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%` } },
-                  React.createElement('div', { style: { transition: 'all 100ms ease-in-out', filter: `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem -${dinamicSize(0.05)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.3 : 0.15}))`, display: 'block', whiteSpace: 'nowrap', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%` } },
-                    React.createElement('div', { style: { transition: 'all 100ms ease-in-out', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder } }),
-                    React.createElement('div', { style: { transition: 'all 200ms ease-in-out', transform: 'translateX(-0.05rem)', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, maxWidth: '21rem', textAlign: 'center', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden' } },
-                      React.createElement('span', { style: { transition: 'all 200ms ease-in-out', display: 'inline-block', padding: `0 ${dinamicSize(0.25)}rem`, margin: '0', boxSizing: 'border-box', fontWeight: '600', fontSize: `${dinamicSize(1.125)}rem`, color: 'rgba(51,65,85,1)', opacity: currentTab === index ? 1 : 0.3,  } },
-                        titulo) ),
-                    React.createElement('div', { style: { transition: 'all 200ms ease-in-out',transform: "translateX(-0.1rem) scaleX(-1)", display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder } } ) ) ) ),
-              )
-            ),
-/**/
-            tabsContentList.map((content,index) => (currentTab === index && React.createElement('div', { key: index, style: { zIndex: 10, height: dinamicSize(13) + 'rem', overflowY: 'scroll', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)', display: 'block', background: 'white', padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
-
-              React.createElement('p', { style: { transition: 'all 100ms ease-in-out', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625 } }, content )
-
-            ) ) ),
-/*
-*/
-            tabBarPosition === 2 && React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)' } },
-
-              React.createElement("div", { style: { zIndex: zIndexMax, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)", pointerEvents: 'none' } }),
-
-              React.createElement("div", { style: { display: 'block', padding: `0 ${dinamicSize(2.5)}rem ${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem`, margin: `0`, boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none' } },
-                tabsTitleList.map((titulo, index) => React.createElement('div', { key: index, onClick: () => setCurrentTab(index), style: { transform: `translateX(calc(-${shoulderWidth * index}rem))`, cursor: 'pointer', zIndex: getZIndex(index,currentTab,zIndexMax), filter: `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem ${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))`, display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%` } },
-                  React.createElement('div', { style: { transition: 'all 100ms ease-in-out', filter: `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem ${dinamicSize(0.1)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.35 : 0.2}))`, display: 'block', whiteSpace: 'nowrap', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%` } },
-                    React.createElement('div', { style: { transition: 'all 100ms ease-in-out', transform: "scale(1,-1)", display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder } }),
-                    React.createElement('div', { style: { transition: 'all 200ms ease-in-out', transform: 'translateX(-0.05rem)', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, maxWidth: '21rem', textAlign: 'center', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden' } },
-                      React.createElement('span', { style: { transition: 'all 200ms ease-in-out', display: 'inline-block', padding: `0 ${dinamicSize(0.25)}rem`, margin: '0', boxSizing: 'border-box', fontWeight: '600', fontSize: `${dinamicSize(1.125)}rem`, color: 'rgba(51,65,85,1)', opacity: currentTab === index ? 1 : 0.3,  } },
-                        titulo) ),
-                    React.createElement('div', { style: { transition: 'all 200ms ease-in-out', transform: "translateX(-0.1rem) scale(-1,-1)", display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder } } ) ) ) ),
-              )
-            ),
-
-            tabBarPosition === 3 && React.createElement('div', { style: { overflowY: 'hidden', display: 'block', padding: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)', height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', margin: '-' + dinamicSize(1.4164) + 'rem 0 0 0' } },
-
-              React.createElement("div", { style: { zIndex: zIndexMax, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)", pointerEvents: 'none' } }),
-
-              React.createElement("div", { style: { display: 'block', margin: `0`, boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none', padding: `${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem 0 ${dinamicSize(2.5)}rem` } },
-                tabsTitleList.map((titulo, index) => React.createElement('div', { key: index, onClick: () => currentTab === index ? null : setCurrentTab(index), style: { transform: `translateX(calc(-${shoulderWidth * index}rem))`, cursor: 'pointer', zIndex: getZIndex(index,currentTab,zIndexMax), display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%`, filter: `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem -${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` } },
-                  React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'block', whiteSpace: 'nowrap', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%`, filter: `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem -${dinamicSize(0.05)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.3 : 0.2}))` } },
-                    React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder } }),
-                    React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, maxWidth: '21rem', textAlign: 'center', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden', transform: 'translateX(-0.05rem)' } },
-                      React.createElement('span', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', padding: `0 ${dinamicSize(0.25)}rem`, margin: '0', boxSizing: 'border-box', fontWeight: '600', fontSize: `${dinamicSize(1.125)}rem`, color: 'rgba(51,65,85,1)', opacity: currentTab === index ? 1 : 0.3,  } },
-                        titulo) ),
-                    React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder, transform: "translateX(-0.1rem) scaleX(-1)" } } ) ) ) ),
-              )
-            )
+            ( tabBarPosition === 0 || tabBarPosition === 1 ) && tabsContentList.map((content,index) => (currentTab === index && React.createElement('div', { key: index, style: { zIndex: 10, height: dinamicSize(13) + 'rem', overflowY: 'scroll', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)', display: 'block', background: 'white', padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
+              React.createElement('p', { style: { transition: 'all 150ms ease-in-out', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625 } }, content ) ) ) ),
 
           ),
-/*
 
-const tabBarStyleA: React.CSSProperties = useMemo(() => {
- overflowY: 'hidden', display: 'block', padding: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)', height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem',
-} ,[dinamicSize]);
-
-const tabBarStyleB: React.CSSProperties = useMemo(() => {
-  zIndex: zIndexMax, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)", pointerEvents: 'none',
-}, [zIndexMax]);
-
-const tabBarStyleC: React.CSSProperties = useMemo(() => {
-  display: 'block', margin: `0`, boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none'
-}, []);
-
-const tabBarStyleD: React.CSSProperties = useMemo(() => {
-  transform: `cursor: 'pointer', display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%`, 
-}, [shoulderWidth]);
-
-const tabBarStyleE: React.CSSProperties = useMemo(() => {
-  transition: 'all 150ms ease-in-out', display: 'block', whiteSpace: 'nowrap', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%`,
-}, []);
-
-const tabBarStyleF: React.CSSProperties = useMemo(() => {
-  transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder,
-}, [tabShoulder]);
-
-const tabBarStyleG: React.CSSProperties = useMemo(() => {
-transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, maxWidth: '21rem', textAlign: 'center', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden', transform: 'translateX(-0.05rem)',
-}, []);
-
-const tabBarStyleH: React.CSSProperties = useMemo(() => {
-transition: 'all 150ms ease-in-out', display: 'inline-block', padding: `0 ${dinamicSize(0.25)}rem`, margin: '0', boxSizing: 'border-box', fontWeight: '600', fontSize: `${dinamicSize(1.125)}rem`, color: 'rgba(51,65,85,1)', opacity: currentTab === index ? 1 : 0.3,
-}, [dinamicSize]);
-
-const tabBarStyleI: React.CSSProperties = useMemo(() => {
-transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder,
-}, [tabShoulder]);
-
-React.createElement('div', { style: { ...tabBarStyleA, margin: '-' + dinamicSize(1.4164) + 'rem 0 0 0' } },
-
-            React.createElement("div", { style: { ...tabBarStyleB } }),
-
-            React.createElement("div", { style: { ...tabBarStyleC, padding: `${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem 0 ${dinamicSize(2.5)}rem` } },
-              tabsTitleList.map((titulo, index) => React.createElement('div', { key: index, onClick: () => currentTab === index ? null : setCurrentTab(index), style: { ...tabBarStyleD, translateX(calc(-${shoulderWidth * index}rem))`, zIndex: getZIndex(index,currentTab,zIndexMax), filter: `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem -${dinamicSize(0.3)}rem ${dinamicSize(0.5)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.04}))` } },
-                React.createElement('div', { style: { ...tabBarStyleE, filter: `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem -${dinamicSize(0.02)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.5 : 0.15}))` } },
-                  React.createElement('div', { style: { ...tabBarStyleF } }),
-                  React.createElement('div', { style: { ...tabBarStyleG } },
-                    React.createElement('span', { style: { ...tabBarStyleH  } },
-                      titulo) ),
-                  React.createElement('div', { style: { ...tabBarStyleI, transform: "translateX(-0.1rem) scaleX(-1)" } } ) ) ) ),
-            )
-          ),
-*/
           React.createElement('div', { style: { zIndex: 200, display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: 0, boxShadow: 'inset 0 0.1rem 0.6rem rgba(0, 0, 0, 0.15)', pointerEvents: 'none' } } )
         
         ),
