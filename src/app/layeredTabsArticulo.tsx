@@ -77,6 +77,10 @@ const LayeredTabsArticulo: React.FC = () => {
     ...intrfzSelecc, fontWeight: state === tabBarPosition ? 600 : 400, color: state === tabBarPosition ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: state === tabBarPosition ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: state === tabBarPosition ? 'default' : 'pointer',
     });
 
+    const maxSizeStyle = (label: string): React.CSSProperties => ({
+      ...intrfzSelecc, fontWeight: label === maxSize ? 600 : 400, color: label === maxSize ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === maxSize ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === maxSize ? 'default' : 'pointer',
+      });
+  
     const tabsTitleList = [ 'Lorem Ipsum', 'Proin Vitae', 'Maecenas Lorem Sapien', 'Pellentesque Habitant', 'In At Aliquam Orci', 'Quisque Luctus', 'Vestibulum Hendrerit' ];
     const tabsContentList = [ 
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus scelerisque, odio ac consectetur tincidunt, nisi eros ornare nisl, varius consequat justo eros a purus. Sed quis pellentesque augue. Nulla scelerisque porttitor pulvinar. Pellentesque commodo, sem in pretium iaculis, nulla ex auctor elit, in accumsan nisi ante sed diam. Pellentesque semper cursus augue vitae suscipit. Suspendisse pulvinar leo diam, ultricies accumsan nibh molestie quis. Nulla eget efficitur nunc. Nullam iaculis a augue et finibus. Nunc tempor, nibh at interdum egestas, ligula massa vestibulum enim, quis facilisis arcu urna viverra justo. Curabitur cursus euismod sagittis. Aenean quis sapien lacus. Donec pellentesque ipsum turpis, sed ornare magna tincidunt ac. Sed sit amet nisl condimentum, mollis risus ac, molestie elit. Donec blandit, dui id mollis ullamcorper, ligula massa scelerisque diam, eget lobortis velit ante eget ipsum. Sed consectetur nunc nibh.',
@@ -87,9 +91,14 @@ const LayeredTabsArticulo: React.FC = () => {
       'Quisque luctus ac nulla feugiat egestas. Donec non felis sed enim aliquet gravida. Nam rhoncus sapien quis lacus bibendum sagittis. Sed ligula risus, porta sed venenatis et, interdum id sem. Proin viverra at eros non convallis. Nulla finibus mollis enim, in placerat lacus facilisis eget. Maecenas placerat elementum lectus, ultrices tristique justo cursus elementum. Donec dolor risus, accumsan ac nunc eu, volutpat feugiat libero. Ut id augue nisi. Pellentesque at felis non massa interdum rhoncus. Morbi consectetur blandit tincidunt. Curabitur a odio gravida, consectetur metus vitae, sagittis diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer non pulvinar nisl.',
       'Vestibulum hendrerit metus sit amet maximus euismod. Sed nec elementum nisi, non lobortis tellus. Curabitur odio felis, commodo hendrerit dui ut, ultrices pretium odio. Nunc congue et nisl et facilisis. Etiam porta erat purus, nec cursus felis elementum a. Cras eu arcu commodo, lobortis nulla quis, porttitor ligula. Duis nec odio elit. Aenean sed viverra lorem, vitae mattis est. Donec fringilla sollicitudin nulla, sed fermentum elit sollicitudin sed. Sed ut ligula in urna lobortis lacinia. Phasellus nisl velit, euismod quis lorem at, aliquet tristique urna. Proin at pellentesque enim, ac finibus elit.' ]
   
+    const [maxSize, setMaxSize] = useState("xl");
     const dinamicSize = useCallback((value: number) => {
-      return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
-    }, [xlScreen, lgScreen, mdScreen, smScreen])
+      if (maxSize === "xl") return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
+      else if (maxSize === "lg") return xlScreen || lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
+      else if (maxSize === "md") return xlScreen || lgScreen || mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
+      else if (maxSize === "sm") return xlScreen || lgScreen || mdScreen || smScreen ? value * 1.1176 : value;
+      else return value;
+    }, [maxSize, xlScreen, lgScreen, mdScreen, smScreen])
   
   const shoulderHeight = dinamicSize(2.125);
   const shoulderWidth = shoulderHeight * 0.7104;
@@ -157,6 +166,15 @@ const LayeredTabsArticulo: React.FC = () => {
                 { label: "Superior", state: 1 },
                 { label: "Inferior", state: 2 },
                 { label: "Abajo", state: 3 } ].map(({ label, state }, index) => React.createElement( 'span', { key: index, onClick: () => state !== tabBarPosition ? setTabBarPosition(state) : null, style: { ...tabBarPositionStyle(state) } }, label ) ) ),
+
+          React.createElement('h5', { style: { ...h5Style } },
+            'Tamaño máximo (', React.createElement('span', { style: { fontStyle: 'oblique', opacity: 0.7 } }, 'por el momento, en relación al ancho de la ventana del browser'), ')' ),
+          React.createElement('p', { style: { ...pStyleC } },
+              [ { label: "xl" },
+                { label: "lg" },
+                { label: "md" },
+                { label: "sm" },
+                { label: "xs" } ].map(({ label }, index) => React.createElement( 'span', { key: index, onClick: () => label !== maxSize ? setMaxSize(label) : null, style: { ...maxSizeStyle(label) } }, label ) ) ),
 
       )
     )
