@@ -21,5 +21,5 @@ const Footer: React.FC = () => {
         React.createElement('p', { style: { boxSizing: 'border-box', position: 'relative', margin: xlScreen || lgScreen ? '0.47rem 0 0 0' : mdScreen ? '0.42rem 0 0 0' : smScreen ? '0.34rem 0 0 0' : '0.24rem 0 0 0' } },
             '© 2025 individual.cl. Distribuido bajo ',
             React.createElement(Link, { style: { position: 'relative', fontWeight: '700' }, href: '/license.txt'} , 'Licencia MIT'),
-            '. Contribuciones ', React.createElement(Link, { href: "https://paypal.me/enriquefuenzalidacl", style: { display: 'inline-block', position: 'relative', boxSizing: 'border-box', height: 'auto', width: xlScreen || lgScreen ? '5rem' : mdScreen ? '4.5rem' : smScreen ? '4rem' : '3rem', verticalAlign: 'bottom' } }, React.createElement(PayPalLogo, null ) ) ) ) }
+            '. Contribuciones ', React.createElement(Link, { href: "https://paypal.me/enriquefuenzalidacl", style: { display: 'inline-block', position: 'relative', boxSizing: 'border-box', height: 'auto', width: xlScreen || lgScreen ? '5rem' : mdScreen ? '4.5rem' : smScreen ? '4rem' : '3.5rem', verticalAlign: 'bottom' } }, React.createElement(PayPalLogo, null ) ) ) ) }
 export default Footer;

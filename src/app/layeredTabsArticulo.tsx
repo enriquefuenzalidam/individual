@@ -81,6 +81,18 @@ const LayeredTabsArticulo: React.FC = () => {
       ...intrfzSelecc, fontWeight: label === maxSize ? 600 : 400, color: label === maxSize ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === maxSize ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === maxSize ? 'default' : 'pointer',
       });
   
+    const fondoClr = (colorValue: string): React.CSSProperties => ({
+      ...intrfzSelecc, fontWeight: fondoColor === colorValue ? 500 : 400, color: fondoColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: fondoColor === colorValue ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)', cursor: fondoColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
+  
+    const pstgnClr = (colorValue: string): React.CSSProperties => ({
+      ...intrfzSelecc, fontWeight: ptgnBarColor === colorValue ? 500 : 400, color: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)', cursor: ptgnBarColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
+  
+    const selccPgnClr = (colorValue: string): React.CSSProperties => ({
+      ...intrfzSelecc, fontWeight: slcPptgnColor === colorValue ? 500 : 400, color: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)', cursor: slcPptgnColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
+  
+    const fondoBarClr = (colorValue: string): React.CSSProperties => ({
+      ...intrfzSelecc, fontWeight: fondoBarColor === colorValue ? 500 : 400, color: fondoBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: fondoBarColor === colorValue ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)', cursor: fondoBarColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
+  
     const tabsTitleList = [ 'Lorem Ipsum', 'Proin Vitae', 'Maecenas Lorem Sapien', 'Pellentesque Habitant', 'In At Aliquam Orci', 'Quisque Luctus', 'Vestibulum Hendrerit' ];
     const tabsContentList = [ 
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus scelerisque, odio ac consectetur tincidunt, nisi eros ornare nisl, varius consequat justo eros a purus. Sed quis pellentesque augue. Nulla scelerisque porttitor pulvinar. Pellentesque commodo, sem in pretium iaculis, nulla ex auctor elit, in accumsan nisi ante sed diam. Pellentesque semper cursus augue vitae suscipit. Suspendisse pulvinar leo diam, ultricies accumsan nibh molestie quis. Nulla eget efficitur nunc. Nullam iaculis a augue et finibus. Nunc tempor, nibh at interdum egestas, ligula massa vestibulum enim, quis facilisis arcu urna viverra justo. Curabitur cursus euismod sagittis. Aenean quis sapien lacus. Donec pellentesque ipsum turpis, sed ornare magna tincidunt ac. Sed sit amet nisl condimentum, mollis risus ac, molestie elit. Donec blandit, dui id mollis ullamcorper, ligula massa scelerisque diam, eget lobortis velit ante eget ipsum. Sed consectetur nunc nibh.',
@@ -105,6 +117,11 @@ const LayeredTabsArticulo: React.FC = () => {
 
   const [currentTab, setCurrentTab] = useState(0);
 
+  const [fondoBarColor, setFondoBarColor] = useState("FFFFFF");
+  const [ptgnBarColor, setPtgnBarColor] = useState("FFFFFF");
+  const [fondoColor, setFondoColor] = useState("FFFFFF");
+  const [slcPptgnColor, setSlcPptgnColor] = useState("FFFFFF");
+
   const zIndexMax = tabsTitleList.length + 10;
   const getZIndex = (index: number, currentTab: number, topZIndex: number) => topZIndex - Math.abs(index - currentTab);
 
@@ -121,31 +138,31 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'linear-gradient( to right, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to right, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)', pointerEvents: 'none' } }),
 
         React.createElement('p', { style: { ...pStyleB } },
-          'Presentar contenido en capas facilita la navegación y en algunos casos se vuelve imprescindible. Organizar textos, documentos y/o contenido web con ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' es simple y proporciona formatos distintos. En desarrollo.'),
+          'Presentar contenido en capas navegables a través de pestañas, es una forma tradicional de ordenamiento en páginas y sitios webs. ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' procura hacer muy simple la implementación de esta forma de organizar contenido web, junto con proporcionar formatos distintos y apariencia personalizable. En desarrollo.'),
 
 // LayeredTabs
 
-        React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto`, background: '#fff' } },
+        React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto`, background: '#' + fondoColor} },
 
           React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto` } },
 
-            ( tabBarPosition === 2 || tabBarPosition === 3 ) && tabsContentList.map((content,index) => (currentTab === index && React.createElement('div', { key: index, style: { zIndex: 10, height: dinamicSize(13) + 'rem', overflowY: 'scroll', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)', display: 'block', background: 'white', padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
+            ( tabBarPosition === 2 || tabBarPosition === 3 ) && tabsContentList.map((content,index) => (currentTab === index && React.createElement('div', { key: index, style: { zIndex: 10, height: dinamicSize(13) + 'rem', overflowY: 'scroll', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)', display: 'block', background: '#' + fondoColor, padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
               React.createElement('p', { style: { transition: 'all 150ms ease-in-out', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625 } }, content ) ) ) ),
 
-            React.createElement('div', { style: { overflowY: 'hidden', display: 'block', padding: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)', margin: tabBarPosition === 0 ? '0 0 -' + dinamicSize(1.4164) + 'rem  0' : tabBarPosition === 3 ? '-' + dinamicSize(1.4164) + 'rem 0 0 0' : '0' } },
+            React.createElement('div', { style: { overflowY: 'hidden', display: 'block', padding: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', /* maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)' */ margin: tabBarPosition === 0 ? '0 0 -' + dinamicSize(1.4164) + 'rem  0' : tabBarPosition === 3 ? '-' + dinamicSize(1.4164) + 'rem 0 0 0' : '0' } },
 
 	            React.createElement("div", { style: { zIndex: zIndexMax, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", pointerEvents: 'none', backgroundImage: tabBarPosition === 0 || tabBarPosition === 2 ? "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)" : "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)" } } ),
 
-	            React.createElement("div", { style: { transition: 'all 150ms ease-in-out', display: 'block', margin: `0`, boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none', padding: tabBarPosition === 0 || tabBarPosition === 2 ? `0 ${dinamicSize(2.5)}rem ${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem` : `${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem 0 ${dinamicSize(2.5)}rem` } },
+	            React.createElement("div", { style: { transition: 'all 150ms ease-in-out', display: 'block', margin: `0`, boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none', padding: tabBarPosition === 0 || tabBarPosition === 2 ? `0 ${dinamicSize(2.5)}rem ${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem` : `${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem 0 ${dinamicSize(2.5)}rem`, background: '#' + fondoBarColor } },
 		            tabsTitleList.map((titulo, index) => React.createElement('div', { key: index, onClick: () => currentTab === index ? null : setCurrentTab(index), style: { transition: 'all 150ms ease-in-out', transform: `translateX(calc(-${shoulderWidth * index}rem))`, cursor: currentTab === index ? 'default' : 'pointer', zIndex: getZIndex(index,currentTab,zIndexMax),  display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%`, filter: tabBarPosition === 0 || tabBarPosition === 2 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem ${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` : `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem -${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` } },
 			            React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'block', whiteSpace: 'nowrap', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%`, filter: tabBarPosition === 0 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem  ${dinamicSize(0.1)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.35 : 0.2}))` : tabBarPosition === 1 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem -${dinamicSize(0.05)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.3 : 0.15}))` : tabBarPosition === 2 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem  ${dinamicSize(0.1)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.35 : 0.2}))` : `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem -${dinamicSize(0.05)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.3 : 0.2} ) )` } },
-				            React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder, transform: tabBarPosition === 0 || tabBarPosition === 2 ? "scale(1,-1)" : "none" } } ),
-				            React.createElement('div', { style: { transition: 'all 150ms ease-in-out', transform: 'translateX(-0.05rem)', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, maxWidth: '21rem', textAlign: 'center', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden' } },
+				            React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#' + (currentTab === index ? slcPptgnColor : ptgnBarColor), padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder, transform: tabBarPosition === 0 || tabBarPosition === 2 ? "scale(1,-1)" : "none" } } ),
+				            React.createElement('div', { style: { transition: 'all 150ms ease-in-out', transform: 'translateX(-0.05rem)', display: 'inline-block', background: '#' + (currentTab === index ? slcPptgnColor : ptgnBarColor), padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, maxWidth: '21rem', textAlign: 'center', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden' } },
 					            React.createElement('span', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', padding: `0 ${dinamicSize(0.25)}rem`, margin: '0', boxSizing: 'border-box', fontWeight: '600', fontSize: `${dinamicSize(1.125)}rem`, color: 'rgba(51,65,85,1)', opacity: currentTab === index ? 1 : 0.3,  } },
 						            titulo ) ),
-				            React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#fff', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder, transform: tabBarPosition === 0 || tabBarPosition === 2 ? "translateX(-0.1rem) scale(-1,-1)" : "translateX(-0.1rem) scaleX(-1)" } } ) ) ) ) ) ),
+				            React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', background: '#' + (currentTab === index ? slcPptgnColor : ptgnBarColor), padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder, transform: tabBarPosition === 0 || tabBarPosition === 2 ? "translateX(-0.1rem) scale(-1,-1)" : "translateX(-0.1rem) scaleX(-1)" } } ) ) ) ) ) ),
 
-            ( tabBarPosition === 0 || tabBarPosition === 1 ) && tabsContentList.map((content,index) => (currentTab === index && React.createElement('div', { key: index, style: { transition: 'all 150ms ease-in-out', zIndex: 10, height: dinamicSize(13) + 'rem', overflowY: 'scroll', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)', display: 'block', background: 'white', padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
+            ( tabBarPosition === 0 || tabBarPosition === 1 ) && tabsContentList.map((content,index) => (currentTab === index && React.createElement('div', { key: index, style: { transition: 'all 150ms ease-in-out', zIndex: 10, height: dinamicSize(13) + 'rem', overflowY: 'scroll', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)', display: 'block', background: '#' + fondoColor, padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
               React.createElement('p', { style: { transition: 'all 150ms ease-in-out', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625 } }, content ) ) ) ),
 
           ),
@@ -154,8 +171,10 @@ const LayeredTabsArticulo: React.FC = () => {
         
         ),
 
+// LayeredTabs
+
           React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
-            `Opciones personalizables` ),
+            `Apariencia personalizable` ),
           React.createElement('p', { style: { ...pStyleB } },
             'En esta interfaz se pueden conocer las opciones personalizables que dispone el componente.'),
 
@@ -175,6 +194,46 @@ const LayeredTabsArticulo: React.FC = () => {
                 { label: "md" },
                 { label: "sm" },
                 { label: "xs" } ].map(({ label }, index) => React.createElement( 'span', { key: index, onClick: () => label !== maxSize ? setMaxSize(label) : null, style: { ...maxSizeStyle(label) } }, label ) ) ),
+
+          React.createElement('h5', { style: { ...h5Style } },
+            'Color de la pestaña seleccionada' ),
+          React.createElement('p', { style: { ...pStyleC } },
+              [ { label: "White", hexCode: "FFFFFF" },
+                { label: "Floral", hexCode: "FDF9F0" },
+                { label: "Isabelline", hexCode: "F8F0EC" },
+                { label: "Lavender", hexCode: "E5E4F4" },
+                { label: "Azureish", hexCode: "D9E4FB" },
+                { label: "Alabaster", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== slcPptgnColor ? setSlcPptgnColor(hexCode) : null, style: { ...selccPgnClr(hexCode) } }, label ) ) ),
+
+          React.createElement('h5', { style: { ...h5Style } },
+            'Color de las pestañas no seleccionadas' ),
+          React.createElement('p', { style: { ...pStyleC } },
+            [ { label: "White", hexCode: "FFFFFF" },
+              { label: "Floral", hexCode: "FDF9F0" },
+              { label: "Isabelline", hexCode: "F8F0EC" },
+              { label: "Lavender", hexCode: "E5E4F4" },
+              { label: "Azureish", hexCode: "D9E4FB" },
+              { label: "Alabaster", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== ptgnBarColor ? setPtgnBarColor(hexCode) : null, style: { ...pstgnClr(hexCode) } }, label ) ) ),
+
+          React.createElement('h5', { style: { ...h5Style } },
+            'Color del fondo de la barra de pestañas' ),
+          React.createElement('p', { style: { ...pStyleC } },
+            [ { label: "White", hexCode: "FFFFFF" },
+              { label: "Floral", hexCode: "FDF9F0" },
+              { label: "Isabelline", hexCode: "F8F0EC" },
+              { label: "Lavender", hexCode: "E5E4F4" },
+              { label: "Azureish", hexCode: "D9E4FB" },
+              { label: "Alabaster", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== fondoBarColor ? setFondoBarColor(hexCode) : null, style: { ...fondoBarClr(hexCode) } }, label ) ) ),
+
+          React.createElement('h5', { style: { ...h5Style } },
+            'Color del contenido de las capas' ),
+          React.createElement('p', { style: { ...pStyleC } },
+            [ { label: "White", hexCode: "FFFFFF" },
+              { label: "Floral", hexCode: "FDF9F0" },
+              { label: "Isabelline", hexCode: "F8F0EC" },
+              { label: "Lavender", hexCode: "E5E4F4" },
+              { label: "Azureish", hexCode: "D9E4FB" },
+              { label: "Alabaster", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== fondoColor ? setFondoColor(hexCode) : null, style: { ...fondoClr(hexCode) } }, label ) ) ),
 
       )
     )
