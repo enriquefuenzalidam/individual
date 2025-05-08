@@ -82,16 +82,16 @@ const LayeredTabsArticulo: React.FC = () => {
       });
   
     const fondoClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, fontWeight: fondoColor === colorValue ? 500 : 400, color: fondoColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: fondoColor === colorValue ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)', cursor: fondoColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
+      ...intrfzSelecc, fontWeight: fondoColor === colorValue ? 500 : 400, color: fondoColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: fondoColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
   
     const pstgnClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, fontWeight: ptgnBarColor === colorValue ? 500 : 400, color: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)', cursor: ptgnBarColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
+      ...intrfzSelecc, fontWeight: ptgnBarColor === colorValue ? 500 : 400, color: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: ptgnBarColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
   
     const selccPgnClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, fontWeight: slcPptgnColor === colorValue ? 500 : 400, color: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)', cursor: slcPptgnColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
+      ...intrfzSelecc, fontWeight: slcPptgnColor === colorValue ? 500 : 400, color: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: slcPptgnColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
   
     const fondoBarClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, fontWeight: fondoBarColor === colorValue ? 500 : 400, color: fondoBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: fondoBarColor === colorValue ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)', cursor: fondoBarColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
+      ...intrfzSelecc, fontWeight: fondoBarColor === colorValue ? 500 : 400, color: fondoBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.5)', borderColor: fondoBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoBarColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
   
     const tabsTitleList = [ 'Lorem Ipsum', 'Proin Vitae', 'Maecenas Lorem Sapien', 'Pellentesque Habitant', 'In At Aliquam Orci', 'Quisque Luctus', 'Vestibulum Hendrerit' ];
     const tabsContentList = [ 
@@ -198,42 +198,46 @@ const LayeredTabsArticulo: React.FC = () => {
           React.createElement('h5', { style: { ...h5Style } },
             'Color de la pestaña seleccionada' ),
           React.createElement('p', { style: { ...pStyleC } },
-              [ { label: "White", hexCode: "FFFFFF" },
-                { label: "Floral", hexCode: "FDF9F0" },
-                { label: "Isabelline", hexCode: "F8F0EC" },
-                { label: "Lavender", hexCode: "E5E4F4" },
-                { label: "Azureish", hexCode: "D9E4FB" },
-                { label: "Alabaster", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== slcPptgnColor ? setSlcPptgnColor(hexCode) : null, style: { ...selccPgnClr(hexCode) } }, label ) ) ),
+            [ { label: "White", hexCode: "FFFFFF" },
+              { label: "Alice Blue", hexCode: "EDF8FF" },
+              { label: "Azureish", hexCode: "D9E4FB" },
+              { label: "Lavender", hexCode: "E5E4F4" },
+              { label: "Isabelline", hexCode: "F8F0EC" },
+              { label: "Floral", hexCode: "FDF9F0" },
+              { label: "Peridot", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== slcPptgnColor ? setSlcPptgnColor(hexCode) : null, style: { ...selccPgnClr(hexCode) } }, label ) ) ),
 
           React.createElement('h5', { style: { ...h5Style } },
             'Color de las pestañas no seleccionadas' ),
           React.createElement('p', { style: { ...pStyleC } },
             [ { label: "White", hexCode: "FFFFFF" },
-              { label: "Floral", hexCode: "FDF9F0" },
-              { label: "Isabelline", hexCode: "F8F0EC" },
-              { label: "Lavender", hexCode: "E5E4F4" },
+              { label: "Alice Blue", hexCode: "EDF8FF" },
               { label: "Azureish", hexCode: "D9E4FB" },
-              { label: "Alabaster", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== ptgnBarColor ? setPtgnBarColor(hexCode) : null, style: { ...pstgnClr(hexCode) } }, label ) ) ),
+              { label: "Lavender", hexCode: "E5E4F4" },
+              { label: "Isabelline", hexCode: "F8F0EC" },
+              { label: "Floral", hexCode: "FDF9F0" },
+              { label: "Peridot", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== ptgnBarColor ? setPtgnBarColor(hexCode) : null, style: { ...pstgnClr(hexCode) } }, label ) ) ),
 
           React.createElement('h5', { style: { ...h5Style } },
             'Color del fondo de la barra de pestañas' ),
           React.createElement('p', { style: { ...pStyleC } },
             [ { label: "White", hexCode: "FFFFFF" },
-              { label: "Floral", hexCode: "FDF9F0" },
-              { label: "Isabelline", hexCode: "F8F0EC" },
-              { label: "Lavender", hexCode: "E5E4F4" },
+              { label: "Alice Blue", hexCode: "EDF8FF" },
               { label: "Azureish", hexCode: "D9E4FB" },
-              { label: "Alabaster", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== fondoBarColor ? setFondoBarColor(hexCode) : null, style: { ...fondoBarClr(hexCode) } }, label ) ) ),
+              { label: "Lavender", hexCode: "E5E4F4" },
+              { label: "Isabelline", hexCode: "F8F0EC" },
+              { label: "Floral", hexCode: "FDF9F0" },
+              { label: "Peridot", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== fondoBarColor ? setFondoBarColor(hexCode) : null, style: { ...fondoBarClr(hexCode) } }, label ) ) ),
 
           React.createElement('h5', { style: { ...h5Style } },
             'Color del contenido de las capas' ),
           React.createElement('p', { style: { ...pStyleC } },
             [ { label: "White", hexCode: "FFFFFF" },
-              { label: "Floral", hexCode: "FDF9F0" },
-              { label: "Isabelline", hexCode: "F8F0EC" },
-              { label: "Lavender", hexCode: "E5E4F4" },
+              { label: "Alice Blue", hexCode: "EDF8FF" },
               { label: "Azureish", hexCode: "D9E4FB" },
-              { label: "Alabaster", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== fondoColor ? setFondoColor(hexCode) : null, style: { ...fondoClr(hexCode) } }, label ) ) ),
+              { label: "Lavender", hexCode: "E5E4F4" },
+              { label: "Isabelline", hexCode: "F8F0EC" },
+              { label: "Floral", hexCode: "FDF9F0" },
+              { label: "Peridot", hexCode: "E8F1DE" } ].map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== fondoColor ? setFondoColor(hexCode) : null, style: { ...fondoClr(hexCode) } }, label ) ) ),
 
       )
     )
