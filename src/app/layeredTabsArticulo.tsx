@@ -219,7 +219,7 @@ const LayeredTabsArticulo: React.FC = () => {
             bgExampleColors.map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== fondoBarColor ? setFondoBarColor(hexCode) : null, style: { ...fondoBarClr(hexCode) } }, label ) ) ),
 
           React.createElement('h5', { style: { ...h5Style } },
-            'Color del contenido de las capas' ),
+            'Color de la capa de contenido' ),
           React.createElement('p', { style: { ...pStyleC } },
             bgExampleColors.map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== fondoColor ? setFondoColor(hexCode) : null, style: { ...fondoClr(hexCode) } }, label ) ) ),
 
