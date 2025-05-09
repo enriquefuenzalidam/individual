@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import React from "react";
 import "./globals.css";
-import ogImage from '@/assets/icons/individualcl_ogimage.jpg';
-import individualIcon230 from '@/assets/icons/individualcl_icon_230x230.jpg';
-import individualIcon85 from '@/assets/icons/individualcl_icon_85x85.jpg';
-import individualIcon32 from '@/assets/icons/individualcl_icon_32x32.jpg';
-import individualIcon34 from '@/assets/icons/individualcl_icon_34x34.jpg';
-import individualIcon16 from '@/assets/icons/individualcl_icon_16x16.jpg';
+import ogImage from '@/assets/icons/individual_cl_1920x1080.jpg';
+import individualIcon230 from '@/assets/icons/individualcl_icon_230_.jpg';
+import individualIcon85 from '@/assets/icons/individualcl_icon_85_.jpg';
+import individualIcon32 from '@/assets/icons/individualcl_icon_32_.jpg';
+import individualIcon34 from '@/assets/icons/individualcl_icon_34_.jpg';
+import individualIcon16 from '@/assets/icons/individualcl_icon_16_.jpg';
 
 export const metadata: Metadata = {
   title: {
