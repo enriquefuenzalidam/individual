@@ -13,8 +13,8 @@ export const metadata: Metadata = {
     template: "%s | individual.cl",
     default: "individual.cl"
   },
-  description: 'Componentes Next.Js',
-  keywords: "Quick'n'Full, Next.JS, Next.js Components, Next.js UI Components, Next.js Image Gallery, Next.js Image Slider, React Next.js, Next.js Open Source, Next.js Carousel, Next.js Slider, Next.js UI Library, React Components, UI Components, Web Components, Open Source UI, Image Carousel, Galería de Imágenes, Deslizador de Imágenes, Carrusel de Imágenes, JavaScript UI, Vercel Components, Componentes de React, Next.js Frontend, Frontend Development, Reusable UI Components, Next.js Free Component",
+  description: 'Componentes Next.Js React',
+  keywords: "Quick'n'Full, LayeredTabs, React, Next.JS, Next.js Components, Next.js UI Components, Next.js Image Gallery, Next.js Image Slider, React Next.js, Next.js Open Source, Next.js Carousel, Next.js Slider, Next.js UI Library, React Components, UI Components, Web Components, Open Source UI, Image Carousel, Galería de Imágenes, Deslizador de Imágenes, Carrusel de Imágenes, JavaScript UI, Vercel Components, Componentes de React, Next.js Frontend, Frontend Development, Reusable UI Components, Next.js Free Component",
   authors: [
     { name: "Enrique Fuenzalida", url: "https://individual.cl/" } 
     ],
