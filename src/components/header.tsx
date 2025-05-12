@@ -28,12 +28,10 @@ const Header: React.FC = () => {
             React.createElement("h2", { style: { display: 'inline-block', boxSizing: 'border-box', position: "relative", fontFamily: "'Pangea Trial', sans-serif", color: "rgb(148, 163, 184)",  lineHeight: "1.15", marginLeft: lgScreen || xlScreen ? '1rem' : mdScreen ? '0.9rem' : smScreen ? '0.8rem' : '0.8rem' } },
                 React.createElement("span", { style: { textTransform: "uppercase", transition: "all 300ms ease-in-out", fontSize: lgScreen || xlScreen ? "1.5rem" : mdScreen ? "1.3rem" : smScreen ? "1.15rem" : "1.15rem", fontWeight: "500", display: "inline-block", verticalAlign: "middle", marginRight: lgScreen || xlScreen ? "0.23rem" : mdScreen ? "0.2rem" : smScreen ? "0.2rem" : "0.25rem" } }, "Componentes"),
                 React.createElement('div', { style: { whiteSpace: 'nowrap', display: xtScreen ? "block" : 'inline-block', boxSizing: 'border-box', padding: '0', margin: xtScreen ? '-0.15rem 0 0.2rem 0.1rem' : '0', }},
-                    React.createElement("span", { style: { transition: "all 300ms ease-in-out", color: "rgb(71,85,105)", width: lgScreen || xlScreen ? "5.31rem": mdScreen ? "4.7rem" : smScreen ? "4rem" : "4rem", height: "auto", display: "inline-block", verticalAlign: "middle", marginTop: lgScreen || xlScreen ? "0.05rem" : mdScreen ? "0.03rem" : smScreen ? "0" : "0" } },
+                    React.createElement("span", { style: { transition: "all 300ms ease-in-out", color: "rgb(71,85,105)", width: lgScreen || xlScreen ? "5.31rem": mdScreen ? "4.7rem" : smScreen ? "4rem" : "4rem", height: "auto", display: "inline-block", verticalAlign: 'middle', marginTop: lgScreen || xlScreen ? "0.05rem" : mdScreen ? "0.03rem" : smScreen ? "0" : "0" } },
                         React.createElement(NextLogo) ),
                     React.createElement("span", { style: { textTransform: 'none', color: "rgb(71,85,105)", transition: "all 300ms ease-in-out", fontSize: lgScreen || xlScreen ? "1.5rem" : mdScreen ? "1.3rem" : smScreen ? "1.15rem" : "1.15rem", fontWeight: "500", display: "inline-block", verticalAlign: "middle", margin: lgScreen || xlScreen ? "0 0.23rem" : mdScreen ? "0 0.2rem" : smScreen ? "0 0.2rem" : "0 0.25rem" } }, "React"),
                     React.createElement("span", { style: { transition: "all 300ms ease-in-out", color: "rgb(71,85,105)", width: lgScreen || xlScreen ? "1.5rem": mdScreen ? "1.3rem" : smScreen ? "1.2rem" : "1.1rem", height: "auto", display: "inline-block", verticalAlign: "middle", marginTop: lgScreen || xlScreen ? "0.05rem" : mdScreen ? "0.03rem" : smScreen ? "0rem" : "0rem" } },
-                        React.createElement(ReactLogo) )
-                )
-                )
+                        React.createElement(ReactLogo) ) ) )
                 ) ) };
 export default Header;
