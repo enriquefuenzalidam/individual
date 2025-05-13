@@ -6,8 +6,12 @@ import LayeredTabs from '@/components/layeredTabs';
 const LayeredTabsArticulo: React.FC = () => {
 
   const tabsContentList = [ 
+      { title: 'Next.js Website', content: (<iframe src="https://nextjs.org" width="100%" height="100%" className={` w-full h-full `}/>) },
+      { title: 'Modernize Next.js Template', content: (<iframe src="https://modernize-nextjs-free.vercel.app/" width="100%" height="100%" className={` w-full h-full `}/>) },
+      { title: 'Netlify Website', content: (<iframe src="https://www.netlify.com" width="100%" height="100%" className={` w-full h-full `}/>) },
+      { title: 'K-Pop Stack Netlify Template', content: (<iframe src="https://kpop-stack.netlify.app" width="100%" height="100%" className={` w-full h-full `}/>) },
       { title: 'Lorem Ipsum', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus scelerisque, odio ac consectetur tincidunt, nisi eros ornare nisl, varius consequat justo eros a purus. Sed quis pellentesque augue. Nulla scelerisque porttitor pulvinar. Pellentesque commodo, sem in pretium iaculis, nulla ex auctor elit, in accumsan nisi ante sed diam. Pellentesque semper cursus augue vitae suscipit. Suspendisse pulvinar leo diam, ultricies accumsan nibh molestie quis. Nulla eget efficitur nunc. Nullam iaculis a augue et finibus. Nunc tempor, nibh at interdum egestas, ligula massa vestibulum enim, quis facilisis arcu urna viverra justo. Curabitur cursus euismod sagittis. Aenean quis sapien lacus. Donec pellentesque ipsum turpis, sed ornare magna tincidunt ac. Sed sit amet nisl condimentum, mollis risus ac, molestie elit. Donec blandit, dui id mollis ullamcorper, ligula massa scelerisque diam, eget lobortis velit ante eget ipsum. Sed consectetur nunc nibh.' },
-      { title: 'Proin Vitae', content: 'Proin vitae molestie tellus, sit amet molestie dui. Cras rhoncus dui nec ante consequat, vel malesuada dui pharetra. Nunc sollicitudin interdum bibendum. Sed id posuere tortor. Mauris id metus in ante gravida finibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut finibus sed lacus et aliquet.'},
+      { title: 'Proin Vitae', content: 'Proin vitae molestie tellus, sit amet molestie dui. Cras rhoncus dui nec ante consequat, vel malesuada dui pharetra. Nunc sollicitudin interdum bibendum. Sed id posuere tortor. Mauris id metus in ante gravida finibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut finibus sed lacus et aliquet' },
       { title: 'Maecenas Lorem Sapien', content: 'Maecenas lorem sapien, feugiat vitae gravida vel, lobortis sed libero. Ut mollis odio a sem malesuada, efficitur mollis mauris pharetra. Phasellus sem purus, commodo a dignissim vehicula, ultrices vel massa. Aliquam vulputate non urna id placerat. Donec tempor tristique neque id venenatis. Quisque malesuada nulla sed sem rutrum facilisis. Proin sit amet est urna. Ut vel dui faucibus, dapibus nunc nec, maximus justo.'},
       { title: 'Pellentesque Habitant', content: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum volutpat massa nec purus tempus placerat. Sed hendrerit pulvinar molestie. Nulla facilisi. Praesent non sagittis quam, sit amet vestibulum urna. Pellentesque sollicitudin eleifend ante, et finibus felis faucibus vitae. Suspendisse venenatis nisi et purus aliquet, id molestie tellus laoreet. Sed nunc est, varius in urna vitae, laoreet cursus nibh.'},
       { title: 'In At Aliquam Orci', content: 'In at aliquam orci, eget consequat enim. Nam ultricies faucibus auctor. In laoreet quis dolor vel suscipit. Donec ut pellentesque arcu. Phasellus magna felis, porttitor in neque nec, laoreet pretium purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin mattis finibus mauris id interdum. Integer imperdiet feugiat vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac leo id magna efficitur feugiat non nec justo. Nulla dapibus nulla suscipit justo pulvinar vestibulum. Donec aliquet arcu eu gravida rhoncus. Aliquam quis eleifend dolor, placerat fringilla neque. Suspendisse vel dolor quis erat hendrerit ullamcorper.'},
@@ -78,29 +82,31 @@ const LayeredTabsArticulo: React.FC = () => {
   
   */
 
+    // botones
     const intrfzSelecc: React.CSSProperties = useMemo(() =>({
-      display: 'inline-block', height: '1.5rem', minWidth: '6rem', borderRadius: '0.375rem', textAlign: 'center', verticalAlign: 'top', paddingBottom: '1.75rem', margin: '0.5rem 0.5rem 0 0', borderStyle: 'solid', borderWidth: '2px',  
+      display: 'inline-block', height: '1.5rem', minWidth: '7rem', borderRadius: '0.375rem', textAlign: 'center', verticalAlign: 'top', paddingBottom: '1.75rem', margin: '0.5rem 0.5rem 0 0', borderStyle: 'solid',  
     }), []);
 
     const tabBarPositionStyle = (state: number): React.CSSProperties => ({
-    ...intrfzSelecc, fontWeight: state === tabBarPosition ? 600 : 400, color: state === tabBarPosition ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: state === tabBarPosition ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: state === tabBarPosition ? 'default' : 'pointer',
+      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: state === tabBarPosition ? 600 : 400, color: state === tabBarPosition ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: state === tabBarPosition ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: state === tabBarPosition ? 'default' : 'pointer',
     });
 
     const maxSizeStyle = (label: string): React.CSSProperties => ({
-      ...intrfzSelecc, fontWeight: label === maxSize ? 600 : 400, color: label === maxSize ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === maxSize ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === maxSize ? 'default' : 'pointer',
+      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: label === maxSize ? 600 : 400, color: label === maxSize ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === maxSize ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === maxSize ? 'default' : 'pointer',
       });
   
-    const fondoClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, fontWeight: fondoColor === colorValue ? 500 : 400, color: fondoColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
+    // colores botones
+    const selccPgnClr = (colorValue: string): React.CSSProperties => ({
+      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: slcPptgnColor === colorValue ? 500 : 400, color: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: slcPptgnColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
   
     const pstgnClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, fontWeight: ptgnBarColor === colorValue ? 500 : 400, color: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: ptgnBarColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
-  
-    const selccPgnClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, fontWeight: slcPptgnColor === colorValue ? 500 : 400, color: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: slcPptgnColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
+      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: ptgnBarColor === colorValue ? 500 : 400, color: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: ptgnBarColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
   
     const fondoBarClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, fontWeight: fondoBarColor === colorValue ? 500 : 400, color: fondoBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoBarColor === colorValue ? 'default' : 'pointer', backgroundColor: '#' + colorValue });
+      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fondoBarColor === colorValue ? 500 : 400, color: fondoBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoBarColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
+  
+    const fondoClr = (colorValue: string): React.CSSProperties => ({
+      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fondoColor === colorValue ? 500 : 400, color: fondoColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
   
     const [maxSize, setMaxSize] = useState("xl");
     const dinamicSize = useCallback((value: number) => {
@@ -118,7 +124,9 @@ const LayeredTabsArticulo: React.FC = () => {
 
   const [tabBarPosition, setTabBarPosition] = useState<number>(0);
 
-  const bgExampleColors = [ { label: "White", hexCode: "FFFFFF" },
+  const bgExampleColors = [
+    { label: "Transparent", hexCode: "transparent" },
+    { label: "White", hexCode: "FFFFFF" },
     { label: "Alice Blue", hexCode: "EDF8FF" },
     { label: "Azureish", hexCode: "D9E4FB" },
     { label: "Lavender", hexCode: "E5E4F4" },
