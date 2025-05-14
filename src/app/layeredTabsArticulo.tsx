@@ -156,7 +156,7 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
           `El contenido y los colores` ),
         React.createElement('p', { style: { ...pStyleB } },
-          'Las capas pueden contener tanto texto plano como HTML. Los colores pueden ser asignados en general y/o para cada pestaña y capa por separado; la pestaña y capa no tenga colores asignados, toma los asignados en general. '),
+          'Las capas pueden contener tanto texto plano como HTML. Los colores pueden ser asignados en general y/o para cada pestaña y capa por separado; la pestañas y capas que no tenga colores asignados, toman los asignados en general.'),
 
         React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: xlScreen || lgScreen ? '0.1rem' : mdScreen ? '0.075rem' :  '0.05rem', background: 'rgba(51,65,85,0.3)', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } } ), 
 
