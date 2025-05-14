@@ -146,17 +146,17 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'linear-gradient( to right, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to right, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)', pointerEvents: 'none' } } ),
 
         React.createElement('p', { style: { ...pStyleB } },
-          'Presentar contenido en capas navegables a través de pestañas, es una forma tradicional de ordenamiento en páginas y sitios webs. ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' procura hacer muy simple la implementación de esta forma de organizar contenido web, proporciona formatos distintos y apariencia personalizable.'),
+          'Presentar contenido en capas navegables a través de pestañas, es una forma tradicional de ordenamiento en páginas y sitios webs. ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' procura hacer muy simple la implementación de esta forma de organizar contenido web, proporciona formatos distintos y apariencia personalizable. Aún en desarrollo.'),
 
         React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
-            `Las pestañas` ),
+            `La barra de pestañas` ),
         React.createElement('p', { style: { ...pStyleB } },
-          'La barra de pestañas es deslizable desde un touchscreen, un trackpad o un mousewheel, su tamaño puede ajustarse siguiendo su responsividad y puede posicionarse en el borde de arriba del cuadro, en el borde superior de las capas, en el borde inferior de las capas o en el borde de abajo del cuadro.'),
+          'La barra de pestañas es deslizable desde un touchscreen, un trackpad o un mousewheel, su tamaño puede ajustarse siguiendo su responsividad y puede posicionarse en la parte superior o inferior.'),
 
         React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
-            `Los colores` ),
+          `El contenido y los colores` ),
         React.createElement('p', { style: { ...pStyleB } },
-          'Los colores de las pestañas pueden ser elejidos de forma general y/o para cada una por serparado; y las capas pueden contener tanto texto plano como HTML. Las capas con texto plano toman los colores asignados de forma general o, en su defecto, los asignados a la pestaña correspondiente.'),
+          'Las capas pueden contener tanto texto plano como HTML. Los colores pueden ser asignados de forma general y/o para cada pestaña y capa por separado; la pestaña y capa no tenga colores asignados, toma los asignados de forma general. '),
 
         React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: xlScreen || lgScreen ? '0.1rem' : mdScreen ? '0.075rem' :  '0.05rem', background: 'rgba(51,65,85,0.3)', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } } ), 
 
