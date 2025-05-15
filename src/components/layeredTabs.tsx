@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, ReactElement, isValidElement } from "react";
+import React, { useEffect, useState, useCallback, ReactElement, isValidElement, useMemo } from "react";
 import { StaticImageData } from "next/image";
 
 interface LayeredTabsParams {
@@ -12,7 +12,8 @@ interface LayeredTabsParams {
  };
 
 export interface TabProps {
-  title: string | StaticImageData;
+  title?: string;
+  titleLang?: string;
   independentBgColor?: string;
   independentTxColor?: string;
   children?: string | React.ReactNode;
@@ -36,6 +37,7 @@ const tabElements = React.Children.toArray(children).filter(
   'displayName' in child.type && (child.type as { displayName: string }).displayName === "LayeredTabs.Tab" );
 
 const tabsTitleList = tabElements.map(el => el.props.title);
+const tabsTitleLangList = tabElements.map(el => el.props.titleLang);
 const tabsColorsList = tabElements.map(el => el.props.independentBgColor);
 const tabsTextList = tabElements.map(el => el.props.independentTxColor);
 const tabsContentList = tabElements.map(el => el.props.children);
@@ -93,9 +95,59 @@ const UsePantallaTamagnos = () => {
   const zIndexMax = tabsTitleList.length + 10;
   const getZIndex = (index: number, currentTab: number, topZIndex: number) => topZIndex - Math.abs(index - currentTab);
 
+  const shortenTitle = (title: string, language: string, maxChars: number): string => {
+  if (title.length <= maxChars) return title;
+
+  const vowelMap: { [key: string]: string } = {
+    en: 'aeiouy',
+    es: 'aeiouáéíóúü',
+    fr: 'aeiouyâêîôûéèëïüù',
+    de: 'aeiouyäöü',
+    it: 'aeiouàèéìòù',
+    pt: 'aeiouáâãàéêíóôõúü',
+    la: 'aeiouy',
+    default: 'aeiou'
+  };
+
+  const vowels = vowelMap[language] || vowelMap.default;
+  const regex = new RegExp(`[^${vowels}]*[${vowels}]+`, 'gi');
+  const matches = title.matchAll(regex);
+
+  let result = '';
+  // let lastIndex = 0;
+
+  for (const match of matches) {
+    const end = (match.index || 0) + match[0].length;
+    if (end > maxChars) break;
+    result = title.slice(0, end);
+    // lastIndex = end;
+  }
+
+  return result.length < title.length ? result.trim() + '…' : title;
+};
+
+        const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+        const [currentMouseOverTag, setCurrentMouseOverTag] = useState(0);
+        const [tabTitleTip, setTabTitleTip] = useState(false);
+
+const shortenedTitles = useMemo(() =>
+  tabsTitleList.map((title,index) => {
+    const shortened = shortenTitle(title as string, tabsTitleLangList[index] ? tabsTitleLangList[index] : 'en', 13);
+    return {
+      original: title,
+      shortened,
+      isShortened: shortened !== title
+    };
+  }),
+  [tabsTitleList, tabsTitleLangList]
+);
+
         if (!screenReady) return null;
 
-        return React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto`, background: fondoColor === 'transparent' ? 'transparent' : '#' + fondoColor} },
+        return React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto`, background: fondoColor === 'transparent' ? 'transparent' : '#' + fondoColor } },
+          
+          tabTitleTip && React.createElement('div', { style: { display: 'inline-block', boxSizing: 'border-box', position: 'fixed', top: `${mousePos.y + 12}px`, left: `${mousePos.x + 12}px`, pointerEvents: 'none', zIndex: 9999 } } , 
+            React.createElement('p', { style: { boxShadow: '0 ' + dinamicSize(0.05) + 'rem ' + dinamicSize(0.1) + 'rem rgba(0,0,0,0.3), 0 ' +  + dinamicSize(0.3) + 'rem ' + dinamicSize(0.5) + 'rem rgba(0,0,0,0.2)', color: 'white', background: 'rgba(51,65,85,1)', transition: 'all 150ms ease-in-out', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'left',  fontSize: dinamicSize(0.86) + 'rem', fontWeight: 600, lineHeight: 1.625, padding: dinamicSize(0.24)+ 'rem ' + dinamicSize(0.77) + 'rem', margin: '0', borderRadius: dinamicSize(0.24) + 'rem' } }, tabsTitleList[currentMouseOverTag] ) ),
 
           React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto` } },
 
@@ -108,12 +160,12 @@ const UsePantallaTamagnos = () => {
                 React.createElement("div", { style: { zIndex: zIndexMax, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", pointerEvents: 'none', backgroundImage: tabBarPosition === 0 || tabBarPosition === 2 ? "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)" : "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)" } } ),
 
                 React.createElement("div", { style: { transition: 'all 150ms ease-in-out', display: 'block', margin: `0`, boxSizing: 'border-box', position: 'relative', width: 'auto', height: '100%', whiteSpace: 'nowrap', overflowX: 'scroll', overflowY: 'hidden', scrollbarWidth: 'none', padding: tabBarPosition === 0 || tabBarPosition === 2 ? `0 ${dinamicSize(2.5)}rem ${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem` : `${dinamicSize(1.4164)}rem ${dinamicSize(2.5)}rem 0 ${dinamicSize(2.5)}rem`, background: fondoBarColor === 'transparent' ? 'transparent' : '#' + fondoBarColor } },
-                    tabsTitleList.map((title, index: number) => React.createElement('div', { key: index, onClick: () => currentTab === index ? null : setCurrentTab(index), style: { transition: 'all 150ms ease-in-out', transform: `translateX(calc(-${shoulderWidth * index}rem))`, cursor: currentTab === index ? 'default' : 'pointer', zIndex: getZIndex(index,currentTab,zIndexMax),  display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%`, filter: tabBarPosition === 0 || tabBarPosition === 2 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem ${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` : `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem -${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` } },
+                    tabsTitleList.map((title, index: number) => React.createElement('div', { key: index, onMouseOver: () => shortenedTitles[index].isShortened ? ( setCurrentMouseOverTag(index), setTabTitleTip(true) ) : null, onMouseOut: () => setTabTitleTip(false), onMouseMove: (e) => shortenedTitles[index].isShortened ? setMousePos( { x: e.clientX, y: e.clientY } ) : null, onClick: () => currentTab === index ? null : setCurrentTab(index), style: { transition: 'all 150ms ease-in-out', transform: `translateX(calc(-${shoulderWidth * index}rem))`, cursor: currentTab === index ? 'default' : 'pointer', zIndex: getZIndex(index,currentTab,zIndexMax),  display: 'inline-block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `auto`, height: `100%`, filter: tabBarPosition === 0 || tabBarPosition === 2 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem ${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` : `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem -${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` } },
                         React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'block', whiteSpace: 'nowrap', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%`, filter: tabBarPosition === 0 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem  ${dinamicSize(0.1)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.35 : 0.2}))` : tabBarPosition === 1 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem -${dinamicSize(0.05)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.3 : 0.15}))` : tabBarPosition === 2 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem  ${dinamicSize(0.1)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.35 : 0.2}))` : `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem -${dinamicSize(0.05)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.3 : 0.2} ) )` } },
                             React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', background: tabsColorsList[index] ? '#' + tabsColorsList[index] : currentTab === index ? slcPptgnColor === 'transparent' ? 'transparent' : '#' + slcPptgnColor : ptgnBarColor === 'transparent' ? 'transparent' : '#' + ptgnBarColor, padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder, transform: tabBarPosition === 0 || tabBarPosition === 2 ? "scale(1,-1)" : "none" } } ),
                             React.createElement('div', { style: { transition: 'all 150ms ease-in-out', transform: 'translateX(-0.05rem)', display: 'inline-block', background: tabsColorsList[index] ? '#' + tabsColorsList[index] : currentTab === index ? slcPptgnColor === 'transparent' ? 'transparent' : '#' + slcPptgnColor : ptgnBarColor === 'transparent' ? 'transparent' : '#' + ptgnBarColor, padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, maxWidth: '21rem', textAlign: 'center', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden' } },
                                 React.createElement('span', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', padding: `0 ${dinamicSize(0.25)}rem`, margin: '0', boxSizing: 'border-box', fontWeight: '600', fontSize: `${dinamicSize(1.125)}rem`, color: tabsTextList[index] ? '#' + tabsTextList[index] : index === currentTab ? '#' + tabsTextList[index] : 'rgba(51,65,85,1)', opacity: currentTab === index ? 1 : 0.3,  } },
-                                    typeof title === "string" ? title : null ) ),
+                                    typeof title === "string" ? shortenedTitles[index].shortened : null ) ),
                             React.createElement('div', { style: { transition: 'all 150ms ease-in-out', display: 'inline-block', background: tabsColorsList[index] ? '#' + tabsColorsList[index] : currentTab === index ? slcPptgnColor === 'transparent' ? 'transparent' : '#' + slcPptgnColor : ptgnBarColor === 'transparent' ? 'transparent' : '#' + ptgnBarColor, padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, aspectRatio: '1056 / 1486', clipPath: tabShoulder, transform: tabBarPosition === 0 || tabBarPosition === 2 ? "translateX(-0.1rem) scale(-1,-1)" : "translateX(-0.1rem) scaleX(-1)" } } ) ) ) ) ) ),
 
               // dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem'
