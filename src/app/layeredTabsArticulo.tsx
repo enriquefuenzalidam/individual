@@ -195,7 +195,7 @@ const LayeredTabsArticulo: React.FC = () => {
                 { label: "Abajo", state: 3 } ].map(({ label, state }, index) => React.createElement( 'span', { key: index, onClick: () => state !== tabBarPosition ? setTabBarPosition(state) : null, style: { ...tabBarPositionStyle(state) } }, label ) ) ),
 
         React.createElement('h5', { style: { ...h5Style } },
-            'Tamaño máximo (', React.createElement('span', { style: { fontStyle: 'oblique', opacity: 0.7 } }, 'por el momento, en relación al ancho de la ventana del browser'), ')' ),
+            'Tamaño máximo' ),
         React.createElement('p', { style: { ...pStyleC } },
               [ { label: "xl" },
                 { label: "lg" },
