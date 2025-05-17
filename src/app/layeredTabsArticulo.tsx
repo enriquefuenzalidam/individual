@@ -123,7 +123,7 @@ const LayeredTabsArticulo: React.FC = () => {
   const [fondoColor, setFondoColor] = useState("FFFFFF");
   const [slcPptgnColor, setSlcPptgnColor] = useState("FFFFFF");
 
-  const [tabBarPosition, setTabBarPosition] = useState<number>(0);
+  const [tabBarPosition, setTabBarPosition] = useState<number>(1);
 
   const bgExampleColors = [
     { label: "Transparent", hexCode: "transparent" },
