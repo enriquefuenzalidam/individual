@@ -149,9 +149,9 @@ const LayeredTabsArticulo: React.FC = () => {
           'Presentar contenido en capas navegables a través de pestañas, es una forma tradicional de ordenamiento en páginas y sitios webs. ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' procura hacer muy simple la implementación de esta forma de organizar contenido web, proporciona formatos distintos y apariencia personalizable. Aún en desarrollo.'),
 
         React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
-            `La barra de pestañas` ),
+            `La barra de pestañas y las pestañas` ),
         React.createElement('p', { style: { ...pStyleB } },
-          'La barra de pestañas es deslizable desde un touchscreen, un trackpad o un mousewheel, su tamaño puede ajustarse siguiendo su responsividad y puede posicionarse en la parte superior o inferior.'),
+          'La barra de pestañas es deslizable desde un touchscreen, un trackpad o un mousewheel, su tamaño puede ajustarse siguiendo su responsividad y puede posicionarse en la parte superior o inferior. Todas las pestañas tienen ancho igual y fijo, excepto la seleccionada y la que tenga el cursor encima. Tanto la seleccionada como la que tenga el cursor encima, pueden tomar dos otros anchos conforme al largo del título el cual es acortado también. Los títulos demasiado largos son acortados en todos los casos.'),
 
         React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
           `El contenido y los colores` ),
