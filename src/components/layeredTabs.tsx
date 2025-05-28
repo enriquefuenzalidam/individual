@@ -9,6 +9,7 @@ interface LayeredTabsParams {
     tabBarPosition?: number;
     maxSize: string | StaticImageData;
     children?: React.ReactNode;
+    tabWidth?: number;
  };
 
 export interface TabProps {
@@ -28,7 +29,7 @@ type LayeredTabsComponent = React.FC<LayeredTabsParams> & {
   Tab: React.FC<TabProps>;
 };
 
-const LayeredTabs: LayeredTabsComponent = ({ fondoBarColor = "FFFFFF", ptgnBarColor = "FFFFFF", fondoColor = "transparent", slcPptgnColor = "FFFFFF", tabBarPosition = 0, maxSize = "xl", children }) => {
+const LayeredTabs: LayeredTabsComponent = ({ fondoBarColor = "FFFFFF", ptgnBarColor = "FFFFFF", fondoColor = "transparent", slcPptgnColor = "FFFFFF", tabBarPosition = 0, maxSize = "xl", children, tabWidth = 8 }) => {
 
 const tabElements = React.Children.toArray(children).filter(
   (child): child is ReactElement<TabProps> =>
@@ -124,18 +125,6 @@ const UsePantallaTamagnos = () => {
     return result.length < title.length ? result.trim() + '…' : title;
   };
 
-  const shortenedTitles = useMemo(() =>
-    tabsTitleList.map((title, index) => {
-      const shortened = shortenTitle(title as string, tabsTitleLangList[index] ? tabsTitleLangList[index] : 'en', 11);
-      const longShortened = shortenTitle(title as string, tabsTitleLangList[index] ? tabsTitleLangList[index] : 'en', 20);
-      return {
-        original: title,
-        shortened,
-        longShortened,
-        isShortened: shortened !== title,
-        isLongShortened: longShortened !== title && longShortened !== shortened } } ),
-    [tabsTitleList, tabsTitleLangList] );
-
   const [currentMouseOverTag, setCurrentMouseOverTag] = useState<number | null>(null);
   
 
@@ -152,6 +141,34 @@ const UsePantallaTamagnos = () => {
       React.createElement('div', { style: styleB } ) ) },
       [tabBgColor, tabBarPosition] );
 
+
+        const tabMinWidth = tabWidth;
+
+        const tabWidths = useMemo( () => {
+          const tMW = tabMinWidth;
+          const base = tMW;
+          const shortened = tMW * 1.375;
+          const longShortened = tMW * 1.625;
+          return { base, shortened, longShortened } }, [tabMinWidth]);
+
+        const titlesLongs = useMemo(() => {
+          const tMW = tabMinWidth;
+          const shortened = Math.round(tMW * 1.375);
+          const longShortened = Math.round(tMW * 2.5);
+          return { shortened, longShortened } }, [tabMinWidth]);
+
+        const shortenedTitles = useMemo(() =>
+          tabsTitleList.map( (title, index) => {
+            const shortened = shortenTitle(title as string, tabsTitleLangList[index] ? tabsTitleLangList[index] : 'en', titlesLongs.shortened);
+            const longShortened = shortenTitle(title as string, tabsTitleLangList[index] ? tabsTitleLangList[index] : 'en', titlesLongs.longShortened);
+            return {
+              title,
+              shortened,
+              longShortened,
+              isShortened: shortened !== title,
+              isLongShortened: longShortened !== title && longShortened !== shortened } } ),
+              [titlesLongs, tabsTitleList, tabsTitleLangList] );
+
         if (!screenReady) return null;
 
         return React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto`, background: fondoColor === 'transparent' ? 'transparent' : '#' + fondoColor } },
@@ -159,8 +176,8 @@ const UsePantallaTamagnos = () => {
           React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto` } },
 
               // maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)',
-            ( tabBarPosition === 2 || tabBarPosition === 3 ) && React.createElement('section', { style: { zIndex: 10, height: dinamicSize(21) + 'rem', overflowY: 'scroll',  display: 'block', background: tabsColorsList[currentTab] ? '#' + tabsColorsList[currentTab] : fondoColor === 'transparent' ? 'transparent' : '#' + fondoColor, padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
-              typeof tabsContentList[currentTab] === 'string' ? React.createElement('p', { style: { transition: 'all 150ms ease-in-out', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: tabsTextList[currentTab] ? '#' + tabsTextList[currentTab] : 'rgba(51,65,85,0.6)', lineHeight: 1.625, padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0' } }, tabsContentList[currentTab] ) : tabsContentList[currentTab] ?? null ),
+            ( tabBarPosition === 2 || tabBarPosition === 3 ) && React.createElement('section', { style: { zIndex: 10, height: dinamicSize(18) + 'rem', overflowY: 'scroll',  display: 'block', background: tabsColorsList[currentTab] ? '#' + tabsColorsList[currentTab] : fondoColor === 'transparent' ? 'transparent' : '#' + fondoColor, padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
+              typeof tabsContentList[currentTab] === 'string' ? React.createElement('p', { style: { transition: 'all 150ms linear', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: tabsTextList[currentTab] ? '#' + tabsTextList[currentTab] : 'rgba(51,65,85,0.6)', lineHeight: 1.625, padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0' } }, tabsContentList[currentTab] ) : tabsContentList[currentTab] ?? null ),
 
             React.createElement('div', { style: { overflowY: 'hidden', display: 'block', padding: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', /* maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)' */ margin: tabBarPosition === 0 ? '0 0 -' + dinamicSize(1.4164) + 'rem  0' : tabBarPosition === 3 ? '-' + dinamicSize(1.4164) + 'rem 0 0 0' : '0' } },
 
@@ -171,16 +188,16 @@ const UsePantallaTamagnos = () => {
                     // Tabs
                     tabsTitleList.map((title, index: number) =>
 
-                    React.createElement('div', { key: index, onMouseOver: () => setCurrentMouseOverTag(index), onMouseOut: () => setCurrentMouseOverTag(null), onClick: () => currentTab === index ? null : setCurrentTab(index), style: { transition: 'all 200ms linear', transform: 'translateX(calc(' + (-shoulderWidth * index) + 'rem))', zIndex: getZIndex(index,currentTab,zIndexMax), display: 'inline-block', position: 'relative', boxSizing: 'border-box', padding: '0', margin: '0', width: currentTab === index || (index === 0 && currentMouseOverTag === 0) ? shortenedTitles[index].isLongShortened ? dinamicSize(13 + ( (2.125 * 2 * 378) / 743 ) ) + 'rem' : shortenedTitles[index].isShortened ? dinamicSize(11 + ( (2.125 * 2 * 378) / 743 ) ) + 'rem' : dinamicSize(8 + ( (2.125 * 2 * 378) / 743 ) ) + 'rem' : dinamicSize( 8 + ( (2.125 * 2 * 378) / 743 ) ) + 'rem', height: '100%', filter: tabBarPosition === 0 || tabBarPosition === 2 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem ${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` : `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem -${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` }},
+                    React.createElement('div', { key: index, onMouseOver: () => setCurrentMouseOverTag(index), onMouseOut: () => setCurrentMouseOverTag(null), onClick: () => currentTab === index ? null : setCurrentTab(index), style: { transition: 'all 200ms linear', transform: 'translateX(calc(' + (-shoulderWidth * index) + 'rem))', zIndex: getZIndex(index,currentTab,zIndexMax), display: 'inline-block', position: 'relative', boxSizing: 'border-box', padding: '0', margin: '0', width: currentTab === index || (index === 0 && currentMouseOverTag === 0) ? shortenedTitles[index].isLongShortened ? dinamicSize(tabWidths.longShortened + ( (2.125 * 2 * 378) / 743 ) ) + 'rem' : shortenedTitles[index].isShortened ? dinamicSize(tabWidths.shortened + ( (2.125 * 2 * 378) / 743 ) ) + 'rem' : dinamicSize(tabWidths.base + ( (2.125 * 2 * 378) / 743 ) ) + 'rem' : dinamicSize(tabWidths.base + ( (2.125 * 2 * 378) / 743 ) ) + 'rem', height: '100%', filter: tabBarPosition === 0 || tabBarPosition === 2 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem ${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` : `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.3 : 0.3 }rem -${dinamicSize(0.5)}rem ${dinamicSize(0.6)}rem rgba(0,0,0,${currentTab === index ? 0.06 : 0.05}))` }},
                       React.createElement('div', { style: { transition: 'all 150ms linear', cursor: currentTab === index ? 'default' : 'pointer', display: 'inline-block', padding: '0', margin: '0', position: 'absolute', top: '0', [ index !== 0 && index < currentTab ? 'right' : 'left' ]: '0', boxSizing: 'border-box', overflow: 'visible', width: 'auto', height: `100%`, filter: tabBarPosition === 0 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem ${dinamicSize(0.1)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.35 : 0.2}))` : tabBarPosition === 1 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem -${dinamicSize(0.05)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.3 : 0.15}))` : tabBarPosition === 2 ? `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem  ${dinamicSize(0.1)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.35 : 0.2}))` : `drop-shadow(${ index === currentTab ? 0 : index < currentTab ? -0.15 : 0.15 }rem -${dinamicSize(0.05)}em ${dinamicSize(0.1)}rem rgba(0,0,0,${currentTab === index ? 0.3 : 0.2} ) )` } },
                         React.createElement('div', { style: { transition: 'all 150ms linear', display: 'block', whiteSpace: 'nowrap', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%` } },
 
                           tabShoulderBlock(index, 0),
 
-                          React.createElement('div', { style: { transition: 'all 150ms linear', transform: 'translateX(-0.05rem)', display: 'inline-block', background: tabBgColor(index), padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, width: currentTab === index ? shortenedTitles[index].isLongShortened ? dinamicSize(13) + 'rem' : shortenedTitles[index].isShortened ? dinamicSize(11) + 'rem' : dinamicSize(8) + 'rem' : currentMouseOverTag === index ? shortenedTitles[index].isLongShortened ? dinamicSize(13) + 'rem' : shortenedTitles[index].isShortened ? dinamicSize(11) + 'rem' : dinamicSize(8) + 'rem' : dinamicSize(8) + 'rem', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden' } },
-                            React.createElement('span', { style: { transition: 'opacity 150ms linear', display: 'inline-block', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', padding: '0', margin: '0', boxSizing: 'border-box', fontWeight: '500', fontSize: `${dinamicSize(1.125)}rem`, color: tabsTextList[index] ? '#' + tabsTextList[index] : index === currentTab ? '#' + tabsTextList[index] : 'rgba(51,65,85,1)', opacity: currentTab === index ? shortenedTitles[index].isShortened ? 0 : 1 : currentMouseOverTag === index ? shortenedTitles[index].isShortened ? 0 : 0.6 : 0.3, } },
+                          React.createElement('div', { style: { transition: 'all 150ms linear', transform: 'translateX(-0.05rem)', display: 'inline-block', background: tabBgColor(index), padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', height: `100%`, width: currentTab === index ? shortenedTitles[index].isLongShortened ? dinamicSize(tabWidths.longShortened)  + 'rem' : shortenedTitles[index].isShortened ? dinamicSize(tabWidths.shortened) + 'rem' : dinamicSize(tabWidths.base) + 'rem' : currentMouseOverTag === index ? shortenedTitles[index].isLongShortened ? dinamicSize(tabWidths.longShortened) + 'rem' : shortenedTitles[index].isShortened ? dinamicSize(tabWidths.shortened) + 'rem' : dinamicSize(tabWidths.base) + 'rem' : dinamicSize(tabWidths.base) + 'rem', verticalAlign: 'top', alignContent: 'end', overflow: 'hidden' } },
+                            React.createElement('span', { style: { transition: 'opacity 150ms linear', display: 'inline-block', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', padding: '0', margin: '0', boxSizing: 'border-box', fontWeight: '500', fontSize: `${dinamicSize(1.125)}rem`, color: tabsTextList[index] ? '#' + tabsTextList[index] : index === currentTab ? '#' + tabsTextList[index] : 'rgba(51,65,85,1)', opacity: currentTab === index ? shortenedTitles[index].isShortened ? 0 : 1 : currentMouseOverTag === index ? shortenedTitles[index].isShortened ? 0 : 0.6 : 0.3 } },
                               typeof title === "string" ? shortenedTitles[index].isShortened ? shortenedTitles[index].shortened : title : null ),
-                            React.createElement('span', { style: { transition: 'opacity 150ms linear', display: 'inline-block', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', padding: '0', margin: '0', boxSizing: 'border-box', fontWeight: '500', fontSize: `${dinamicSize(1.125)}rem`, color: tabsTextList[index] ? '#' + tabsTextList[index] : index === currentTab ? '#' + tabsTextList[index] : 'rgba(51,65,85,1)', opacity: currentTab === index ? shortenedTitles[index].isShortened ? 1 : 0 : currentMouseOverTag === index ? shortenedTitles[index].isShortened ? 0.6 : 0 : 0,  } },
+                            React.createElement('span', { style: { transition: 'opacity 150ms linear', display: 'inline-block', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', padding: '0', margin: '0', boxSizing: 'border-box', fontWeight: '500', fontSize: `${dinamicSize(1.125)}rem`, color: tabsTextList[index] ? '#' + tabsTextList[index] : index === currentTab ? '#' + tabsTextList[index] : 'rgba(51,65,85,1)', opacity: currentTab === index ? shortenedTitles[index].isShortened ? 1 : 0 : currentMouseOverTag === index ? shortenedTitles[index].isShortened ? 0.6 : 0 : 0 } },
                               typeof title === "string" ? shortenedTitles[index].isLongShortened ? shortenedTitles[index].longShortened : shortenedTitles[index].isShortened ? shortenedTitles[index].longShortened : title : null ) ),
 
                           tabShoulderBlock(index, 1) ) ) ) )
@@ -189,8 +206,8 @@ const UsePantallaTamagnos = () => {
 
               // dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem'
               // maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)',
-            ( tabBarPosition === 0 || tabBarPosition === 1 ) && React.createElement('section', { style: { zIndex: 10, height: dinamicSize(21) + 'rem', overflowY: 'scroll', display: 'block', background: tabsColorsList[currentTab] ? '#' + tabsColorsList[currentTab] : fondoColor === 'transparent' ? 'transparent' : '#' + fondoColor, padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
-              typeof tabsContentList[currentTab] === 'string' ? React.createElement('p', { style: { transition: 'all 150ms ease-in-out', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: tabsTextList[currentTab] ? '#' + tabsTextList[currentTab] : 'rgba(51,65,85,0.6)', lineHeight: 1.625, padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0' } }, tabsContentList[currentTab] ) : tabsContentList[currentTab] ?? null ),
+            ( tabBarPosition === 0 || tabBarPosition === 1 ) && React.createElement('section', { style: { zIndex: 10, height: dinamicSize(18) + 'rem', overflowY: 'scroll', display: 'block', background: tabsColorsList[currentTab] ? '#' + tabsColorsList[currentTab] : fondoColor === 'transparent' ? 'transparent' : '#' + fondoColor, padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
+              typeof tabsContentList[currentTab] === 'string' ? React.createElement('p', { style: { transition: 'all 150ms linear', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: tabsTextList[currentTab] ? '#' + tabsTextList[currentTab] : 'rgba(51,65,85,0.6)', lineHeight: 1.625, padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0' } }, tabsContentList[currentTab] ) : tabsContentList[currentTab] ?? null ),
 
           ),
 

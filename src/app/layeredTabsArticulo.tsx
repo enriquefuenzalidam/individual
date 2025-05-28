@@ -17,7 +17,7 @@ const LayeredTabsArticulo: React.FC = () => {
       { title: 'In At Aliquam Orci', content: 'In at aliquam orci, eget consequat enim. Nam ultricies faucibus auctor. In laoreet quis dolor vel suscipit. Donec ut pellentesque arcu. Phasellus magna felis, porttitor in neque nec, laoreet pretium purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin mattis finibus mauris id interdum. Integer imperdiet feugiat vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac leo id magna efficitur feugiat non nec justo. Nulla dapibus nulla suscipit justo pulvinar vestibulum. Donec aliquet arcu eu gravida rhoncus. Aliquam quis eleifend dolor, placerat fringilla neque. Suspendisse vel dolor quis erat hendrerit ullamcorper.'},
       { title: 'Quisque Luctus', content: 'Quisque luctus ac nulla feugiat egestas. Donec non felis sed enim aliquet gravida. Nam rhoncus sapien quis lacus bibendum sagittis. Sed ligula risus, porta sed venenatis et, interdum id sem. Proin viverra at eros non convallis. Nulla finibus mollis enim, in placerat lacus facilisis eget. Maecenas placerat elementum lectus, ultrices tristique justo cursus elementum. Donec dolor risus, accumsan ac nunc eu, volutpat feugiat libero. Ut id augue nisi. Pellentesque at felis non massa interdum rhoncus. Morbi consectetur blandit tincidunt. Curabitur a odio gravida, consectetur metus vitae, sagittis diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer non pulvinar nisl.'},
       { title: 'Vestibulum Hendrerit Metus', content: 'Vestibulum hendrerit metus sit amet maximus euismod. Sed nec elementum nisi, non lobortis tellus. Curabitur odio felis, commodo hendrerit dui ut, ultrices pretium odio. Nunc congue et nisl et facilisis. Etiam porta erat purus, nec cursus felis elementum a. Cras eu arcu commodo, lobortis nulla quis, porttitor ligula. Duis nec odio elit. Aenean sed viverra lorem, vitae mattis est. Donec fringilla sollicitudin nulla, sed fermentum elit sollicitudin sed. Sed ut ligula in urna lobortis lacinia. Phasellus nisl velit, euismod quis lorem at, aliquet tristique urna. Proin at pellentesque enim, ac finibus elit.'},
-       ];
+  ];
 
   const { screenReady, xlScreen, lgScreen, mdScreen, smScreen } = UsePantallaTamagnos();
 
@@ -96,6 +96,10 @@ const LayeredTabsArticulo: React.FC = () => {
       ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: label === maxSize ? 600 : 400, color: label === maxSize ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === maxSize ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === maxSize ? 'default' : 'pointer',
       });
   
+    const tabWidthStyle = (label: number): React.CSSProperties => ({
+      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: label === tabWidth ? 600 : 400, color: label === tabWidth ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === tabWidth ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === tabWidth ? 'default' : 'pointer',
+      });
+  
     // colores botones
     const selccPgnClr = (colorValue: string): React.CSSProperties => ({
       ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: slcPptgnColor === colorValue ? 500 : 400, color: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: slcPptgnColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
@@ -123,6 +127,7 @@ const LayeredTabsArticulo: React.FC = () => {
   const [fondoColor, setFondoColor] = useState("FFFFFF");
   const [slcPptgnColor, setSlcPptgnColor] = useState("FFFFFF");
 
+  const [tabWidth, setTabWidth] = useState<number>(8);
   const [tabBarPosition, setTabBarPosition] = useState<number>(1);
 
   const bgExampleColors = [
@@ -163,7 +168,7 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('p', { style: { ...pStyleB, margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
           'Aquí se presenta el componente con seis pestañas, las dos primeras pestañas conteniendo otras páginas web y sin colores asignados, una tercera pestaña conteniendo texto plano y con colores asignados, y tres pestañas más con textos planos y sin colores asignados. Tanto las dos primeras pestañas como las tres últimas toman los colores asignados en general.'),
 
-        React.createElement(LayeredTabs, { fondoBarColor, ptgnBarColor, fondoColor, slcPptgnColor, tabBarPosition, maxSize },
+        React.createElement(LayeredTabs, { fondoBarColor, ptgnBarColor, fondoColor, slcPptgnColor, tabBarPosition, maxSize, tabWidth },
           tabsContentList.map((tab, index) => React.createElement(LayeredTabs.Tab, { key: index, title: tab.title, ...(tab.independentBgColor && { independentBgColor: tab.independentBgColor }), ...(tab.independentTxColor && { independentTxColor: tab.independentTxColor }) }, tab.content ) ) ),
 
 /*
@@ -185,6 +190,13 @@ const LayeredTabsArticulo: React.FC = () => {
             `Apariencia personalizable` ),
         React.createElement('p', { style: { ...pStyleB } },
             'En esta interfaz se pueden conocer las opciones personalizables que dispone el componente.'),
+
+        React.createElement('h5', { style: { ...h5Style } },
+            'Largo de las pestañas' ),
+        React.createElement('p', { style: { ...pStyleC } },
+              [ { label: 5 },
+                { label: 8 },
+                { label: 11 } ].map(({ label }, index) => React.createElement( 'span', { key: index, onClick: () => label !== tabWidth ? setTabWidth(label) : null, style: { ...tabWidthStyle(label) } }, label ) ) ),
 
         React.createElement('h5', { style: { ...h5Style } },
             `Posición de la barra de pestañas` ),
