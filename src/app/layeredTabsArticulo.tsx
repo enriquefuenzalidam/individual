@@ -183,7 +183,7 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('p', { style: { ...pStyleB, margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
           'Aquí se presenta el componente con seis pestañas, las dos primeras pestañas conteniendo otras páginas web y sin colores asignados, una tercera pestaña conteniendo texto plano y con colores asignados, y tres pestañas más con textos planos y sin colores asignados. Tanto las dos primeras pestañas como las tres últimas toman los colores asignados en general.'),
 
-        React.createElement(LayeredTabs, { fondoBarColor, ptgnBarColor, fondoColor, slcPptgnColor, tabBarPosition, maxSize, tabWidth, fixedMaxSize },
+        React.createElement(LayeredTabs, { fondoBarColor, ptgnBarColor, fondoColor, slcPptgnColor, tabBarPostn: tabBarPosition, maxSize, tabWidth, fixedMaxSize },
           tabsContentList.map((tab, index) => React.createElement(LayeredTabs.Tab, { key: index, title: tab.title, ...(tab.independentBgColor && { independentBgColor: tab.independentBgColor }), ...(tab.independentTxColor && { independentTxColor: tab.independentTxColor }) }, tab.content ) ) ),
 
 /*

@@ -6,7 +6,7 @@ interface LayeredTabsParams {
     ptgnBarColor: string | StaticImageData;
     fondoColor: string | StaticImageData;
     slcPptgnColor: string | StaticImageData;
-    tabBarPosition?: number;
+    tabBarPostn?: number;
     maxSize: string | StaticImageData;
     children?: React.ReactNode;
     tabWidth?: number;
@@ -25,18 +25,25 @@ Tab.displayName = "LayeredTabs.Tab";
 
 type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabProps>; };
 
-  const LayeredTabs: LayeredTabsComponent = ({ fondoBarColor = "FFFFFF", ptgnBarColor = "FFFFFF", fondoColor = "transparent", slcPptgnColor = "FFFFFF", tabBarPosition = 0, maxSize = "xl", children, tabWidth = 8, fixedMaxSize = false }) => {
+  const LayeredTabs: LayeredTabsComponent = ({ fondoBarColor = "FFFFFF", ptgnBarColor = "FFFFFF", fondoColor = "transparent", slcPptgnColor = "FFFFFF", tabBarPostn = 0, maxSize = "xl", children, tabWidth = 8, fixedMaxSize = false } ) => {
+
+  const [tabBarPosition, setTabBarPosition] = useState(0);
+  useEffect(() => {
+    if ([0, 1, 2, 3].includes(tabBarPostn as number)) setTabBarPosition(tabBarPostn as number);
+    else setTabBarPosition(0); }, [tabBarPostn]);
 
   const [maxResSize, setMaxResSize] = useState("xl");
   useEffect(() => {
     if (["xl", "lg", "md", "sm", "xs"].includes(maxSize as string)) setMaxResSize(maxSize as string);
     else setMaxResSize("xl"); }, [maxSize]);
 
-  const tabElements = React.Children.toArray(children).filter(
-    (child): child is ReactElement<TabProps> =>
-    isValidElement(child) &&
-    typeof child.type !== "string" &&
-    'displayName' in child.type && (child.type as { displayName: string }).displayName === "LayeredTabs.Tab" );
+  const allowedTabWidths = [5, 8, 11];
+  function normalizeTabWidth(value: number): 5 | 8 | 11 {
+    const closest = allowedTabWidths.reduce( (prev, curr) => Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev );
+    return closest as 5 | 8 | 11; }
+  const tabMinWidth = normalizeTabWidth(tabWidth);
+
+  const tabElements = React.Children.toArray(children).filter( (child): child is ReactElement<TabProps> => isValidElement(child) && typeof child.type !== "string" && 'displayName' in child.type && (child.type as { displayName: string }).displayName === "LayeredTabs.Tab" );
 
   const tabsTitleList = tabElements.map(el => el.props.title);
   const tabsTitleLangList = tabElements.map(el => el.props.titleLang);
@@ -140,9 +147,6 @@ type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabPro
     return React.createElement('div', { style: styleA },
       React.createElement('div', { style: styleB } ) ) },
       [tabBgColor, tabBarPosition] );
-
-
-  const tabMinWidth = tabWidth;
 
   const tabWidths = useMemo( () => {
     const tMW = tabMinWidth;
