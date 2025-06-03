@@ -96,6 +96,10 @@ const LayeredTabsArticulo: React.FC = () => {
       ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: label === maxSize ? 600 : 400, color: label === maxSize ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === maxSize ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === maxSize ? 'default' : 'pointer',
       });
   
+    const fixedMaxSizeStyle = (value: boolean): React.CSSProperties => ({
+      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fixedMaxSize === value ? 600 : 400, color: fixedMaxSize === value ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: fixedMaxSize === value ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: fixedMaxSize === value ? 'default' : 'pointer',
+      });
+  
     const tabWidthStyle = (label: number): React.CSSProperties => ({
       ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: label === tabWidth ? 600 : 400, color: label === tabWidth ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === tabWidth ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === tabWidth ? 'default' : 'pointer',
       });
@@ -114,6 +118,7 @@ const LayeredTabsArticulo: React.FC = () => {
       ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fondoColor === colorValue ? 500 : 400, color: fondoColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
   
     const [maxSize, setMaxSize] = useState("xl");
+    const [fixedMaxSize, setFixedMaxSize] = useState<boolean>(false);
     const dinamicSize = useCallback((value: number) => {
       if (maxSize === "xl") return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
       else if (maxSize === "lg") return xlScreen || lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
@@ -154,9 +159,19 @@ const LayeredTabsArticulo: React.FC = () => {
           'Presentar contenido en capas navegables a través de pestañas, es una forma tradicional de ordenamiento en páginas y sitios webs. ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' procura hacer muy simple la implementación de esta forma de organizar contenido web, proporciona formatos distintos y apariencia personalizable. Aún en desarrollo.'),
 
         React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
-            `La barra de pestañas y las pestañas` ),
+          `La barra de pestaña` ),
         React.createElement('p', { style: { ...pStyleB } },
-          'La barra de pestañas es deslizable desde un touchscreen, un trackpad o un mousewheel, su tamaño puede ajustarse siguiendo su responsividad y puede posicionarse en la parte superior o inferior. Todas las pestañas tienen ancho igual y fijo, excepto la seleccionada y la que tenga el cursor encima. Tanto la seleccionada como la que tenga el cursor encima, pueden tomar dos otros anchos conforme al largo del título el cual es acortado también. Los títulos demasiado largos son acortados en todos los casos.'),
+          'La barra de pestañas es deslizable desde un touchscreen, un trackpad o un mousewheel, puede posicionarse en la parte superior o inferior y su tamaño se ajusta siguiendo responsividad.'),
+
+        React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+          `Responsividad de la barra de pestañas` ),
+        React.createElement('p', { style: { ...pStyleB } },
+          'El tamaño de la barra de pestañas es responsivo y puede ajustarse a cinco tamaños máximos predefinidos. La responsividad puede ser inactivada dejando fijo el tamaño máximo seleccionado.'),
+
+        React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+          `Las pestañas` ),
+        React.createElement('p', { style: { ...pStyleB } },
+          'Todas las pestañas tienen ancho igual y fijo, excepto la seleccionada y la que tenga el cursor encima. Tanto la seleccionada como la que tenga el cursor encima, pueden tomar dos otros anchos conforme al largo del título el cual es acortado también. Los títulos demasiado largos son acortados en todos los casos.'),
 
         React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
           `El contenido y los colores` ),
@@ -168,7 +183,7 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('p', { style: { ...pStyleB, margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
           'Aquí se presenta el componente con seis pestañas, las dos primeras pestañas conteniendo otras páginas web y sin colores asignados, una tercera pestaña conteniendo texto plano y con colores asignados, y tres pestañas más con textos planos y sin colores asignados. Tanto las dos primeras pestañas como las tres últimas toman los colores asignados en general.'),
 
-        React.createElement(LayeredTabs, { fondoBarColor, ptgnBarColor, fondoColor, slcPptgnColor, tabBarPosition, maxSize, tabWidth },
+        React.createElement(LayeredTabs, { fondoBarColor, ptgnBarColor, fondoColor, slcPptgnColor, tabBarPosition, maxSize, tabWidth, fixedMaxSize },
           tabsContentList.map((tab, index) => React.createElement(LayeredTabs.Tab, { key: index, title: tab.title, ...(tab.independentBgColor && { independentBgColor: tab.independentBgColor }), ...(tab.independentTxColor && { independentTxColor: tab.independentTxColor }) }, tab.content ) ) ),
 
 /*
@@ -192,13 +207,6 @@ const LayeredTabsArticulo: React.FC = () => {
             'En esta interfaz se pueden conocer las opciones personalizables que dispone el componente.'),
 
         React.createElement('h5', { style: { ...h5Style } },
-            'Largo de las pestañas' ),
-        React.createElement('p', { style: { ...pStyleC } },
-              [ { label: 5 },
-                { label: 8 },
-                { label: 11 } ].map(({ label }, index) => React.createElement( 'span', { key: index, onClick: () => label !== tabWidth ? setTabWidth(label) : null, style: { ...tabWidthStyle(label) } }, label ) ) ),
-
-        React.createElement('h5', { style: { ...h5Style } },
             `Posición de la barra de pestañas` ),
         React.createElement('p', { style: { ...pStyleC } },
               [ { label: "Arriba", state: 0 },
@@ -207,13 +215,26 @@ const LayeredTabsArticulo: React.FC = () => {
                 { label: "Abajo", state: 3 } ].map(({ label, state }, index) => React.createElement( 'span', { key: index, onClick: () => state !== tabBarPosition ? setTabBarPosition(state) : null, style: { ...tabBarPositionStyle(state) } }, label ) ) ),
 
         React.createElement('h5', { style: { ...h5Style } },
-            'Tamaño máximo' ),
+            'Tamaño máximo de la barra de pestañas' ),
         React.createElement('p', { style: { ...pStyleC } },
               [ { label: "xl" },
                 { label: "lg" },
                 { label: "md" },
                 { label: "sm" },
                 { label: "xs" } ].map(({ label }, index) => React.createElement( 'span', { key: index, onClick: () => label !== maxSize ? setMaxSize(label) : null, style: { ...maxSizeStyle(label) } }, label ) ) ),
+
+        React.createElement('h5', { style: { ...h5Style } },
+            'Tamaño fijo de la barra de pestañas' ),
+        React.createElement('p', { style: { ...pStyleC } },
+              [ { label: "Fijo", value: true },
+                { label: "Dinámico", value: false } ].map(({ label, value }, index) => React.createElement( 'span', { key: index, onClick: () => value !== fixedMaxSize ? setFixedMaxSize(value) : null, style: { ...fixedMaxSizeStyle(value) } }, label ) ) ),
+
+        React.createElement('h5', { style: { ...h5Style } },
+            'Largo de las pestañas' ),
+        React.createElement('p', { style: { ...pStyleC } },
+              [ { label: 5 },
+                { label: 8 },
+                { label: 11 } ].map(({ label }, index) => React.createElement( 'span', { key: index, onClick: () => label !== tabWidth ? setTabWidth(label) : null, style: { ...tabWidthStyle(label) } }, label ) ) ),
 
         React.createElement('h5', { style: { ...h5Style } },
             'Color de la pestaña seleccionada' ),
