@@ -189,15 +189,15 @@ type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabPro
 
   if (!screenReady) return null;
 
-  return React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto`, background: isValidCssColor(fondoColor) ? fondoColor : 'transparent' } },
+  return React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%`, background: isValidCssColor(fondoColor) ? fondoColor : 'transparent' } },
 
-          React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `auto` } },
+          React.createElement('div', { style: { display: 'grid', gap: '0', gridTemplateRows: tabBarPosition === 0  ? dinamicSize(2.125) + 'rem auto' : tabBarPosition === 1 ? dinamicSize(2.125 + 1.4164) + 'rem auto' : tabBarPosition === 2 ? 'auto ' + dinamicSize(2.125 + 1.4164) + 'rem' : 'auto ' + dinamicSize(2.125) + 'rem', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%` } },
 
               // maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)',
-            ( tabBarPosition === 2 || tabBarPosition === 3 ) && React.createElement('section', { style: { zIndex: 10, height: dinamicSize(18) + 'rem', overflowY: 'scroll',  display: 'block', background: tabsColorsList[currentTab] ? tabsColorsList[currentTab] :  isValidCssColor(fondoColor) ? fondoColor : 'transparent', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
+            ( tabBarPosition === 2 || tabBarPosition === 3 ) && React.createElement('section', { style: { height: '100%' /*dinamicSize(18) + 'rem' */, zIndex: 10, overflowY: 'scroll',  display: 'block', background: tabsColorsList[currentTab] ? tabsColorsList[currentTab] :  isValidCssColor(fondoColor) ? fondoColor : 'transparent', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
               typeof tabsContentList[currentTab] === 'string' ? React.createElement('p', { style: { transition: 'all 150ms linear', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: tabsTextList[currentTab] ? tabsTextList[currentTab] : 'rgba(51,65,85,0.6)', lineHeight: 1.625, padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0' } }, tabsContentList[currentTab] ) : tabsContentList[currentTab] ?? null ),
 
-            React.createElement('div', { style: { overflowY: 'hidden', display: 'block', padding: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', /* maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)' */ margin: tabBarPosition === 0 ? '0 0 -' + dinamicSize(1.4164) + 'rem  0' : tabBarPosition === 3 ? '-' + dinamicSize(1.4164) + 'rem 0 0 0' : '0' } },
+            React.createElement('section', { style: { height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', overflowY: 'hidden', display: 'block', padding: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, /* maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)' */ margin: tabBarPosition === 0 ? '0 0 -' + dinamicSize(1.4164) + 'rem  0' : tabBarPosition === 3 ? '-' + dinamicSize(1.4164) + 'rem 0 0 0' : '0' } },
 
                 React.createElement("div", { style: { zIndex: zIndexMax, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", pointerEvents: 'none', backgroundImage: tabBarPosition === 0 || tabBarPosition === 2 ? "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)" : "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)" } } ),
 
@@ -224,7 +224,7 @@ type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabPro
 
               // dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem'
               // maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)',
-            ( tabBarPosition === 0 || tabBarPosition === 1 ) && React.createElement('section', { style: { zIndex: 10, height: dinamicSize(18) + 'rem', overflowY: 'scroll', display: 'block', background: tabsColorsList[currentTab] ? tabsColorsList[currentTab] : isValidCssColor(fondoColor) ? fondoColor : 'transparent', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
+            ( tabBarPosition === 0 || tabBarPosition === 1 ) && React.createElement('section', { style: { zIndex: 10, height: '100%' /* dinamicSize(18) + 'rem' */, overflowY: 'scroll', display: 'block', background: tabsColorsList[currentTab] ? tabsColorsList[currentTab] : isValidCssColor(fondoColor) ? fondoColor : 'transparent', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
               typeof tabsContentList[currentTab] === 'string' ? React.createElement('p', { style: { transition: 'all 150ms linear', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: tabsTextList[currentTab] ? tabsTextList[currentTab] : 'rgba(51,65,85,0.6)', lineHeight: 1.625, padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0' } }, tabsContentList[currentTab] ) : tabsContentList[currentTab] ?? null ),
 
           ),
@@ -237,3 +237,5 @@ type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabPro
 LayeredTabs.Tab = Tab;
 
 export default LayeredTabs;
+
+// <div className={` grid grid-rows-2 `} ></div>
