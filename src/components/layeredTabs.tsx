@@ -181,7 +181,7 @@ type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabPro
 
     const tabsTransition = (transProp: string): React.CSSProperties => ({
       transitionProperty: transProp,
-      transitionDuration: '80ms',
+      transitionDuration: '130ms',
       transitionTimingFunction: 'linear' });
 
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
