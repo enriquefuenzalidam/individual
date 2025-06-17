@@ -8,15 +8,16 @@ function isValidCssColor(color: string): boolean {
 }
 
 interface LayeredTabsParams {
-    fondoBarColor: string;
-    ptgnBarColor: string;
-    fondoColor: string;
-    slcPptgnColor: string;
+    fondoBarColor?: string;
+    ptgnBarColor?: string;
+    fondoColor?: string;
+    slcPptgnColor?: string;
     tabBarPostn?: number;
-    maxSize: string;
+    maxSize?: string;
     children?: React.ReactNode;
     tabWidth?: number;
-    fixedMaxSize?: boolean; };
+    fixedMaxSize?: boolean;
+    fullWindow?: boolean; };
 
 export interface TabProps {
   title?: string;
@@ -31,7 +32,7 @@ Tab.displayName = "LayeredTabs.Tab";
 
 type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabProps>; };
 
-  const LayeredTabs: LayeredTabsComponent = ({ fondoBarColor = "white", ptgnBarColor = "white", fondoColor = "transparent", slcPptgnColor = "white", tabBarPostn = 0, maxSize = "xl", children, tabWidth = 8, fixedMaxSize = false } ) => {
+  const LayeredTabs: LayeredTabsComponent = ({ fondoBarColor = "white", ptgnBarColor = "white", fondoColor = "transparent", slcPptgnColor = "white", tabBarPostn = 0, maxSize = "xl", children, tabWidth = 8, fixedMaxSize = false, fullWindow = true } ) => {
 
   const [tabBarPosition, setTabBarPosition] = useState(0);
   useEffect(() => {
@@ -108,8 +109,8 @@ type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabPro
   const zIndexMax = tabsTitleList.length + 10;
   const getZIndex = (index: number, currentTab: number, topZIndex: number) => topZIndex - Math.abs(index - currentTab); 
 
-  const shortenTitle = (title: string, language: string, maxChars: number): string => {
-
+  const shortenTitle = (title: string | undefined, language: string, maxChars: number): string => {
+    if (!title) return '';
     if (title.length <= maxChars) return title;
 
     const vowelMap: { [key: string]: string } = {
@@ -169,6 +170,13 @@ type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabPro
 
   const shortenedTitles = useMemo(() =>
     tabsTitleList.map( (title, index) => {
+    if (!title) {
+      return {
+        title: '',
+        shortened: '',
+        longShortened: '',
+        isShortened: false,
+        isLongShortened: false } }
     const shortened = shortenTitle(title as string, tabsTitleLangList[index] ? tabsTitleLangList[index] : 'en', titlesLongs.shortened);
     const longShortened = shortenTitle(title as string, tabsTitleLangList[index] ? tabsTitleLangList[index] : 'en', titlesLongs.longShortened);
     return {
@@ -189,15 +197,16 @@ type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabPro
 
   if (!screenReady) return null;
 
-  return React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%`, background: isValidCssColor(fondoColor) ? fondoColor : 'transparent' } },
+  return React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', width: `100%`, height: `100%`, background: isValidCssColor(fondoColor) ? fondoColor : 'transparent', position: fullWindow ? 'fixed' : 'relative', left: fullWindow ? '0' : 'auto', top: fullWindow ? '0' : 'auto', zIndex: fullWindow ? '999' : 'auto' } },
 
-          React.createElement('div', { style: { display: 'grid', gap: '0', gridTemplateRows: tabBarPosition === 0  ? dinamicSize(2.125) + 'rem auto' : tabBarPosition === 1 ? dinamicSize(2.125 + 1.4164) + 'rem auto' : tabBarPosition === 2 ? 'auto ' + dinamicSize(2.125 + 1.4164) + 'rem' : 'auto ' + dinamicSize(2.125) + 'rem', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%` } },
+          React.createElement('div', { style: { display: 'grid', gap: '0', gridTemplateColumns: '1fr', gridTemplateRows: tabBarPosition === 0  ? dinamicSize(2.125) + 'rem 1fr' : tabBarPosition === 1 ? dinamicSize(2.125 + 1.4164) + 'rem 1fr' : tabBarPosition === 2 ? '1fr ' + dinamicSize(2.125 + 1.4164) + 'rem' : '1fr ' + dinamicSize(2.125) + 'rem', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%` } },
 
               // maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 91%, rgba(0,0,0,0) 100%)',
             ( tabBarPosition === 2 || tabBarPosition === 3 ) && React.createElement('section', { style: { height: '100%' /*dinamicSize(18) + 'rem' */, zIndex: 10, overflowY: 'scroll',  display: 'block', background: tabsColorsList[currentTab] ? tabsColorsList[currentTab] :  isValidCssColor(fondoColor) ? fondoColor : 'transparent', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%` } },
               typeof tabsContentList[currentTab] === 'string' ? React.createElement('p', { style: { transition: 'all 150ms linear', display: 'block', position: 'relative', boxSizing: 'border-box', hyphens: 'auto', textAlign: 'justify', textIndent: dinamicSize(1) + 'rem', fontSize: dinamicSize(1.125) + 'rem', fontWeight: 400, color: tabsTextList[currentTab] ? tabsTextList[currentTab] : 'rgba(51,65,85,0.6)', lineHeight: 1.625, padding: dinamicSize(1.3)+ 'rem ' + dinamicSize(1.5) + 'rem', margin: '0' } }, tabsContentList[currentTab] ) : tabsContentList[currentTab] ?? null ),
 
-            React.createElement('section', { style: { height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', overflowY: 'hidden', display: 'block', padding: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, /* maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)' */ margin: tabBarPosition === 0 ? '0 0 -' + dinamicSize(1.4164) + 'rem  0' : tabBarPosition === 3 ? '-' + dinamicSize(1.4164) + 'rem 0 0 0' : '0' } },
+            // Tabbar // maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%)'  
+            React.createElement('section', { style: { height: dinamicSize(2.125) + dinamicSize(1.4164) + 'rem', overflowY: 'hidden', display: 'block', padding: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, margin: tabBarPosition === 0 ? '0 0 -' + dinamicSize(1.4164) + 'rem  0' : tabBarPosition === 3 ? '-' + dinamicSize(1.4164) + 'rem 0 0 0' : '0' } },
 
                 React.createElement("div", { style: { zIndex: zIndexMax, display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", pointerEvents: 'none', backgroundImage: tabBarPosition === 0 || tabBarPosition === 2 ? "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)" : "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 5%, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.01) 21%, rgba(0,0,0,0) 100%)" } } ),
 
@@ -231,11 +240,8 @@ type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabPro
 
           React.createElement('div', { style: { zIndex: 200, display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: 0, boxShadow: 'inset 0 0.1rem 0.6rem rgba(0, 0, 0, 0.15)', pointerEvents: 'none' } } )
 
-        )
-    };
+        ) };
 
 LayeredTabs.Tab = Tab;
 
 export default LayeredTabs;
-
-// <div className={` grid grid-rows-2 `} ></div>

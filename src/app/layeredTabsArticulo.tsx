@@ -103,6 +103,11 @@ const LayeredTabsArticulo: React.FC = () => {
     const tabWidthStyle = (label: number): React.CSSProperties => ({
       ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: label === tabWidth ? 600 : 400, color: label === tabWidth ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === tabWidth ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === tabWidth ? 'default' : 'pointer',
       });
+
+    const fullWindowStyle = (value: boolean): React.CSSProperties => ({
+      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fullWindow === value ? 600 : 400, color: fullWindow === value ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: fullWindow === value ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: fullWindow === value ? 'default' : 'pointer',
+      });
+  
   
     // colores botones
     const selccPgnClr = (colorValue: string): React.CSSProperties => ({
@@ -134,6 +139,9 @@ const LayeredTabsArticulo: React.FC = () => {
 
   const [tabWidth, setTabWidth] = useState<number>(8);
   const [tabBarPosition, setTabBarPosition] = useState<number>(1);
+  const [fullWindow, setFullWindow] = useState<boolean>(false);
+
+  const [fwButtonMouseOver, setFwButtonMouseOver] = useState<boolean>(false);
 
   const bgExampleColors = [
     { label: "Transparent", hexCode: "transparent" },
@@ -184,8 +192,11 @@ const LayeredTabsArticulo: React.FC = () => {
           'Aquí se presenta el componente con seis pestañas, las dos primeras pestañas conteniendo otras páginas web y sin colores asignados, una tercera pestaña conteniendo texto plano y con colores asignados, y tres pestañas más con textos planos y sin colores asignados. Tanto las dos primeras pestañas como las tres últimas toman los colores asignados en general.'),
 
         React.createElement('div', { style: { width: '100%', height: dinamicSize(21.5414) + 'rem', boxSizing: 'border-box', display: 'block', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0' } },
-          React.createElement(LayeredTabs, { fondoBarColor, ptgnBarColor, fondoColor, slcPptgnColor, tabBarPostn: tabBarPosition, maxSize, tabWidth, fixedMaxSize },
+          React.createElement(LayeredTabs, { fondoBarColor, ptgnBarColor, fondoColor, slcPptgnColor, tabBarPostn: tabBarPosition, maxSize, tabWidth, fixedMaxSize, fullWindow },
             tabsContentList.map((tab, index) => React.createElement(LayeredTabs.Tab, { key: index, title: tab.title, ...(tab.independentBgColor && { independentBgColor: tab.independentBgColor }), ...(tab.independentTxColor && { independentTxColor: tab.independentTxColor }) }, tab.content ) ) ) ),
+
+        fullWindow && React.createElement('div', { onClick: () => { setFullWindow(false); setFwButtonMouseOver(false) }, onMouseOver: () => setFwButtonMouseOver(true), onMouseOut: () => setFwButtonMouseOver(false), style: { boxSizing: 'border-box', borderRadius: '0.375rem', borderWidth: dinamicSize(0.1) + 'rem', borderStyle: 'solid', borderColor: fwButtonMouseOver ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0.2)', position: 'fixed', left: dinamicSize(2) + 'rem', bottom: dinamicSize(2) + 'rem', zIndex: '1001', textAlign: 'center', verticalAlign: 'top', background: fwButtonMouseOver ? 'black' : '#fffaf4', width: 'auto', height: 'auto', margin: '0', padding: dinamicSize(0.6) + 'rem', fontWeight: 500, color: fwButtonMouseOver ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.4)', cursor: 'pointer', boxShadow: '0 ' + dinamicSize(0.625) + 'rem ' + dinamicSize(0.9375) + 'rem -' + dinamicSize(0.1875) + `rem rgb(0,0,0,${ fwButtonMouseOver ? '1' : '0.6' } ), 0 ` + dinamicSize(0.25) + 'rem ' + dinamicSize(0.375) + 'rem -' + dinamicSize(0.25) + 'rem rgb(0,0,0,0.1)', transition: 'all 100ms linear', fontSize: dinamicSize(0.9) + 'rem' } }, 'Cerrar ventana completa' ) ,
+
 /*
         <LayeredTabs fondoBarColor={fondoBarColor} ptgnBarColor={ptgnBarColor} fondoColor={fondoColor} slcPptgnColor={slcPptgnColor} tabBarPosition={tabBarPosition} maxSize={maxSize}>
           <LayeredTabs.Tab title="Hola A">
@@ -205,6 +216,12 @@ const LayeredTabsArticulo: React.FC = () => {
             `Apariencia personalizable` ),
         React.createElement('p', { style: { ...pStyleB } },
             'En esta interfaz se pueden conocer las opciones personalizables que dispone el componente.'),
+
+        React.createElement('h5', { style: { ...h5Style } },
+            'Ventana completa' ),
+        React.createElement('p', { style: { ...pStyleC } },
+              [ { label: "Ventana", value: true },
+                { label: "Contenedor", value: false } ].map(({ label, value }, index) => React.createElement( 'span', { key: index, onClick: () => value !== fixedMaxSize ? setFullWindow(value) : null, style: { ...fullWindowStyle(value) } }, label ) ) ),
 
         React.createElement('h5', { style: { ...h5Style } },
             `Posición de la barra de pestañas` ),
@@ -262,3 +279,5 @@ const LayeredTabsArticulo: React.FC = () => {
 }
 
 export default LayeredTabsArticulo;
+
+
