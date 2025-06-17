@@ -1,6 +1,8 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useMemo, useCallback } from 'react';
+import Link from 'next/link';
 import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
 import LayeredTabs from '@/components/layeredTabs';
+import ExtLink from '@/components/extLink';
 
 
 const LayeredTabsArticulo: React.FC = () => {
@@ -18,6 +20,11 @@ const LayeredTabsArticulo: React.FC = () => {
       { title: 'Quisque Luctus', content: 'Quisque luctus ac nulla feugiat egestas. Donec non felis sed enim aliquet gravida. Nam rhoncus sapien quis lacus bibendum sagittis. Sed ligula risus, porta sed venenatis et, interdum id sem. Proin viverra at eros non convallis. Nulla finibus mollis enim, in placerat lacus facilisis eget. Maecenas placerat elementum lectus, ultrices tristique justo cursus elementum. Donec dolor risus, accumsan ac nunc eu, volutpat feugiat libero. Ut id augue nisi. Pellentesque at felis non massa interdum rhoncus. Morbi consectetur blandit tincidunt. Curabitur a odio gravida, consectetur metus vitae, sagittis diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer non pulvinar nisl.'},
       { title: 'Vestibulum Hendrerit Metus', content: 'Vestibulum hendrerit metus sit amet maximus euismod. Sed nec elementum nisi, non lobortis tellus. Curabitur odio felis, commodo hendrerit dui ut, ultrices pretium odio. Nunc congue et nisl et facilisis. Etiam porta erat purus, nec cursus felis elementum a. Cras eu arcu commodo, lobortis nulla quis, porttitor ligula. Duis nec odio elit. Aenean sed viverra lorem, vitae mattis est. Donec fringilla sollicitudin nulla, sed fermentum elit sollicitudin sed. Sed ut ligula in urna lobortis lacinia. Phasellus nisl velit, euismod quis lorem at, aliquet tristique urna. Proin at pellentesque enim, ac finibus elit.'},
   ];
+
+
+  const repDemoTtl = useRef<HTMLHeadingElement>(null);
+
+  const [repIsHovered, setRepIsHovered] = useState(false);
 
   const { screenReady, xlScreen, lgScreen, mdScreen, smScreen } = UsePantallaTamagnos();
 
@@ -59,6 +66,10 @@ const LayeredTabsArticulo: React.FC = () => {
   const h4Style: React.CSSProperties = useMemo(() =>({
     ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,1)', fontWeight: '600', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem'
   }),[nullBlockStyle, lgScreen, xlScreen ]);
+
+  const h4StyleB: React.CSSProperties = useMemo(() => ({
+    ...h4Style, marginTop: xlScreen || lgScreen ? '3.5rem' : mdScreen ? '2.5rem' : smScreen ? '2rem' : '2rem'
+  }), [h4Style, xlScreen, lgScreen, mdScreen, smScreen])
 
   /*
     const h4StyleB: React.CSSProperties = useMemo(() => ({
@@ -164,7 +175,7 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'linear-gradient( to right, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to right, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)', pointerEvents: 'none' } } ),
 
         React.createElement('p', { style: { ...pStyleB } },
-          'Presentar contenido en capas navegables a través de pestañas, es una forma tradicional de ordenamiento en páginas y sitios webs. ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' procura hacer muy simple la implementación de esta forma de organizar contenido web, proporciona formatos distintos y apariencia personalizable. Aún en desarrollo.'),
+          'Presentar contenido en capas navegables a través de pestañas, es una forma tradicional de ordenamiento en páginas y sitios webs. ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' procura hacer muy simple la implementación de esta forma de organizar contenido web, proporciona formatos distintos y apariencia personalizable. Un repositorio demo ya se encuentra disponible y, pronto, un paquete npm instalable.'),
 
         React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
           `La barra de pestaña` ),
@@ -272,6 +283,13 @@ const LayeredTabsArticulo: React.FC = () => {
             'Color de la capa de contenido' ),
         React.createElement('p', { style: { ...pStyleC } },
             bgExampleColors.map(({ label, hexCode }, index) => React.createElement( 'span', { key: index, onClick: () => hexCode !== fondoColor ? setFondoColor(hexCode) : null, style: { ...fondoClr(hexCode) } }, label ) ) ),
+
+          React.createElement('h4', { ref: repDemoTtl, style: { ...h4StyleB  } },
+              `Repositorio demo` ),
+          React.createElement('p', { style: { ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 2.25rem' : mdScreen ? '0.75rem 0 2rem 0' : smScreen ? '0.5rem 0 1.75rem 0' : '0.5rem 0 1.75rem 0' } },
+              'En el siguiente enlace se encuentra un respositorio GitHub el cual contiene un proyecto Next.js en blanco, solo con el componente ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' implementado. Al descargarlo y seguir las instrucciones del archivo README.md, el proyecto corre de forma local y muestra a ', React.createElement('span', { style: {  ...pBold } }, 'LayeredTabs'), ' en funcionamiento. Permite controlar las opciones personalizables, conocer el código fuente y usarlo en proyectos Next.js.' ),
+          React.createElement('p', { style: { display: 'block', boxSizing: 'border-box', position: 'relative', textIndent: lgScreen || xlScreen ? '-1.5rem' : mdScreen ? '-1.25rem' : '-1rem', hyphens: 'auto', textAlign: 'left', fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 2.25rem 3rem' : mdScreen ? '0.75rem 0 2rem 2.5rem' : '0.5rem 0 1.75rem 2rem' } },
+            React.createElement('span', { style: { ...pBold } }, '—'), React.createElement(Link, { lang: 'en', onMouseEnter: () => setRepIsHovered(true), onMouseLeave: () => setRepIsHovered(false), href: 'https://github.com/enriquefuenzalidam/layeredtabs', target: '_blank', rel: 'noopener noreferrer', title: 'Ir repositorio en GitHub de LayeredTabs', style: { ...pBold, fontStyle: 'italic', textDecoration: repIsHovered ? 'underline' : 'none', } }, 'github.com/enriquefuenzalidam/layeredtabs', React.createElement('span', { style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', margin: '0 0 0 0.35rem', padding: '0', width: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem', height: 'auto', verticalAlign: 'text-bottom' } }, React.createElement(ExtLink, null) ) ) )
 
       )
     )
