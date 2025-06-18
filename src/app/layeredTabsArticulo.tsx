@@ -22,7 +22,18 @@ const LayeredTabsArticulo: React.FC = () => {
   ];
 
 
+  const barrPstTtl = useRef<HTMLHeadingElement>(null);
+  const responsTtl = useRef<HTMLHeadingElement>(null);
+  const lasPestTtl = useRef<HTMLHeadingElement>(null);
+  const cntColrTtl = useRef<HTMLHeadingElement>(null);
+  const aparPerTtl = useRef<HTMLHeadingElement>(null);
   const repDemoTtl = useRef<HTMLHeadingElement>(null);
+
+  const scrollTo = (ref: React.RefObject<HTMLElement | null>) => {
+    const el = ref.current;
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.pageYOffset - 48;
+    window.scrollTo({ top: y, behavior: 'smooth' } ) };
 
   const [repIsHovered, setRepIsHovered] = useState(false);
 
@@ -55,9 +66,21 @@ const LayeredTabsArticulo: React.FC = () => {
     ...pStyle, display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500', color: 'rgba(51,65,85,1)'
   }), [pStyle]);
 
+  const h4BStyle: React.CSSProperties = useMemo(() =>({
+    ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,1)', fontWeight: '500', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem', padding: '0', margin: xlScreen || lgScreen ? '1.7rem 0 0.5rem 1.5rem' : mdScreen ? '1.3rem 0 0.5rem 1.25rem' : '1rem 0 0.5rem 1rem'
+  }),[nullBlockStyle, mdScreen, lgScreen, xlScreen ]);
+
   const h5Style: React.CSSProperties = useMemo(() =>({
     hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,0.8)', fontWeight: 400, lineHeight: '1.5', fontSize: lgScreen || xlScreen ? '1.25rem' : mdScreen || smScreen ? '1.125rem' : '1.125rem', margin: lgScreen || xlScreen ? '2rem 0 0 0' : mdScreen ? '1.5rem 0 0 0' : smScreen ? '1.25rem 0 0 0' : '1.25rem 0 0 0',
   }), [xlScreen, lgScreen, mdScreen, smScreen]);
+
+  const navRapLi: React.CSSProperties = useMemo(() => ({
+    ...nullBlockStyle, hyphens: 'auto', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 400, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 0 1.5rem' : mdScreen ? '0.75rem 0 0 1.25rem' : smScreen ? '0.5rem 0 0 0' : '0.5rem 0 0 1rem'
+  }), [ nullBlockStyle, xlScreen, lgScreen, mdScreen, smScreen]);
+
+  const navRapSp: React.CSSProperties = useMemo(() => ({
+    ...nullStyle, cursor: 'pointer', display: 'inline', padding: '0', margin: '0'
+  }), [nullStyle]);
 
   const pStyleC: React.CSSProperties = useMemo(() => ({
     marginTop: lgScreen ? '0.5rem' : '0.25rem', textAlign: 'left', fontSize: '1.125rem', lineHeight: '1.5'
@@ -177,25 +200,39 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('p', { style: { ...pStyleB } },
           'Presentar contenido en capas navegables a través de pestañas, es una forma tradicional de ordenamiento en páginas y sitios webs. ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' procura hacer muy simple la implementación de esta forma de organizar contenido web, proporciona formatos distintos y apariencia personalizable. Un repositorio demo ya se encuentra disponible y, pronto, un paquete npm instalable.'),
 
-        React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+          React.createElement('h4', { style: { ...h4BStyle } },
+            'Navegación rápida:' ),
+          React.createElement('ul', { style: { ...nullBlockStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 3.8rem 0' : mdScreen ? '0.75rem 0 3rem 0' : smScreen ? '0.5rem 0 2.2rem 0' : '0.5rem 0 2rem 0' } },
+            [ { label: 'La barra de pestaña', ref: barrPstTtl },
+              { label: 'Responsividad de la barra de pestañas', ref: responsTtl },
+              { label: 'Las pestañas', ref: lasPestTtl },
+              { label: 'El contenido y los colores', ref: cntColrTtl },
+              { label: 'Apariencia personalizable', ref: aparPerTtl },
+              { label: 'Repositorio demo', ref: repDemoTtl } ].map(({ label, ref }, index) =>
+              React.createElement('li', { key: index, style: { ...navRapLi } },
+                `${index + 1}.— `, React.createElement('span', { onClick: () => scrollTo(ref), style: { ...navRapSp }, className: `hover:underline` }, label ) ) ) ),
+
+          React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: xlScreen || lgScreen ? '0.1rem' : mdScreen ? '0.075rem' :  '0.05rem', background: 'rgba(51,65,85,0.3)' } } ), 
+
+        React.createElement('h4', { ref: barrPstTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
           `La barra de pestaña` ),
         React.createElement('p', { style: { ...pStyleB } },
           'La barra de pestañas es deslizable desde un touchscreen, un trackpad o un mousewheel, puede posicionarse en la parte superior o inferior y su tamaño se ajusta siguiendo responsividad.'),
 
-        React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+        React.createElement('h4', { ref: responsTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
           `Responsividad de la barra de pestañas` ),
         React.createElement('p', { style: { ...pStyleB } },
           'El tamaño de la barra de pestañas es responsivo y puede ajustarse a cinco tamaños máximos predefinidos. La responsividad puede ser inactivada dejando fijo el tamaño máximo seleccionado.'),
 
-        React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+        React.createElement('h4', { ref: lasPestTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
           `Las pestañas` ),
         React.createElement('p', { style: { ...pStyleB } },
           'Todas las pestañas tienen ancho igual y fijo, excepto la seleccionada y la que tenga el cursor encima. Tanto la seleccionada como la que tenga el cursor encima, pueden tomar dos otros anchos conforme al largo del título el cual es acortado también. Los títulos demasiado largos son acortados en todos los casos.'),
 
-        React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+        React.createElement('h4', { ref: cntColrTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
           `El contenido y los colores` ),
         React.createElement('p', { style: { ...pStyleB } },
-          'Las capas pueden contener tanto texto plano como HTML. Los colores pueden ser asignados en general y/o para cada pestaña y capa por separado; la pestañas y capas sin colores asignados, toman los asignados en general.'),
+          'Las capas pueden contener tanto texto plano como HTML. Los colores pueden ser asignados en general y/o para cada pestaña y capa por separado; las pestañas y capas sin colores asignados, toman los asignados en general.'),
 
         React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: xlScreen || lgScreen ? '0.1rem' : mdScreen ? '0.075rem' :  '0.05rem', background: 'rgba(51,65,85,0.3)', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } } ), 
 
@@ -206,7 +243,7 @@ const LayeredTabsArticulo: React.FC = () => {
           React.createElement(LayeredTabs, { fondoBarColor, ptgnBarColor, fondoColor, slcPptgnColor, tabBarPostn: tabBarPosition, maxSize, tabWidth, fixedMaxSize, fullWindow },
             tabsContentList.map((tab, index) => React.createElement(LayeredTabs.Tab, { key: index, title: tab.title, ...(tab.independentBgColor && { independentBgColor: tab.independentBgColor }), ...(tab.independentTxColor && { independentTxColor: tab.independentTxColor }) }, tab.content ) ) ) ),
 
-        fullWindow && React.createElement('div', { onClick: () => { setFullWindow(false); setFwButtonMouseOver(false) }, onMouseOver: () => setFwButtonMouseOver(true), onMouseOut: () => setFwButtonMouseOver(false), style: { boxSizing: 'border-box', borderRadius: '0.375rem', borderWidth: dinamicSize(0.1) + 'rem', borderStyle: 'solid', borderColor: fwButtonMouseOver ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0.2)', position: 'fixed', left: dinamicSize(2) + 'rem', bottom: dinamicSize(2) + 'rem', zIndex: '1001', textAlign: 'center', verticalAlign: 'top', background: fwButtonMouseOver ? 'black' : '#fffaf4', width: 'auto', height: 'auto', margin: '0', padding: dinamicSize(0.6) + 'rem', fontWeight: 500, color: fwButtonMouseOver ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.4)', cursor: 'pointer', boxShadow: '0 ' + dinamicSize(0.625) + 'rem ' + dinamicSize(0.9375) + 'rem -' + dinamicSize(0.1875) + `rem rgb(0,0,0,${ fwButtonMouseOver ? '1' : '0.6' } ), 0 ` + dinamicSize(0.25) + 'rem ' + dinamicSize(0.375) + 'rem -' + dinamicSize(0.25) + 'rem rgb(0,0,0,0.1)', transition: 'all 100ms linear', fontSize: dinamicSize(0.9) + 'rem' } }, 'Cerrar ventana completa' ) ,
+        fullWindow && React.createElement('div', { onClick: () => { setFullWindow(false); setFwButtonMouseOver(false) }, onMouseOver: () => setFwButtonMouseOver(true), onMouseOut: () => setFwButtonMouseOver(false), style: { boxSizing: 'border-box', borderRadius: '0.375rem', borderWidth: dinamicSize(0.1) + 'rem', borderStyle: 'solid', borderColor: fwButtonMouseOver ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.2)', position: 'fixed', left: '50%', bottom: dinamicSize(2) + 'rem', transform: 'translateX(-50%)', zIndex: '1001', textAlign: 'center', verticalAlign: 'top', background: fwButtonMouseOver ? 'black' : '#fffaf4', width: 'auto', height: 'auto', margin: '0', padding: dinamicSize(0.3) + 'rem ' + dinamicSize(1) + 'rem', fontWeight: 500, color: fwButtonMouseOver ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.4)', cursor: 'pointer', boxShadow: '0 ' + dinamicSize(0.625) + 'rem ' + dinamicSize(0.9375) + 'rem -' + dinamicSize(0.1875) + `rem rgb(0,0,0,${ fwButtonMouseOver ? '1' : '0.6' } ), 0 ` + dinamicSize(0.25) + 'rem ' + dinamicSize(0.375) + 'rem -' + dinamicSize(0.25) + 'rem rgb(0,0,0,0.1)', transition: 'all 100ms linear', fontSize: dinamicSize(0.9) + 'rem' } }, 'Cerrar ventana completa' ) ,
 
 /*
         <LayeredTabs fondoBarColor={fondoBarColor} ptgnBarColor={ptgnBarColor} fondoColor={fondoColor} slcPptgnColor={slcPptgnColor} tabBarPosition={tabBarPosition} maxSize={maxSize}>
@@ -223,7 +260,7 @@ const LayeredTabsArticulo: React.FC = () => {
         </LayeredTabs>,
 */
 
-        React.createElement('h4', { style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
+        React.createElement('h4', { ref: aparPerTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
             `Apariencia personalizable` ),
         React.createElement('p', { style: { ...pStyleB } },
             'En esta interfaz se pueden conocer las opciones personalizables que dispone el componente.'),
