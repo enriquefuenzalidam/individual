@@ -164,7 +164,7 @@ const LayeredTabsArticulo: React.FC = () => {
       else if (maxSize === "md") return xlScreen || lgScreen || mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
       else if (maxSize === "sm") return xlScreen || lgScreen || mdScreen || smScreen ? value * 1.1176 : value;
       else return value;
-    }, [maxSize, xlScreen, lgScreen, mdScreen, smScreen]);
+    }, [maxSize, xlScreen, lgScreen, mdScreen, smScreen])
   
   const [fondoBarColor, setFondoBarColor] = useState("#FFFFFF");
   const [ptgnBarColor, setPtgnBarColor] = useState("#FFFFFF");
