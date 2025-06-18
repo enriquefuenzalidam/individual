@@ -21,7 +21,6 @@ const LayeredTabsArticulo: React.FC = () => {
       { title: 'Vestibulum Hendrerit Metus', content: 'Vestibulum hendrerit metus sit amet maximus euismod. Sed nec elementum nisi, non lobortis tellus. Curabitur odio felis, commodo hendrerit dui ut, ultrices pretium odio. Nunc congue et nisl et facilisis. Etiam porta erat purus, nec cursus felis elementum a. Cras eu arcu commodo, lobortis nulla quis, porttitor ligula. Duis nec odio elit. Aenean sed viverra lorem, vitae mattis est. Donec fringilla sollicitudin nulla, sed fermentum elit sollicitudin sed. Sed ut ligula in urna lobortis lacinia. Phasellus nisl velit, euismod quis lorem at, aliquet tristique urna. Proin at pellentesque enim, ac finibus elit.'},
   ];
 
-
   const barrPstTtl = useRef<HTMLHeadingElement>(null);
   const responsTtl = useRef<HTMLHeadingElement>(null);
   const lasPestTtl = useRef<HTMLHeadingElement>(null);
@@ -29,15 +28,45 @@ const LayeredTabsArticulo: React.FC = () => {
   const aparPerTtl = useRef<HTMLHeadingElement>(null);
   const repDemoTtl = useRef<HTMLHeadingElement>(null);
 
+  const [repIsHovered, setRepIsHovered] = useState(false);
+  
+  const [maxSize, setMaxSize] = useState("xl");
+  const [fixedMaxSize, setFixedMaxSize] = useState<boolean>(false);
+
+  const [fondoBarColor, setFondoBarColor] = useState("#FFFFFF");
+  const [ptgnBarColor, setPtgnBarColor] = useState("#FFFFFF");
+  const [fondoColor, setFondoColor] = useState("#FFFFFF");
+  const [slcPptgnColor, setSlcPptgnColor] = useState("#FFFFFF");
+
+  const [tabWidth, setTabWidth] = useState<number>(8);
+  const [tabBarPosition, setTabBarPosition] = useState<number>(1);
+  const [fullWindow, setFullWindow] = useState<boolean>(false);
+
+  const [fwButtonMouseOver, setFwButtonMouseOver] = useState<boolean>(false);
+
+  const bgExampleColors = [
+    { label: "Transparent", hexCode: "transparent" },
+    { label: "White", hexCode: "FFFFFF" },
+    { label: "Alice Blue", hexCode: "EDF8FF" },
+    { label: "Azureish", hexCode: "D9E4FB" },
+    { label: "Lavender", hexCode: "E5E4F4" },
+    { label: "Isabelline", hexCode: "F8F0EC" },
+    { label: "Calcite", hexCode: "FDF9F0" },
+    { label: "Peridot", hexCode: "E8F1DE" } ];
+
+
+
+  const { screenReady, xlScreen, lgScreen, mdScreen, smScreen } = UsePantallaTamagnos();
+
+  const dinamicSize = useCallback((value: number) => {
+    return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
+  }, [ xlScreen, lgScreen, mdScreen, smScreen])
+  
   const scrollTo = (ref: React.RefObject<HTMLElement | null>) => {
     const el = ref.current;
     if (!el) return;
     const y = el.getBoundingClientRect().top + window.pageYOffset - 48;
     window.scrollTo({ top: y, behavior: 'smooth' } ) };
-
-  const [repIsHovered, setRepIsHovered] = useState(false);
-
-  const { screenReady, xlScreen, lgScreen, mdScreen, smScreen } = UsePantallaTamagnos();
 
   const [pageLoaded, setPageLoaded] = useState(false);
   useEffect(() => {
@@ -94,94 +123,41 @@ const LayeredTabsArticulo: React.FC = () => {
     ...h4Style, marginTop: xlScreen || lgScreen ? '3.5rem' : mdScreen ? '2.5rem' : smScreen ? '2rem' : '2rem'
   }), [h4Style, xlScreen, lgScreen, mdScreen, smScreen])
 
-  /*
-    const h4StyleB: React.CSSProperties = useMemo(() => ({
-      ...h4Style, marginTop: lgScreen ? '3.5rem' : mdScreen ? '2.5rem' : smScreen ? '2rem' : '2rem'
-    }), [h4Style, lgScreen, mdScreen, smScreen])
-  
-    const h4BStyle: React.CSSProperties = useMemo(() =>({
-      ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,1)', fontWeight: '500', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem', padding: '0', margin: xlScreen || lgScreen ? '1.7rem 0 0.5rem 1.5rem' : mdScreen ? '1.3rem 0 0.5rem 1.25rem' : '1rem 0 0.5rem 1rem'
-    }),[nullBlockStyle, mdScreen, lgScreen, xlScreen ]);
-  
-    const navRapLi: React.CSSProperties = useMemo(() => ({
-      ...nullBlockStyle, hyphens: 'auto', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 400, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 0 1.5rem' : mdScreen ? '0.75rem 0 0 1.25rem' : smScreen ? '0.5rem 0 0 0' : '0.5rem 0 0 1rem'
-    }), [ nullBlockStyle, xlScreen, lgScreen, mdScreen, smScreen]);
-  
-    const navRapSp: React.CSSProperties = useMemo(() => ({
-      ...nullStyle, cursor: 'pointer', display: 'inline', padding: '0', margin: '0'
-    }), [nullStyle]);
-  
-    const imgsDesc: React.CSSProperties = useMemo(() => ({
-      ...nullBlockStyle, hyphens: 'none', padding: '0', margin: xlScreen || lgScreen ? '0.5rem' : mdScreen ? '0.375rem 0 0 0' : smScreen ? '0.25rem 0 0 0' : '0.25rem 0 0 0', textAlign: 'center', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 300, color: 'rgba(51,65,85,0.4)', lineHeight: 1.625
-    }), [nullBlockStyle, xlScreen, lgScreen, mdScreen, smScreen]);
-  
-  */
+  const intrfzSelecc: React.CSSProperties = useMemo(() =>({
+    display: 'inline-block', height: '1.5rem', minWidth: '7rem', borderRadius: '0.375rem', textAlign: 'center', verticalAlign: 'top', paddingBottom: '1.75rem', margin: '0.5rem 0.5rem 0 0', borderStyle: 'solid',  
+  }), []);
 
-    // botones
-    const intrfzSelecc: React.CSSProperties = useMemo(() =>({
-      display: 'inline-block', height: '1.5rem', minWidth: '7rem', borderRadius: '0.375rem', textAlign: 'center', verticalAlign: 'top', paddingBottom: '1.75rem', margin: '0.5rem 0.5rem 0 0', borderStyle: 'solid',  
-    }), []);
+  const tabBarPositionStyle = (state: number): React.CSSProperties => ({
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: state === tabBarPosition ? 600 : 400, color: state === tabBarPosition ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: state === tabBarPosition ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: state === tabBarPosition ? 'default' : 'pointer',
+  });
 
-    const tabBarPositionStyle = (state: number): React.CSSProperties => ({
-      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: state === tabBarPosition ? 600 : 400, color: state === tabBarPosition ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: state === tabBarPosition ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: state === tabBarPosition ? 'default' : 'pointer',
-    });
+  const maxSizeStyle = (label: string): React.CSSProperties => ({
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: label === maxSize ? 600 : 400, color: label === maxSize ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === maxSize ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === maxSize ? 'default' : 'pointer',
+  });
+  
+  const fixedMaxSizeStyle = (value: boolean): React.CSSProperties => ({
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fixedMaxSize === value ? 600 : 400, color: fixedMaxSize === value ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: fixedMaxSize === value ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: fixedMaxSize === value ? 'default' : 'pointer',
+  });
+  
+  const tabWidthStyle = (label: number): React.CSSProperties => ({
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: label === tabWidth ? 600 : 400, color: label === tabWidth ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === tabWidth ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === tabWidth ? 'default' : 'pointer',
+  });
 
-    const maxSizeStyle = (label: string): React.CSSProperties => ({
-      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: label === maxSize ? 600 : 400, color: label === maxSize ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === maxSize ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === maxSize ? 'default' : 'pointer',
-      });
-  
-    const fixedMaxSizeStyle = (value: boolean): React.CSSProperties => ({
-      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fixedMaxSize === value ? 600 : 400, color: fixedMaxSize === value ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: fixedMaxSize === value ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: fixedMaxSize === value ? 'default' : 'pointer',
-      });
-  
-    const tabWidthStyle = (label: number): React.CSSProperties => ({
-      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: label === tabWidth ? 600 : 400, color: label === tabWidth ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: label === tabWidth ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: label === tabWidth ? 'default' : 'pointer',
-      });
+  const fullWindowStyle = (value: boolean): React.CSSProperties => ({
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fullWindow === value ? 600 : 400, color: fullWindow === value ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: fullWindow === value ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: fullWindow === value ? 'default' : 'pointer',
+  });
 
-    const fullWindowStyle = (value: boolean): React.CSSProperties => ({
-      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fullWindow === value ? 600 : 400, color: fullWindow === value ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: fullWindow === value ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: fullWindow === value ? 'default' : 'pointer',
-      });
-  
-  
-    // colores botones
-    const selccPgnClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: slcPptgnColor === colorValue ? 500 : 400, color: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: slcPptgnColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
-  
-    const pstgnClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: ptgnBarColor === colorValue ? 500 : 400, color: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: ptgnBarColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
-  
-    const fondoBarClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fondoBarColor === colorValue ? 500 : 400, color: fondoBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoBarColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
-  
-    const fondoClr = (colorValue: string): React.CSSProperties => ({
-      ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fondoColor === colorValue ? 500 : 400, color: fondoColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
-  
-    const [maxSize, setMaxSize] = useState("xl");
-    const [fixedMaxSize, setFixedMaxSize] = useState<boolean>(false);
-    const dinamicSize = useCallback((value: number) => {
-      return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
-    }, [ xlScreen, lgScreen, mdScreen, smScreen])
-  
-  const [fondoBarColor, setFondoBarColor] = useState("#FFFFFF");
-  const [ptgnBarColor, setPtgnBarColor] = useState("#FFFFFF");
-  const [fondoColor, setFondoColor] = useState("#FFFFFF");
-  const [slcPptgnColor, setSlcPptgnColor] = useState("#FFFFFF");
+  const selccPgnClr = (colorValue: string): React.CSSProperties => ({
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: slcPptgnColor === colorValue ? 500 : 400, color: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: slcPptgnColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
 
-  const [tabWidth, setTabWidth] = useState<number>(8);
-  const [tabBarPosition, setTabBarPosition] = useState<number>(1);
-  const [fullWindow, setFullWindow] = useState<boolean>(false);
+  const pstgnClr = (colorValue: string): React.CSSProperties => ({
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: ptgnBarColor === colorValue ? 500 : 400, color: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: ptgnBarColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
 
-  const [fwButtonMouseOver, setFwButtonMouseOver] = useState<boolean>(false);
+  const fondoBarClr = (colorValue: string): React.CSSProperties => ({
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fondoBarColor === colorValue ? 500 : 400, color: fondoBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoBarColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
 
-  const bgExampleColors = [
-    { label: "Transparent", hexCode: "transparent" },
-    { label: "White", hexCode: "FFFFFF" },
-    { label: "Alice Blue", hexCode: "EDF8FF" },
-    { label: "Azureish", hexCode: "D9E4FB" },
-    { label: "Lavender", hexCode: "E5E4F4" },
-    { label: "Isabelline", hexCode: "F8F0EC" },
-    { label: "Calcite", hexCode: "FDF9F0" },
-    { label: "Peridot", hexCode: "E8F1DE" } ];
+  const fondoClr = (colorValue: string): React.CSSProperties => ({
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fondoColor === colorValue ? 500 : 400, color: fondoColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
 
   if (!screenReady) return null;
 
@@ -235,13 +211,14 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('p', { style: { ...pStyleB, margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
           'Aquí se presenta el componente con seis pestañas, las dos primeras pestañas conteniendo otras páginas web y sin colores asignados, una tercera pestaña conteniendo texto plano y con colores asignados, y tres pestañas más con textos planos y sin colores asignados. Tanto las dos primeras pestañas como las tres últimas toman los colores asignados en general.'),
 
-        React.createElement('div', { style: { width: '100%', height: dinamicSize(21.5414) + 'rem', boxSizing: 'border-box', display: 'block', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0' } },
+        React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', width: '100%', height: dinamicSize(21.5414) + 'rem', boxSizing: 'border-box', display: 'block', position: 'relative', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0' } },
           React.createElement(LayeredTabs, { fondoBarColor, ptgnBarColor, fondoColor, slcPptgnColor, tabBarPostn: tabBarPosition, maxSize, tabWidth, fixedMaxSize, fullWindow },
-            tabsContentList.map((tab, index) => React.createElement(LayeredTabs.Tab, { key: index, title: tab.title, ...(tab.independentBgColor && { independentBgColor: tab.independentBgColor }), ...(tab.independentTxColor && { independentTxColor: tab.independentTxColor }) }, tab.content ) ) ) ),
+            tabsContentList.map((tab, index) => React.createElement(LayeredTabs.Tab, { key: index, title: tab.title, ...(tab.independentBgColor && { independentBgColor: tab.independentBgColor }), ...(tab.independentTxColor && { independentTxColor: tab.independentTxColor }) }, tab.content ) ) ),
+          React.createElement('div', { style: { zIndex: 200, display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: 0, boxShadow: 'inset 0 0.1rem 0.6rem rgba(0, 0, 0, 0.15)', pointerEvents: 'none' } } ) ),
 
-        fullWindow && React.createElement('div', { onClick: () => { setFullWindow(false); setFwButtonMouseOver(false) }, onMouseOver: () => setFwButtonMouseOver(true), onMouseOut: () => setFwButtonMouseOver(false), style: { boxSizing: 'border-box', borderRadius: '0.375rem', borderWidth: dinamicSize(0.1) + 'rem', borderStyle: 'solid', borderColor: fwButtonMouseOver ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.2)', position: 'fixed', left: '50%', bottom: dinamicSize(2) + 'rem', transform: 'translateX(-50%)', zIndex: '1001', textAlign: 'center', verticalAlign: 'top', background: fwButtonMouseOver ? 'black' : '#fffaf4', width: 'auto', height: 'auto', margin: '0', padding: dinamicSize(0.3) + 'rem ' + dinamicSize(1) + 'rem', fontWeight: 500, color: fwButtonMouseOver ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.4)', cursor: 'pointer', boxShadow: '0 ' + dinamicSize(0.625) + 'rem ' + dinamicSize(0.9375) + 'rem -' + dinamicSize(0.1875) + `rem rgb(0,0,0,${ fwButtonMouseOver ? '1' : '0.6' } ), 0 ` + dinamicSize(0.25) + 'rem ' + dinamicSize(0.375) + 'rem -' + dinamicSize(0.25) + 'rem rgb(0,0,0,0.1)', transition: 'all 100ms linear', fontSize: dinamicSize(0.9) + 'rem' } }, 'Cerrar ventana completa' ) ,
+        fullWindow && React.createElement('div', { onClick: () => { setFullWindow(false); setFwButtonMouseOver(false) }, onMouseOver: () => setFwButtonMouseOver(true), onMouseOut: () => setFwButtonMouseOver(false), style: { boxSizing: 'border-box', borderRadius: '0.375rem', borderWidth: dinamicSize(0.1) + 'rem', borderStyle: 'solid', borderColor: fwButtonMouseOver ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.2)', position: 'fixed', left: '50%', bottom: dinamicSize(4) + 'rem', transform: 'translateX(-50%)', zIndex: '1001', textAlign: 'center', verticalAlign: 'top', background: fwButtonMouseOver ? 'black' : '#fffaf4', width: 'auto', height: 'auto', margin: '0', padding: dinamicSize(0.3) + 'rem ' + dinamicSize(1) + 'rem', fontWeight: 500, color: fwButtonMouseOver ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.4)', cursor: 'pointer', boxShadow: '0 ' + dinamicSize(0.625) + 'rem ' + dinamicSize(0.9375) + 'rem -' + dinamicSize(0.1875) + `rem rgb(0,0,0,${ fwButtonMouseOver ? '1' : '0.6' } ), 0 ` + dinamicSize(0.25) + 'rem ' + dinamicSize(0.375) + 'rem -' + dinamicSize(0.25) + 'rem rgb(0,0,0,0.1)', transition: 'all 100ms linear', fontSize: dinamicSize(0.9) + 'rem' } }, 'Cerrar ventana completa' ) ,
 
-/*
+        /*
         <LayeredTabs fondoBarColor={fondoBarColor} ptgnBarColor={ptgnBarColor} fondoColor={fondoColor} slcPptgnColor={slcPptgnColor} tabBarPosition={tabBarPosition} maxSize={maxSize}>
           <LayeredTabs.Tab title="Hola A">
             <div className="font-extralight text-blue-900">
@@ -253,8 +230,7 @@ const LayeredTabsArticulo: React.FC = () => {
               Nothing gonna change
             </div>
           </LayeredTabs.Tab>
-        </LayeredTabs>,
-*/
+        </LayeredTabs> */
 
         React.createElement('h4', { ref: aparPerTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
             `Apariencia personalizable` ),
