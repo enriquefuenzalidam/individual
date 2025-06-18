@@ -159,12 +159,8 @@ const LayeredTabsArticulo: React.FC = () => {
     const [maxSize, setMaxSize] = useState("xl");
     const [fixedMaxSize, setFixedMaxSize] = useState<boolean>(false);
     const dinamicSize = useCallback((value: number) => {
-      if (maxSize === "xl") return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
-      else if (maxSize === "lg") return xlScreen || lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
-      else if (maxSize === "md") return xlScreen || lgScreen || mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
-      else if (maxSize === "sm") return xlScreen || lgScreen || mdScreen || smScreen ? value * 1.1176 : value;
-      else return value;
-    }, [maxSize, xlScreen, lgScreen, mdScreen, smScreen])
+      return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
+    }, [ xlScreen, lgScreen, mdScreen, smScreen])
   
   const [fondoBarColor, setFondoBarColor] = useState("#FFFFFF");
   const [ptgnBarColor, setPtgnBarColor] = useState("#FFFFFF");
@@ -269,7 +265,7 @@ const LayeredTabsArticulo: React.FC = () => {
             'Ventana completa' ),
         React.createElement('p', { style: { ...pStyleC } },
               [ { label: "Ventana", value: true },
-                { label: "Contenedor", value: false } ].map(({ label, value }, index) => React.createElement( 'span', { key: index, onClick: () => value !== fixedMaxSize ? setFullWindow(value) : null, style: { ...fullWindowStyle(value) } }, label ) ) ),
+                { label: "Contenedor", value: false } ].map(({ label, value }, index) => React.createElement( 'span', { key: index, onClick: () => value !== fullWindow ? setFullWindow(value) : null, style: { ...fullWindowStyle(value) } }, label ) ) ),
 
         React.createElement('h5', { style: { ...h5Style } },
             `Posición de la barra de pestañas` ),
