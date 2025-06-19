@@ -50,7 +50,7 @@ const LayeredTabsArticulo: React.FC = () => {
   const [fwButtonMouseOver, setFwButtonMouseOver] = useState<boolean>(false);
 
   const bgExampleColors = [
-    { label: "Translúcido", hexCode: "transparent" },
+    { label: "Sin color", hexCode: "transparent" },
     { label: "White", hexCode: "#FFFFFF" },
     { label: "Alice Blue", hexCode: "#EDF8FF" },
     { label: "Azureish", hexCode: "#D9E4FB" },
@@ -157,20 +157,6 @@ const LayeredTabsArticulo: React.FC = () => {
 
         fullWindow && React.createElement('div', { onClick: () => { setFullWindow(false); setFwButtonMouseOver(false) }, onMouseOver: () => setFwButtonMouseOver(true), onMouseOut: () => setFwButtonMouseOver(false), style: { boxSizing: 'border-box', borderRadius: '0.375rem', borderWidth: dinamicSize(0.1) + 'rem', borderStyle: 'solid', borderColor: fwButtonMouseOver ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.2)', position: 'fixed', left: '50%', bottom: dinamicSize(4) + 'rem', transform: 'translateX(-50%)', zIndex: '1001', textAlign: 'center', verticalAlign: 'top', background: fwButtonMouseOver ? 'black' : '#fffaf4', width: 'auto', height: 'auto', margin: '0', padding: dinamicSize(0.3) + 'rem ' + dinamicSize(1) + 'rem', fontWeight: 500, color: fwButtonMouseOver ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.4)', cursor: 'pointer', boxShadow: '0 ' + dinamicSize(0.625) + 'rem ' + dinamicSize(0.9375) + 'rem -' + dinamicSize(0.1875) + `rem rgb(0,0,0,${ fwButtonMouseOver ? '1' : '0.6' } ), 0 ` + dinamicSize(0.25) + 'rem ' + dinamicSize(0.375) + 'rem -' + dinamicSize(0.25) + 'rem rgb(0,0,0,0.1)', transition: 'all 100ms linear', fontSize: dinamicSize(0.9) + 'rem' } }, 'Cerrar ventana completa' ) ,
 
-        /*
-        <LayeredTabs fondoBarColor={fondoBarColor} ptgnBarColor={ptgnBarColor} fondoColor={fondoColor} slcPptgnColor={slcPptgnColor} tabBarPosition={tabBarPosition} maxSize={maxSize}>
-          <LayeredTabs.Tab title="Hola A">
-            <div className="font-extralight text-blue-900">
-              Nothing gonna change
-            </div>
-          </LayeredTabs.Tab>
-          <LayeredTabs.Tab title="Hola B">
-            <div className="font-extralight text-blue-900">
-              Nothing gonna change
-            </div>
-          </LayeredTabs.Tab>
-        </LayeredTabs> */
-
         React.createElement('h4', { ref: aparPerTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
             `Apariencia personalizable` ),
         React.createElement('p', { style: { ...pStyleB } },
@@ -180,7 +166,7 @@ const LayeredTabsArticulo: React.FC = () => {
             'Ventana completa' ),
         React.createElement('p', { style: { ...pStyleC } },
               [ { label: "Ventana", value: true },
-                { label: "Contenido", value: false } ].map(({ label, value }, index) => React.createElement( 'span', { key: index, onClick: () => value !== fullWindow ? setFullWindow(value) : null, style: { ...fullWindowStyle(value) } }, label ) ) ),
+                { label: "Página", value: false } ].map(({ label, value }, index) => React.createElement( 'span', { key: index, onClick: () => value !== fullWindow ? setFullWindow(value) : null, style: { ...fullWindowStyle(value) } }, label ) ) ),
 
         React.createElement('h5', { style: { ...h5Style } },
             `Posición de la barra de pestañas` ),
