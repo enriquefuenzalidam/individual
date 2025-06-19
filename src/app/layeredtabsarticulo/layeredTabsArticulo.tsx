@@ -84,7 +84,7 @@ const LayeredTabsArticulo: React.FC = () => {
   }), [nullStyle]);
 
   const pStyle: React.CSSProperties = useMemo(() => ({
-    ...nullBlockStyle, hyphens: 'auto', textAlign: 'left', textIndent: lgScreen || xlScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625
+    ...nullBlockStyle, hyphens: 'auto', textAlign: 'left', textIndent: lgScreen || xlScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', fontSize: xlScreen || lgScreen ? '1.5rem' : mdScreen ? '1.4rem' : smScreen ? '1.21rem' : '1.13rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625
   }), [nullBlockStyle, lgScreen, xlScreen, mdScreen, smScreen]);
 
   const pStyleB: React.CSSProperties = useMemo(() => ({

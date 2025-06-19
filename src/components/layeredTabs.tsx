@@ -5,20 +5,28 @@ function isValidCssColor(color: string): boolean {
   const s = new Option().style;
   s.color = ""; // Reset in case it's inheriting anything
   s.color = color;
-  return !!s.color;
-}
+  return !!s.color; }
+
+function isValidCssHeight(value: string): boolean {
+  if (typeof window === 'undefined') return false; // SSR-safe
+  const el = document.createElement('div');
+  el.style.height = '';
+  el.style.height = value;
+  return el.style.height !== ''; }
 
 interface LayeredTabsParams {
+    children?: React.ReactNode;
+
+    fullWindow?: boolean;
+    containerAlto?: string;
     fondoBarColor?: string;
     ptgnBarColor?: string;
-    fondoColor?: string;
     slcPptgnColor?: string;
+    fondoColor?: string;
     tabBarPostn?: number;
     maxSize?: string;
-    children?: React.ReactNode;
     tabWidth?: number;
-    fixedMaxSize?: boolean;
-    fullWindow?: boolean; };
+    fixedMaxSize?: boolean; };
 
 export interface TabProps {
   title?: string;
@@ -33,7 +41,7 @@ Tab.displayName = "LayeredTabs.Tab";
 
 type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabProps>; };
 
-  const LayeredTabs: LayeredTabsComponent = ({ fondoBarColor = "white", ptgnBarColor = "white", fondoColor = "white", slcPptgnColor = "white", tabBarPostn = 0, maxSize = "xl", children, tabWidth = 8, fixedMaxSize = false, fullWindow = false } ) => {
+  const LayeredTabs: LayeredTabsComponent = ({ fondoBarColor = "white", ptgnBarColor = "white", fondoColor = "white", slcPptgnColor = "white", tabBarPostn = 0, maxSize = "xl", children, tabWidth = 8, fixedMaxSize = false, fullWindow = false, containerAlto = "100%" } ) => {
 
   const [tabBarPosition, setTabBarPosition] = useState(0);
   useEffect(() => {
@@ -198,7 +206,7 @@ type LayeredTabsComponent = React.FC<LayeredTabsParams> & { Tab: React.FC<TabPro
 
   if (!screenReady) return null;
 
-  return React.createElement('div', { style: { overflow: 'hidden', display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', width: `100%`, height: `100%`, background: isValidCssColor(fondoColor) ? fondoColor : 'transparent', position: fullWindow ? 'fixed' : 'relative', left: fullWindow ? '0' : 'auto', top: fullWindow ? '0' : 'auto', zIndex: fullWindow ? '999' : 'auto' } },
+  return React.createElement('div', { style: { overflow: 'hidden', display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', width: `100%`, height: fullWindow ? `100%` : isValidCssHeight(containerAlto) ? containerAlto : `100%`, background: isValidCssColor(fondoColor) ? fondoColor : 'transparent', position: fullWindow ? 'fixed' : 'relative', left: fullWindow ? '0' : 'auto', top: fullWindow ? '0' : 'auto', zIndex: fullWindow ? '999' : 'auto' } },
 
           React.createElement('div', { style: { display: 'grid', gap: '0', gridTemplateColumns: '1fr', gridTemplateRows: tabBarPosition === 0  ? dinamicSize(2.125) + 'rem 1fr' : tabBarPosition === 1 ? dinamicSize(2.125 + 1.4164) + 'rem 1fr' : tabBarPosition === 2 ? '1fr ' + dinamicSize(2.125 + 1.4164) + 'rem' : '1fr ' + dinamicSize(2.125) + 'rem', padding: '0', margin: '0', position: 'relative', boxSizing: 'border-box', width: `100%`, height: `100%` } },
 
