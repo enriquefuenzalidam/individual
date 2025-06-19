@@ -9,9 +9,9 @@ import ExtLink from '@/components/extLink';
 const QuicknFullArticulo: React.FC = () => {
 
   const { screenReady, xlScreen, lgScreen, mdScreen, smScreen,
-    pStyleC, h4Style, h4StyleB, h4BStyle, navRapLi, navRapSp, imgsDesc, h5Style, intrfzSelecc,
-    nullBlockStyle, pStyle, pStyleB, pBold,
-    scrollTo } = IndividualStyling();
+      pStyleC, h4Style, h4StyleB, h4BStyle, navRapLi, navRapSp, imgsDesc, h5Style, intrfzSelecc,
+      nullBlockStyle, pStyle, pStyleB, pBold,
+      scrollTo } = IndividualStyling();
 
   const isValidColor = (color: string) => typeof window !== "undefined" && CSS.supports("color", color);
   const [cajaAltura, setCajaAltura] = useState(32);
@@ -28,14 +28,10 @@ const QuicknFullArticulo: React.FC = () => {
   const prinGalTtl = useRef<HTMLHeadingElement>(null);
   const repDemoTtl = useRef<HTMLHeadingElement>(null);
 
-  useEffect(() => {
-    if (isValidColor(seleccionColor)) setSeleccionColor(seleccionColor)
-  }, [seleccionColor]);
-
   const [pageLoaded, setPageLoaded] = useState(false);
   useEffect(() => {
     if (!screenReady) return;
-    const timeout = setTimeout(() => setPageLoaded(true), 500);
+    const timeout = setTimeout(() => setPageLoaded(true), 1000);
     return () => clearTimeout(timeout); }, [screenReady]);
 
   const maxAltSpn = (value: number): React.CSSProperties => ({

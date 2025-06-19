@@ -62,7 +62,7 @@ const LayeredTabsArticulo: React.FC = () => {
   const [pageLoaded, setPageLoaded] = useState(false);
   useEffect(() => {
     if (!screenReady) return;
-    const timeout = setTimeout(() => setPageLoaded(true), 500);
+    const timeout = setTimeout(() => setPageLoaded(true), 1000);
     return () => clearTimeout(timeout);
   }, [screenReady]);
 

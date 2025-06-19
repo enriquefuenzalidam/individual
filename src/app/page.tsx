@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   const [pageLoaded, setPageLoaded] = useState(false);
   useEffect(() => {
     if (!screenReady) return;
-    const timeout = setTimeout(() => setPageLoaded(true), 500);
+    const timeout = setTimeout(() => setPageLoaded(true), 1000);
     return () => clearTimeout(timeout); }, [screenReady]);
 
   return React.createElement('div', { style: { position: 'relative', margin: '0', padding: '0', boxSizing: 'border-box', display: 'block', height:'auto', width: '100%', backgroundColor: 'white', background: 'linear-gradient( 54deg, white 15%, #fffaf4 38%, white)' } },
