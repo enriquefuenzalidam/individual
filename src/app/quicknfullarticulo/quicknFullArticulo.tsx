@@ -1,6 +1,6 @@
-import React, { useEffect, useCallback, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { ExampleImagesLists } from '@/components/quicknfull/exampleImagesLists';
-import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
+import IndividualStyling from '@/hooks/individualstyling';
 import QuicknfullPrev from '@/components/quicknfull/quicknfullPrev';
 import QuicknfullMain from '@/components/quicknfull/quicknfullMain';
 import Link from 'next/link';
@@ -8,7 +8,11 @@ import ExtLink from '@/components/extLink';
 
 const QuicknFullArticulo: React.FC = () => {
 
-  const { screenReady, xlScreen, lgScreen, mdScreen, smScreen } = UsePantallaTamagnos();
+  const { screenReady, xlScreen, lgScreen, mdScreen, smScreen,
+    pStyleC, h4Style, h4StyleB, h4BStyle, navRapLi, navRapSp, imgsDesc, h5Style, intrfzSelecc,
+    nullBlockStyle, pStyle, pStyleB, pBold,
+    scrollTo } = IndividualStyling();
+
   const isValidColor = (color: string) => typeof window !== "undefined" && CSS.supports("color", color);
   const [cajaAltura, setCajaAltura] = useState(32);
   const [tiempoIntervalo, setTiempoIntervalo] = useState(3400);
@@ -24,12 +28,6 @@ const QuicknFullArticulo: React.FC = () => {
   const prinGalTtl = useRef<HTMLHeadingElement>(null);
   const repDemoTtl = useRef<HTMLHeadingElement>(null);
 
-  const scrollTo = (ref: React.RefObject<HTMLElement | null>) => {
-    const el = ref.current;
-    if (!el) return;
-    const y = el.getBoundingClientRect().top + window.pageYOffset - 48;
-    window.scrollTo({ top: y, behavior: 'smooth' } ) };
-
   useEffect(() => {
     if (isValidColor(seleccionColor)) setSeleccionColor(seleccionColor)
   }, [seleccionColor]);
@@ -39,62 +37,6 @@ const QuicknFullArticulo: React.FC = () => {
     if (!screenReady) return;
     const timeout = setTimeout(() => setPageLoaded(true), 500);
     return () => clearTimeout(timeout); }, [screenReady]);
-
-  const nullStyle: React.CSSProperties = useMemo(() => ({
-    boxSizing: 'border-box' 
-  }), []);
-
-  const nullBlockStyle: React.CSSProperties = useMemo(() => ({
-    ...nullStyle, display: 'block', position: 'relative' 
-  }), [nullStyle]);
-
-  const pStyle: React.CSSProperties = useMemo(() => ({
-    ...nullBlockStyle, hyphens: 'auto', textAlign: 'left', textIndent: lgScreen || xlScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', fontSize: xlScreen || lgScreen ? '1.5rem' : mdScreen ? '1.4rem' : smScreen ? '1.21rem' : '1.13rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625
-  }), [nullBlockStyle, lgScreen, xlScreen, mdScreen, smScreen]);
-
-  const pStyleB: React.CSSProperties = useMemo(() => ({
-    ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0' : mdScreen ? '0.75rem 0' : smScreen ? '0.5rem 0' : '0.5rem 0'
-  }), [pStyle, lgScreen, xlScreen, mdScreen, smScreen]);
-
-  const pStyleC: React.CSSProperties = useMemo(() => ({
-    marginTop: xlScreen || lgScreen ? '0.5rem' : '0.25rem', textAlign: 'left', fontSize: '1.125rem', lineHeight: '1.5'
-  }), [lgScreen, xlScreen])
-
-  const pBold: React.CSSProperties = useMemo(() =>({
-    ...pStyle, display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500', color: 'rgba(51,65,85,1)'
-  }),[pStyle])
-
-  const h4Style: React.CSSProperties = useMemo(() =>({
-    ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,1)', fontWeight: '600', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem'
-  }),[nullBlockStyle, lgScreen, xlScreen ]);
-
-  const h4StyleB: React.CSSProperties = useMemo(() => ({
-    ...h4Style, marginTop: xlScreen || lgScreen ? '3.5rem' : mdScreen ? '2.5rem' : smScreen ? '2rem' : '2rem'
-  }), [h4Style, xlScreen, lgScreen, mdScreen, smScreen])
-
-  const h4BStyle: React.CSSProperties = useMemo(() =>({
-    ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,1)', fontWeight: '500', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem', padding: '0', margin: xlScreen || lgScreen ? '1.7rem 0 0.5rem 1.5rem' : mdScreen ? '1.3rem 0 0.5rem 1.25rem' : '1rem 0 0.5rem 1rem'
-  }),[nullBlockStyle, mdScreen, lgScreen, xlScreen ]);
-
-  const navRapLi: React.CSSProperties = useMemo(() => ({
-    ...nullBlockStyle, hyphens: 'auto', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 400, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 0 1.5rem' : mdScreen ? '0.75rem 0 0 1.25rem' : smScreen ? '0.5rem 0 0 0' : '0.5rem 0 0 1rem'
-  }), [ nullBlockStyle, xlScreen, lgScreen, mdScreen, smScreen]);
-
-  const navRapSp: React.CSSProperties = useMemo(() => ({
-    ...nullStyle, cursor: 'pointer', display: 'inline', padding: '0', margin: '0'
-  }), [nullStyle]);
-
-  const imgsDesc: React.CSSProperties = useMemo(() => ({
-    ...nullBlockStyle, hyphens: 'none', padding: '0', margin: xlScreen || lgScreen ? '0.5rem' : mdScreen ? '0.375rem 0 0 0' : smScreen ? '0.25rem 0 0 0' : '0.25rem 0 0 0', textAlign: 'center', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 300, color: 'rgba(51,65,85,0.4)', lineHeight: 1.625
-  }), [nullBlockStyle, xlScreen, lgScreen, mdScreen, smScreen]);
-
-  const h5Style: React.CSSProperties = useMemo(() =>({
-    hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,0.8)', fontWeight: 400, lineHeight: '1.5', fontSize: lgScreen || xlScreen ? '1.25rem' : mdScreen || smScreen ? '1.125rem' : '1.125rem', margin: lgScreen || xlScreen ? '2rem 0 0 0' : mdScreen ? '1.5rem 0 0 0' : smScreen ? '1.25rem 0 0 0' : '1.25rem 0 0 0',
-  }), [xlScreen, lgScreen, mdScreen, smScreen]);
-
-  const intrfzSelecc: React.CSSProperties = useMemo(() =>({
-    display: 'inline-block', height: '1.5rem', width: '6rem', borderRadius: '0.375rem', textAlign: 'center', verticalAlign: 'top', paddingBottom: '1.75rem', margin: '0.5rem 0.5rem 0 0', borderStyle: 'solid', borderWidth: '2px',  
-  }), []);
 
   const maxAltSpn = (value: number): React.CSSProperties => ({
     ...intrfzSelecc, fontWeight: cajaAltura === value ? 600 : 400, color: cajaAltura === value ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: cajaAltura === value ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: cajaAltura === value ? 'default' : 'pointer' });
@@ -109,13 +51,9 @@ const QuicknFullArticulo: React.FC = () => {
     ...intrfzSelecc, fontWeight: dscNavg ? 600 : 400, color: dscNavg ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: dscNavg ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: dscNavg ? 'default' : 'pointer'
   })
 
-  const dinamicSize = useCallback((value: number) => {
-    return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
-  }, [xlScreen, lgScreen, mdScreen, smScreen])
-  
   if (!screenReady) return null;
 
-  return React.createElement('section', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'relative', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none', fontFamily: '"Pangea Trial", sans-serif', letterSpacing: dinamicSize(-0.008) + 'rem' } },
+  return React.createElement('section', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'relative', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none', fontFamily: '"Pangea Trial", sans-serif', letterSpacing: '-0.008rem' } },
     React.createElement('div', { style: { display: 'block', margin: '0', boxSizing: 'border-box', position: 'relative', transition: 'all 300ms ease-in-out', padding: lgScreen ? '5rem 3rem 5rem 3rem' : mdScreen ? '3.5rem 2.1rem 3.5rem 2.1rem' : smScreen ? '3rem 1.75rem 3rem 1.75rem' : '1.8rem 0.5rem 1.8rem 0.5rem' } },
       React.createElement('h3', { style: { display: 'block', padding: '0', boxSizing: 'border-box', margin: lgScreen ? '2.8rem 1.4rem 1.3rem 1.4rem' : mdScreen ? '2.8rem 1.4rem 0.8rem 1.4rem' : smScreen ? '3rem 1.5rem 0.8rem 1.5rem' : '3rem 1.5rem 0.8rem 1.5rem', textAlign: 'left', transition: 'all 300ms ease-in-out', fontWeight: '600', color: 'rgba(50,66,89,1)', fontSize: lgScreen ? '2.2rem' : mdScreen ? '2rem' : smScreen ? '1.7rem' : '1.5rem', lineHeight: lgScreen ? '1' : mdScreen ? '2.5rem' : smScreen ? '2.25rem' : '2rem' } },
         "Quick'n'Full"),

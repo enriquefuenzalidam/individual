@@ -1,11 +1,16 @@
-import React, { useRef, useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
-import UsePantallaTamagnos from '@/hooks/usepantallatamagnos';
+import IndividualStyling from '@/hooks/individualstyling';
 import LayeredTabs from '@/components/layeredTabs';
 import ExtLink from '@/components/extLink';
 
 
 const LayeredTabsArticulo: React.FC = () => {
+
+  const { screenReady, xlScreen, lgScreen, mdScreen, smScreen,
+    pStyleC, h4Style, h4StyleB, h4BStyle, navRapLi, navRapSp, h5Style, intrfzSelecc,
+    nullBlockStyle, pStyle, pStyleB, pBold,
+    dinamicSize, scrollTo } = IndividualStyling();
 
   const tabsContentList = [ 
       { title: 'Next.js Website', titleLang: 'en', content: (<iframe src="https://nextjs.org" width="100%" height="100%" className={` w-full h-full `}/>) },
@@ -45,7 +50,7 @@ const LayeredTabsArticulo: React.FC = () => {
   const [fwButtonMouseOver, setFwButtonMouseOver] = useState<boolean>(false);
 
   const bgExampleColors = [
-    { label: "Transparent", hexCode: "transparent" },
+    { label: "Translúcido", hexCode: "transparent" },
     { label: "White", hexCode: "#FFFFFF" },
     { label: "Alice Blue", hexCode: "#EDF8FF" },
     { label: "Azureish", hexCode: "#D9E4FB" },
@@ -54,78 +59,12 @@ const LayeredTabsArticulo: React.FC = () => {
     { label: "Calcite", hexCode: "#FDF9F0" },
     { label: "Peridot", hexCode: "#E8F1DE" } ];
 
-
-
-  const { screenReady, xlScreen, lgScreen, mdScreen, smScreen } = UsePantallaTamagnos();
-
-  const dinamicSize = useCallback((value: number) => {
-    return xlScreen ? value * 1.4118 : lgScreen ? value * 1.2941 : mdScreen ? value * 1.1765 : smScreen ? value * 1.1176 : value;
-  }, [ xlScreen, lgScreen, mdScreen, smScreen])
-  
-  const scrollTo = (ref: React.RefObject<HTMLElement | null>) => {
-    const el = ref.current;
-    if (!el) return;
-    const y = el.getBoundingClientRect().top + window.pageYOffset - 48;
-    window.scrollTo({ top: y, behavior: 'smooth' } ) };
-
   const [pageLoaded, setPageLoaded] = useState(false);
   useEffect(() => {
     if (!screenReady) return;
     const timeout = setTimeout(() => setPageLoaded(true), 500);
     return () => clearTimeout(timeout);
   }, [screenReady]);
-
-  const nullStyle: React.CSSProperties = useMemo(() => ({
-    boxSizing: 'border-box'
-  }), []);
-
-  const nullBlockStyle: React.CSSProperties = useMemo(() => ({
-    ...nullStyle, display: 'block', position: 'relative'
-  }), [nullStyle]);
-
-  const pStyle: React.CSSProperties = useMemo(() => ({
-    ...nullBlockStyle, hyphens: 'auto', textAlign: 'left', textIndent: lgScreen || xlScreen ? '1.5rem' : mdScreen ? '1.25rem' : '1rem', fontSize: xlScreen || lgScreen ? '1.5rem' : mdScreen ? '1.4rem' : smScreen ? '1.21rem' : '1.13rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625
-  }), [nullBlockStyle, lgScreen, xlScreen, mdScreen, smScreen]);
-
-  const pStyleB: React.CSSProperties = useMemo(() => ({
-    ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0' : mdScreen ? '0.75rem 0' : smScreen ? '0.5rem 0' : '0.5rem 0'
-  }), [pStyle, lgScreen, xlScreen, mdScreen, smScreen]);
-
-  const pBold: React.CSSProperties = useMemo(() => ({
-    ...pStyle, display: 'inline', boxSizing: 'border-box', position: 'relative', margin: '0', padding: '0', fontWeight: '500', color: 'rgba(51,65,85,1)'
-  }), [pStyle]);
-
-  const h4BStyle: React.CSSProperties = useMemo(() =>({
-    ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,1)', fontWeight: '500', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem', padding: '0', margin: xlScreen || lgScreen ? '1.7rem 0 0.5rem 1.5rem' : mdScreen ? '1.3rem 0 0.5rem 1.25rem' : '1rem 0 0.5rem 1rem'
-  }),[nullBlockStyle, mdScreen, lgScreen, xlScreen ]);
-
-  const h5Style: React.CSSProperties = useMemo(() =>({
-    hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,0.8)', fontWeight: 400, lineHeight: '1.5', fontSize: lgScreen || xlScreen ? '1.25rem' : mdScreen || smScreen ? '1.125rem' : '1.125rem', margin: lgScreen || xlScreen ? '2rem 0 0 0' : mdScreen ? '1.5rem 0 0 0' : smScreen ? '1.25rem 0 0 0' : '1.25rem 0 0 0',
-  }), [xlScreen, lgScreen, mdScreen, smScreen]);
-
-  const navRapLi: React.CSSProperties = useMemo(() => ({
-    ...nullBlockStyle, hyphens: 'auto', fontSize: lgScreen || xlScreen ? '1.175rem' : mdScreen || smScreen ? '1.125rem' : '1rem', fontWeight: 400, color: 'rgba(51,65,85,0.7)', lineHeight: 1.625, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 0 1.5rem' : mdScreen ? '0.75rem 0 0 1.25rem' : smScreen ? '0.5rem 0 0 0' : '0.5rem 0 0 1rem'
-  }), [ nullBlockStyle, xlScreen, lgScreen, mdScreen, smScreen]);
-
-  const navRapSp: React.CSSProperties = useMemo(() => ({
-    ...nullStyle, cursor: 'pointer', display: 'inline', padding: '0', margin: '0'
-  }), [nullStyle]);
-
-  const pStyleC: React.CSSProperties = useMemo(() => ({
-    marginTop: lgScreen ? '0.5rem' : '0.25rem', textAlign: 'left', fontSize: '1.125rem', lineHeight: '1.5'
-  }), [lgScreen]);
-
-  const h4Style: React.CSSProperties = useMemo(() =>({
-    ...nullBlockStyle, hyphens: 'none', textAlign: 'left', color: 'rgba(51,65,85,1)', fontWeight: '600', lineHeight: '1.5', fontSize: xlScreen || lgScreen ? '1.5rem' : '1.25rem'
-  }),[nullBlockStyle, lgScreen, xlScreen ]);
-
-  const h4StyleB: React.CSSProperties = useMemo(() => ({
-    ...h4Style, marginTop: xlScreen || lgScreen ? '3.5rem' : mdScreen ? '2.5rem' : smScreen ? '2rem' : '2rem'
-  }), [h4Style, xlScreen, lgScreen, mdScreen, smScreen])
-
-  const intrfzSelecc: React.CSSProperties = useMemo(() =>({
-    display: 'inline-block', height: '1.5rem', minWidth: '7rem', borderRadius: '0.375rem', textAlign: 'center', verticalAlign: 'top', paddingBottom: '1.75rem', margin: '0.5rem 0.5rem 0 0', borderStyle: 'solid',  
-  }), []);
 
   const tabBarPositionStyle = (state: number): React.CSSProperties => ({
     ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: state === tabBarPosition ? 600 : 400, color: state === tabBarPosition ? 'rgba(51,65,85,0.8)' : 'rgba(51,65,85,0.6)', borderColor: state === tabBarPosition ? 'rgba(51,65,85,0.9)' : 'rgba(51,65,85,0.5)', cursor: state === tabBarPosition ? 'default' : 'pointer',
@@ -241,7 +180,7 @@ const LayeredTabsArticulo: React.FC = () => {
             'Ventana completa' ),
         React.createElement('p', { style: { ...pStyleC } },
               [ { label: "Ventana", value: true },
-                { label: "Contenedor", value: false } ].map(({ label, value }, index) => React.createElement( 'span', { key: index, onClick: () => value !== fullWindow ? setFullWindow(value) : null, style: { ...fullWindowStyle(value) } }, label ) ) ),
+                { label: "Contenido", value: false } ].map(({ label, value }, index) => React.createElement( 'span', { key: index, onClick: () => value !== fullWindow ? setFullWindow(value) : null, style: { ...fullWindowStyle(value) } }, label ) ) ),
 
         React.createElement('h5', { style: { ...h5Style } },
             `Posición de la barra de pestañas` ),

@@ -21,9 +21,6 @@ const UsePantallaTamagnos = () => {
         mdScreen: screenSize !== null && (screenSize >= 768),
         smScreen: screenSize !== null && (screenSize >= 640),
         tnScreen: screenSize !== null && screenSize < 640,
-        xtScreen: screenSize !== null && screenSize < 480,
-    }
-
-}
+        xtScreen: screenSize !== null && screenSize < 480, } }
 
 export default UsePantallaTamagnos;

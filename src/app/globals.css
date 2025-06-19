@@ -5,11 +5,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  font-size: 16px;
-  font-family: 'Pangea Trial', Sans-serif;
-}
-
 @font-face {
   font-family: "Pangea Trial";
   src: url("/pangea/PangeaTrial-RegularWeb.woff2") format("woff2");

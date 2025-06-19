@@ -50,10 +50,12 @@ export const metadata: Metadata = {
   }
 }
 
-const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>{
+const baseStyle: React.CSSProperties = {
+        boxSizing: 'border-box', display: 'block', position: 'static', margin: '0', padding: '0', 
+        fontSize: '16px', fontFamily: `'Pangea Trial', sans-serif`, WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", 
+        backgroundColor: 'white', scrollBehavior: 'smooth' }
 
-  const baseStyle = {   boxSizing: 'border-box', display: 'block', position: 'static', margin: '0', padding: '0',
-                        WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", backgroundColor: 'white', scrollBehavior: 'smooth' }
+const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>{
 
   return React.createElement('html', { lang: 'es', style: baseStyle },
           React.createElement('body', { style: baseStyle },
