@@ -46,13 +46,13 @@ const LayeredTabsArticulo: React.FC = () => {
 
   const bgExampleColors = [
     { label: "Transparent", hexCode: "transparent" },
-    { label: "White", hexCode: "FFFFFF" },
-    { label: "Alice Blue", hexCode: "EDF8FF" },
-    { label: "Azureish", hexCode: "D9E4FB" },
-    { label: "Lavender", hexCode: "E5E4F4" },
-    { label: "Isabelline", hexCode: "F8F0EC" },
-    { label: "Calcite", hexCode: "FDF9F0" },
-    { label: "Peridot", hexCode: "E8F1DE" } ];
+    { label: "White", hexCode: "#FFFFFF" },
+    { label: "Alice Blue", hexCode: "#EDF8FF" },
+    { label: "Azureish", hexCode: "#D9E4FB" },
+    { label: "Lavender", hexCode: "#E5E4F4" },
+    { label: "Isabelline", hexCode: "#F8F0EC" },
+    { label: "Calcite", hexCode: "#FDF9F0" },
+    { label: "Peridot", hexCode: "#E8F1DE" } ];
 
 
 
@@ -148,16 +148,16 @@ const LayeredTabsArticulo: React.FC = () => {
   });
 
   const selccPgnClr = (colorValue: string): React.CSSProperties => ({
-    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: slcPptgnColor === colorValue ? 500 : 400, color: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: slcPptgnColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: slcPptgnColor === colorValue ? 500 : 400, color: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: slcPptgnColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: slcPptgnColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : colorValue });
 
   const pstgnClr = (colorValue: string): React.CSSProperties => ({
-    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: ptgnBarColor === colorValue ? 500 : 400, color: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: ptgnBarColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: ptgnBarColor === colorValue ? 500 : 400, color: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: ptgnBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: ptgnBarColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : colorValue });
 
   const fondoBarClr = (colorValue: string): React.CSSProperties => ({
-    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fondoBarColor === colorValue ? 500 : 400, color: fondoBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoBarColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fondoBarColor === colorValue ? 500 : 400, color: fondoBarColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoBarColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoBarColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : colorValue });
 
   const fondoClr = (colorValue: string): React.CSSProperties => ({
-    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fondoColor === colorValue ? 500 : 400, color: fondoColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : '#' + colorValue });
+    ...intrfzSelecc, borderWidth: '0.125rem', fontWeight: fondoColor === colorValue ? 500 : 400, color: fondoColor === colorValue ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)', borderColor: fondoColor === colorValue ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)', cursor: fondoColor === colorValue ? 'default' : 'pointer', backgroundColor: colorValue === 'transparent' ? 'transparent' : colorValue });
 
   if (!screenReady) return null;
 
