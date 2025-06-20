@@ -7,11 +7,12 @@ const NotFoundContenido: React.FC = () => {
   const [ pageLoaded, setPageLoaded] = useState(false);
   useEffect(() => {
     if (!screenReady) return;
-    const timeout = setTimeout(() => setPageLoaded(true), 100);
+    const timeout = setTimeout(() => setPageLoaded(true), 500);
     return () => clearTimeout(timeout); }, [screenReady]);
 
   if (!screenReady) return null;
-    return React.createElement('section', { style: { display: 'block', boxSizing: 'border-box', position: 'relative', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none' } },
+
+    return React.createElement('section', { style: { display: 'block', boxSizing: 'border-box', position: 'relative', transition: 'opacity 500ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none' } },
             React.createElement('div', { style: { display: 'block', boxSizing: 'border-box', position: 'relative', transition: 'all 300ms ease-in-out', padding: lgScreen ? '5rem 3rem' : mdScreen ? '3.5rem 2.1rem' : smScreen ? '3rem 1.75rem' : '1.8rem 0.5rem' }},
                 React.createElement('h3', { style: { display: 'block', boxSizing: 'border-box', position: 'relative', margin: lgScreen ? '2.8rem 1.45rem 1.3rem 1.45rem' : mdScreen ? '2.8rem 1.45rem 0.8rem 1.45rem' : smScreen ? '3rem 1.45rem 0.8rem 1.45rem' : '3rem 1.45rem 0.8rem 1.45rem', textAlign: 'left', transition: 'all 300ms ease-in-out', fontWeight: '600', color: 'rgba(50,66,89,0.8)', fontSize: lgScreen ? '2.2rem': mdScreen ? '2rem' : smScreen ? '1.7rem' : '1.5rem', lineHeight: lgScreen ? '1' : mdScreen ? '2.5rem' : smScreen ? '2.25rem' : '2rem' } },
                   "404"),

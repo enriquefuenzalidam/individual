@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
-import IndividualStyling from '@/hooks/individualstyling';
+import useIndividualStyling from "@/hooks/useindividualstyling";
 import LayeredTabs from '@/components/layeredTabs';
 import ExtLink from '@/components/extLink';
 
@@ -10,7 +10,7 @@ const LayeredTabsArticulo: React.FC = () => {
   const { screenReady, xlScreen, lgScreen, mdScreen, smScreen,
     pStyleC, h4Style, h4StyleB, h4BStyle, navRapLi, navRapSp, h5Style, intrfzSelecc,
     nullBlockStyle, pStyle, pStyleB, pBold,
-    dinamicSize, scrollTo } = IndividualStyling();
+    dinamicSize, scrollTo } = useIndividualStyling();
 
   const tabsContentList = [ 
       { title: 'Next.js Website', titleLang: 'en', content: (<iframe src="https://nextjs.org" width="100%" height="100%" className={` w-full h-full `}/>) },
@@ -62,7 +62,7 @@ const LayeredTabsArticulo: React.FC = () => {
   const [pageLoaded, setPageLoaded] = useState(false);
   useEffect(() => {
     if (!screenReady) return;
-    const timeout = setTimeout(() => setPageLoaded(true), 1000);
+    const timeout = setTimeout(() => setPageLoaded(true), 500);
     return () => clearTimeout(timeout);
   }, [screenReady]);
 
@@ -100,7 +100,7 @@ const LayeredTabsArticulo: React.FC = () => {
 
   if (!screenReady) return null;
 
-  return React.createElement('section', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'relative', transition: 'opacity 400ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none', fontFamily: '"Pangea Trial", sans-serif', letterSpacing: dinamicSize(-0.008) + 'rem' } },
+  return React.createElement('section', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'relative', transition: 'opacity 500ms ease-in-out', opacity: pageLoaded ? 1 : 0, pointerEvents: pageLoaded ? 'auto' : 'none', fontFamily: '"Pangea Trial", sans-serif', letterSpacing: dinamicSize(-0.008) + 'rem' } },
     React.createElement('div', { style: { display: 'block', margin: '0', boxSizing: 'border-box', position: 'relative', transition: 'all 300ms ease-in-out', padding: lgScreen ? '5rem 3rem 5rem 3rem' : mdScreen ? '3.5rem 2.1rem 3.5rem 2.1rem' : smScreen ? '3rem 1.75rem 3rem 1.75rem' : '1.8rem 0.5rem 1.8rem 0.5rem' } },
       React.createElement('h3', { style: { display: 'block', padding: '0', boxSizing: 'border-box', margin: lgScreen ? '2.8rem 1.4rem 1.3rem 1.4rem' : mdScreen ? '2.8rem 1.4rem 0.8rem 1.4rem' : smScreen ? '3rem 1.5rem 0.8rem 1.5rem' : '3rem 1.5rem 0.8rem 1.5rem', textAlign: 'left', transition: 'all 300ms ease-in-out', fontWeight: '600', color: 'rgba(50,66,89,1)', fontSize: lgScreen ? '2.2rem' : mdScreen ? '2rem' : smScreen ? '1.7rem' : '1.5rem', lineHeight: lgScreen ? '1' : mdScreen ? '2.5rem' : smScreen ? '2.25rem' : '2rem' } },
         "LayeredTabs"),

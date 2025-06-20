@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 
-const UsePantallaTamagnos = () => {
+const usePantallaTamagnos = () => {
+
     const [screenSize, setScreenSize] = useState<number | null>(null);
-    const [screenReady, setScreenReady] = useState(false);
+    const [screenReady, setScreenReady] = useState<boolean | false>(false);
 
     useEffect(() => {
         if (typeof window === "undefined") return;
@@ -23,4 +24,4 @@ const UsePantallaTamagnos = () => {
         tnScreen: screenSize !== null && screenSize < 640,
         xtScreen: screenSize !== null && screenSize < 480, } }
 
-export default UsePantallaTamagnos;
+export default usePantallaTamagnos;

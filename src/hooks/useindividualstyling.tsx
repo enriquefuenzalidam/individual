@@ -1,9 +1,9 @@
-import UsePantallaTamagnos from "./usepantallatamagnos";
+import usePantallaTamagnos from "./usepantallatamagnos";
 import React, { useCallback, useMemo } from "react";
 
-const IndividualStyling = () => {
+const useIndividualStyling = () => {
 
-  const { screenReady, xlScreen, lgScreen, mdScreen, smScreen, tnScreen, xtScreen } = UsePantallaTamagnos();
+  const { screenReady, xlScreen, lgScreen, mdScreen, smScreen, tnScreen, xtScreen } = usePantallaTamagnos();
 
   const dynSzGttr = useCallback((xl: string, lg: string, md: string, sm: string, tn: string, xt: string) => {
     return xlScreen ? xl : lgScreen ? lg : mdScreen ? md : smScreen ? sm : tnScreen ? tn : xt
@@ -79,6 +79,6 @@ const IndividualStyling = () => {
       screenReady, xlScreen, lgScreen, mdScreen, smScreen, tnScreen, xtScreen,
       nullStyle, nullBlockStyle, pStyle, pStyleB, pBold,
       pStyleC, h4Style, h4StyleB, h4BStyle, navRapLi, navRapSp, imgsDesc, h5Style, intrfzSelecc,
-      dinamicSize, scrollTo } }
+      dinamicSize, scrollTo, dynSzGttr } }
 
-export default IndividualStyling;
+export default useIndividualStyling;
