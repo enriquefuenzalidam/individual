@@ -5,8 +5,7 @@ import Link from "next/link";
 interface EntradaProps {
   title: string;
   href: string;
-  description: (React.ReactNode | string)[];
-}
+  description: (React.ReactNode | string)[]; }
 
 const EntradaPreview = ({ title, href, description }: EntradaProps ) => {
   const { pStyleB, dynSzGttr } = useIndividualStyling();
@@ -23,5 +22,5 @@ const EntradaPreview = ({ title, href, description }: EntradaProps ) => {
                 React.createElement('p', { style: { ...pStyleB, fontWeight: '500', color: 'rgba(51,65,85,1)' } }, '— ', 
                   React.createElement(Link, { href: href, title: `Ver artículo ${title}`, lang: 'es', style: {  cursor: 'pointer' } }, React.createElement('span',{ className: `hover:underline` }, 'Leer más') ) ),
                 ) ) ) };
-             
+
 export default EntradaPreview;

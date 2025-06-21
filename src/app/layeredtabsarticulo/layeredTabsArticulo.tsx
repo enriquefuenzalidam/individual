@@ -109,8 +109,7 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('div', { style: { display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: '0', background: 'linear-gradient( to right, rgba(51,65,85,0.05) 0%, rgba(51,65,85,0.005) 2rem, rgba(51,65,85,0) 100%), linear-gradient( to right, rgba(0,0,0,0.1) 0%, rgba(51,65,85,0.01) 0.4rem, rgba(51,65,85,0) 100%)', maskImage: 'linear-gradient( to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)', pointerEvents: 'none' } } ),
 
         React.createElement('p', { style: { ...pStyleB } },
-          'Presentar contenido en capas navegables a través de pestañas, es una forma tradicional de ordenamiento en páginas y sitios webs. ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' procura hacer muy simple la implementación de esta forma de organizar contenido web, proporciona formatos distintos y apariencia personalizable. Un repositorio demo ya se encuentra disponible y, pronto, un paquete npm instalable.'),
-
+            'Organizar contenido en capas navegables mediante pestañas es una solución clásica para estructurar información en páginas y sitios web. Este enfoque, además de familiar para los usuarios, permite distribuir secciones sin recargar visualmente el entorno. El componente ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' simplifica su implementación, ofreciendo distintos estilos, comportamiento personalizable y una apariencia adaptable. Puede integrarse en cualquier sección del sitio o expandirse para ocupar toda la ventana del navegador. Ya está disponible un repositorio de demo y, pronto, un paquete instalable vía npm.'),
           React.createElement('h4', { style: { ...h4BStyle } },
             'Navegación rápida:' ),
           React.createElement('ul', { style: { ...nullBlockStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 3.8rem 0' : mdScreen ? '0.75rem 0 3rem 0' : smScreen ? '0.5rem 0 2.2rem 0' : '0.5rem 0 2rem 0' } },
@@ -144,6 +143,11 @@ const LayeredTabsArticulo: React.FC = () => {
           `El contenido y los colores` ),
         React.createElement('p', { style: { ...pStyleB } },
           'Las capas pueden contener tanto texto plano como HTML. Los colores pueden ser asignados en general y/o para cada pestaña y capa por separado; las pestañas y capas sin colores asignados, toman los asignados en general.'),
+
+        React.createElement('h4', { ref: cntColrTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+          `Modo ventana completa` ),
+        React.createElement('p', { style: { ...pStyleB } },
+          'Por defecto, el componente se adapta la altura del elemento contenedor, pero dicha altura es también personalizable. Además, cuenta con un modo modo ventana completa, en el que ocupa todo el alto y ancho de la ventana del navegador, ocultando cualquier otro contenido presente en la página. Es una modalidad ideal para aplicaciones de una sola vista o presentaciones en pantalla completa.'),
 
         React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: xlScreen || lgScreen ? '0.1rem' : mdScreen ? '0.075rem' :  '0.05rem', background: 'rgba(51,65,85,0.3)', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } } ), 
 
