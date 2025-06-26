@@ -139,9 +139,9 @@ const LayeredTabsArticulo: React.FC = () => {
         React.createElement('p', { style: { ...pStyleB } },
           'Por defecto, el componente se adapta la altura del elemento contenedor, pero dicha altura es también personalizable. Además, cuenta con un modo modo ventana completa, en el que ocupa todo el alto y ancho de la ventana del navegador, ocultando cualquier otro contenido presente en la página. Es una modalidad ideal para aplicaciones de una sola vista o presentaciones en pantalla completa.'),
 
-        React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: dynSzGttr('0.1','0.1','0.075','0.05','0.05','0.05') + 'rem', background: 'rgba(51,65,85,0.3)', margin: dynSzGttr('4','4','3','2','2','2') + 'rem' } } ), 
+        React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: dynSzGttr('0.1','0.1','0.075','0.05','0.05','0.05') + 'rem', background: 'rgba(51,65,85,0.3)', margin: dynSzGttr('4','4','3','2','2','2') + 'rem 0 0 0' } } ), 
 
-        React.createElement('p', { style: { ...pStyleB, margin: dynSzGttr('4','4','3','2','2','2') + 'rem' } },
+        React.createElement('p', { style: { ...pStyleB, margin: dynSzGttr('4','4','3','2','2','2') + 'rem 0 0 0' } },
           'Aquí se presenta el componente con seis pestañas, las dos primeras pestañas conteniendo otras páginas web y sin colores asignados, una tercera pestaña conteniendo texto plano y con colores asignados, y tres pestañas más con textos planos y sin colores asignados. Tanto las dos primeras pestañas como las tres últimas toman los colores asignados en general.'),
 
         React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', width: '100%', height: dinamicSize(21.5414) + 'rem', boxSizing: 'border-box', display: 'block', position: 'relative', padding: '0', margin: dynSzGttr('3.5','3.5','2.5','2','2','2') + 'rem 0 0 0' } },
@@ -151,7 +151,7 @@ const LayeredTabsArticulo: React.FC = () => {
 
         fullWindow && React.createElement('div', { onClick: () => { setFullWindow(false); setFwButtonMouseOver(false) }, onMouseOver: () => setFwButtonMouseOver(true), onMouseOut: () => setFwButtonMouseOver(false), style: { boxSizing: 'border-box', borderRadius: '0.375rem', borderWidth: dinamicSize(0.1) + 'rem', borderStyle: 'solid', borderColor: fwButtonMouseOver ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.2)', position: 'fixed', left: '50%', bottom: dinamicSize(4) + 'rem', transform: 'translateX(-50%)', zIndex: '1001', textAlign: 'center', verticalAlign: 'top', background: fwButtonMouseOver ? 'black' : '#fffaf4', width: 'auto', height: 'auto', margin: '0', padding: dinamicSize(0.3) + 'rem ' + dinamicSize(1) + 'rem', fontWeight: 500, color: fwButtonMouseOver ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.4)', cursor: 'pointer', boxShadow: '0 ' + dinamicSize(0.625) + 'rem ' + dinamicSize(0.9375) + 'rem -' + dinamicSize(0.1875) + `rem rgb(0,0,0,${ fwButtonMouseOver ? '1' : '0.6' } ), 0 ` + dinamicSize(0.25) + 'rem ' + dinamicSize(0.375) + 'rem -' + dinamicSize(0.25) + 'rem rgb(0,0,0,0.1)', transition: 'all 100ms linear', fontSize: dinamicSize(0.9) + 'rem' } }, 'Cerrar ventana completa' ) ,
 
-        React.createElement('h4', { ref: aparPerTtl, style: { ...h4Style, padding: '0', margin:  dynSzGttr('4','4','3','2','2','2') + 'rem' } },
+        React.createElement('h4', { ref: aparPerTtl, style: { ...h4Style, padding: '0', margin:  dynSzGttr('4','4','3','2','2','2') + 'rem 0 0 0' } },
             `Apariencia personalizable` ),
         React.createElement('p', { style: { ...pStyleB } },
             'En esta interfaz se pueden conocer las opciones personalizables que dispone el componente.'),
