@@ -9,10 +9,10 @@ import EntradaSeccion from '@/components/entradaSection';
 
 const LayeredTabsArticulo: React.FC = () => {
 
-  const { screenReady, xlScreen, lgScreen, mdScreen, smScreen,
+  const { screenReady, 
     pStyleC, h4Style, h4StyleB, h4BStyle, navRapLi, navRapSp, h5Style, intrfzSelecc,
     nullBlockStyle, pStyle, pStyleB, pBold,
-    dinamicSize, scrollTo } = useIndividualStyling();
+    dinamicSize, scrollTo, dynSzGttr } = useIndividualStyling();
 
   const tabsContentList = [ 
       { title: 'Next.js Website', titleLang: 'en', content: (<iframe src="https://nextjs.org" width="100%" height="100%" className={` w-full h-full `}/>) },
@@ -102,7 +102,7 @@ const LayeredTabsArticulo: React.FC = () => {
             'Organizar contenido en capas navegables mediante pestañas es una solución clásica para estructurar información en páginas y sitios web. Este enfoque, además de familiar para los usuarios, permite distribuir secciones sin recargar visualmente el entorno. El componente ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' simplifica su implementación, ofreciendo distintos estilos, comportamiento personalizable y una apariencia adaptable. Puede integrarse en cualquier sección del sitio o expandirse para ocupar toda la ventana del navegador. Ya está disponible un repositorio de demo y, pronto, un paquete instalable vía npm.'),
           React.createElement('h4', { style: { ...h4BStyle } },
             'Navegación rápida:' ),
-          React.createElement('ul', { style: { ...nullBlockStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 3.8rem 0' : mdScreen ? '0.75rem 0 3rem 0' : smScreen ? '0.5rem 0 2.2rem 0' : '0.5rem 0 2rem 0' } },
+          React.createElement('ul', { style: { ...nullBlockStyle, padding: '0', marginTop: dynSzGttr('1','1','0.75','0.5','0.5','0.5') + 'rem', marginBottom: dynSzGttr('3.8','3.8','3','2.2','2','2') + 'rem', marginLeft: '0', marginRight: '0' } },
             [ { label: 'La barra de pestaña', ref: barrPstTtl },
               { label: 'Responsividad de la barra de pestañas', ref: responsTtl },
               { label: 'Las pestañas', ref: lasPestTtl },
@@ -112,46 +112,46 @@ const LayeredTabsArticulo: React.FC = () => {
               React.createElement('li', { key: index, style: { ...navRapLi } },
                 `${index + 1}.— `, React.createElement('span', { onClick: () => scrollTo(ref), style: { ...navRapSp }, className: `hover:underline` }, label ) ) ) ),
 
-          React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: xlScreen || lgScreen ? '0.1rem' : mdScreen ? '0.075rem' :  '0.05rem', background: 'rgba(51,65,85,0.3)' } } ), 
+          React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: dynSzGttr('0.1','0.1','0.075','0.05','0.05','0.05') + 'rem', background: 'rgba(51,65,85,0.3)' } } ), 
 
-        React.createElement('h4', { ref: barrPstTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+        React.createElement('h4', { ref: barrPstTtl, style: { ...h4Style, padding: '0', margin: dynSzGttr('3','3','2','1','1','1') +  'rem 0 0 0' } },
           `La barra de pestaña` ),
         React.createElement('p', { style: { ...pStyleB } },
           'La barra de pestañas es deslizable desde un touchscreen, un trackpad o un mousewheel, puede posicionarse en la parte superior o inferior y su tamaño se ajusta siguiendo responsividad.'),
 
-        React.createElement('h4', { ref: responsTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+        React.createElement('h4', { ref: responsTtl, style: { ...h4Style, padding: '0', margin: dynSzGttr('3','3','2','1','1','1') + 'rem 0 0 0' } },
           `Responsividad de la barra de pestañas` ),
         React.createElement('p', { style: { ...pStyleB } },
           'El tamaño de la barra de pestañas es responsivo y puede ajustarse a cinco tamaños máximos predefinidos. La responsividad puede ser inactivada dejando fijo el tamaño máximo seleccionado.'),
 
-        React.createElement('h4', { ref: lasPestTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+        React.createElement('h4', { ref: lasPestTtl, style: { ...h4Style, padding: '0', margin: dynSzGttr('3','3','2','1','1','1') + 'rem 0 0 0' } },
           `Las pestañas` ),
         React.createElement('p', { style: { ...pStyleB } },
           'Todas las pestañas tienen ancho igual y fijo, excepto la seleccionada y la que tenga el cursor encima. Tanto la seleccionada como la que tenga el cursor encima, pueden tomar dos otros anchos conforme al largo del título el cual es acortado también. Los títulos demasiado largos son acortados en todos los casos.'),
 
-        React.createElement('h4', { ref: cntColrTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+        React.createElement('h4', { ref: cntColrTtl, style: { ...h4Style, padding: '0', margin: dynSzGttr('3','3','2','1','1','1') + 'rem 0 0 0' } },
           `El contenido y los colores` ),
         React.createElement('p', { style: { ...pStyleB } },
           'Las capas pueden contener tanto texto plano como HTML. Los colores pueden ser asignados en general y/o para cada pestaña y capa por separado; las pestañas y capas sin colores asignados, toman los asignados en general.'),
 
-        React.createElement('h4', { ref: cntColrTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '3rem 0 0 0' : mdScreen ? '2rem 0 0 0' : '1rem 0 0 0' } },
+        React.createElement('h4', { ref: cntColrTtl, style: { ...h4Style, padding: '0', margin: dynSzGttr('3','3','2','1','1','1') + 'rem 0 0 0' } },
           `Modo ventana completa` ),
         React.createElement('p', { style: { ...pStyleB } },
           'Por defecto, el componente se adapta la altura del elemento contenedor, pero dicha altura es también personalizable. Además, cuenta con un modo modo ventana completa, en el que ocupa todo el alto y ancho de la ventana del navegador, ocultando cualquier otro contenido presente en la página. Es una modalidad ideal para aplicaciones de una sola vista o presentaciones en pantalla completa.'),
 
-        React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: xlScreen || lgScreen ? '0.1rem' : mdScreen ? '0.075rem' :  '0.05rem', background: 'rgba(51,65,85,0.3)', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } } ), 
+        React.createElement('hr', { style: { ...nullBlockStyle, border: 'none', height: dynSzGttr('0.1','0.1','0.075','0.05','0.05','0.05') + 'rem', background: 'rgba(51,65,85,0.3)', margin: dynSzGttr('4','4','3','2','2','2') + 'rem' } } ), 
 
-        React.createElement('p', { style: { ...pStyleB, margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
+        React.createElement('p', { style: { ...pStyleB, margin: dynSzGttr('4','4','3','2','2','2') + 'rem' } },
           'Aquí se presenta el componente con seis pestañas, las dos primeras pestañas conteniendo otras páginas web y sin colores asignados, una tercera pestaña conteniendo texto plano y con colores asignados, y tres pestañas más con textos planos y sin colores asignados. Tanto las dos primeras pestañas como las tres últimas toman los colores asignados en general.'),
 
-        React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', width: '100%', height: dinamicSize(21.5414) + 'rem', boxSizing: 'border-box', display: 'block', position: 'relative', padding: '0', margin: xlScreen || lgScreen ? '3.5rem 0 0 0' : mdScreen ? '2.5rem 0 0 0' : smScreen ? '2rem 0 0 0' : '2rem 0 0 0' } },
+        React.createElement('div', { style: { borderRadius: '0.38rem', overflow: 'hidden', width: '100%', height: dinamicSize(21.5414) + 'rem', boxSizing: 'border-box', display: 'block', position: 'relative', padding: '0', margin: dynSzGttr('3.5','3.5','2.5','2','2','2') + 'rem 0 0 0' } },
           React.createElement(LayeredTabs, { fondoBarColor, ptgnBarColor, fondoColor, slcPptgnColor, tabBarPostn: tabBarPosition, maxSize, tabWidth, fixedMaxSize, fullWindow },
             tabsContentList.map((tab, index) => React.createElement(LayeredTabs.Tab, { key: index, title: tab.title, ...(tab.independentBgColor && { independentBgColor: tab.independentBgColor }), ...(tab.independentTxColor && { independentTxColor: tab.independentTxColor }) }, tab.content ) ) ),
-          React.createElement('div', { style: { zIndex: 200, display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: 0, boxShadow: 'inset 0 0.1rem 0.6rem rgba(0, 0, 0, 0.15)', pointerEvents: 'none' } } ) ),
+          React.createElement('div', { style: { zIndex: 200, display: 'block', padding: '0', margin: '0', boxSizing: 'border-box', position: 'absolute', inset: 0, boxShadow: 'inset 0 0.2rem 0.6rem rgba(0, 0, 0, 0.3)', pointerEvents: 'none' } } ) ),
 
         fullWindow && React.createElement('div', { onClick: () => { setFullWindow(false); setFwButtonMouseOver(false) }, onMouseOver: () => setFwButtonMouseOver(true), onMouseOut: () => setFwButtonMouseOver(false), style: { boxSizing: 'border-box', borderRadius: '0.375rem', borderWidth: dinamicSize(0.1) + 'rem', borderStyle: 'solid', borderColor: fwButtonMouseOver ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.2)', position: 'fixed', left: '50%', bottom: dinamicSize(4) + 'rem', transform: 'translateX(-50%)', zIndex: '1001', textAlign: 'center', verticalAlign: 'top', background: fwButtonMouseOver ? 'black' : '#fffaf4', width: 'auto', height: 'auto', margin: '0', padding: dinamicSize(0.3) + 'rem ' + dinamicSize(1) + 'rem', fontWeight: 500, color: fwButtonMouseOver ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.4)', cursor: 'pointer', boxShadow: '0 ' + dinamicSize(0.625) + 'rem ' + dinamicSize(0.9375) + 'rem -' + dinamicSize(0.1875) + `rem rgb(0,0,0,${ fwButtonMouseOver ? '1' : '0.6' } ), 0 ` + dinamicSize(0.25) + 'rem ' + dinamicSize(0.375) + 'rem -' + dinamicSize(0.25) + 'rem rgb(0,0,0,0.1)', transition: 'all 100ms linear', fontSize: dinamicSize(0.9) + 'rem' } }, 'Cerrar ventana completa' ) ,
 
-        React.createElement('h4', { ref: aparPerTtl, style: { ...h4Style, padding: '0', margin: xlScreen || lgScreen ? '4rem 0 0 0' : mdScreen ? '3rem 0 0 0' : '2rem 0 0 0' } },
+        React.createElement('h4', { ref: aparPerTtl, style: { ...h4Style, padding: '0', margin:  dynSzGttr('4','4','3','2','2','2') + 'rem' } },
             `Apariencia personalizable` ),
         React.createElement('p', { style: { ...pStyleB } },
             'En esta interfaz se pueden conocer las opciones personalizables que dispone el componente.'),
@@ -214,15 +214,14 @@ const LayeredTabsArticulo: React.FC = () => {
 
           React.createElement('h4', { ref: repDemoTtl, style: { ...h4StyleB  } },
               `Repositorio demo` ),
-          React.createElement('p', { style: { ...pStyle, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 2.25rem' : mdScreen ? '0.75rem 0 2rem 0' : smScreen ? '0.5rem 0 1.75rem 0' : '0.5rem 0 1.75rem 0' } },
+          React.createElement('p', { style: { ...pStyle, padding: '0', marginTop: dynSzGttr('1','1','0.75','0.5','0.5','0.5') + 'rem', marginBottom: dynSzGttr('2.25','2.25','2','1.75','1.75','1.75') + 'rem', marginLeft: '0', marginRight: '0', } },
               'En el siguiente enlace se encuentra un respositorio GitHub el cual contiene un proyecto Next.js en blanco, solo con el componente ', React.createElement('span', { style: { ...pBold } }, 'LayeredTabs'), ' implementado. Al descargarlo y seguir las instrucciones del archivo README.md, el proyecto corre de forma local y muestra a ', React.createElement('span', { style: {  ...pBold } }, 'LayeredTabs'), ' en funcionamiento. Permite controlar las opciones personalizables, conocer el código fuente y usarlo en proyectos Next.js.' ),
-          React.createElement('p', { style: { display: 'block', boxSizing: 'border-box', position: 'relative', textIndent: lgScreen || xlScreen ? '-1.5rem' : mdScreen ? '-1.25rem' : '-1rem', hyphens: 'auto', textAlign: 'left', fontSize: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625, padding: '0', margin: xlScreen || lgScreen ? '1rem 0 2.25rem 3rem' : mdScreen ? '0.75rem 0 2rem 2.5rem' : '0.5rem 0 1.75rem 2rem' } },
-            React.createElement('span', { style: { ...pBold } }, '—'), React.createElement(Link, { lang: 'en', onMouseEnter: () => setRepIsHovered(true), onMouseLeave: () => setRepIsHovered(false), href: 'https://github.com/enriquefuenzalidam/layeredtabs', target: '_blank', rel: 'noopener noreferrer', title: 'Ir repositorio en GitHub de LayeredTabs', style: { ...pBold, fontStyle: 'italic', textDecoration: repIsHovered ? 'underline' : 'none', } }, 'github.com/enriquefuenzalidam/layeredtabs', React.createElement('span', { style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', margin: '0 0 0 0.35rem', padding: '0', width: lgScreen || xlScreen ? '1.5rem' : mdScreen || smScreen ? '1.25rem' : '1.125rem', height: 'auto', verticalAlign: 'text-bottom' } }, React.createElement(ExtLink, null) ) ) )
+          React.createElement('p', { style: { display: 'block', boxSizing: 'border-box', position: 'relative', textIndent: '-' + dynSzGttr('1.5','1.5','1.25','1','1','1') + 'rem', hyphens: 'auto', textAlign: 'left', fontSize: dynSzGttr('1.5','1.5','1.25','1.25','1.125','1.125') + 'rem', fontWeight: 400, color: 'rgba(51,65,85,0.6)', lineHeight: 1.625, padding: '0', marginTop: dynSzGttr('1','1','0.75','0.5','0.5','0.5') + 'rem', marginRight: '0', marginBottom: dynSzGttr('2.25','2.25','2','1.75','1.75','1.75') + 'rem', marginLeft: dynSzGttr('3','3','2.5','2','2','2') + 'rem' } },
+            React.createElement('span', { style: { ...pBold } }, '—'), React.createElement(Link, { lang: 'en', onMouseEnter: () => setRepIsHovered(true), onMouseLeave: () => setRepIsHovered(false), href: 'https://github.com/enriquefuenzalidam/layeredtabs', target: '_blank', rel: 'noopener noreferrer', title: 'Ir repositorio en GitHub de LayeredTabs', style: { ...pBold, fontStyle: 'italic', textDecoration: repIsHovered ? 'underline' : 'none', } }, 'github.com/enriquefuenzalidam/layeredtabs', React.createElement('span', { style: { display: 'inline-block', boxSizing: 'border-box', position: 'relative', margin: '0 0 0 0.35rem', padding: '0', width: dynSzGttr('1.5','1.5','1.25','1.25','1.125','1.125') + 'rem', height: 'auto', verticalAlign: 'text-bottom' } }, React.createElement(ExtLink, null) ) ) )
     ],
     href: "layeredtabsarticulo"
 
-  } )
-};
+  } ) };
 
 export default LayeredTabsArticulo;
 
