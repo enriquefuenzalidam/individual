@@ -6,8 +6,9 @@ export const metadata = {
     title: "LayeredTabs" };
 
 const Home: React.FC = () => {
-  return React.createElement(ArticlePage, null,
-        React.createElement(LayeredTabsArticulo, null ) ) };
+  return React.createElement(ArticlePage,
+    { smallheader: true },
+    React.createElement(LayeredTabsArticulo, null) ) };
 
 export default Home;
 

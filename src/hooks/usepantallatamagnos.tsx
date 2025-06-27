@@ -17,11 +17,11 @@ const usePantallaTamagnos = () => {
     return {
         screenReady,
         screenSize: screenSize ?? 1024,
-        xlScreen: screenSize !== null && screenSize >= 1280,
-        lgScreen: screenSize !== null && (screenSize >= 1024),
-        mdScreen: screenSize !== null && (screenSize >= 768),
-        smScreen: screenSize !== null && (screenSize >= 640),
-        tnScreen: screenSize !== null && screenSize < 640,
-        xtScreen: screenSize !== null && screenSize < 480, } }
+        xlScreen: screenSize !== null && (screenSize >= 1280),
+        lgScreen: screenSize !== null && (screenSize >= 1024 && screenSize < 1280),
+        mdScreen: screenSize !== null && (screenSize >= 768 && screenSize < 1024),
+        smScreen: screenSize !== null && (screenSize >= 640 && screenSize < 768),
+        tnScreen: screenSize !== null && (screenSize >= 480 && screenSize < 640),
+        xtScreen: screenSize !== null && (screenSize < 480) } }
 
 export default usePantallaTamagnos;

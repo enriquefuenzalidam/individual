@@ -21,7 +21,7 @@ const Home: React.FC = () => {
     descriptionArray.map((item, i) => typeof item === 'string' ? item : React.createElement('span', { key: i, style: { ...pBold } }, item.bold) );
 
   return React.createElement(ArticlePage, null, 
-
+    // React.createElement('div', { style: { display: 'block', boxSizing: 'border-box', position: 'relative', width: '100%', height: '6vh' } }),
     (entradasPreviews as EntradaData[]).map(({ title, href, description }) =>
       React.createElement( React.Fragment, { key: href },
         EntradaPreview({ title, href, description: parseDescription(description, pBold) } ) ) )
