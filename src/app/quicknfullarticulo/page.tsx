@@ -6,8 +6,9 @@ export const metadata = {
     title: "Quick'n'Full" };
 
 const Home: React.FC = () => {
-  return React.createElement(ArticlePage, null,
-        React.createElement(QuicknFullArticulo, null ) ) };
+  return React.createElement(ArticlePage,
+    { smallheader: true },
+    React.createElement(QuicknFullArticulo, null) ) };
 
 export default Home;
 
