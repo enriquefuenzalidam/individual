@@ -18,7 +18,7 @@ const EntradaPreview = ({ title, href, description }: EntradaProps ) => {
       React.createElement('p', { style: { ...pStyleB } },
         ...description),
       React.createElement('p', { style: { ...pStyleB, fontWeight: '500', color: 'rgba(51,65,85,1)' } }, '— ', 
-        React.createElement(Link, { href: href, title: 'Ver artículo' + title, lang: 'es', style: {  cursor: 'pointer' } }, React.createElement('span',{ className: `hover:underline` }, 'Leer más') ) ),
+        React.createElement(Link, { href: href, replace: false, prefetch: true, scroll: true, title: 'Ver artículo' + title, lang: 'es', style: {  cursor: 'pointer' } }, React.createElement('span',{ className: `hover:underline` }, 'Leer más') ) ),
     ] } ) };
 
 export default EntradaPreview;

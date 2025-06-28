@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from "react";
+import Link from "next/link";
 import IndividualLogo from "./individualLogo";
 import useIndividualStyling from "@/hooks/useindividualstyling";
 
@@ -17,12 +18,13 @@ const HeaderSmall: React.FC = () => {
         React.createElement("section", { style: { maxWidth: "64rem", whiteSpace: 'nowrap', position: "relative", boxSizing: 'border-box', zIndex: "20", paddingBottom: '0.3rem', display: "block", transition: "all 300ms ease-in-out", height: 'auto' } },
             React.createElement("div", { style: { display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.005) 1rem, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.01) 0.3rem, rgba(0,0,0,0) 100%)", maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 100%)' } } ),
             React.createElement("div", { style: { display: 'block', position: "absolute", boxSizing: 'border-box', inset: "0", backgroundImage: "linear-gradient(to bottom, #f1f5f9, transparent)", maskImage: 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)' } }),
-            React.createElement("h1", { title: 'individual.cl', style: { position: 'relative', boxSizing: 'border-box', background: 'black', display: 'inline-block', width: '5rem', aspectRatio: 173 / 239, overflow: 'hidden', borderRadius: '0.2rem', transition: 'all 300ms ease-in-out',
-                boxShadow: '0 0.508rem 0.508rem 0.078rem rgba(0, 0, 0, 0.2), 0 0.313rem 0.313rem -0.195rem rgba(0, 0, 0, 0.6)',
-                margin: '1.5rem 0 -2.2rem ' + dynSzGttr('4.5','4.1','3.5','3.1','2.5','2') + 'rem' }}, 
-                React.createElement(IndividualLogo, null) ),
+            React.createElement(Link, { href: '/', replace: false, prefetch: true, scroll: true, title: 'Inicio' },
+                React.createElement("h1", { title: 'individual.cl', style: { position: 'relative', boxSizing: 'border-box', background: 'black', display: 'inline-block', width: '5rem', aspectRatio: 173 / 239, overflow: 'hidden', borderRadius: '0.2rem', transition: 'all 300ms ease-in-out',
+                    boxShadow: '0 0.508rem 0.508rem 0.078rem rgba(0, 0, 0, 0.2), 0 0.313rem 0.313rem -0.195rem rgba(0, 0, 0, 0.6)',
+                    margin: '1.5rem 0 -2.2rem ' + dynSzGttr('4.5','4.1','3.5','3.1','2.5','2') + 'rem' }}, 
+                    React.createElement(IndividualLogo, null) ),
 
-                ) ) };
+                ) ) ) };
 export default HeaderSmall;
 
 // import NextLogo from "./nextlogo";
