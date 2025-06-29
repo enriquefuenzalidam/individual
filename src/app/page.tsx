@@ -13,7 +13,7 @@ interface EntradaData {
   href: string;
   description: DescriptionItem[]; }
 
-const Home: React.FC = () => {
+const Home = () => {
 
   const { pBold } = useIndividualStyling();
 

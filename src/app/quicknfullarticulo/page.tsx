@@ -5,7 +5,7 @@ import QuicknFullArticulo from './quicknFullArticulo';
 export const metadata = {
     title: "Quick'n'Full" };
 
-const Home: React.FC = () => {
+const Home = () => {
   return React.createElement(ArticlePage,
     { smallheader: true },
     React.createElement(QuicknFullArticulo, null) ) };

@@ -5,7 +5,7 @@ import LayeredTabsArticulo from './layeredTabsArticulo';
 export const metadata = {
     title: "LayeredTabs" };
 
-const Home: React.FC = () => {
+const Home = () => {
   return React.createElement(ArticlePage,
     { smallheader: true },
     React.createElement(LayeredTabsArticulo, null) ) };

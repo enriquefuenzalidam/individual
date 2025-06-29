@@ -1,6 +1,6 @@
 import React from "react";
 
-const IndividualLogo: React.FC = () => {
+const IndividualLogo = () => {
     return React.createElement('svg', { xmlns: "http://www.w3.org/2000/svg", xmlnsXlink: "http://www.w3.org/1999/xlink", version: "1.1", viewBox: "0 0 173 239" },
         React.createElement('g', { enableBackground: "new"},
             React.createElement('g', null, 

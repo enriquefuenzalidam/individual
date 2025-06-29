@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExtLink: React.FC = () => {
+const ExtLink = () => {
     return React.createElement('svg', {
         xmlns: "http://www.w3.org/2000/svg",
         fill: "currentColor",

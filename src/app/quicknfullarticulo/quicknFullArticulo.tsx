@@ -10,7 +10,7 @@ import QuicknfullPrev from '@/components/quicknfull/quicknfullPrev';
 import QuicknfullMain from '@/components/quicknfull/quicknfullMain';
 import { ExampleImagesLists } from '@/components/quicknfull/exampleImagesLists';
 
-const QuicknFullArticulo: React.FC = () => {
+const QuicknFullArticulo = () => {
 
   const { screenReady, xlScreen, lgScreen, mdScreen, smScreen,
       pStyleC, h4Style, h4StyleB, h4BStyle, navRapLi, navRapSp, imgsDesc, h5Style, intrfzSelecc,

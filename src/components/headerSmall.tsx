@@ -3,7 +3,7 @@ import Link from "next/link";
 import IndividualLogo from "./individualLogo";
 import useIndividualStyling from "@/hooks/useindividualstyling";
 
-const HeaderSmall: React.FC = () => {
+const HeaderSmall = () => {
     const { screenReady, dynSzGttr } = useIndividualStyling();
 
     const [pageLoaded, setPageLoaded] = useState(false);

@@ -1,7 +1,6 @@
 import { StaticImageData } from "next/image";
 import { useEffect } from "react";
 
-
 export const isValidColor = (color: string) => {
     if (typeof window === "undefined") return false;
     const s = new Option().style;

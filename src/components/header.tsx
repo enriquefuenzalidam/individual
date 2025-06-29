@@ -4,7 +4,7 @@ import ReactLogo from "./reactlogo";
 import IndividualLogo from "./individualLogo";
 import useIndividualStyling from "@/hooks/useindividualstyling";
 
-const Header: React.FC = () => {
+const Header = () => {
     const { screenReady, dynSzGttr } = useIndividualStyling();
 
     const [pageLoaded, setPageLoaded] = useState(false);

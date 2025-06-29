@@ -3,7 +3,7 @@ import useIndividualStyling from "@/hooks/useindividualstyling";
 import Link from "next/link";
 import PayPalLogo from "./paypal";
 
-const Footer: React.FC = () => {
+const Footer = () => {
 
     const { screenReady, dynSzGttr} = useIndividualStyling();
     const [ pageLoaded, setPageLoaded] = useState(false);

@@ -7,7 +7,7 @@ import ExtLink from '@/components/extLink';
 
 import EntradaSeccion from '@/components/entradaSection';
 
-const LayeredTabsArticulo: React.FC = () => {
+const LayeredTabsArticulo = () => {
 
   const { screenReady, 
     pStyleC, h4Style, h4StyleB, h4BStyle, navRapLi, navRapSp, h5Style, intrfzSelecc,
